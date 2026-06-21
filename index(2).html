@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Учительская 2.0 — доска проекта</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Учительская 2.0 — интерактивная доска из 7 столбцов: проблемы, наставники, материалы, маркет и результаты." />
+</head>
+<body>
+  <div class="app-shell" id="top">
+    <aside class="sidebar" aria-label="Боковое меню">
+      <a class="app-button app-button--active" href="#board" aria-label="Доска">
+        <span class="app-button__icon">▦</span>
+      </a>
+      <nav class="side-nav">
+        <a href="#board" class="side-nav__item side-nav__item--active">
+          <span>▦</span>
+          <b>Доска</b>
+        </a>
+        <a href="#search" class="side-nav__item">
+          <span>⌕</span>
+          <b>Поиск</b>
+        </a>
+        <a href="#materials" class="side-nav__item">
+          <span>▣</span>
+          <b>Материалы</b>
+        </a>
+        <a href="#messages" class="side-nav__item">
+          <span>☰</span>
+          <b>Сообщения</b>
+        </a>
+        <a href="#team" class="side-nav__item">
+          <span>👥</span>
+          <b>Участники</b>
+        </a>
+        <a href="#calendar" class="side-nav__item">
+          <span>□</span>
+          <b>Календарь</b>
+        </a>
+        <a href="#settings" class="side-nav__item">
+          <span>⚙</span>
+          <b>Настройки</b>
+        </a>
+      </nav>
+      <a class="help-link" href="#help">?</a>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <a class="brand" href="#top" aria-label="Учительская 2.0">
+          <span class="brand__mark">📖</span>
+          <span class="brand__name">Учительская 2.0</span>
+          <span class="brand__chevron">⌄</span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Разделы проекта">
+          <a href="#board">Доска проекта</a>
+          <a href="#materials">Материалы</a>
+          <a href="#diagnostic">Диагностика</a>
+        </nav>
+
+        <div class="topbar__actions">
+          <div class="avatars" aria-label="Участники проекта">
+            <span>👩</span><span>👨</span><span>👩</span><span>👩</span><b>+8</b>
+          </div>
+          <button class="invite-btn" type="button">Пригласить</button>
+          <button class="icon-btn" type="button" aria-label="Поиск">⌕</button>
+          <button class="icon-btn" type="button" aria-label="Уведомления">🔔</button>
+          <button class="icon-btn" type="button" aria-label="Помощь">?</button>
+          <div class="profile">
+            <span>👩</span>
+            <div>
+              <b>Мария П.</b>
+              <small>Учитель</small>
+            </div>
+          </div>
+          <button class="menu-btn" id="menuBtn" type="button" aria-label="Открыть меню">☰</button>
+        </div>
+      </header>
+
+      <main class="main-board" id="board">
+        <section class="hero-board" aria-label="Заголовок проекта">
+          <div class="hero-board__decor hero-board__decor--left">💡</div>
+          <div class="hero-board__decor hero-board__decor--book">📖</div>
+          <div class="hero-board__text">
+            <h1>Учительская 2.0</h1>
+            <p>Выбери проблему — найди наставника — создай проект</p>
+          </div>
+          <div class="hero-board__decor hero-board__decor--puzzle">🧩</div>
+          <div class="hero-board__decor hero-board__decor--plane">✈</div>
+        </section>
+
+        <section class="search-panel" id="search" aria-label="Поиск по доске">
+          <label for="boardSearch">Быстрый поиск по карточкам</label>
+          <div class="search-panel__row">
+            <input id="boardSearch" type="search" placeholder="Например: ИИ, НПК, презентация, наставник" />
+            <button class="btn" id="clearSearch" type="button">Очистить</button>
+          </div>
+        </section>
+
+        <section class="kanban" aria-label="Доска проекта из семи столбцов">
+          <article class="column column--blue" data-column="welcome">
+            <div class="column__header">
+              <span class="column__number">1</span>
+              <h2>Вход в учительскую</h2>
+            </div>
+            <button class="card" type="button" data-info="Добро пожаловать! Это стартовая зона проекта: выберите задачу и двигайтесь по доске слева направо.">
+              <span class="card__icon">🚪</span>
+              <b>Добро пожаловать!</b>
+            </button>
+            <button class="card" type="button" data-info="Доска работает как маршрут: проблема → наставник → материал → готовый образовательный продукт.">
+              <span class="card__icon">📘</span>
+              <b>Как пользоваться доской</b>
+            </button>
+            <button class="card" type="button" data-info="Шаг 1: сформулируйте свою главную педагогическую задачу.">
+              <span class="card__icon">🖱</span>
+              <b>1. Выбери задачу</b>
+            </button>
+            <button class="card" type="button" data-info="Шаг 2: найдите учителя с подходящей суперсилой.">
+              <span class="card__icon">👥</span>
+              <b>2. Найди наставника</b>
+            </button>
+            <button class="card" type="button" data-info="Шаг 3: получите помощь, материал или пакет сопровождения.">
+              <span class="card__icon">🤝</span>
+              <b>3. Получи помощь</b>
+            </button>
+          </article>
+
+          <article class="column column--purple" data-column="problems">
+            <div class="column__header">
+              <span class="column__number">2</span>
+              <h2>Что у вас болит?</h2>
+            </div>
+            <button class="card js-recommend" type="button" data-role="design" data-info="Рекомендация: обратитесь к дизайнеру образовательных продуктов и возьмите шаблон презентации.">
+              <span class="card__icon">💡</span>
+              <b>Не знаю, как оформить проект</b>
+            </button>
+            <button class="card js-recommend" type="button" data-role="ai" data-info="Рекомендация: начните с 10 промптов для учителя и консультации интегратора ИИ.">
+              <span class="card__icon">🤖</span>
+              <b>Хочу использовать ИИ, но боюсь</b>
+            </button>
+            <button class="card js-recommend" type="button" data-role="olymp" data-info="Рекомендация: выберите наставника одарённых и олимпиадный разбор.">
+              <span class="card__icon">📗</span>
+              <b>Нужно подготовить ученика к олимпиаде</b>
+            </button>
+            <button class="card js-recommend" type="button" data-role="producer" data-info="Рекомендация: учитель-продюсер поможет собрать сценарий, афишу и медиаплан события.">
+              <span class="card__icon">🎉</span>
+              <b>Нужно провести яркое школьное событие</b>
+            </button>
+            <button class="card js-recommend" type="button" data-role="team" data-info="Рекомендация: фасилитатор проведёт сессию и распределит роли без хаоса.">
+              <span class="card__icon">👥</span>
+              <b>Хочу сделать командную работу без хаоса</b>
+            </button>
+          </article>
+
+          <article class="column column--green" data-column="teachers">
+            <div class="column__header">
+              <span class="column__number">3</span>
+              <h2>Карта суперсил учителей</h2>
+            </div>
+            <button class="card" type="button" data-tags="olymp" data-info="Наставник одарённых помогает готовить учеников к олимпиадам, НПК и конкурсам.">
+              <span class="card__icon">🌟</span>
+              <b>Наставник одарённых</b>
+            </button>
+            <button class="card" type="button" data-tags="research" data-info="Методист проектов помогает оформить тему, цель, задачи, гипотезу и план исследования.">
+              <span class="card__icon">🧩</span>
+              <b>Методист проектов</b>
+            </button>
+            <button class="card" type="button" data-tags="design" data-info="Дизайнер образовательных продуктов помогает с презентацией, стендом, буклетом и визуальным стилем.">
+              <span class="card__icon">✏️</span>
+              <b>Дизайнер образовательных продуктов</b>
+            </button>
+            <button class="card" type="button" data-tags="ai" data-info="Интегратор ИИ помогает применять нейросети, чат-ботов и цифровых помощников в учебной работе.">
+              <span class="card__icon">💻</span>
+              <b>Интегратор ИИ</b>
+            </button>
+            <button class="card" type="button" data-tags="producer" data-info="Учитель-продюсер превращает школьную идею в событие, фестиваль или медиапроект.">
+              <span class="card__icon">🎬</span>
+              <b>Учитель-продюсер</b>
+            </button>
+            <button class="card" type="button" data-tags="team" data-info="Фасилитатор помогает команде договориться, распределить роли и довести проект до результата.">
+              <span class="card__icon">👥</span>
+              <b>Фасилитатор</b>
+            </button>
+          </article>
+
+          <article class="column column--sky" data-column="materials" id="materials">
+            <div class="column__header">
+              <span class="column__number">4</span>
+              <h2>Бесплатная полка</h2>
+            </div>
+            <a class="card" href="#" data-info="Готовая структура слайдов для защиты проекта.">
+              <span class="card__icon">🪪</span>
+              <b>Шаблон презентации</b>
+            </a>
+            <a class="card" href="#" data-info="Короткий список проверки перед научно-практической конференцией.">
+              <span class="card__icon">📋</span>
+              <b>Чек-лист для НПК</b>
+            </a>
+            <a class="card" href="#" data-info="Набор промптов для урока, проекта, проверки текста и генерации идей.">
+              <span class="card__icon">🤖</span>
+              <b>10 промптов для учителя</b>
+            </a>
+            <a class="card" href="#" data-info="Советы по оформлению школьного стенда без перегруза и ошибок.">
+              <span class="card__icon">🖼</span>
+              <b>Памятка по оформлению стенда</b>
+            </a>
+            <a class="card" href="#" data-info="Мини-инструкция: как написать цель, задачи и ожидаемый результат.">
+              <span class="card__icon">🎯</span>
+              <b>Как написать цель и задачи</b>
+            </a>
+          </article>
+
+          <article class="column column--orange" data-column="market">
+            <div class="column__header">
+              <span class="column__number">5</span>
+              <h2>Педагогический маркет</h2>
+            </div>
+            <button class="card" type="button" data-info="Пакет: от идеи до защиты. Включает консультацию, структуру, проверку и финальные правки.">
+              <span class="card__icon">💼</span>
+              <b>Проект под ключ</b>
+            </button>
+            <button class="card" type="button" data-info="Быстрая упаковка содержания: логика, слайды, визуальный стиль и финальная проверка.">
+              <span class="card__icon">🖥</span>
+              <b>Презентация за 1 вечер</b>
+            </button>
+            <button class="card" type="button" data-info="Цифровой помощник для класса: ответы на вопросы, материалы, памятки и навигация.">
+              <span class="card__icon">🤖</span>
+              <b>ИИ-помощник класса</b>
+            </button>
+            <button class="card" type="button" data-info="Разбор сложных заданий, ошибок и стратегии подготовки.">
+              <span class="card__icon">🏅</span>
+              <b>Олимпиадный разбор</b>
+            </button>
+            <button class="card" type="button" data-info="Помощь в создании стенда: структура, визуал, QR-коды, защита и распечатка.">
+              <span class="card__icon">🖥</span>
+              <b>Стенд как у профи</b>
+            </button>
+          </article>
+
+          <article class="column column--red" data-column="projects">
+            <div class="column__header">
+              <span class="column__number">6</span>
+              <h2>Социокультурные проекты</h2>
+            </div>
+            <button class="card" type="button" data-info="Интерактивная карта профессий, интервью с представителями улуса и профориентационные материалы.">
+              <span class="card__icon">🗺</span>
+              <b>Атлас профессий Намского улуса</b>
+            </button>
+            <button class="card" type="button" data-info="Команда учителей выезжает в школу-партнёр и помогает запустить витрину компетенций.">
+              <span class="card__icon">🧑‍🤝‍🧑</span>
+              <b>Педагогический десант</b>
+            </button>
+            <button class="card" type="button" data-info="Открытая энциклопедия педагогических практик, материалов и достижений учителей.">
+              <span class="card__icon">🌀</span>
+              <b>Цифровой след учителя</b>
+            </button>
+            <button class="card" type="button" data-info="Школьники создают фестиваль: от идеи и афиши до сценария и медиапродукта.">
+              <span class="card__icon">🎭</span>
+              <b>Ученик — продюсер фестиваля</b>
+            </button>
+          </article>
+
+          <article class="column column--gold" data-column="results">
+            <div class="column__header">
+              <span class="column__number">7</span>
+              <h2>Зал славы и результаты</h2>
+            </div>
+            <button class="card card--result" type="button" data-info="Команда учителей-лидеров, которые помогают коллегам и ученикам.">
+              <span class="card__icon">🏅</span>
+              <b>6 учителей-лидеров</b>
+            </button>
+            <button class="card card--result" type="button" data-info="Материалы, консультации, шаблоны и готовые решения для быстрого старта.">
+              <span class="card__icon">📦</span>
+              <b>30 пакетов помощи</b>
+            </button>
+            <button class="card card--result" type="button" data-info="Ученики используют материалы для проектов, конкурсов, НПК и школьных событий.">
+              <span class="card__icon">👥</span>
+              <b>50 учеников воспользовались материалами</b>
+            </button>
+            <button class="card card--result" type="button" data-info="Первые социокультурные инициативы уже запущены и могут масштабироваться.">
+              <span class="card__icon">🚀</span>
+              <b>2 проекта запущены</b>
+            </button>
+            <button class="card card--result" type="button" data-info="Здесь можно размещать короткие отзывы участников и фотографии результатов.">
+              <span class="card__icon">💬</span>
+              <b>Отзывы участников</b>
+            </button>
+          </article>
+        </section>
+
+        <section class="bottom-zone" id="diagnostic">
+          <article class="info-box" id="infoBox" aria-live="polite">
+            <span class="info-box__icon">💡</span>
+            <div>
+              <h2>Нажмите на любую карточку</h2>
+              <p>Здесь появится подсказка, рекомендация или описание выбранного раздела.</p>
+            </div>
+          </article>
+
+          <article class="diagnostic-card">
+            <div class="diagnostic-card__icon">📋</div>
+            <div>
+              <h2>Мини-диагностика</h2>
+              <p>Ответьте на несколько вопросов и получите индивидуальные рекомендации и полезные ресурсы.</p>
+            </div>
+            <button class="diagnostic-card__btn" id="diagnosticBtn" type="button">Пройти</button>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <dialog class="quiz-modal" id="quizModal" aria-labelledby="quizTitle">
+    <form method="dialog" class="quiz-modal__content" id="quizForm">
+      <button class="quiz-modal__close" value="close" aria-label="Закрыть">×</button>
+      <p class="eyebrow">Мини-диагностика</p>
+      <h2 id="quizTitle">Какой наставник вам нужен?</h2>
+      <label for="quizSelect">Выберите главную задачу</label>
+      <select id="quizSelect" required>
+        <option value="">Выберите вариант</option>
+        <option value="design">Оформить проект красиво</option>
+        <option value="ai">Освоить ИИ-инструменты</option>
+        <option value="olymp">Подготовить олимпиадника</option>
+        <option value="research">Написать исследовательскую работу</option>
+        <option value="producer">Организовать событие</option>
+        <option value="team">Настроить командную работу</option>
+      </select>
+      <button class="btn btn--primary" id="quizSubmit" type="submit">Получить рекомендацию</button>
+      <p class="quiz-result" id="quizResult"></p>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
