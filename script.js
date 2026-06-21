@@ -14,9 +14,38 @@ const recommendations = {
   ai: 'Лучший маршрут: интегратор ИИ → 10 промптов для учителя → ИИ-помощник класса.',
   olymp: 'Лучший маршрут: наставник одарённых → чек-лист для НПК → олимпиадный разбор.',
   research: 'Лучший маршрут: методист проектов → как написать цель и задачи → проект под ключ.',
+  exam: 'Лучший маршрут: наставник ВПР, ОГЭ и ЕГЭ → план подготовки → разбор заданий и диагностика.',
   producer: 'Лучший маршрут: учитель-продюсер → сценарий события → ученик — продюсер фестиваля.',
   team: 'Лучший маршрут: фасилитатор → распределение ролей → командная работа без хаоса.'
 };
+
+function adaptExamCards() {
+  const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
+    card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
+  );
+
+  if (examProblemCard) {
+    examProblemCard.dataset.role = 'exam';
+    examProblemCard.dataset.info = 'Рекомендация: выберите наставника ВПР, ОГЭ и ЕГЭ, чтобы составить план подготовки, разобрать задания и провести диагностику.';
+  }
+
+  const methodistCard = Array.from(document.querySelectorAll('[data-column="teachers"] .card')).find(card =>
+    card.innerText.includes('Методист проектов')
+  );
+
+  if (methodistCard) {
+    methodistCard.dataset.tags = 'exam';
+    methodistCard.dataset.info = 'Наставник ВПР, ОГЭ и ЕГЭ помогает составить план подготовки, разобрать типовые задания, отработать сложные темы и провести диагностику.';
+
+    const icon = methodistCard.querySelector('.card__icon');
+    const title = methodistCard.querySelector('b');
+
+    if (icon) icon.textContent = '📚';
+    if (title) title.textContent = 'Наставник ВПР, ОГЭ и ЕГЭ';
+  }
+}
+
+adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
   infoBox.innerHTML = `
