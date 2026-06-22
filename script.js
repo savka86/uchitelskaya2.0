@@ -226,6 +226,26 @@ function linkFillRequestCard() {
   });
 }
 
+function linkGetResultCard() {
+  const resultCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
+    card.innerText.includes('Получи результат')
+  );
+
+  if (!resultCard) return;
+
+  resultCard.dataset.info = 'Откройте подробную визуальную страницу: как проверить итог, доработать материал, применить его и показать готовый результат.';
+  resultCard.dataset.resultLink = 'pages/5-poluchi-rezultat.html';
+  resultCard.classList.add('card--link');
+  resultCard.style.cursor = 'pointer';
+  resultCard.title = 'Открыть страницу «5. Получи результат»';
+
+  resultCard.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.href = resultCard.dataset.resultLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -260,6 +280,7 @@ linkChooseTaskCard();
 linkFindMentorCard();
 linkGetHelpCard();
 linkFillRequestCard();
+linkGetResultCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
