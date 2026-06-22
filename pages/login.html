@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Вход в Учительскую 2.0</title>
+  <title>Вход — Учительская 2.0</title>
   <style>
     :root {
       --bg: #f3f7ff;
@@ -103,14 +103,6 @@
     .form-zone {
       padding: 42px;
       background: #fff;
-    }
-
-    .top-link {
-      display: inline-flex;
-      margin-bottom: 24px;
-      color: var(--blue);
-      font-weight: 900;
-      text-decoration: none;
     }
 
     .form-zone h2 {
@@ -237,27 +229,26 @@
 <body>
   <main class="login-shell">
     <section class="welcome">
-      <span class="badge">🚪 Учительская 2.0</span>
-      <h1>Добро пожаловать!</h1>
-      <p>Войдите как учитель или ученик, чтобы пользоваться доской проекта, выбирать задачи, находить наставников и получать материалы.</p>
+      <span class="badge">🔐 Главный вход</span>
+      <h1>Учительская 2.0</h1>
+      <p>Сначала заполните форму входа. Только после этого откроется доска проекта с задачами, наставниками и материалами.</p>
       <div class="steps">
         <div class="step"><span>1</span> Выберите роль</div>
-        <div class="step"><span>2</span> Введите данные</div>
-        <div class="step"><span>3</span> Перейдите к доске</div>
+        <div class="step"><span>2</span> Введите имя, email и пароль</div>
+        <div class="step"><span>3</span> Автоматически откроется доска</div>
       </div>
     </section>
 
     <section class="form-zone">
-      <a class="top-link" href="../index.html">← Назад к доске</a>
       <h2>Вход</h2>
-      <p>Пока это демонстрационная форма для сайта на GitHub Pages. Данные сохраняются только в браузере пользователя.</p>
+      <p>Это демонстрационный вход для GitHub Pages. Данные сохраняются только в браузере пользователя.</p>
 
       <form id="loginForm">
         <div class="role-grid" aria-label="Выберите роль">
           <label class="role-card">
             <input type="radio" name="role" value="Учитель" checked />
             <b>👩‍🏫 Учитель</b>
-            <small>Создаёт материалы, помогает ученикам, ведёт проекты.</small>
+            <small>Создаёт материалы, проверяет работы, помогает ученикам.</small>
           </label>
           <label class="role-card">
             <input type="radio" name="role" value="Ученик" />
@@ -281,7 +272,7 @@
           <input id="userPassword" type="password" placeholder="Введите пароль" required />
         </label>
 
-        <button class="submit-btn" type="submit">Войти в Учительскую</button>
+        <button class="submit-btn" type="submit">Войти и открыть доску</button>
         <div class="note" id="loginNote"></div>
       </form>
     </section>
@@ -300,12 +291,10 @@
 
       localStorage.setItem('uchitelskayaUser', JSON.stringify({ role, name, email }));
 
-      note.textContent = `Готово! Вы вошли как ${role}: ${name}. Сейчас можно перейти к доске.`;
+      note.textContent = `Готово! Вы вошли как ${role}: ${name}. Открываю доску...`;
       note.classList.add('is-visible');
 
-      setTimeout(() => {
-        window.location.href = '../index.html#board';
-      }, 900);
+      window.location.href = '../index.html?auth=1#board';
     });
   </script>
 </body>
