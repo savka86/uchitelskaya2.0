@@ -1,237 +1,34 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Наставник одарённых — проект «Домовый гриб»</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <style>
-    :root{--green:#123f16;--lime:#64a900;--soft:#f4faec;--paper:#fff;--gold:#c58f00;--ink:#17311a}
-    body{margin:0;background:linear-gradient(135deg,#f7fbef,#e9f7d6 45%,#fff);color:var(--ink)}
-    .page{width:min(1180px,calc(100% - 28px));margin:auto;padding:28px 0 56px}
-    .hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#103d13,#64a900);color:#fff;box-shadow:0 24px 60px rgba(16,61,19,.22)}
-    .eyebrow,.pill{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}
-    .hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}.lead{font-size:20px;line-height:1.55;max-width:940px}
-    .mentor-word,.card,.checklist,.material-detail,.box,.template{padding:24px;border-radius:28px;background:#fff;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}
-    .mentor-word{margin:22px 0 6px;border:2px solid rgba(92,159,0,.24)}.mentor-word h2,.card h2,.checklist h2,.material-detail h2,.template h2{margin-top:0;color:var(--green)}.mentor-word p{font-size:20px;line-height:1.65;margin:0}.mentor-badge{display:inline-flex;gap:8px;padding:8px 14px;border-radius:999px;background:var(--soft);color:var(--green);font-weight:900;margin-bottom:14px}
-    .route,.materials,.boost{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:26px 0}.step,.material,.boost-card{padding:18px;border-radius:22px;background:var(--green);color:#fff;font-weight:900}.material,.boost-card{background:#fff;color:var(--ink);box-shadow:0 14px 36px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}.material b,.boost-card b{display:block;color:var(--green);margin-bottom:8px}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}.checklist{margin-top:24px}.checklist ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}.checklist li{padding:14px 16px;border-radius:18px;background:var(--soft);font-weight:800}.checklist li::before{content:'☐ ';font-weight:900;color:var(--lime)}
-    .toc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:22px 0}.toc a{display:block;padding:13px 15px;border-radius:18px;background:#fff;color:var(--green);text-decoration:none;font-weight:900;border:1px solid rgba(92,159,0,.18)}
-    .material-detail{margin-top:24px}.meta-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0}.meta{padding:16px;border-radius:18px;background:var(--soft)}.meta b{display:block;color:var(--green);margin-bottom:8px}.mini{white-space:pre-wrap;background:#fff;padding:18px;border-radius:18px;border:1px solid rgba(92,159,0,.2);line-height:1.55}.prompt{background:#fff9e8;border:2px dashed var(--gold)}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}.btn,button.btn{padding:14px 18px;border-radius:999px;background:var(--green);color:#fff;text-decoration:none;font-weight:900;border:0;cursor:pointer}.btn--light,button.btn--light{background:white;color:var(--green);border:1px solid rgba(18,63,22,.2)}.box,.template{margin-top:22px;background:#fff9e8;border:2px dashed var(--gold)}.prompt-list{margin:0;padding-left:22px;display:grid;gap:12px}.prompt-list li{padding:14px 16px;border-radius:18px;background:#fff9e8;font-weight:800}
-    @media(max-width:900px){.materials,.route,.grid,.boost,.toc,.meta-grid{grid-template-columns:1fr}}
-  </style>
-</head>
-<body>
-  <main class="page">
-    <section class="hero">
-      <span class="eyebrow">🌟 Бесплатная полка · отдельное окошко</span>
-      <h1>Наставник одарённых</h1>
-      <p class="lead">Я помогаю превратить проект Амана о <b>Serpula lacrymans</b> в сильную конкурсную работу для <b>ОВСУ, НПК и защиты перед жюри</b>.</p>
-      <div class="actions"><button class="btn btn--light" onclick="downloadAll()">Скачать все 10 материалов</button><a class="btn btn--light" href="../index.html#materials">Вернуться в бесплатную полку</a></div>
-    </section>
-
-    <section class="mentor-word">
-      <span class="mentor-badge">🌟 Слово наставника одарённых</span>
-      <h2>Я помогаю Аману выйти на уровень сильной конкурсной работы</h2>
-      <p>Моя задача — показать новизну исследования, доказательность результатов, практическую пользу для жителей села Намцы и подготовить ученика к уверенным ответам на вопросы экспертов. Я смотрю на проект глазами жюри: что в нём сильное, какие цифры надо помнить, где нужна аккуратная формулировка и как превратить работу в убедительное выступление.</p>
-    </section>
-
-    <section class="route">
-      <div class="step">1. Новизна</div><div class="step">2. Значимость</div><div class="step">3. Доказательства</div><div class="step">4. Вопросы жюри</div><div class="step">5. Уверенная защита</div>
-    </section>
-
-    <section class="grid">
-      <article class="card"><h2>Что я усиливаю</h2><p>Я помогаю показать, что проблема домового гриба в селе Намцы раньше системно не изучалась, а значит работа имеет практическую пользу для жителей деревянных домов.</p></article>
-      <article class="card"><h2>Главные цифры для жюри</h2><p>Я учу Амана уверенно объяснять цифры: <b>66</b> домов участвовали в опросе, <b>45</b> заражены, <b>21</b> не заражён, <b>31</b> дом избавился от гриба, <b>14</b> случаев остаются нерешёнными.</p></article>
-      <article class="card"><h2>Сильный аргумент</h2><p>Проект силён тем, что проблема не только описана словами, но и подтверждена тремя блоками: опросом, картой заражённости и экспериментом с брусками лиственницы.</p></article>
-      <article class="card"><h2>Фраза для защиты</h2><p>«Мы не просто изучили гриб, а показали, где проблема встречается, какие факторы её усиливают и какие рекомендации нужны жителям».</p></article>
-    </section>
-
-    <section class="checklist">
-      <h2>10 материалов наставника одарённых</h2>
-      <div class="materials">
-        <article class="material"><b>1. Паспорт для конкурса</b>Тема, цель, новизна, практическая польза.</article>
-        <article class="material"><b>2. Речь победителя</b>Сильное начало, проблема, доказательства, финал.</article>
-        <article class="material"><b>3. Вопросы жюри</b>Выборка, достоверность, карта, эксперимент.</article>
-        <article class="material"><b>4. Анализ опроса</b>66 домов, 45 заражённых, 31/14 случаев.</article>
-        <article class="material"><b>5. Карта как доказательство</b>Микрорайоны риска и развитие карты.</article>
-        <article class="material"><b>6. Эксперимент для жюри</b>Почему №2–№5 растут, а №1 нет.</article>
-        <article class="material"><b>7. Фотодоказательства</b>Фото образцов, карты и эксперимента.</article>
-        <article class="material"><b>8. Чек-лист НПК</b>Цифры, термины, выводы, ответы, тайминг.</article>
-        <article class="material"><b>9. ИИ для тренировки</b>Вопросы жюри без выдуманных фактов.</article>
-        <article class="material"><b>10. Пакет участника</b>Паспорт, речь, ответы, карточки, репетиция.</article>
-      </div>
-      <div class="toc">
-        <a href="#m1">1. Паспорт для конкурса</a><a href="#m2">2. Речь победителя</a><a href="#m3">3. Вопросы жюри</a><a href="#m4">4. Анализ опроса</a><a href="#m5">5. Карта как доказательство</a><a href="#m6">6. Эксперимент для жюри</a><a href="#m7">7. Фотодоказательства</a><a href="#m8">8. Чек-лист НПК</a><a href="#m9">9. ИИ для тренировки</a><a href="#m10">10. Пакет участника</a>
-      </div>
-    </section>
-
-    <article class="material-detail" id="m1">
-      <h2>1. Паспорт для конкурса</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Сделать короткую версию темы, цели, новизны и практической пользы для заявки на ОВСУ или НПК.</div><div class="meta"><b>Что получит ученик</b>Готовый паспорт проекта на 1 страницу: тема, актуальность, цель, задачи, новизна, практическая значимость.</div><div class="meta"><b>Где использовать</b>Заявка на конкурс, вступление к работе, первый слайд защиты, аннотация.</div></div>
-      <div class="mini prompt" id="text1">Промпт наставника одарённых:
-Ты — наставник одарённого ученика и эксперт школьной научной конференции. Подготовь конкурсный паспорт проекта Амана на тему: «Зараженность настоящим домовым грибом (Serpula lacrymans) жилищного фонда с. Намцы».
-Обязательные данные: 66 домов, 45 заражённых, 21 незаражённый, 31 дом избавился, 14 случаев остаются нерешёнными; есть карта заражённости и эксперимент с 5 банками и брусками лиственницы.
-Сделай кратко: тема, актуальность, цель, 4 задачи, новизна, практическая польза, 3 главных доказательства. Не добавляй новых фактов, адресов, процентов и источников.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Новизна понятна жюри; цель не расплывчатая; практическая польза связана с жителями с. Намцы.</div><div class="meta"><b>Мини-шаблон</b>Новизна: проблема заражённости домов Serpula lacrymans в с. Намцы рассмотрена через опрос, карту и эксперимент.</div><div class="meta"><b>Итог</b>Паспорт проекта для заявки и первого слайда.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text1')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text1','01_pasport_dlya_konkursa.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m2">
-      <h2>2. Речь победителя</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Собрать сильную речь: начало, проблема села, 3 доказательства и уверенный финал.</div><div class="meta"><b>Что получит ученик</b>Речь на 4–5 минут и короткую версию на 2–3 минуты.</div><div class="meta"><b>Где использовать</b>Защита ОВСУ, НПК, школьная конференция, репетиция перед жюри.</div></div>
-      <div class="mini prompt" id="text2">Промпт наставника одарённых:
-Составь речь победителя для защиты проекта Амана о Serpula lacrymans. Речь должна быть понятной для ученика 7 класса, но звучать уверенно перед жюри.
-Структура: сильное начало — почему тема важна для села Намцы — цель — 3 доказательства: опрос 66 домов, карта заражённости, эксперимент с банками — выводы — практическая польза — уверенный финал.
-Обязательные цифры: 45 заражённых домов, 21 незаражённый, 31 избавился, 14 не избавились. Не меняй данные и не придумывай новые результаты.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Есть проблема, доказательства и финал; ученик может произнести речь без чтения с листа.</div><div class="meta"><b>Мини-шаблон</b>«Мой проект важен, потому что домовый гриб разрушает деревянные конструкции, а деревянные дома — значимая часть жилищного фонда села».</div><div class="meta"><b>Итог</b>Текст речи и карточки для репетиции.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text2')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text2','02_rech_pobeditelya.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m3">
-      <h2>3. Вопросы жюри</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Подготовить сложные вопросы про выборку, достоверность, карту, эксперимент и рекомендации.</div><div class="meta"><b>Что получит ученик</b>Таблицу: вопрос — зачем спрашивают — сильный ответ — цифра-доказательство.</div><div class="meta"><b>Где использовать</b>Репетиция защиты и тренировка ответов.</div></div>
-      <div class="mini prompt" id="text3">Промпт наставника одарённых:
-Представь, что ты строгое жюри ОВСУ/НПК. Составь 20 вопросов к проекту о заражённости Serpula lacrymans в с. Намцы.
-Обязательно включи вопросы: почему выбрана тема, почему выборка 66 домов важна, насколько достоверны результаты, как читать карту, зачем нужен эксперимент, почему в банках №2–№5 мицелий растёт, а в №1 нет, какая практическая польза для жителей.
-Дай короткие ответы ученика. Ответы должны опираться только на данные проекта: 66, 45, 21, 31, 14, карта и эксперимент.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Есть трудные вопросы; ответы короткие; ученик ссылается на доказательства.</div><div class="meta"><b>Мини-шаблон</b>Вопрос: «Почему ваш проект полезен?» Ответ: «Он помогает увидеть распространение проблемы и обратить внимание на профилактику».</div><div class="meta"><b>Итог</b>Карточки для тренировки перед защитой.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text3')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text3','03_voprosy_zhyuri.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m4">
-      <h2>4. Анализ опроса</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Объяснить 66 домов, 45 заражённых, 31 избавившийся и 14 нерешённых случаев.</div><div class="meta"><b>Что получит ученик</b>Текст для раздела работы, короткий вывод для слайда и фразу для защиты.</div><div class="meta"><b>Где использовать</b>Раздел «Результаты опроса», диаграмма, устный доклад.</div></div>
-      <div class="mini prompt" id="text4">Промпт наставника одарённых:
-Помоги объяснить результаты опроса для жюри. Данные: всего 66 домов; 45 заражены; 21 не заражён; среди заражённых 31 дом избавился от гриба, 14 не избавились.
-Сделай 3 версии: 1) научный текст для работы; 2) короткий вывод для слайда; 3) устное объяснение на 30 секунд.
-Отдельно напиши, какие выводы можно делать, а какие нельзя без дополнительных данных. Не добавляй новые проценты без расчёта.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Цифры совпадают; вывод не преувеличен; видно, что опрос — доказательная часть проекта.</div><div class="meta"><b>Мини-шаблон</b>«Опрос показал, что проблема встречается часто: из 66 домов 45 сообщили о заражении».</div><div class="meta"><b>Итог</b>Текст анализа и фраза для объяснения диаграммы.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text4')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text4','04_analiz_oprosa.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m5">
-      <h2>5. Карта как доказательство</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Показать микрорайоны риска и объяснить, почему карта будет дополняться.</div><div class="meta"><b>Что получит ученик</b>Объяснение карты для защиты и подпись к слайду.</div><div class="meta"><b>Где использовать</b>Слайд с картой, стенд, ответы на вопросы жюри.</div></div>
-      <div class="mini prompt" id="text5">Промпт наставника одарённых:
-Подготовь объяснение карты заражённости Serpula lacrymans по микрорайонам с. Намцы для жюри.
-Нужно показать: карта помогает увидеть распространение проблемы; условные обозначения показывают дома, где избавились, не избавились или гриб не появлялся; карта может дополняться при новых данных.
-Сделай: 1) подпись к карте; 2) объяснение на 30 секунд; 3) ответ на вопрос жюри «Почему карта является доказательством?»; 4) аккуратную фразу о том, что карта не даёт окончательного диагноза каждому дому.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Карта связана с задачей исследования; нет преувеличений; понятна легенда.</div><div class="meta"><b>Мини-шаблон</b>«Карта показывает не все возможные случаи, а данные, собранные в ходе исследования, поэтому её можно дополнять».</div><div class="meta"><b>Итог</b>Готовое объяснение карты для защиты.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text5')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text5','05_karta_kak_dokazatelstvo.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m6">
-      <h2>6. Эксперимент для жюри</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Коротко объяснить, почему в банках №2–№5 мицелий растёт, а в №1 нет.</div><div class="meta"><b>Что получит ученик</b>Сильное объяснение опыта: цель, условия, наблюдения, вывод.</div><div class="meta"><b>Где использовать</b>Слайд эксперимента, устная защита, ответы на вопросы экспертов.</div></div>
-      <div class="mini prompt" id="text6">Промпт наставника одарённых:
-Помоги объяснить эксперимент с 5 банками и 5 брусками лиственницы для жюри.
-Данные: в опыте были почва, вода, бруски лиственницы, средство «Антиплесень». В банках №2–№5 наблюдался рост мицелия, а в банке №1, где брусок был обработан средством, рост не наблюдался на указанном этапе.
-Сделай короткое объяснение: зачем был эксперимент, что сравнивали, что заметили, какой осторожный вывод можно сделать. Не делай медицинских или строительных рекомендаций без данных.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Сохранены номера банок; вывод осторожный; понятно, зачем опыт нужен проекту.</div><div class="meta"><b>Мини-шаблон</b>«Эксперимент показывает, что при влажности и наличии органической среды мицелий развивается активнее на необработанных образцах».</div><div class="meta"><b>Итог</b>Объяснение эксперимента на 30–60 секунд.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text6')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text6','06_eksperiment_dlya_zhyuri.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m7">
-      <h2>7. Фотодоказательства</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Выбрать фото образцов и эксперимента как сильные доказательства.</div><div class="meta"><b>Что получит ученик</b>Список фото для слайдов и подписи в едином стиле.</div><div class="meta"><b>Где использовать</b>Презентация, стенд, приложение к работе.</div></div>
-      <div class="mini prompt" id="text7">Промпт наставника одарённых:
-Помоги выбрать и подписать фотодоказательства для проекта о Serpula lacrymans.
-Нужны фото: образец домового гриба, карта заражённости, банки в начале эксперимента, рост мицелия в банках №2–№5, обработанный брусок №1.
-Для каждого фото дай: 1) короткую подпись для слайда; 2) научную подпись для работы; 3) фразу, что сказать при показе фото. Не добавляй адреса, фамилии и детали, которых не видно на фото.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Фото подтверждают ход исследования; подписи короткие; нет лишних утверждений.</div><div class="meta"><b>Мини-шаблон</b>«Фото. Рост мицелия Serpula lacrymans в банках №2–№5 в ходе эксперимента».</div><div class="meta"><b>Итог</b>Готовые подписи и порядок показа фото.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text7')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text7','07_fotodokazatelstva.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m8">
-      <h2>8. Чек-лист НПК</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Проверить готовность перед выступлением: цифры, термины, выводы, ответы, тайминг.</div><div class="meta"><b>Что получит ученик</b>Лист самопроверки перед выходом к жюри.</div><div class="meta"><b>Где использовать</b>За день до защиты и за 30 минут до выступления.</div></div>
-      <div class="mini prompt" id="text8">Промпт наставника одарённых:
-Составь чек-лист готовности Амана к НПК/ОВСУ по проекту о Serpula lacrymans.
-Проверь: цифры 66, 45, 21, 31, 14; правильное произношение Serpula lacrymans; цель и задачи; выводы; объяснение карты; объяснение эксперимента; 10 возможных вопросов жюри; речь на 4–5 минут; уверенный финал.
-Сделай чек-лист в формате: пункт — как проверить — готово/нужно доработать.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Чек-лист помогает действовать, а не просто читать список.</div><div class="meta"><b>Мини-шаблон</b>[ ] Я помню все цифры. [ ] Я объясняю карту. [ ] Я отвечаю на трудные вопросы.</div><div class="meta"><b>Итог</b>Печатный чек-лист готовности.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text8')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text8','08_chek_list_npk.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m9">
-      <h2>9. ИИ для тренировки</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>ИИ задаёт вопросы как жюри и помогает отработать ответы без выдуманных фактов.</div><div class="meta"><b>Что получит ученик</b>Тренировку «жюри — ученик» и исправление слабых ответов.</div><div class="meta"><b>Где использовать</b>Репетиция дома, на кружке, перед учителем.</div></div>
-      <div class="mini prompt" id="text9">Промпт наставника одарённых:
-Проведи тренировку защиты как жюри ОВСУ/НПК. Задавай мне по одному вопросу о проекте Serpula lacrymans, дождись моего ответа и оцени его.
-Оценивай по критериям: точность фактов, уверенность, связь с данными, краткость, отсутствие выдуманных фактов.
-Данные, которые нельзя менять: 66 домов, 45 заражённых, 21 незаражённый, 31 избавился, 14 не избавились, карта заражённости, эксперимент с 5 банками.
-После каждого ответа дай совет: как сделать ответ сильнее.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>ИИ не пишет за ученика, а тренирует; ответы сохраняют факты проекта.</div><div class="meta"><b>Мини-шаблон</b>«Задайте мне вопрос жюри. Я отвечу, а вы оцените мой ответ по 5 критериям».</div><div class="meta"><b>Итог</b>Серия тренировочных вопросов и улучшенных ответов.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text9')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text9','09_ii_dlya_trenirovki.txt')">Скачать материал</button></div>
-    </article>
-
-    <article class="material-detail" id="m10">
-      <h2>10. Пакет участника</h2>
-      <div class="meta-grid"><div class="meta"><b>Назначение</b>Собрать паспорт, речь, вопросы жюри, карточки ответов и финальную репетицию.</div><div class="meta"><b>Что получит ученик</b>Полную папку участника конкурса.</div><div class="meta"><b>Где использовать</b>Последняя подготовка перед ОВСУ/НПК и защита перед жюри.</div></div>
-      <div class="mini prompt" id="text10">Промпт наставника одарённых:
-Собери пакет участника ОВСУ/НПК для проекта Амана о Serpula lacrymans.
-В пакет включи: 1) паспорт проекта; 2) речь на 4–5 минут; 3) 15 вопросов жюри и ответы; 4) карточку главных цифр: 66, 45, 21, 31, 14; 5) объяснение карты; 6) объяснение эксперимента; 7) чек-лист перед защитой; 8) план финальной репетиции.
-Формат ответа: раздел — что входит — как использовать на защите. Не добавляй новых фактов и источников.</div>
-      <div class="meta-grid"><div class="meta"><b>Критерии качества</b>Пакет помогает ученику быстро повторить главное и уверенно отвечать жюри.</div><div class="meta"><b>Мини-шаблон</b>Папка участника: паспорт + речь + ответы + цифры + карта + эксперимент + чек-лист.</div><div class="meta"><b>Итог</b>Финальный комплект для защиты.</div></div>
-      <div class="actions"><button class="btn" onclick="copyBlock('text10')">Скопировать</button><button class="btn btn--light" onclick="downloadBlock('text10','10_paket_uchastnika.txt')">Скачать материал</button></div>
-    </article>
-
-    <section class="checklist">
-      <h2>Индивидуальный чек-лист наставника одарённых</h2>
-      <ul>
-        <li>Новизна проекта сформулирована одним понятным предложением.</li>
-        <li>Практическая значимость связана с деревянными домами села Намцы.</li>
-        <li>Ученик уверенно помнит цифры: 66, 45, 21, 31 и 14.</li>
-        <li>На защите выделены 3 доказательства: опрос, карта, эксперимент.</li>
-        <li>Подготовлены ответы на вопросы жюри о достоверности опроса.</li>
-        <li>Есть ответ на вопрос: «Почему эта тема важна именно для нашего села?»</li>
-        <li>Речь уложена в 4–5 минут и произносится без чтения с листа.</li>
-        <li>Финал защиты показывает пользу проекта для жителей.</li>
-      </ul>
-    </section>
-
-    <section class="checklist">
-      <h2>10 индивидуальных промтов наставника одарённых</h2>
-      <ol class="prompt-list">
-        <li>Составь 10 вопросов жюри к проекту о заражённости Serpula lacrymans в селе Намцы и дай краткие уверенные ответы ученика.</li>
-        <li>Помоги сформулировать новизну проекта одним сильным предложением для научной конференции школьников.</li>
-        <li>Проверь, достаточно ли убедительно раскрыта практическая значимость проекта для жителей деревянных домов села Намцы.</li>
-        <li>Сделай 5 аргументов, почему проект важен именно для Республики Саха (Якутия) и деревянного жилищного фонда.</li>
-        <li>Подготовь короткий ответ на вопрос жюри: «Почему вы выбрали именно эту тему?»</li>
-        <li>Сформулируй сильную финальную фразу защиты, чтобы показать пользу исследования для села.</li>
-        <li>Помоги объяснить жюри, почему опрос 66 домов можно использовать как доказательную базу проекта.</li>
-        <li>Сделай карточки для тренировки: вопрос жюри — ответ — какая цифра проекта подтверждает ответ.</li>
-        <li>Проверь речь защиты на убедительность, научность и ясность для 7 класса.</li>
-        <li>Составь план подготовки ученика к защите за 3 дня: речь, слайды, вопросы, репетиция.</li>
-      </ol>
-    </section>
-
-    <section class="box"><b>Мини-задание от наставника:</b><br>Составь 5 вопросов, которые может задать жюри: про выбор темы, достоверность опроса, карту, эксперимент и практическую пользу.</section>
-    <div class="actions"><a class="btn" href="../index.html#materials">Вернуться в бесплатную полку</a><a class="btn btn--light" href="project-domovoy-grib.html">Открыть проект</a></div>
-  </main>
-  <script>
-    function copyBlock(id){
-      const text=document.getElementById(id).innerText;
-      navigator.clipboard.writeText(text);
-      alert('Материал скопирован');
-    }
-    function downloadText(text, filename){
-      const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
-      const a=document.createElement('a');
-      a.href=URL.createObjectURL(blob);
-      a.download=filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(a.href);
-    }
-    function downloadBlock(id, filename){downloadText(document.getElementById(id).innerText, filename)}
-    function downloadAll(){
-      const ids=['text1','text2','text3','text4','text5','text6','text7','text8','text9','text10'];
-      const text=ids.map(id=>document.getElementById(id).closest('.material-detail').innerText).join('\n\n---\n\n');
-      downloadText(text,'10_materialov_nastavnika_odarennyh.txt');
-    }
-  </script>
-</body>
-</html>
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Наставник одарённых</title><link rel="stylesheet" href="../styles.css"><style>body{margin:0;background:#f4faec;color:#17311a}.page{width:min(1100px,calc(100% - 28px));margin:auto;padding:28px 0 56px}.hero,.card{padding:28px;border-radius:28px;background:#fff;box-shadow:0 16px 38px rgba(18,63,22,.1);margin-top:20px}.hero{background:linear-gradient(135deg,#103d13,#64a900);color:#fff}.hero h1{font-size:clamp(30px,5vw,56px);margin:10px 0}.lead{font-size:20px;line-height:1.55}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.item{padding:20px;border-radius:22px;background:#fff;border:1px solid rgba(92,159,0,.22);box-shadow:0 12px 28px rgba(18,63,22,.08)}.item h2,.card h2{color:#123f16;margin-top:0}.box{white-space:pre-wrap;background:#fffdf5;border:2px dashed #c58f00;padding:16px;border-radius:16px;line-height:1.55}.toc{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.toc a{padding:12px;border-radius:16px;background:#f4faec;color:#123f16;text-decoration:none;font-weight:900}.btn{display:inline-block;padding:12px 16px;border-radius:999px;background:#fff;color:#123f16;text-decoration:none;font-weight:900}@media(max-width:850px){.grid,.toc{grid-template-columns:1fr}}</style></head><body><main class="page"><section class="hero"><div>🌟 Бесплатная полка</div><h1>Наставник одарённых</h1><p class="lead">Я помогаю превратить проект Амана о Serpula lacrymans в сильную конкурсную работу для ОВСУ, НПК и защиты перед жюри. Промты убраны. Вместо них размещены шаблоны, чек-листы и материалы из файла по организации работы с сильными участниками.</p><a class="btn" href="../index.html#materials">Вернуться в бесплатную полку</a></section><section class="card"><h2>Что теперь внутри</h2><p>На странице оставлены не промты, а готовые рабочие материалы: индивидуальный маршрут, лист учёта, циклограмма, чек-листы, паспорт конкурса, портфолио и пакет участника.</p><div class="toc"><a href="#m1">1. Индивидуальный маршрут</a><a href="#m2">2. Лист учёта</a><a href="#m3">3. Циклограмма</a><a href="#m4">4. Карта сильных сторон</a><a href="#m5">5. Этапы сопровождения</a><a href="#m6">6. Оценка результата</a><a href="#m7">7. Паспорт конкурса</a><a href="#m8">8. Чек-лист НПК</a><a href="#m9">9. Портфолио</a><a href="#m10">10. Пакет участника</a></div></section><section class="grid"><article class="item" id="m1"><h2>1. Индивидуальный маршрут</h2><div class="box">ФИО: Гоголев Аман Аялович
+Класс: _____
+Направление: исследовательский проект
+Цель: подготовить конкурсную работу о Serpula lacrymans.
+План: консультации, работа с данными, карта, эксперимент, презентация, репетиция.</div></article><article class="item" id="m2"><h2>2. Лист учёта</h2><div class="box">Дата | Вид работы | Что сделано | Результат | Что доработать
+_____ | Выбор темы | Тема уточнена | Принята | Цель
+_____ | Опрос | Проверены 66 домов | Есть вывод | Диаграмма
+_____ | Карта | Легенда объяснена | Готово | Подпись
+_____ | Эксперимент | Описаны банки | Есть вывод | Фото</div></article><article class="item" id="m3"><h2>3. Циклограмма</h2><div class="box">Сентябрь — выбор темы.
+Октябрь — сбор данных.
+Ноябрь — карта и фото.
+Декабрь — текст и презентация.
+Январь–февраль — репетиция.
+Март — НПК.
+Апрель — ОВСУ.
+Май — анализ результата.</div></article><article class="item" id="m4"><h2>4. Карта сильных сторон</h2><div class="box">[ ] Работа с фактами
+[ ] Объяснение карты
+[ ] Описание эксперимента
+[ ] Устная защита
+[ ] Оформление презентации
+[ ] Самостоятельная доработка</div></article><article class="item" id="m5"><h2>5. Этапы сопровождения</h2><div class="box">Старт: тема, цель, задачи.
+Развитие: данные, карта, эксперимент.
+Защита: речь, вопросы, тайминг.
+Итог: портфолио и самооценка.</div></article><article class="item" id="m6"><h2>6. Оценка результата</h2><div class="box">Критерии: участие в конкурсах, качество текста, презентация, уверенность защиты, ответы жюри, наличие итогового продукта.</div></article><article class="item" id="m7"><h2>7. Паспорт конкурса</h2><div class="box">Название: «Зараженность настоящим домовым грибом Serpula lacrymans жилищного фонда с. Намцы».
+Цель: изучить заражённость домов.
+Доказательства: опрос 66 домов, карта, эксперимент.
+Польза: профилактика и информирование жителей.</div></article><article class="item" id="m8"><h2>8. Чек-лист НПК</h2><div class="box">[ ] Тема произносится правильно
+[ ] Цель краткая
+[ ] Цифры 66, 45, 21, 31, 14 выучены
+[ ] Карта объяснена
+[ ] Эксперимент объяснён
+[ ] Ответы готовы
+[ ] Речь по времени
+[ ] Фото подписаны</div></article><article class="item" id="m9"><h2>9. Портфолио</h2><div class="box">Титульный лист, паспорт проекта, текст исследования, презентация, карта, фото, таблицы, дипломы, лист консультаций, самооценка.</div></article><article class="item" id="m10"><h2>10. Пакет участника</h2><div class="box">Маршрут, лист учёта, циклограмма, паспорт конкурса, речь, карточки ответов, чек-лист НПК, портфолио, самооценка.</div></article></section></main></body></html>
