@@ -5,201 +5,518 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Как пользоваться доской — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Инструкция по работе с доской проекта Учительская 2.0: как выбрать задачу, найти наставника, получить материал и запустить проект." />
+  <meta name="description" content="Красочная инструкция по работе с доской проекта Учительская 2.0: как выбрать задачу, найти наставника, получить материал и запустить проект." />
+  <style>
+    :root {
+      --guide-blue: #2563eb;
+      --guide-purple: #7c3aed;
+      --guide-green: #16a34a;
+      --guide-orange: #f97316;
+      --guide-pink: #db2777;
+      --guide-sky: #0284c7;
+      --guide-yellow: #ca8a04;
+      --guide-dark: #111827;
+      --guide-soft: #f8fafc;
+    }
+
+    .visual-guide {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 26px 18px 54px;
+    }
+
+    .visual-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.9), transparent 34%),
+        linear-gradient(135deg, #dbeafe 0%, #f5d0fe 42%, #ffedd5 100%);
+      box-shadow: 0 24px 70px rgba(30, 41, 59, .16);
+    }
+
+    .visual-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .52);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .76);
+      font-weight: 800;
+      color: #1e293b;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .08);
+    }
+
+    .visual-hero h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: .95;
+      letter-spacing: -1.8px;
+      color: #111827;
+    }
+
+    .visual-hero p {
+      max-width: 760px;
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.65;
+      color: #334155;
+    }
+
+    .hero-illustration {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .hero-step {
+      min-height: 132px;
+      border-radius: 24px;
+      padding: 18px;
+      color: white;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, .17);
+      transform: rotate(var(--rotate, 0deg));
+    }
+
+    .hero-step span {
+      display: block;
+      font-size: 34px;
+      margin-bottom: 8px;
+    }
+
+    .hero-step strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .hero-step small {
+      display: block;
+      margin-top: 7px;
+      opacity: .92;
+      line-height: 1.35;
+    }
+
+    .step-blue { background: linear-gradient(135deg, #2563eb, #38bdf8); --rotate: -1deg; }
+    .step-purple { background: linear-gradient(135deg, #7c3aed, #c084fc); --rotate: 1.5deg; }
+    .step-green { background: linear-gradient(135deg, #16a34a, #86efac); --rotate: -.7deg; }
+    .step-orange { background: linear-gradient(135deg, #f97316, #facc15); --rotate: 1deg; }
+    .step-pink { background: linear-gradient(135deg, #db2777, #fb7185); --rotate: -1.2deg; }
+
+    .visual-section {
+      margin-top: 28px;
+      padding: 28px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 18px 55px rgba(15, 23, 42, .10);
+      border: 1px solid rgba(148, 163, 184, .25);
+    }
+
+    .visual-section h2 {
+      margin: 0 0 18px;
+      font-size: clamp(26px, 4vw, 38px);
+      color: #0f172a;
+      letter-spacing: -.8px;
+    }
+
+    .route-picture {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .route-card {
+      position: relative;
+      border-radius: 24px;
+      padding: 20px 16px;
+      min-height: 160px;
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      overflow: hidden;
+    }
+
+    .route-card::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -18px;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #111827;
+      color: white;
+      font-weight: 900;
+      z-index: 2;
+    }
+
+    .route-card:last-child::after { display: none; }
+
+    .route-card b {
+      display: block;
+      margin-top: 10px;
+      font-size: 18px;
+      color: #0f172a;
+    }
+
+    .route-card p {
+      margin: 8px 0 0;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .route-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      color: white;
+    }
+
+    .map-board {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .map-column {
+      min-height: 230px;
+      border-radius: 24px;
+      padding: 14px;
+      color: white;
+      box-shadow: inset 0 -30px 60px rgba(0,0,0,.10), 0 14px 34px rgba(15, 23, 42, .14);
+    }
+
+    .map-column span {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.24);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .map-column b {
+      display: block;
+      font-size: 15px;
+      line-height: 1.25;
+    }
+
+    .map-column small {
+      display: block;
+      margin-top: 8px;
+      line-height: 1.35;
+      opacity: .94;
+    }
+
+    .mini-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .mini-card {
+      border-radius: 26px;
+      padding: 22px;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border: 1px solid #e2e8f0;
+    }
+
+    .mini-card .big {
+      font-size: 42px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      color: #111827;
+      font-size: 21px;
+    }
+
+    .mini-card p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .poster-box {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: center;
+      border-radius: 30px;
+      padding: 24px;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.10), rgba(219,39,119,.10)),
+        #ffffff;
+      border: 2px dashed rgba(37, 99, 235, .35);
+    }
+
+    .poster-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .poster-pill {
+      padding: 12px 15px;
+      border-radius: 999px;
+      background: #111827;
+      color: white;
+      font-weight: 800;
+    }
+
+    .poster-note {
+      border-radius: 24px;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .10);
+    }
+
+    .poster-note strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .visual-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .visual-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 900;
+      background: #111827;
+      color: white;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .18);
+    }
+
+    .visual-btn--light {
+      background: white;
+      color: #111827;
+      border: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 980px) {
+      .hero-illustration,
+      .route-picture,
+      .map-board,
+      .mini-cards,
+      .poster-box {
+        grid-template-columns: 1fr;
+      }
+
+      .route-card::after {
+        content: "↓";
+        top: auto;
+        right: 18px;
+        bottom: -18px;
+        transform: none;
+      }
+    }
+  </style>
 </head>
 
 <body class="detail-body">
-  <main class="detail-page">
+  <main class="visual-guide">
 
     <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
+      <a class="back-link back-link--ghost" href="../index.html?auth=1#board">← Назад к доске</a>
+      <a class="detail-btn" href="../index.html?auth=1#diagnostic">Мини-диагностика</a>
     </div>
 
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Столбец 1: Вход в учительскую</span>
+    <section class="visual-hero">
+      <span class="hero-badge">🧭 Инструкция с визуализацией</span>
+      <h1>Как пользоваться доской «Учительская 2.0»</h1>
+      <p>
+        Доска работает как навигатор: сначала вы выбираете задачу, затем находите наставника,
+        берёте готовые материалы, запускаете действие и получаете результат.
+      </p>
 
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">🧭</div>
-        <div>
-          <h1>Как пользоваться доской</h1>
-          <p>
-            Эта страница поможет быстро понять, как устроена «Учительская 2.0»,
-            как выбрать нужную карточку, найти наставника, взять материалы и запустить
-            свой образовательный проект.
-          </p>
+      <div class="hero-illustration" aria-label="Главный маршрут работы с доской">
+        <div class="hero-step step-blue">
+          <span>🎯</span>
+          <strong>Выбери задачу</strong>
+          <small>Что нужно сделать прямо сейчас?</small>
+        </div>
+        <div class="hero-step step-purple">
+          <span>🤝</span>
+          <strong>Найди наставника</strong>
+          <small>Кто поможет лучше всего?</small>
+        </div>
+        <div class="hero-step step-green">
+          <span>📚</span>
+          <strong>Возьми материал</strong>
+          <small>Шаблон, чек-лист или пример.</small>
+        </div>
+        <div class="hero-step step-orange">
+          <span>🚀</span>
+          <strong>Запусти работу</strong>
+          <small>Урок, проект, сайт или событие.</small>
+        </div>
+        <div class="hero-step step-pink">
+          <span>🏆</span>
+          <strong>Покажи результат</strong>
+          <small>Добавь итог в зал славы.</small>
         </div>
       </div>
     </section>
 
-    <section class="detail-grid">
-
-      <article class="detail-card detail-card--large">
-        <h2>Главный маршрут</h2>
-        <p>
-          Доска работает как понятный маршрут от проблемы к результату.
-          Двигайтесь слева направо: сначала определите свою задачу, затем найдите
-          наставника или материал, после этого оформите идею в проект, урок,
-          мероприятие или готовый цифровой продукт.
-        </p>
-
-        <div class="template-box">
-          <strong>Простой путь:</strong><br>
-          Проблема → Наставник → Материал → Действие → Готовый результат
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 1. Найдите свою проблему</h2>
-        <p>
-          Начните с вопроса: какая помощь вам нужна прямо сейчас?
-          Например: оформить проект, подготовить презентацию, найти наставника,
-          создать сайт, сделать ИИ-книгу, подготовиться к конкурсу или провести
-          интересное мероприятие.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 2. Откройте нужную карточку</h2>
-        <p>
-          На главной доске каждая карточка ведёт на отдельную страницу.
-          Внутри карточки можно найти описание, подсказки, готовые материалы,
-          примеры, маршруты работы и ссылки на следующие действия.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 3. Выберите наставника</h2>
-        <p>
-          Если задача требует помощи, откройте раздел «Карта суперсил учителей».
-          Там можно выбрать педагога, который хорошо разбирается в нужном направлении:
-          ИИ, проектах, конкурсах, олимпиадах, презентациях, сайтах или исследованиях.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 4. Возьмите материал</h2>
-        <p>
-          В разделе «Бесплатная полка» можно найти шаблоны, чек-листы, инструкции,
-          памятки и готовые примеры. Эти материалы помогают не начинать работу с нуля,
-          а сразу двигаться по понятному плану.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 5. Запустите проект</h2>
-        <p>
-          Когда идея понятна, материал выбран, а наставник найден, можно переходить
-          к действию: оформить заявку, создать презентацию, подготовить защиту,
-          собрать команду или сделать готовый продукт.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Что означают 7 столбцов?</h2>
-
-        <div class="template-box">
-          <strong>1. Вход в учительскую</strong> — старт, инструкция и мини-диагностика.<br><br>
-          <strong>2. Что у вас болит?</strong> — выбор проблемы или задачи.<br><br>
-          <strong>3. Карта суперсил учителей</strong> — поиск наставника по сильной стороне.<br><br>
-          <strong>4. Бесплатная полка</strong> — шаблоны, чек-листы, инструкции и примеры.<br><br>
-          <strong>5. Педагогический маркет</strong> — обмен помощью, идеями и услугами внутри школы.<br><br>
-          <strong>6. Социокультурные проекты</strong> — идеи проектов для школы, села, района и сообщества.<br><br>
-          <strong>7. Зал славы и результаты</strong> — готовые работы, достижения, отзывы и успешные кейсы.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Для учителя</h2>
-        <ul class="detail-list">
-          <li>найти коллегу, который поможет с проектом;</li>
-          <li>взять готовый шаблон или чек-лист;</li>
-          <li>подготовить урок, мероприятие или конкурсную работу;</li>
-          <li>создать цифровой продукт вместе с учениками;</li>
-          <li>показать свои сильные стороны другим педагогам.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Для ученика</h2>
-        <ul class="detail-list">
-          <li>выбрать тему проекта;</li>
-          <li>понять, с чего начать работу;</li>
-          <li>найти наставника;</li>
-          <li>получить образец оформления;</li>
-          <li>подготовить защиту, презентацию или творческий продукт.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Правила работы с доской</h2>
-
-        <ul class="detail-list">
-          <li>Не обязательно проходить все карточки подряд — можно открыть только нужную.</li>
-          <li>Сначала сформулируйте задачу, потом выбирайте материал или наставника.</li>
-          <li>Используйте поиск на главной странице, если знаете ключевое слово.</li>
-          <li>Сохраняйте полезные ссылки и шаблоны для своей работы.</li>
-          <li>После завершения проекта можно добавить результат в «Зал славы».</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Быстрый пример</h2>
-        <p>
-          Ученику нужно сделать проект о профессиях будущего. Он открывает раздел
-          «Что у вас болит?», выбирает задачу, находит наставника, берёт шаблон
-          проекта, готовит презентацию и добавляет результат в общую копилку.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Мини-диагностика</h2>
-        <p>
-          Если вы не знаете, с чего начать, пройдите мини-диагностику.
-          Она помогает определить вашу задачу и понять, какая карточка подойдёт лучше всего.
-        </p>
-
-        <div class="detail-actions">
-          <a class="detail-btn" href="../index.html#diagnostic">Пройти мини-диагностику</a>
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Короткая инструкция для вставки на стенд</h2>
-        <div class="template-box">
-          1. Найдите свою проблему или задачу.<br>
-          2. Откройте подходящую карточку на доске.<br>
-          3. Выберите наставника или готовый материал.<br>
-          4. Используйте шаблон, чек-лист или инструкцию.<br>
-          5. Запустите свой проект и доведите его до результата.
-        </div>
-      </article>
-
+    <section class="visual-section">
+      <h2>Главная визуальная схема</h2>
+      <div class="route-picture">
+        <article class="route-card">
+          <div class="route-icon" style="background: var(--guide-blue);">❓</div>
+          <b>Проблема</b>
+          <p>Выберите карточку с вашей трудностью или задачей.</p>
+        </article>
+        <article class="route-card">
+          <div class="route-icon" style="background: var(--guide-purple);">🧑‍🏫</div>
+          <b>Наставник</b>
+          <p>Найдите педагога с нужной суперсилой.</p>
+        </article>
+        <article class="route-card">
+          <div class="route-icon" style="background: var(--guide-green);">🧩</div>
+          <b>Материалы</b>
+          <p>Откройте шаблоны, памятки, чек-листы и примеры.</p>
+        </article>
+        <article class="route-card">
+          <div class="route-icon" style="background: var(--guide-orange);">⚙️</div>
+          <b>Действие</b>
+          <p>Соберите урок, проект, мероприятие или цифровой продукт.</p>
+        </article>
+        <article class="route-card">
+          <div class="route-icon" style="background: var(--guide-pink);">✅</div>
+          <b>Результат</b>
+          <p>Получите готовую работу и покажите достижение.</p>
+        </article>
+      </div>
     </section>
 
-    <section class="related-section">
-      <h2>Следующие шаги</h2>
+    <section class="visual-section">
+      <h2>Карта 7 столбцов</h2>
+      <div class="map-board" aria-label="Семь столбцов доски Учительская 2.0">
+        <div class="map-column" style="background: linear-gradient(135deg, #2563eb, #38bdf8);">
+          <span>1</span>
+          <b>Вход в учительскую</b>
+          <small>Старт, правила, инструкция и диагностика.</small>
+        </div>
+        <div class="map-column" style="background: linear-gradient(135deg, #7c3aed, #c084fc);">
+          <span>2</span>
+          <b>Что у вас болит?</b>
+          <small>Выбор проблемы: проект, экзамен, урок, команда.</small>
+        </div>
+        <div class="map-column" style="background: linear-gradient(135deg, #16a34a, #4ade80);">
+          <span>3</span>
+          <b>Карта суперсил учителей</b>
+          <small>Наставники: ИИ, ВПР, ОГЭ, ЕГЭ, проекты.</small>
+        </div>
+        <div class="map-column" style="background: linear-gradient(135deg, #0284c7, #67e8f9);">
+          <span>4</span>
+          <b>Бесплатная полка</b>
+          <small>Шаблоны, инструкции, чек-листы, примеры.</small>
+        </div>
+        <div class="map-column" style="background: linear-gradient(135deg, #f97316, #facc15);">
+          <span>5</span>
+          <b>Педагогический маркет</b>
+          <small>Готовая помощь, обмен идеями и услугами.</small>
+        </div>
+        <div class="map-column" style="background: linear-gradient(135deg, #db2777, #fb7185);">
+          <span>6</span>
+          <b>Социокультурные проекты</b>
+          <small>Проекты для школы, села, района и сообщества.</small>
+        </div>
+        <div class="map-column" style="background: linear-gradient(135deg, #ca8a04, #fde047);">
+          <span>7</span>
+          <b>Зал славы и результаты</b>
+          <small>Готовые работы, отзывы, достижения и кейсы.</small>
+        </div>
+      </div>
+    </section>
 
-      <div class="related-grid">
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
+    <section class="visual-section">
+      <h2>Как действовать: 3 быстрых сценария</h2>
+      <div class="mini-cards">
+        <article class="mini-card">
+          <span class="big">👩‍🏫</span>
+          <h3>Для учителя</h3>
+          <p>Выберите задачу, найдите коллегу-наставника, возьмите шаблон и подготовьте урок, проект или мероприятие.</p>
+        </article>
+        <article class="mini-card">
+          <span class="big">🧑‍🎓</span>
+          <h3>Для ученика</h3>
+          <p>Найдите тему, получите подсказки, оформите работу, подготовьте защиту и покажите результат.</p>
+        </article>
+        <article class="mini-card">
+          <span class="big">🤖</span>
+          <h3>Для ИИ-проекта</h3>
+          <p>Откройте карточку про ИИ, выберите промпт или инструмент и создайте сайт, презентацию, книгу или бота.</p>
+        </article>
+      </div>
+    </section>
 
-        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
-          <span>🎯</span>
-          1. Выбери задачу
-        </a>
+    <section class="visual-section">
+      <h2>Инфографика для стенда</h2>
+      <div class="poster-box">
+        <div>
+          <div class="poster-flow">
+            <span class="poster-pill">1. Задача</span>
+            <span class="poster-pill">2. Наставник</span>
+            <span class="poster-pill">3. Материал</span>
+            <span class="poster-pill">4. Действие</span>
+            <span class="poster-pill">5. Результат</span>
+          </div>
+        </div>
+        <div class="poster-note">
+          <strong>Запомни маршрут</strong>
+          Не нужно открывать всё подряд. Найди свою проблему, выбери нужную карточку и двигайся к результату по подсказкам.
+        </div>
+      </div>
+    </section>
 
-        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
-          <span>🤝</span>
-          2. Найди наставника
-        </a>
+    <section class="visual-section">
+      <h2>Короткая инструкция</h2>
+      <div class="template-box">
+        <strong>1.</strong> Войдите на сайт и откройте доску.<br>
+        <strong>2.</strong> Выберите карточку с вашей задачей.<br>
+        <strong>3.</strong> Посмотрите подсказку, наставника или материал.<br>
+        <strong>4.</strong> Используйте шаблон, чек-лист или пример.<br>
+        <strong>5.</strong> Создайте готовый результат и добавьте его в копилку достижений.
+      </div>
 
-        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
-          <span>📚</span>
-          3. Получи помощь
-        </a>
+      <div class="visual-actions">
+        <a class="visual-btn" href="../index.html?auth=1#board">🚀 Перейти к доске</a>
+        <a class="visual-btn visual-btn--light" href="../index.html?auth=1#diagnostic">🧭 Пройти мини-диагностику</a>
       </div>
     </section>
 
