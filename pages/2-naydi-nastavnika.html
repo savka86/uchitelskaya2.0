@@ -5,276 +5,620 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2. Найди наставника — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Страница выбора наставника в проекте Учительская 2.0: как найти педагога по суперсиле, описать запрос и записаться на консультацию." />
+  <meta name="description" content="Красочная визуальная инструкция: как найти наставника на доске Учительская 2.0." />
+  <style>
+    :root {
+      --mentor-blue: #2563eb;
+      --mentor-violet: #7c3aed;
+      --mentor-green: #10b981;
+      --mentor-orange: #f97316;
+      --mentor-rose: #e11d48;
+      --mentor-dark: #172554;
+      --mentor-soft: #eef2ff;
+    }
+
+    body.detail-body {
+      background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, .18), transparent 30%),
+        radial-gradient(circle at top right, rgba(16, 185, 129, .18), transparent 32%),
+        linear-gradient(135deg, #f8fafc 0%, #eef2ff 45%, #fff7ed 100%);
+    }
+
+    .mentor-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+      color: #0f172a;
+    }
+
+    .mentor-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .mentor-link,
+    .mentor-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 12px 18px;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 14px 30px rgba(37, 99, 235, .16);
+    }
+
+    .mentor-link {
+      background: rgba(255, 255, 255, .9);
+      color: #1d4ed8;
+      border: 1px solid rgba(37, 99, 235, .16);
+    }
+
+    .mentor-btn {
+      background: linear-gradient(135deg, var(--mentor-blue), var(--mentor-violet));
+      color: white;
+    }
+
+    .mentor-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(37, 99, 235, .96), rgba(124, 58, 237, .94)),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,.25), transparent 22%);
+      box-shadow: 0 28px 65px rgba(37, 99, 235, .32);
+    }
+
+    .mentor-hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -70px;
+      bottom: -90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.14);
+    }
+
+    .mentor-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.28);
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .mentor-hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .mentor-hero h1 {
+      font-size: clamp(2.2rem, 6vw, 5.2rem);
+      line-height: .95;
+      margin: 0 0 18px;
+      letter-spacing: -0.05em;
+    }
+
+    .mentor-hero p {
+      max-width: 720px;
+      margin: 0;
+      font-size: 1.15rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,.92);
+    }
+
+    .mentor-visual-card {
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 28px;
+      padding: 22px;
+      backdrop-filter: blur(8px);
+    }
+
+    .mentor-avatar-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .mentor-avatar {
+      display: grid;
+      place-items: center;
+      min-height: 82px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.18);
+      font-size: 2.25rem;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+    }
+
+    .mentor-route {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(130px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .mentor-route__item {
+      position: relative;
+      min-height: 120px;
+      padding: 18px;
+      border-radius: 24px;
+      background: white;
+      box-shadow: 0 18px 38px rgba(15, 23, 42, .08);
+      border: 1px solid rgba(148, 163, 184, .18);
+    }
+
+    .mentor-route__num {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: white;
+      background: linear-gradient(135deg, var(--mentor-blue), var(--mentor-violet));
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .mentor-route__item b {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .mentor-route__item span {
+      color: #64748b;
+      font-size: .92rem;
+      line-height: 1.35;
+    }
+
+    .mentor-section-title {
+      margin: 38px 0 16px;
+      font-size: clamp(1.7rem, 4vw, 3rem);
+      color: var(--mentor-dark);
+      letter-spacing: -0.04em;
+    }
+
+    .mentor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mentor-card {
+      position: relative;
+      overflow: hidden;
+      background: rgba(255,255,255,.9);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: 0 18px 42px rgba(15, 23, 42, .09);
+      border: 1px solid rgba(148, 163, 184, .18);
+    }
+
+    .mentor-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 7px;
+      background: linear-gradient(90deg, var(--mentor-blue), var(--mentor-violet), var(--mentor-green));
+    }
+
+    .mentor-icon {
+      width: 56px;
+      height: 56px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      font-size: 1.9rem;
+      background: var(--mentor-soft);
+      margin-bottom: 14px;
+    }
+
+    .mentor-card h3 {
+      margin: 0 0 10px;
+      color: #111827;
+      font-size: 1.25rem;
+    }
+
+    .mentor-card p {
+      margin: 0 0 14px;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .mentor-card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    .mentor-band {
+      margin: 28px 0;
+      border-radius: 32px;
+      padding: 26px;
+      color: white;
+      background: linear-gradient(135deg, #0f172a, #1d4ed8 55%, #7c3aed);
+      box-shadow: 0 24px 55px rgba(30, 64, 175, .25);
+    }
+
+    .mentor-band h2 {
+      margin: 0 0 16px;
+      font-size: clamp(1.6rem, 4vw, 2.7rem);
+    }
+
+    .mentor-compare {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mentor-note {
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .mentor-note h3 {
+      margin-top: 0;
+    }
+
+    .mentor-note ul {
+      margin-bottom: 0;
+      line-height: 1.7;
+    }
+
+    .mentor-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .mentor-map__item {
+      padding: 18px;
+      border-radius: 24px;
+      background: white;
+      box-shadow: 0 15px 34px rgba(15, 23, 42, .08);
+      border: 1px solid rgba(148, 163, 184, .18);
+    }
+
+    .mentor-map__item strong {
+      display: block;
+      margin: 8px 0;
+      color: #111827;
+    }
+
+    .mentor-map__item span {
+      color: #64748b;
+      line-height: 1.45;
+      display: block;
+    }
+
+    .mentor-formula {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .mentor-formula div {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.95);
+      color: #111827;
+      text-align: center;
+      font-weight: 900;
+      box-shadow: 0 16px 32px rgba(15,23,42,.09);
+    }
+
+    .mentor-checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .mentor-question {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, .07);
+    }
+
+    .mentor-question b {
+      color: var(--mentor-blue);
+    }
+
+    .mentor-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .mentor-actions .mentor-btn:nth-child(2) {
+      background: white;
+      color: var(--mentor-blue);
+    }
+
+    @media (max-width: 920px) {
+      .mentor-hero-grid,
+      .mentor-compare,
+      .mentor-checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .mentor-route,
+      .mentor-grid,
+      .mentor-map,
+      .mentor-formula {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .mentor-hero {
+        padding: 24px;
+        border-radius: 26px;
+      }
+
+      .mentor-route,
+      .mentor-grid,
+      .mentor-map,
+      .mentor-formula {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body class="detail-body">
-  <main class="detail-page">
+  <main class="mentor-page">
+    <nav class="mentor-topline" aria-label="Навигация по странице">
+      <a class="mentor-link" href="../index.html#board">← Вернуться к доске</a>
+      <a class="mentor-btn" href="3-poluchi-pomosch.html">Следующий шаг: получи помощь →</a>
+    </nav>
 
-    <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
-    </div>
-
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Шаг 2: Поиск наставника</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">🤝</div>
+    <section class="mentor-hero">
+      <span class="mentor-badge">🤝 Шаг 2 из 7</span>
+      <div class="mentor-hero-grid">
         <div>
           <h1>2. Найди наставника</h1>
           <p>
-            Наставник — это педагог, который помогает не делать работу за ученика или коллегу,
-            а направляет, подсказывает, проверяет, объясняет и помогает довести идею до результата.
+            Наставник — это педагог с конкретной суперсилой. Он помогает выбрать маршрут,
+            подсказать материал, проверить идею и довести работу до результата. Главное —
+            найти не просто человека, а того, кто подходит именно под твою задачу.
+          </p>
+        </div>
+        <div class="mentor-visual-card" aria-label="Визуализация наставников">
+          <div class="mentor-avatar-row">
+            <div class="mentor-avatar">📚</div>
+            <div class="mentor-avatar">🤖</div>
+            <div class="mentor-avatar">🎨</div>
+          </div>
+          <strong>Наставник = суперсила + опыт + понятный маршрут</strong>
+          <p style="margin-top: 10px; color: rgba(255,255,255,.86);">
+            Выбирай по задаче: экзамены, проект, ИИ, дизайн, олимпиада, событие или команда.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="detail-grid">
-
-      <article class="detail-card detail-card--large">
-        <h2>Зачем нужен наставник?</h2>
-        <p>
-          Когда задача уже выбрана, важно найти человека, который разбирается именно в этом направлении.
-          Наставник помогает увидеть сильные стороны идеи, убрать лишнее, составить план,
-          подобрать материалы и подготовить работу к защите, конкурсу или публикации.
-        </p>
-
-        <div class="template-box">
-          <strong>Маршрут:</strong><br>
-          Выбрал задачу → нашёл наставника → получил совет → взял материал → сделал результат
-        </div>
+    <section class="mentor-route" aria-label="Маршрут выбора наставника">
+      <article class="mentor-route__item">
+        <div class="mentor-route__num">1</div>
+        <b>Определи задачу</b>
+        <span>Что нужно сделать: проект, экзамен, урок, ИИ или событие?</span>
       </article>
-
-      <article class="detail-card">
-        <h2>Наставник по проектам</h2>
-        <p>
-          Помогает оформить тему, актуальность, цель, задачи, этапы, продукт,
-          результат и презентацию проекта.
-        </p>
-        <ul class="detail-list">
-          <li>проектная заявка;</li>
-          <li>исследовательская работа;</li>
-          <li>социокультурный проект;</li>
-          <li>текст защиты.</li>
-        </ul>
+      <article class="mentor-route__item">
+        <div class="mentor-route__num">2</div>
+        <b>Выбери суперсилу</b>
+        <span>Найди направление, которое лучше всего подходит твоей задаче.</span>
       </article>
-
-      <article class="detail-card">
-        <h2>Наставник по ИИ</h2>
-        <p>
-          Помогает использовать нейросети безопасно и полезно: для уроков,
-          проектов, презентаций, изображений, чат-ботов и цифровых помощников.
-        </p>
-        <ul class="detail-list">
-          <li>ИИ-книга;</li>
-          <li>чат-бот;</li>
-          <li>промпты;</li>
-          <li>цифровой продукт.</li>
-        </ul>
+      <article class="mentor-route__item">
+        <div class="mentor-route__num">3</div>
+        <b>Открой наставника</b>
+        <span>Посмотри, чем он помогает и какой результат можно получить.</span>
       </article>
-
-      <article class="detail-card">
-        <h2>Наставник по дизайну</h2>
-        <p>
-          Помогает красиво оформить презентацию, стенд, карточки, буклет,
-          афишу, сайт, постер или визуальную часть проекта.
-        </p>
-        <ul class="detail-list">
-          <li>презентация;</li>
-          <li>стенд;</li>
-          <li>буклет;</li>
-          <li>визуальный стиль.</li>
-        </ul>
+      <article class="mentor-route__item">
+        <div class="mentor-route__num">4</div>
+        <b>Сформулируй запрос</b>
+        <span>Напиши, что уже есть и какая помощь нужна.</span>
       </article>
-
-      <article class="detail-card">
-        <h2>Наставник по олимпиадам</h2>
-        <p>
-          Помогает подготовить ученика к олимпиадам, конкурсам, интеллектуальным играм,
-          разбору заданий и тренировочным занятиям.
-        </p>
-        <ul class="detail-list">
-          <li>подбор заданий;</li>
-          <li>план подготовки;</li>
-          <li>разбор ошибок;</li>
-          <li>индивидуальная траектория.</li>
-        </ul>
+      <article class="mentor-route__item">
+        <div class="mentor-route__num">5</div>
+        <b>Получи помощь</b>
+        <span>План, подсказку, шаблон, проверку или консультацию.</span>
       </article>
-
-      <article class="detail-card">
-        <h2>Наставник по событиям</h2>
-        <p>
-          Помогает организовать школьное мероприятие, фестиваль, акцию,
-          педагогический десант, классный час или командную активность.
-        </p>
-        <ul class="detail-list">
-          <li>сценарий;</li>
-          <li>план мероприятия;</li>
-          <li>распределение ролей;</li>
-          <li>итоговый отчёт.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Как выбрать своего наставника?</h2>
-
-        <div class="template-box">
-          <strong>Ответьте на 4 вопроса:</strong><br><br>
-          1. Какая у меня задача? ___________________________<br>
-          2. В чём именно нужна помощь? ______________________<br>
-          3. Что уже готово? _________________________________<br>
-          4. Какой результат нужен? __________________________
-        </div>
-
-        <p>
-          После этого выберите наставника не по должности, а по суперсиле:
-          кто лучше всего умеет решать именно такую задачу.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Когда нужен наставник?</h2>
-        <ul class="detail-list">
-          <li>непонятно, с чего начать;</li>
-          <li>есть идея, но нет структуры;</li>
-          <li>нужно проверить работу;</li>
-          <li>нужно подготовить защиту;</li>
-          <li>нужно сделать проект ярче;</li>
-          <li>нужно довести работу до конкурса.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Когда достаточно материала?</h2>
-        <p>
-          Если задача простая и понятная, можно не записываться к наставнику,
-          а сразу перейти в раздел «Бесплатная полка» и взять шаблон, чек-лист
-          или инструкцию.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Форма заявки к наставнику</h2>
-
-        <div class="template-box">
-          <strong>Скопируйте и заполните:</strong><br><br>
-          Здравствуйте! Мне нужен наставник по направлению: __________________.<br><br>
-          Моя задача: _______________________________________________.<br><br>
-          Сейчас у меня уже есть: ___________________________________.<br><br>
-          Мне нужна помощь: консультация / шаблон / проверка / идея / подготовка к защите.<br><br>
-          Итоговый результат должен быть: ___________________________.<br><br>
-          Срок выполнения: _________________________________________.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что наставник может сделать?</h2>
-        <ul class="detail-list">
-          <li>провести короткую консультацию;</li>
-          <li>помочь составить план;</li>
-          <li>посоветовать шаблон;</li>
-          <li>проверить структуру;</li>
-          <li>подсказать, как улучшить работу;</li>
-          <li>помочь подготовиться к защите.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что наставник не делает?</h2>
-        <ul class="detail-list">
-          <li>не выполняет всю работу вместо участника;</li>
-          <li>не пишет проект полностью за ученика;</li>
-          <li>не заменяет самостоятельную работу;</li>
-          <li>не исправляет всё в последний момент без участия автора.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Карта наставников</h2>
-        <p>
-          Ниже можно добавить реальные фотографии, имена и контакты педагогов.
-          Пока блок можно использовать как шаблон для заполнения.
-        </p>
-
-        <div class="template-box">
-          <strong>Пример карточки наставника:</strong><br><br>
-          ФИО наставника: Гуляев Савелий Николаевич<br>
-          Суперсила: Интегратор ИИ<br>
-          Помогает с: сайтами, чат-ботами, ИИ-книгами, презентациями, цифровыми продуктами<br>
-          Формат помощи: консультация, пример, проверка, подсказка<br>
-          Контакт: ___________________________
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Наставник для ученика</h2>
-        <p>
-          Ученик может обратиться к наставнику, чтобы выбрать тему, оформить проект,
-          подготовить презентацию, написать речь для защиты или создать творческий продукт.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Наставник для учителя</h2>
-        <p>
-          Учитель может обратиться к коллеге, чтобы подготовить мероприятие,
-          методическую разработку, конкурсный материал, проектную заявку или цифровой ресурс.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Кнопка записи на консультацию</h2>
-        <p>
-          Позже сюда можно добавить ссылку на Google Форму, Яндекс Форму, Telegram,
-          электронную почту или QR-код для записи.
-        </p>
-
-        <div class="detail-actions">
-          <a class="detail-btn" href="../index.html#diagnostic">Подобрать наставника</a>
-          <a class="detail-btn detail-btn--light" href="3-poluchi-pomosch.html">Перейти к материалам</a>
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Короткий текст для страницы</h2>
-        <div class="template-box">
-          Найдите наставника по своей задаче. Выберите педагога, чья суперсила
-          подходит вашему запросу: проект, ИИ, дизайн, олимпиада, исследование,
-          мероприятие или командная работа. Наставник поможет составить план,
-          подобрать материалы и довести идею до результата.
-        </div>
-      </article>
-
     </section>
 
-    <section class="related-section">
-      <h2>Следующий шаг</h2>
+    <h2 class="mentor-section-title">Карта наставников по суперсилам</h2>
+    <section class="mentor-grid" aria-label="Карточки наставников">
+      <article class="mentor-card">
+        <div class="mentor-icon">📚</div>
+        <h3>Наставник ВПР, ОГЭ и ЕГЭ</h3>
+        <p>Помогает составить план подготовки, разобрать задания и отработать сложные темы.</p>
+        <ul>
+          <li>диагностика знаний;</li>
+          <li>план подготовки;</li>
+          <li>разбор типовых заданий.</li>
+        </ul>
+      </article>
 
-      <div class="related-grid">
-        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
-          <span>🎯</span>
-          1. Выбери задачу
-        </a>
+      <article class="mentor-card">
+        <div class="mentor-icon">🤖</div>
+        <h3>Интегратор ИИ</h3>
+        <p>Помогает использовать нейросети безопасно и создавать цифровые продукты.</p>
+        <ul>
+          <li>промпты;</li>
+          <li>чат-боты;</li>
+          <li>ИИ-книги и сайты.</li>
+        </ul>
+      </article>
 
-        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
-          <span>📚</span>
-          3. Получи помощь
-        </a>
+      <article class="mentor-card">
+        <div class="mentor-icon">🏗️</div>
+        <h3>Учитель-архитектор содержания</h3>
+        <p>Помогает выстроить логику урока, проекта или исследования.</p>
+        <ul>
+          <li>цель и задачи;</li>
+          <li>смысловые блоки;</li>
+          <li>понятная структура.</li>
+        </ul>
+      </article>
 
-        <a class="related-card related-card--green" href="../index.html#diagnostic">
-          <span>🧪</span>
-          Мини-диагностика
-        </a>
+      <article class="mentor-card">
+        <div class="mentor-icon">🎨</div>
+        <h3>Дизайнер образовательных продуктов</h3>
+        <p>Помогает оформить презентацию, стенд, карточки, сайт или постер.</p>
+        <ul>
+          <li>визуальный стиль;</li>
+          <li>инфографика;</li>
+          <li>красивое оформление.</li>
+        </ul>
+      </article>
 
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
+      <article class="mentor-card">
+        <div class="mentor-icon">🌟</div>
+        <h3>Наставник одарённых</h3>
+        <p>Помогает готовиться к олимпиадам, НПК и интеллектуальным конкурсам.</p>
+        <ul>
+          <li>индивидуальная траектория;</li>
+          <li>тренировочные задания;</li>
+          <li>разбор ошибок.</li>
+        </ul>
+      </article>
+
+      <article class="mentor-card">
+        <div class="mentor-icon">🎤</div>
+        <h3>Учитель-продюсер</h3>
+        <p>Помогает превратить идею в событие, защиту, выступление или фестиваль.</p>
+        <ul>
+          <li>сценарий;</li>
+          <li>роли команды;</li>
+          <li>публичная защита.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="mentor-band">
+      <h2>Как понять, кто тебе нужен?</h2>
+      <div class="mentor-compare">
+        <article class="mentor-note">
+          <h3>Если ты учитель</h3>
+          <ul>
+            <li>нужна подготовка к экзаменам — выбирай наставника ВПР, ОГЭ и ЕГЭ;</li>
+            <li>нужно оформить проект — ищи архитектора содержания;</li>
+            <li>хочешь использовать ИИ — выбирай интегратора ИИ;</li>
+            <li>нужно событие — подойдёт учитель-продюсер.</li>
+          </ul>
+        </article>
+        <article class="mentor-note">
+          <h3>Если ты ученик</h3>
+          <ul>
+            <li>готовишься к защите — ищи наставника по проектам;</li>
+            <li>готовишься к экзамену — выбери экзаменационного наставника;</li>
+            <li>делаешь презентацию — нужен дизайнер продукта;</li>
+            <li>идёшь на конкурс — нужен наставник одарённых.</li>
+          </ul>
+        </article>
       </div>
     </section>
 
+    <h2 class="mentor-section-title">Инфографика выбора</h2>
+    <section class="mentor-formula" aria-label="Формула выбора наставника">
+      <div>Моя задача</div>
+      <div>→</div>
+      <div>Нужная суперсила</div>
+      <div>→</div>
+      <div>Мой наставник</div>
+    </section>
+
+    <h2 class="mentor-section-title">Мини-карта: задача → наставник</h2>
+    <section class="mentor-map" aria-label="Соответствие задачи и наставника">
+      <article class="mentor-map__item">
+        <span>📚</span>
+        <strong>Подготовка к ВПР, ОГЭ и ЕГЭ</strong>
+        <span>Наставник ВПР, ОГЭ и ЕГЭ</span>
+      </article>
+      <article class="mentor-map__item">
+        <span>🏗️</span>
+        <strong>Оформить проект</strong>
+        <span>Учитель-архитектор содержания</span>
+      </article>
+      <article class="mentor-map__item">
+        <span>🤖</span>
+        <strong>Использовать ИИ</strong>
+        <span>Интегратор ИИ</span>
+      </article>
+      <article class="mentor-map__item">
+        <span>🎨</span>
+        <strong>Сделать красиво</strong>
+        <span>Дизайнер образовательных продуктов</span>
+      </article>
+      <article class="mentor-map__item">
+        <span>🌟</span>
+        <strong>Олимпиада или НПК</strong>
+        <span>Наставник одарённых</span>
+      </article>
+      <article class="mentor-map__item">
+        <span>🎤</span>
+        <strong>Школьное событие</strong>
+        <span>Учитель-продюсер</span>
+      </article>
+      <article class="mentor-map__item">
+        <span>👥</span>
+        <strong>Командная работа</strong>
+        <span>Фасилитатор</span>
+      </article>
+      <article class="mentor-map__item">
+        <span>🧠</span>
+        <strong>Идеи для урока</strong>
+        <span>Методический наставник</span>
+      </article>
+    </section>
+
+    <h2 class="mentor-section-title">Перед обращением к наставнику</h2>
+    <section class="mentor-checklist" aria-label="Мини-анкета для наставника">
+      <article class="mentor-question"><b>1. Какая задача?</b><br>Например: подготовка к ОГЭ, проект, урок, ИИ, событие.</article>
+      <article class="mentor-question"><b>2. Что уже готово?</b><br>Идея, тема, черновик, презентация, материалы или ничего.</article>
+      <article class="mentor-question"><b>3. Какая помощь нужна?</b><br>План, проверка, шаблон, консультация, дизайн или разбор ошибок.</article>
+      <article class="mentor-question"><b>4. Какой нужен результат?</b><br>Готовый проект, урок, презентация, план подготовки или защита.</article>
+    </section>
+
+    <section class="mentor-band">
+      <h2>Готовый текст заявки</h2>
+      <div class="mentor-note">
+        <p>
+          Здравствуйте! Мне нужен наставник по направлению: _____________.<br>
+          Моя задача: _____________.<br>
+          Уже готово: _____________.<br>
+          Нужна помощь: план / шаблон / проверка / консультация / подготовка к защите.<br>
+          Итоговый результат должен быть: _____________.
+        </p>
+      </div>
+      <div class="mentor-actions">
+        <a class="mentor-btn" href="../index.html#board">Открыть карту суперсил</a>
+        <a class="mentor-btn" href="3-poluchi-pomosch.html">Перейти к помощи</a>
+      </div>
+    </section>
   </main>
 </body>
 </html>
