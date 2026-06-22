@@ -126,6 +126,26 @@ function adaptWelcomeCard() {
   });
 }
 
+function linkBoardGuideCard() {
+  const guideCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
+    card.innerText.includes('Как пользоваться доской')
+  );
+
+  if (!guideCard) return;
+
+  guideCard.dataset.info = 'Откройте подробную красочную инструкцию: как двигаться по 7 столбцам, выбирать карточки, находить наставника и получать результат.';
+  guideCard.dataset.guideLink = 'pages/kak-polzovatsya-doskoy.html';
+  guideCard.classList.add('card--link');
+  guideCard.style.cursor = 'pointer';
+  guideCard.title = 'Открыть инструкцию по работе с доской';
+
+  guideCard.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.href = guideCard.dataset.guideLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -155,6 +175,7 @@ function adaptExamCards() {
 hideTopbarExtras();
 renderLoggedUser();
 adaptWelcomeCard();
+linkBoardGuideCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
