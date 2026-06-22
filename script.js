@@ -146,6 +146,26 @@ function linkBoardGuideCard() {
   });
 }
 
+function linkChooseTaskCard() {
+  const chooseTaskCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
+    card.innerText.includes('Выбери задачу')
+  );
+
+  if (!chooseTaskCard) return;
+
+  chooseTaskCard.dataset.info = 'Откройте подробную визуальную страницу: как выбрать задачу, определить маршрут и перейти к наставнику.';
+  chooseTaskCard.dataset.taskLink = 'pages/1-vyberi-zadachu.html';
+  chooseTaskCard.classList.add('card--link');
+  chooseTaskCard.style.cursor = 'pointer';
+  chooseTaskCard.title = 'Открыть страницу «1. Выбери задачу»';
+
+  chooseTaskCard.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.href = chooseTaskCard.dataset.taskLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -176,6 +196,7 @@ hideTopbarExtras();
 renderLoggedUser();
 adaptWelcomeCard();
 linkBoardGuideCard();
+linkChooseTaskCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
