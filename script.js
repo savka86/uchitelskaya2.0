@@ -206,6 +206,26 @@ function linkGetHelpCard() {
   });
 }
 
+function linkFillRequestCard() {
+  const requestCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
+    card.innerText.includes('Заполни заявку')
+  );
+
+  if (!requestCard) return;
+
+  requestCard.dataset.info = 'Откройте подробную визуальную страницу: как правильно заполнить заявку, описать задачу, срок, материалы и ожидаемый результат.';
+  requestCard.dataset.requestLink = 'pages/4-zapolni-zayavku.html';
+  requestCard.classList.add('card--link');
+  requestCard.style.cursor = 'pointer';
+  requestCard.title = 'Открыть страницу «4. Заполни заявку»';
+
+  requestCard.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.href = requestCard.dataset.requestLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -239,6 +259,7 @@ linkBoardGuideCard();
 linkChooseTaskCard();
 linkFindMentorCard();
 linkGetHelpCard();
+linkFillRequestCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
