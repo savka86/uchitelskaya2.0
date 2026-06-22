@@ -8,6 +8,7 @@ const quizModal = document.querySelector('#quizModal');
 const quizForm = document.querySelector('#quizForm');
 const quizSelect = document.querySelector('#quizSelect');
 const quizResult = document.querySelector('#quizResult');
+const profile = document.querySelector('.profile');
 
 const recommendations = {
   design: 'Лучший маршрут: дизайнер образовательных продуктов → шаблон презентации → стенд как у профи.',
@@ -18,6 +19,30 @@ const recommendations = {
   producer: 'Лучший маршрут: учитель-продюсер → сценарий события → ученик — продюсер фестиваля.',
   team: 'Лучший маршрут: фасилитатор → распределение ролей → командная работа без хаоса.'
 };
+
+function renderLoggedUser() {
+  if (!profile) return;
+
+  let user = null;
+
+  try {
+    user = JSON.parse(localStorage.getItem('uchitelskayaUser'));
+  } catch (error) {
+    user = null;
+  }
+
+  if (!user || !user.name) return;
+
+  const avatar = profile.querySelector(':scope > span');
+  const name = profile.querySelector('b');
+  const role = profile.querySelector('small');
+
+  if (avatar) avatar.textContent = user.role === 'Ученик' ? '🧑‍🎓' : '👩‍🏫';
+  if (name) name.textContent = user.name;
+  if (role) role.textContent = user.role || 'Участник';
+
+  profile.title = `${user.role || 'Участник'}: ${user.name}${user.email ? ` (${user.email})` : ''}`;
+}
 
 function adaptWelcomeCard() {
   const welcomeCard = document.querySelector('[data-column="welcome"] .card');
@@ -66,6 +91,7 @@ function adaptExamCards() {
   }
 }
 
+renderLoggedUser();
 adaptWelcomeCard();
 adaptExamCards();
 
