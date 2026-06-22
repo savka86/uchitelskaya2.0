@@ -4,348 +4,246 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Не знаю, как оформить проект — Учительская 2.0</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Помощь в оформлении школьного проекта: структура, актуальность, цель, задачи, этапы, результат, презентация и защита." />
+  <meta name="description" content="Красочная инструкция по оформлению школьного проекта: тема, проблема, актуальность, цель, задачи, продукт, результат и защита." />
+  <style>
+    :root {
+      --bg: #f6f3ff;
+      --ink: #1f2340;
+      --muted: #667085;
+      --card: rgba(255,255,255,.92);
+      --blue: #3b82f6;
+      --violet: #8b5cf6;
+      --pink: #ec4899;
+      --orange: #f97316;
+      --green: #22c55e;
+      --cyan: #06b6d4;
+      --shadow: 0 20px 55px rgba(79, 70, 229, .18);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(139,92,246,.22), transparent 35%),
+        radial-gradient(circle at top right, rgba(236,72,153,.18), transparent 32%),
+        linear-gradient(135deg, #f8fafc 0%, var(--bg) 100%);
+    }
+    a { color: inherit; }
+    .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 56px; }
+    .topline { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 22px; flex-wrap: wrap; }
+    .back, .mini-btn, .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 16px; border-radius: 999px; text-decoration: none; font-weight: 800;
+      background: #fff; box-shadow: 0 10px 28px rgba(15,23,42,.08); border: 1px solid rgba(99,102,241,.14);
+    }
+    .mini-btn { background: #111827; color: white; }
+    .hero {
+      position: relative; overflow: hidden; border-radius: 34px; padding: 34px;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed 42%, #ec4899 100%);
+      color: white; box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: auto -80px -100px auto; width: 280px; height: 280px;
+      border-radius: 50%; background: rgba(255,255,255,.16);
+    }
+    .badge { display: inline-flex; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.28); padding: 9px 14px; border-radius: 999px; font-weight: 800; }
+    .hero-main { display: grid; grid-template-columns: 120px 1fr; gap: 22px; align-items: center; margin-top: 24px; position: relative; z-index: 1; }
+    .hero-icon { width: 110px; height: 110px; border-radius: 32px; display: grid; place-items: center; font-size: 58px; background: rgba(255,255,255,.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.25); }
+    h1 { font-size: clamp(34px, 5vw, 64px); margin: 0 0 10px; line-height: 1; }
+    .hero p { font-size: 19px; line-height: 1.55; margin: 0; max-width: 820px; }
+    .flow { margin-top: 28px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; position: relative; z-index: 1; }
+    .flow-step { background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.25); border-radius: 22px; padding: 16px; text-align: center; font-weight: 900; }
+    .flow-step span { display: block; font-size: 28px; margin-bottom: 6px; }
+    .section-title { font-size: clamp(28px, 4vw, 42px); margin: 38px 0 16px; }
+    .subtitle { color: var(--muted); font-size: 18px; line-height: 1.55; max-width: 820px; margin: -6px 0 22px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .card {
+      background: var(--card); border-radius: 28px; padding: 22px; box-shadow: 0 16px 40px rgba(15,23,42,.08); border: 1px solid rgba(99,102,241,.12);
+    }
+    .card.large { grid-column: span 2; }
+    .icon { width: 58px; height: 58px; border-radius: 20px; display: grid; place-items: center; font-size: 30px; margin-bottom: 14px; background: linear-gradient(135deg, #eef2ff, #fce7f3); }
+    .card h2, .card h3 { margin: 0 0 10px; }
+    .card p, .card li { color: #475467; line-height: 1.6; }
+    .card ul { padding-left: 20px; margin-bottom: 0; }
+    .ribbon { border-radius: 28px; padding: 22px; color: white; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); box-shadow: var(--shadow); }
+    .ribbon h2 { margin: 0 0 12px; }
+    .formula { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .pill { padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,.2); font-weight: 900; border: 1px solid rgba(255,255,255,.22); }
+    .project-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .map-item { background: #fff; border-radius: 22px; padding: 18px; border: 1px solid rgba(99,102,241,.14); box-shadow: 0 12px 28px rgba(15,23,42,.06); }
+    .map-item b { display: block; margin-bottom: 7px; font-size: 18px; }
+    .template {
+      background: #111827; color: white; border-radius: 28px; padding: 24px; box-shadow: 0 20px 50px rgba(17,24,39,.24);
+    }
+    .template code { display: block; white-space: pre-wrap; font-family: Arial, sans-serif; background: rgba(255,255,255,.08); padding: 18px; border-radius: 20px; line-height: 1.7; }
+    .checklist { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .check { background: #fff; padding: 14px 16px; border-radius: 18px; font-weight: 800; box-shadow: 0 10px 22px rgba(15,23,42,.06); }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+    .btn.primary { background: linear-gradient(135deg, #4f46e5, #ec4899); color: white; }
+    .btn.green { background: linear-gradient(135deg, #10b981, #22c55e); color: white; }
+    @media (max-width: 850px) {
+      .hero-main, .grid, .project-map, .checklist { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: 1fr; }
+      .card.large { grid-column: span 1; }
+    }
+  </style>
 </head>
-
-<body class="detail-body">
-  <main class="detail-page">
-
-    <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
+<body>
+  <main class="page">
+    <div class="topline">
+      <a class="back" href="../index.html#board">← Назад к доске</a>
+      <a class="mini-btn" href="2-naydi-nastavnika.html">Найти наставника →</a>
     </div>
 
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Столбец 2: Что у вас болит?</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">📝</div>
+    <section class="hero">
+      <span class="badge">Столбец 2: Что у вас болит?</span>
+      <div class="hero-main">
+        <div class="hero-icon">🧩</div>
         <div>
           <h1>Не знаю, как оформить проект</h1>
-          <p>
-            Эта страница поможет превратить идею в понятный школьный проект:
-            сформулировать проблему, актуальность, цель, задачи, этапы, продукт,
-            результат и подготовить защиту.
-          </p>
+          <p>Эта страница поможет превратить идею в понятный школьный проект: выбрать тему, сформулировать проблему, цель, задачи, продукт, результат и подготовить защиту.</p>
         </div>
+      </div>
+      <div class="flow">
+        <div class="flow-step"><span>💭</span>Идея</div>
+        <div class="flow-step"><span>🎯</span>Цель</div>
+        <div class="flow-step"><span>✅</span>Задачи</div>
+        <div class="flow-step"><span>🛠️</span>Продукт</div>
+        <div class="flow-step"><span>🏆</span>Защита</div>
       </div>
     </section>
 
-    <section class="detail-grid">
+    <h2 class="section-title">Визуальная формула проекта</h2>
+    <p class="subtitle">Чтобы проект не выглядел хаотично, двигайся по простой цепочке. Каждый блок отвечает на один главный вопрос.</p>
 
-      <article class="detail-card detail-card--large">
-        <h2>Что это значит?</h2>
-        <p>
-          Иногда идея уже есть, но непонятно, как правильно оформить её для конкурса,
-          конференции, защиты или школьного проекта. Возникают вопросы: как написать
-          актуальность, чем цель отличается от задач, что считать продуктом и как красиво
-          представить результат.
-        </p>
-        <p>
-          Здесь собран простой маршрут, который поможет оформить проект без хаоса
-          и лишнего страха.
-        </p>
-
-        <div class="template-box">
-          <strong>Главная формула:</strong><br>
-          Проблема → Идея → Цель → Задачи → Этапы → Продукт → Результат → Защита
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кому подойдёт эта карточка?</h2>
-        <ul class="detail-list">
-          <li>ученику, который готовит проект к защите;</li>
-          <li>учителю, который помогает ученику оформить работу;</li>
-          <li>команде, которая участвует в конкурсе;</li>
-          <li>наставнику, которому нужен быстрый шаблон;</li>
-          <li>автору идеи, который не знает, с чего начать оформление.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кто может помочь?</h2>
-        <p>
-          Лучше всего подойдёт наставник по проектной деятельности или дизайнер
-          образовательных продуктов. Он поможет выстроить логику проекта, убрать лишнее,
-          оформить материалы и подготовить защиту.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Структура школьного проекта</h2>
-
-        <div class="template-box">
-          <strong>1. Тема проекта</strong><br>
-          Как называется работа?<br><br>
-
-          <strong>2. Проблема</strong><br>
-          Что не устраивает? Что нужно изменить или улучшить?<br><br>
-
-          <strong>3. Актуальность</strong><br>
-          Почему эта тема важна сейчас?<br><br>
-
-          <strong>4. Цель</strong><br>
-          Какой главный результат нужно получить?<br><br>
-
-          <strong>5. Задачи</strong><br>
-          Какие шаги нужно выполнить, чтобы достичь цели?<br><br>
-
-          <strong>6. Этапы работы</strong><br>
-          Что делаем сначала, потом и в конце?<br><br>
-
-          <strong>7. Продукт</strong><br>
-          Что будет создано: сайт, буклет, презентация, книга, стенд, акция, видео?<br><br>
-
-          <strong>8. Результат</strong><br>
-          Что изменилось после выполнения проекта?<br><br>
-
-          <strong>9. Защита</strong><br>
-          Как кратко и убедительно представить проект?
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как написать проблему?</h2>
-        <p>
-          Проблема — это то, что требует решения. Она должна быть понятной,
-          конкретной и связанной с жизнью школы, класса, семьи, села или сообщества.
-        </p>
-
-        <div class="template-box">
-          <strong>Пример:</strong><br>
-          Многие ученики мало читают художественные книги, потому что им трудно
-          заинтересоваться обычным текстом. Поэтому нужен новый формат, который
-          поможет вовлечь детей в чтение.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как написать актуальность?</h2>
-        <p>
-          Актуальность объясняет, почему проект нужен именно сейчас и кому он поможет.
-        </p>
-
-        <div class="template-box">
-          <strong>Формула:</strong><br>
-          Эта тема актуальна, потому что __________________________.
-          Проект поможет __________________________.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как написать цель?</h2>
-        <p>
-          Цель — это главный результат проекта. Она должна начинаться с глагола:
-          создать, разработать, изучить, организовать, провести, оформить, подготовить.
-        </p>
-
-        <div class="template-box">
-          <strong>Пример:</strong><br>
-          Создать цифровую ИИ-книгу, которая поможет ученикам начальной школы
-          повысить интерес к чтению.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как написать задачи?</h2>
-        <p>
-          Задачи — это шаги к цели. Обычно достаточно 4–6 задач.
-        </p>
-
-        <div class="template-box">
-          <strong>Пример задач:</strong><br>
-          1. Изучить проблему низкого интереса к чтению.<br>
-          2. Подобрать инструменты ИИ для создания книги.<br>
-          3. Разработать сюжет и структуру книги.<br>
-          4. Создать иллюстрации и текст.<br>
-          5. Провести пробное чтение с учениками.<br>
-          6. Собрать отзывы и улучшить проект.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Мини-шаблон паспорта проекта</h2>
-
-        <div class="template-box">
-          <strong>Название проекта:</strong> _______________________________<br><br>
-          <strong>Автор / команда:</strong> ________________________________<br><br>
-          <strong>Наставник:</strong> _____________________________________<br><br>
-          <strong>Проблема:</strong> ______________________________________<br><br>
-          <strong>Актуальность:</strong> _________________________________<br><br>
-          <strong>Цель:</strong> __________________________________________<br><br>
-          <strong>Задачи:</strong><br>
-          1. _______________________________________________<br>
-          2. _______________________________________________<br>
-          3. _______________________________________________<br>
-          4. _______________________________________________<br><br>
-          <strong>Целевая аудитория:</strong> _____________________________<br><br>
-          <strong>Продукт проекта:</strong> _______________________________<br><br>
-          <strong>Ожидаемый результат:</strong> ___________________________<br><br>
-          <strong>Сроки:</strong> _________________________________________
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что такое продукт проекта?</h2>
-        <p>
-          Продукт — это то, что можно показать, использовать или передать другим.
-          Это не просто «проект», а конкретный результат работы.
-        </p>
-        <ul class="detail-list">
-          <li>сайт;</li>
-          <li>ИИ-книга;</li>
-          <li>буклет;</li>
-          <li>презентация;</li>
-          <li>видеоролик;</li>
-          <li>интерактивный стенд;</li>
-          <li>методическая разработка;</li>
-          <li>сценарий мероприятия;</li>
-          <li>цифровой помощник или чат-бот.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что такое результат?</h2>
-        <p>
-          Результат показывает, что изменилось после проекта. Его лучше описывать
-          конкретно: сколько участников, какие отзывы, какой продукт создан,
-          где он применён.
-        </p>
-
-        <div class="template-box">
-          <strong>Пример:</strong><br>
-          Создана ИИ-книга из 10 страниц, проведено пробное чтение с учениками
-          3 класса, собраны отзывы и подготовлена презентация для защиты.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>План оформления проекта за 30 минут</h2>
-
-        <div class="template-box">
-          <strong>0–5 минут:</strong> запишите тему и проблему.<br><br>
-          <strong>5–10 минут:</strong> сформулируйте цель проекта.<br><br>
-          <strong>10–15 минут:</strong> напишите 4–6 задач.<br><br>
-          <strong>15–20 минут:</strong> определите продукт проекта.<br><br>
-          <strong>20–25 минут:</strong> опишите ожидаемый результат.<br><br>
-          <strong>25–30 минут:</strong> составьте план слайдов для защиты.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как оформить презентацию?</h2>
-        <ul class="detail-list">
-          <li>1 слайд — название проекта и авторы;</li>
-          <li>2 слайд — проблема;</li>
-          <li>3 слайд — актуальность;</li>
-          <li>4 слайд — цель и задачи;</li>
-          <li>5 слайд — этапы работы;</li>
-          <li>6 слайд — продукт проекта;</li>
-          <li>7 слайд — результаты;</li>
-          <li>8 слайд — выводы;</li>
-          <li>9 слайд — благодарность и контакты.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Частые ошибки</h2>
-        <ul class="detail-list">
-          <li>тема слишком широкая;</li>
-          <li>цель звучит как процесс, а не результат;</li>
-          <li>задачи не связаны с целью;</li>
-          <li>нет конкретного продукта;</li>
-          <li>результат описан слишком общо;</li>
-          <li>в презентации слишком много текста;</li>
-          <li>непонятно, кто будет пользоваться проектом.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Чек-лист проверки проекта</h2>
-
-        <div class="template-box">
-          ✅ Есть понятная тема.<br>
-          ✅ Описана проблема.<br>
-          ✅ Объяснена актуальность.<br>
-          ✅ Цель начинается с глагола действия.<br>
-          ✅ Есть 4–6 задач.<br>
-          ✅ Понятно, для кого проект.<br>
-          ✅ Есть конкретный продукт.<br>
-          ✅ Описаны этапы работы.<br>
-          ✅ Есть результат.<br>
-          ✅ Подготовлена презентация.<br>
-          ✅ Есть короткая речь для защиты.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что взять с бесплатной полки?</h2>
-        <ul class="detail-list">
-          <li>шаблон паспорта проекта;</li>
-          <li>шаблон презентации;</li>
-          <li>чек-лист проверки проекта;</li>
-          <li>памятку для защиты;</li>
-          <li>пример готового проекта;</li>
-          <li>промпты для помощи с текстом.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Первый маленький шаг</h2>
-        <p>
-          Не пытайтесь сразу оформить весь проект идеально. Начните с одного действия:
-          заполните тему, проблему и цель. После этого станет легче двигаться дальше.
-        </p>
-
-        <div class="template-box">
-          <strong>Мой первый шаг:</strong><br>
-          Сегодня я заполняю три строки: тема, проблема, цель.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Готовый текст для обращения к наставнику</h2>
-
-        <div class="template-box">
-          Здравствуйте! Мне нужна помощь в оформлении проекта.<br><br>
-          Тема проекта: ________________________________.<br><br>
-          Сейчас у меня есть: идея / текст / презентация / черновик / ничего нет.<br><br>
-          Мне нужно помочь с: актуальностью, целью, задачами, структурой,
-          презентацией или защитой.<br><br>
-          Итоговый результат нужен к: __________________.
-        </div>
-      </article>
-
-    </section>
-
-    <section class="related-section">
-      <h2>Следующий шаг</h2>
-
-      <div class="related-grid">
-        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
-          <span>🤝</span>
-          Найти наставника
-        </a>
-
-        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
-          <span>📚</span>
-          Получить материалы
-        </a>
-
-        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
-          <span>🎯</span>
-          Вернуться к выбору задачи
-        </a>
-
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
+    <section class="ribbon">
+      <h2>Проблема → Актуальность → Цель → Задачи → Продукт → Результат → Защита</h2>
+      <div class="formula">
+        <span class="pill">Что не так?</span>
+        <span class="pill">Почему важно?</span>
+        <span class="pill">Что создаём?</span>
+        <span class="pill">Как делаем?</span>
+        <span class="pill">Что покажем?</span>
       </div>
     </section>
 
+    <h2 class="section-title">Из чего состоит школьный проект?</h2>
+    <section class="project-map">
+      <div class="map-item"><b>1. Тема</b>Короткое название проекта.</div>
+      <div class="map-item"><b>2. Проблема</b>Что нужно решить или улучшить.</div>
+      <div class="map-item"><b>3. Актуальность</b>Почему это важно сейчас.</div>
+      <div class="map-item"><b>4. Цель</b>Какой главный результат нужен.</div>
+      <div class="map-item"><b>5. Задачи</b>Шаги для достижения цели.</div>
+      <div class="map-item"><b>6. Этапы</b>План работы по времени.</div>
+      <div class="map-item"><b>7. Продукт</b>Что будет создано.</div>
+      <div class="map-item"><b>8. Защита</b>Как представить результат.</div>
+    </section>
+
+    <h2 class="section-title">Что именно нужно оформить?</h2>
+    <section class="grid">
+      <article class="card">
+        <div class="icon">📝</div>
+        <h3>Тема проекта</h3>
+        <p>Тема должна быть понятной, короткой и показывать, о чём работа.</p>
+      </article>
+      <article class="card">
+        <div class="icon">❗</div>
+        <h3>Проблема</h3>
+        <p>Опиши, что не устраивает и почему это требует решения.</p>
+      </article>
+      <article class="card">
+        <div class="icon">🔥</div>
+        <h3>Актуальность</h3>
+        <p>Покажи, кому и зачем нужен проект именно сейчас.</p>
+      </article>
+      <article class="card">
+        <div class="icon">🎯</div>
+        <h3>Цель</h3>
+        <p>Начни с глагола: создать, разработать, провести, изучить, оформить.</p>
+      </article>
+      <article class="card">
+        <div class="icon">📌</div>
+        <h3>Задачи</h3>
+        <p>Напиши 4–6 конкретных действий, которые приведут к цели.</p>
+      </article>
+      <article class="card">
+        <div class="icon">🎁</div>
+        <h3>Продукт</h3>
+        <p>Это то, что можно показать: сайт, буклет, ИИ-книга, стенд, презентация.</p>
+      </article>
+    </section>
+
+    <h2 class="section-title">Мини-шаблон паспорта проекта</h2>
+    <section class="template">
+      <code>Название проекта: __________________________
+Автор / команда: ___________________________
+Наставник: _________________________________
+Проблема: __________________________________
+Актуальность: ______________________________
+Цель: ______________________________________
+Задачи:
+1. _________________________________________
+2. _________________________________________
+3. _________________________________________
+4. _________________________________________
+Продукт проекта: ___________________________
+Ожидаемый результат: _______________________
+Где будет применён проект: __________________
+Как будет проходить защита: ________________</code>
+    </section>
+
+    <h2 class="section-title">Пример на проекте «МоИИстории»</h2>
+    <section class="grid">
+      <article class="card large">
+        <div class="icon">📚</div>
+        <h3>Идея</h3>
+        <p>Создать персональные ИИ-книги для детей, чтобы повысить интерес к чтению.</p>
+        <ul>
+          <li><b>Проблема:</b> детям трудно заинтересоваться обычным текстом.</li>
+          <li><b>Цель:</b> создать ИИ-книгу с персональным сюжетом и иллюстрациями.</li>
+          <li><b>Продукт:</b> цифровая книга, презентация и пример чтения.</li>
+        </ul>
+      </article>
+      <article class="card">
+        <div class="icon">🛡️</div>
+        <h3>Что проверяет наставник?</h3>
+        <ul>
+          <li>понятность цели;</li>
+          <li>логичность задач;</li>
+          <li>связь продукта с проблемой;</li>
+          <li>готовность к защите.</li>
+        </ul>
+      </article>
+    </section>
+
+    <h2 class="section-title">Чек-лист перед защитой</h2>
+    <section class="checklist">
+      <div class="check">✅ Есть понятная тема</div>
+      <div class="check">✅ Проблема написана простыми словами</div>
+      <div class="check">✅ Цель начинается с действия</div>
+      <div class="check">✅ Задачи идут по порядку</div>
+      <div class="check">✅ Есть готовый продукт</div>
+      <div class="check">✅ Результат можно показать</div>
+      <div class="check">✅ Презентация не перегружена текстом</div>
+      <div class="check">✅ Есть короткая речь для защиты</div>
+    </section>
+
+    <h2 class="section-title">Как обратиться за помощью?</h2>
+    <section class="template">
+      <code>Здравствуйте! Мне нужна помощь с оформлением проекта.
+Тема: ________________________________
+Что уже есть: идея / текст / презентация / материалы
+Что нужно помочь сделать: цель, задачи, актуальность, паспорт проекта, презентацию или защиту.
+Срок: ________________________________
+Ожидаемый результат: готовый оформленный проект для защиты.</code>
+    </section>
+
+    <div class="actions">
+      <a class="btn primary" href="../index.html#board">← Вернуться к доске</a>
+      <a class="btn" href="2-naydi-nastavnika.html">Найти наставника</a>
+      <a class="btn green" href="4-zapolni-zayavku.html">Заполнить заявку</a>
+    </div>
   </main>
 </body>
 </html>
