@@ -1,3 +1,40 @@
+function getSavedUser() {
+  const keys = ['uchitelskayaUser', 'uchitelskaya_user', 'currentUser'];
+
+  for (const key of keys) {
+    try {
+      const value = localStorage.getItem(key);
+      if (!value) continue;
+      const user = JSON.parse(value);
+      if (user && (user.name || user.email || user.role)) return user;
+    } catch (error) {
+      continue;
+    }
+  }
+
+  return null;
+}
+
+function isBoardPage() {
+  const path = window.location.pathname;
+  return path.endsWith('/') || path.endsWith('/index.html') || path.includes('/uchitelskaya2.0/index.html');
+}
+
+function requireLoginBeforeBoard() {
+  const user = getSavedUser();
+
+  if (!user && isBoardPage()) {
+    window.location.replace('pages/login.html?return=../index.html%23board');
+    return false;
+  }
+
+  return true;
+}
+
+if (!requireLoginBeforeBoard()) {
+  throw new Error('Требуется вход в Учительскую 2.0');
+}
+
 const menuBtn = document.querySelector('#menuBtn');
 const searchInput = document.querySelector('#boardSearch');
 const clearSearch = document.querySelector('#clearSearch');
@@ -20,23 +57,6 @@ const recommendations = {
   team: 'Лучший маршрут: фасилитатор → распределение ролей → командная работа без хаоса.'
 };
 
-function getSavedUser() {
-  const keys = ['uchitelskayaUser', 'uchitelskaya_user', 'currentUser'];
-
-  for (const key of keys) {
-    try {
-      const value = localStorage.getItem(key);
-      if (!value) continue;
-      const user = JSON.parse(value);
-      if (user && (user.name || user.email || user.role)) return user;
-    } catch (error) {
-      continue;
-    }
-  }
-
-  return null;
-}
-
 function renderLoggedUser() {
   if (!profile) return;
 
@@ -52,7 +72,7 @@ function renderLoggedUser() {
     profile.title = 'Нажмите, чтобы войти в Учительскую 2.0';
     profile.style.cursor = 'pointer';
     profile.addEventListener('click', () => {
-      window.location.href = 'pages/login.html';
+      window.location.href = 'pages/login.html?return=../index.html%23board';
     });
     return;
   }
@@ -61,16 +81,31 @@ function renderLoggedUser() {
   if (name) name.textContent = user.name;
   if (role) role.textContent = user.role || 'Участник';
 
-  profile.title = `${user.role || 'Участник'}: ${user.name}${user.email ? ` (${user.email})` : ''}`;
+  profile.title = `${user.role || 'Участник'}: ${user.name}${user.email ? ` (${user.email})` : ''}. Нажмите, чтобы выйти.`;
+  profile.style.cursor = 'pointer';
+  profile.addEventListener('click', () => {
+    if (confirm('Выйти из Учительской 2.0?')) {
+      localStorage.removeItem('uchitelskayaUser');
+      localStorage.removeItem('uchitelskaya_user');
+      localStorage.removeItem('currentUser');
+      window.location.href = 'pages/login.html?return=../index.html%23board';
+    }
+  });
 }
 
 function adaptWelcomeCard() {
   const welcomeCard = document.querySelector('[data-column="welcome"] .card');
-
   if (!welcomeCard) return;
 
-  welcomeCard.dataset.info = 'Нажмите, чтобы войти в Учительскую 2.0 как учитель или ученик.';
-  welcomeCard.dataset.loginLink = 'pages/login.html';
+  const user = getSavedUser();
+
+  if (user && user.name) {
+    welcomeCard.remove();
+    return;
+  }
+
+  welcomeCard.dataset.info = 'Сначала войдите в Учительскую 2.0 как учитель или ученик.';
+  welcomeCard.dataset.loginLink = 'pages/login.html?return=../index.html%23board';
   welcomeCard.classList.add('card--link');
 
   const icon = welcomeCard.querySelector('.card__icon');
@@ -116,6 +151,8 @@ adaptWelcomeCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
+  if (!infoBox) return;
+
   infoBox.innerHTML = `
     <span class="info-box__icon">${icon}</span>
     <div>
