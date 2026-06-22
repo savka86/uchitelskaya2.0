@@ -47,6 +47,12 @@ const quizSelect = document.querySelector('#quizSelect');
 const quizResult = document.querySelector('#quizResult');
 const profile = document.querySelector('.profile');
 
+function hideTopbarExtras() {
+  document.querySelectorAll('.topbar .avatars, .topbar .invite-btn, .topbar .icon-btn').forEach(element => {
+    element.remove();
+  });
+}
+
 const recommendations = {
   design: 'Лучший маршрут: дизайнер образовательных продуктов → шаблон презентации → стенд как у профи.',
   ai: 'Лучший маршрут: интегратор ИИ → 10 промптов для учителя → ИИ-помощник класса.',
@@ -146,6 +152,7 @@ function adaptExamCards() {
   }
 }
 
+hideTopbarExtras();
 renderLoggedUser();
 adaptWelcomeCard();
 adaptExamCards();
