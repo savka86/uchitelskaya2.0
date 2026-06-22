@@ -186,6 +186,26 @@ function linkFindMentorCard() {
   });
 }
 
+function linkGetHelpCard() {
+  const helpCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
+    card.innerText.includes('Получи помощь')
+  );
+
+  if (!helpCard) return;
+
+  helpCard.dataset.info = 'Откройте подробную визуальную страницу: как получить помощь, подготовить заявку, выбрать формат поддержки и довести задачу до результата.';
+  helpCard.dataset.helpLink = 'pages/3-poluchi-pomosch.html';
+  helpCard.classList.add('card--link');
+  helpCard.style.cursor = 'pointer';
+  helpCard.title = 'Открыть страницу «3. Получи помощь»';
+
+  helpCard.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.href = helpCard.dataset.helpLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -218,6 +238,7 @@ adaptWelcomeCard();
 linkBoardGuideCard();
 linkChooseTaskCard();
 linkFindMentorCard();
+linkGetHelpCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
