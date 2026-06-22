@@ -246,6 +246,26 @@ function linkGetResultCard() {
   });
 }
 
+function linkProjectFormatCard() {
+  const projectCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
+    card.innerText.includes('Не знаю, как оформить проект')
+  );
+
+  if (!projectCard) return;
+
+  projectCard.dataset.info = 'Откройте подробную визуальную страницу: как оформить школьный проект, написать проблему, актуальность, цель, задачи, продукт, результат и подготовить защиту.';
+  projectCard.dataset.projectLink = 'pages/ne-znayu-kak-oformit-proekt.html';
+  projectCard.classList.add('card--link');
+  projectCard.style.cursor = 'pointer';
+  projectCard.title = 'Открыть страницу «Не знаю, как оформить проект»';
+
+  projectCard.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.href = projectCard.dataset.projectLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -281,6 +301,7 @@ linkFindMentorCard();
 linkGetHelpCard();
 linkFillRequestCard();
 linkGetResultCard();
+linkProjectFormatCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
