@@ -6,58 +6,17 @@
   <title>От учителя-продюсера — проект «Домовый гриб»</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    body{margin:0;background:linear-gradient(135deg,#f7fbef,#eef8df,#fff);color:#17311a}.page{width:min(1120px,calc(100% - 28px));margin:auto;padding:28px 0 56px}.hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#143b17,#659d00);color:white}.eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}.hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}.lead{font-size:20px;line-height:1.55;max-width:860px}.timeline{display:grid;gap:14px;margin-top:26px}.scene,.checklist{padding:22px;border-radius:24px;background:white;box-shadow:0 16px 40px rgba(18,63,22,.1);border-left:9px solid #5c9f00}.scene b{color:#123f16}.speech{padding:24px;border-radius:26px;background:#fff9e8;border:2px dashed #c58f00;line-height:1.7}.checklist{margin-top:24px;border-left:0;border:1px solid rgba(92,159,0,.18)}.checklist h2{margin-top:0;color:#123f16}.checklist ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}.checklist li{padding:14px 16px;border-radius:18px;background:#f4faec;font-weight:800}.checklist li::before{content:'☐ ';font-weight:900;color:#5c9f00}.prompt-list{margin:0;padding-left:22px;display:grid;gap:12px}.prompt-list li{padding:14px 16px;border-radius:18px;background:#fff9e8;font-weight:800}.prompt-list li::before{content:''}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900}.btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}
+    body{margin:0;background:linear-gradient(135deg,#f7fbef,#eef8df,#fff);color:#17311a}.page{width:min(1120px,calc(100% - 28px));margin:auto;padding:28px 0 56px}.hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#143b17,#659d00);color:white}.eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}.hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}.lead{font-size:20px;line-height:1.55;max-width:860px}.timeline,.materials{display:grid;gap:14px;margin-top:26px}.materials{grid-template-columns:repeat(5,1fr)}.scene,.checklist,.material{padding:22px;border-radius:24px;background:white;box-shadow:0 16px 40px rgba(18,63,22,.1);border-left:9px solid #5c9f00}.material{border-left:0;border-top:8px solid #5c9f00}.scene b,.material b{display:block;color:#123f16;margin-bottom:8px}.speech{padding:24px;border-radius:26px;background:#fff9e8;border:2px dashed #c58f00;line-height:1.7}.checklist{margin-top:24px;border-left:0;border:1px solid rgba(92,159,0,.18)}.checklist h2{margin-top:0;color:#123f16}.checklist ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}.checklist li{padding:14px 16px;border-radius:18px;background:#f4faec;font-weight:800}.checklist li::before{content:'☐ ';font-weight:900;color:#5c9f00}.prompt-list{margin:0;padding-left:22px;display:grid;gap:12px}.prompt-list li{padding:14px 16px;border-radius:18px;background:#fff9e8;font-weight:800}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900}.btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}@media(max-width:900px){.materials{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <main class="page">
-    <section class="hero">
-      <span class="eyebrow">🎬 Бесплатная полка · отдельное окошко</span>
-      <h1>От учителя-продюсера</h1>
-      <p class="lead">Я превращаю проект в сильное выступление: яркое начало, понятная история, доказательства, вывод и финальный призыв.</p>
-    </section>
-
-    <section class="timeline">
-      <div class="scene"><b>Сцена 1. Крючок:</b> «Домовый гриб влияет на состояние деревянных конструкций и требует внимания жителей».</div>
-      <div class="scene"><b>Сцена 2. Почему это важно:</b> в селе много деревянных домов, поэтому тема касается жителей Намцев.</div>
-      <div class="scene"><b>Сцена 3. Доказательство:</b> опрос 66 домов и карта заражённости показывают масштаб проблемы.</div>
-      <div class="scene"><b>Сцена 4. Эксперимент:</b> на необработанных брусках начался рост мицелия, а на обработанном образце рост не наблюдался.</div>
-      <div class="scene"><b>Сцена 5. Финал:</b> проект завершается рекомендациями по профилактике и устранению заражения.</div>
-    </section>
-
-    <section class="checklist">
-      <h2>Индивидуальный чек-лист учителя-продюсера</h2>
-      <ul>
-        <li>В начале речи есть сильный крючок о состоянии деревянных домов.</li>
-        <li>Зритель сразу понимает, почему тема важна для села Намцы.</li>
-        <li>История защиты идёт по сценарию: проблема → данные → карта → эксперимент → вывод.</li>
-        <li>Карта заражённости объясняется голосом, а не просто показывается.</li>
-        <li>Эксперимент объяснён коротко и понятно для жюри.</li>
-        <li>Есть финальная фраза о практической пользе проекта.</li>
-        <li>Речь отрепетирована по таймеру и укладывается в 4–5 минут.</li>
-        <li>Спикер готов ответить на 5 самых вероятных вопросов жюри.</li>
-      </ul>
-    </section>
-
-    <section class="checklist">
-      <h2>10 индивидуальных промтов учителя-продюсера</h2>
-      <ol class="prompt-list">
-        <li>Напиши сильное вступление к защите проекта о Serpula lacrymans, чтобы сразу показать важность темы для деревянных домов.</li>
-        <li>Сделай сценарий защиты на 5 минут: проблема, цель, опрос, карта, эксперимент, выводы, рекомендации.</li>
-        <li>Сократи речь защиты до версии на 3 минуты, сохрани главные цифры и смысл проекта.</li>
-        <li>Добавь в речь плавные переходы между слайдами: актуальность, цель, методы, опрос, карта, эксперимент, выводы.</li>
-        <li>Сделай финальную фразу, которая показывает практическую пользу проекта для жителей села Намцы.</li>
-        <li>Подготовь репетиционный план: что ученик тренирует утром, днём и вечером перед защитой.</li>
-        <li>Проверь речь на живость: где добавить паузу, где подчеркнуть цифры, где смотреть на жюри.</li>
-        <li>Составь короткие ответы на вопросы жюри, чтобы ученик отвечал уверенно и без лишнего текста.</li>
-        <li>Сделай карточку тайминга: какой слайд сколько секунд объяснять, чтобы уложиться в 5 минут.</li>
-        <li>Преврати сухие выводы проекта в убедительный финальный блок выступления.</li>
-      </ol>
-    </section>
-
-    <h2>Короткое начало речи</h2>
-    <section class="speech">Здравствуйте! Тема моего исследования — заражённость настоящим домовым грибом жилищного фонда села Намцы. Эта проблема важна, потому что гриб влияет на состояние древесины и строительных конструкций. Мы провели опрос жителей, составили карту распространения и начали эксперимент, чтобы понять условия роста гриба и предложить рекомендации по профилактике.</section>
-
+    <section class="hero"><span class="eyebrow">🎬 Бесплатная полка · отдельное окошко</span><h1>От учителя-продюсера</h1><p class="lead">Я превращаю проект в сильное выступление: яркое начало, понятная история, доказательства, вывод и финальный призыв.</p></section>
+    <section class="timeline"><div class="scene"><b>Сцена 1. Крючок:</b> «Домовый гриб влияет на состояние деревянных конструкций и требует внимания жителей».</div><div class="scene"><b>Сцена 2. Почему это важно:</b> в селе много деревянных домов, поэтому тема касается жителей Намцев.</div><div class="scene"><b>Сцена 3. Доказательство:</b> опрос 66 домов и карта заражённости показывают масштаб проблемы.</div><div class="scene"><b>Сцена 4. Эксперимент:</b> на необработанных брусках начался рост мицелия, а на обработанном образце рост не наблюдался.</div><div class="scene"><b>Сцена 5. Финал:</b> проект завершается рекомендациями по профилактике и устранению заражения.</div></section>
+    <section class="checklist"><h2>10 материалов учителя-продюсера</h2><div class="materials"><article class="material"><b>1. Паспорт выступления</b>Кто выступает, зачем проект важен, какой главный результат нужно донести.</article><article class="material"><b>2. Речь защиты</b>Сценарий на 3 и 5 минут: вступление, доказательства, вывод, благодарность.</article><article class="material"><b>3. Ответы жюри</b>Карточки быстрых ответов, чтобы ученик не терялся после выступления.</article><article class="material"><b>4. Сцена опроса</b>Как эмоционально, но научно показать масштаб: 66 домов и 45 заражённых.</article><article class="material"><b>5. Сцена карты</b>Как сделать карту главным визуальным моментом защиты.</article><article class="material"><b>6. Сцена эксперимента</b>Как кратко рассказать про банки, образцы и рост мицелия.</article><article class="material"><b>7. Фото в выступлении</b>Где показать фото образцов, чтобы усилить внимание аудитории.</article><article class="material"><b>8. Чек-лист репетиции</b>Голос, паузы, взгляд, таймер, переходы, ответы на вопросы.</article><article class="material"><b>9. ИИ-репетитор</b>ИИ задаёт вопросы, проверяет речь и помогает сократить текст.</article><article class="material"><b>10. Финальный сценарий</b>Полный план защиты: что сказать, где показать карту, где сделать паузу.</article></div></section>
+    <section class="checklist"><h2>Индивидуальный чек-лист учителя-продюсера</h2><ul><li>В начале речи есть сильный крючок о состоянии деревянных домов.</li><li>Зритель сразу понимает, почему тема важна для села Намцы.</li><li>История защиты идёт по сценарию: проблема → данные → карта → эксперимент → вывод.</li><li>Карта заражённости объясняется голосом, а не просто показывается.</li><li>Эксперимент объяснён коротко и понятно для жюри.</li><li>Есть финальная фраза о практической пользе проекта.</li><li>Речь отрепетирована по таймеру и укладывается в 4–5 минут.</li><li>Спикер готов ответить на 5 самых вероятных вопросов жюри.</li></ul></section>
+    <section class="checklist"><h2>10 индивидуальных промтов учителя-продюсера</h2><ol class="prompt-list"><li>Напиши сильное вступление к защите проекта о Serpula lacrymans, чтобы сразу показать важность темы для деревянных домов.</li><li>Сделай сценарий защиты на 5 минут: проблема, цель, опрос, карта, эксперимент, выводы, рекомендации.</li><li>Сократи речь защиты до версии на 3 минуты, сохрани главные цифры и смысл проекта.</li><li>Добавь в речь плавные переходы между слайдами: актуальность, цель, методы, опрос, карта, эксперимент, выводы.</li><li>Сделай финальную фразу, которая показывает практическую пользу проекта для жителей села Намцы.</li><li>Подготовь репетиционный план: что ученик тренирует утром, днём и вечером перед защитой.</li><li>Проверь речь на живость: где добавить паузу, где подчеркнуть цифры, где смотреть на жюри.</li><li>Составь короткие ответы на вопросы жюри, чтобы ученик отвечал уверенно и без лишнего текста.</li><li>Сделай карточку тайминга: какой слайд сколько секунд объяснять, чтобы уложиться в 5 минут.</li><li>Преврати сухие выводы проекта в убедительный финальный блок выступления.</li></ol></section>
+    <h2>Короткое начало речи</h2><section class="speech">Здравствуйте! Тема моего исследования — заражённость настоящим домовым грибом жилищного фонда села Намцы. Эта проблема важна, потому что гриб влияет на состояние древесины и строительных конструкций. Мы провели опрос жителей, составили карту распространения и начали эксперимент, чтобы понять условия роста гриба и предложить рекомендации по профилактике.</section>
     <div class="actions"><a class="btn" href="../index.html#materials">Вернуться в бесплатную полку</a><a class="btn btn--light" href="project-domovoy-grib.html">Все окошки проекта</a></div>
   </main>
 </body>
