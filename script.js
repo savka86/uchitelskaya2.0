@@ -47,14 +47,74 @@ const quizResult = document.querySelector('#quizResult');
 const profile = document.querySelector('.profile');
 
 const recommendations = {
-  design: 'Лучший маршрут: дизайнер образовательных продуктов → шаблон презентации → стенд как у профи.',
-  ai: 'Лучший маршрут: интегратор ИИ → 10 промптов для учителя → ИИ-помощник класса.',
-  olymp: 'Лучший маршрут: наставник одарённых → чек-лист для НПК → олимпиадный разбор.',
-  research: 'Лучший маршрут: методист проектов → как написать цель и задачи → проект под ключ.',
-  exam: 'Лучший маршрут: наставник ВПР, ОГЭ и ЕГЭ → план подготовки → разбор заданий и диагностика.',
-  producer: 'Лучший маршрут: учитель-продюсер → сценарий события → ученик — продюсер фестиваля.',
-  team: 'Лучший маршрут: фасилитатор → распределение ролей → командная работа без хаоса.'
+  design: 'Лучший маршрут: дизайнер образовательных продуктов → презентация, стенд, брошюра, дашборд → красивая упаковка опыта.',
+  ai: 'Лучший маршрут: интегратор ИИ → нейросети, автоматизация рутины, приложения и ИИ-помощники.',
+  olymp: 'Лучший маршрут: наставник одарённых → олимпиадники, 100-балльное ЕГЭ, задания повышенной сложности.',
+  research: 'Лучший маршрут: методист проектов → НИР, цель, задачи, оформление и защита на НПК.',
+  content: 'Лучший маршрут: учитель-архитектор содержания → сборники, пособия, электронные курсы для всей школы.',
+  producer: 'Лучший маршрут: учитель-продюсер → ресурсы, партнёры, конкурсы, гранты и внешний уровень проекта.',
+  team: 'Лучший маршрут: фасилитатор → групповая работа, мозговой штурм, педсовет, родительская встреча, дебаты и решение команды.',
+  exam: 'Лучший маршрут: наставник одарённых → план подготовки → разбор сложных заданий.'
 };
+
+const teacherRoles = [
+  {
+    icon: '🌟',
+    title: 'Наставник одарённых',
+    tags: 'olymp exam',
+    teacher: 'Учитель химии',
+    note: 'ВсОШ, «Большие вызовы»',
+    action: 'Ведёт олимпиадников, готовит к 100-балльному ЕГЭ, разбирает задания повышенной сложности.'
+  },
+  {
+    icon: '🧩',
+    title: 'Методист проектов',
+    tags: 'research',
+    teacher: 'Учитель биологии',
+    note: 'результативные проекты учащихся',
+    action: 'Помогает оформить НИР, поставить цель и задачи, довести исследование до защиты на НПК.'
+  },
+  {
+    icon: '✏️',
+    title: 'Дизайнер образовательных продуктов',
+    tags: 'design',
+    teacher: 'Учитель английского',
+    note: 'презентации, стенды, брошюры, дашборды',
+    action: 'Создаёт презентации, стенды, брошюры, дашборды и упаковывает педагогический опыт в визуальный продукт.'
+  },
+  {
+    icon: '💻',
+    title: 'Интегратор ИИ',
+    tags: 'ai',
+    teacher: 'Учитель физики',
+    note: 'нейросети, приложения, ИИ-помощники',
+    action: 'Внедряет нейросети, автоматизирует рутину, создаёт приложения и ИИ-помощников.'
+  },
+  {
+    icon: '🎬',
+    title: 'Учитель-продюсер',
+    tags: 'producer',
+    teacher: 'Учитель истории',
+    note: 'клуб дебатеров, музей',
+    action: 'Находит ресурсы и партнёров, выводит проекты на внешний уровень: конкурсы, гранты, события.'
+  },
+  {
+    icon: '👥',
+    title: 'Фасилитатор',
+    tags: 'team',
+    teacher: 'Учитель истории / педагог-психолог',
+    note: 'групповая работа, педсоветы, родительские собрания, дебаты',
+    action: 'Ведёт групповую работу, мозговые штурмы, педсоветы, родительские собрания, дебаты родители-дети и помогает команде находить решения.'
+  },
+  {
+    icon: '🏗️',
+    title: 'Учитель-архитектор содержания',
+    tags: 'content',
+    teacher: 'Учитель математики',
+    note: 'OneNote-сборник по всем классам, пособие',
+    action: 'Создаёт системные сборники, пособия и электронные курсы для всей школы.'
+  }
+];
 
 function hideTopbarExtras() {
   document.querySelectorAll('.topbar .avatars, .topbar .invite-btn, .topbar .icon-btn').forEach(element => {
@@ -139,6 +199,41 @@ function makeCardActive(card, link, info, title) {
     event.stopImmediatePropagation();
     window.location.href = card.dataset.activeLink;
   });
+}
+
+function renderTeacherRoles() {
+  const column = document.querySelector('[data-column="teachers"]');
+  if (!column) return;
+
+  column.querySelectorAll('.card').forEach(card => card.remove());
+
+  teacherRoles.forEach(role => {
+    const card = document.createElement('button');
+    card.className = 'card';
+    card.type = 'button';
+    card.dataset.tags = role.tags;
+    card.dataset.info = `${role.title}. Что делает: ${role.action} Кто из ваших учителей: ${role.teacher} (${role.note}).`;
+    card.innerHTML = `
+      <span class="card__icon">${role.icon}</span>
+      <span style="display:grid;gap:4px;min-width:0;">
+        <b>${role.title}</b>
+        <small style="display:block;color:#52705d;font-weight:800;line-height:1.25;">${role.teacher}</small>
+        <small style="display:block;color:#6d7490;line-height:1.25;">${role.note}</small>
+      </span>
+    `;
+    column.appendChild(card);
+  });
+}
+
+function adaptExamProblemCard() {
+  const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
+    card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
+  );
+
+  if (examProblemCard) {
+    examProblemCard.dataset.role = 'olymp';
+    examProblemCard.dataset.info = 'Рекомендация: выберите наставника одарённых, чтобы выстроить подготовку к сложным заданиям, олимпиадам и высоким результатам.';
+  }
 }
 
 function linkBoardGuideCard() {
@@ -232,32 +327,6 @@ function linkProjectFormatCard() {
   );
 }
 
-function adaptExamCards() {
-  const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
-    card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
-  );
-
-  if (examProblemCard) {
-    examProblemCard.dataset.role = 'exam';
-    examProblemCard.dataset.info = 'Рекомендация: выберите наставника ВПР, ОГЭ и ЕГЭ, чтобы составить план подготовки, разобрать задания и провести диагностику.';
-  }
-
-  const methodistCard = Array.from(document.querySelectorAll('[data-column="teachers"] .card')).find(card =>
-    card.innerText.includes('Методист проектов')
-  );
-
-  if (methodistCard) {
-    methodistCard.dataset.tags = 'exam';
-    methodistCard.dataset.info = 'Наставник ВПР, ОГЭ и ЕГЭ помогает составить план подготовки, разобрать типовые задания, отработать сложные темы и провести диагностику.';
-
-    const icon = methodistCard.querySelector('.card__icon');
-    const title = methodistCard.querySelector('b');
-
-    if (icon) icon.textContent = '📚';
-    if (title) title.textContent = 'Наставник ВПР, ОГЭ и ЕГЭ';
-  }
-}
-
 function loadMushroomProjectShelf() {
   const shelf = document.querySelector('[data-column="materials"]');
   if (!shelf) return;
@@ -269,13 +338,13 @@ function loadMushroomProjectShelf() {
       icon: '🌟',
       title: 'От наставника одарённых',
       info: 'Проект «Serpula lacrymans»: подготовка к НПК, ОВСУ и защите перед жюри. Акцент — новизна, практическая значимость, ответы на вопросы.',
-      href: 'pages/project-domovoy-grib.html#talent'
+      href: 'pages/polka-domovoy-grib-nastavnik-odarennyh.html'
     },
     {
       icon: '🧩',
       title: 'От методиста проекта',
       info: 'Паспорт исследования: тема, цель, задачи, гипотеза, объект, предмет, методы, этапы и выводы по проекту о домовом грибе.',
-      href: 'pages/project-domovoy-grib.html#method'
+      href: 'pages/polka-domovoy-grib-metodist.html'
     },
     {
       icon: '🏗️',
@@ -293,7 +362,7 @@ function loadMushroomProjectShelf() {
       icon: '💻',
       title: 'От интегратора ИИ',
       info: 'ИИ-поддержка проекта: речь для защиты, вопросы жюри, проверка цифр, исправление текста и подготовка карточек «вопрос — ответ».',
-      href: 'pages/project-domovoy-grib.html#ai'
+      href: 'pages/polka-domovoy-grib-ii.html'
     },
     {
       icon: '🎬',
@@ -325,7 +394,8 @@ function loadMushroomProjectShelf() {
 hideTopbarExtras();
 renderLoggedUser();
 adaptWelcomeCard();
-adaptExamCards();
+renderTeacherRoles();
+adaptExamProblemCard();
 loadMushroomProjectShelf();
 linkBoardGuideCard();
 linkChooseTaskCard();
@@ -361,7 +431,8 @@ function flashTarget(target) {
 
 function highlightByRole(role) {
   cards.forEach(card => {
-    if (card.dataset.tags === role || card.dataset.role === role) {
+    const tags = (card.dataset.tags || '').split(/\s+/);
+    if (tags.includes(role) || card.dataset.role === role) {
       card.classList.add('is-active');
     }
   });
