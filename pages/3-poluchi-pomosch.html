@@ -4,286 +4,516 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3. Получи помощь — Учительская 2.0</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Раздел помощи проекта Учительская 2.0: шаблоны, чек-листы, инструкции, консультации и материалы для учителей и учеников." />
+  <meta name="description" content="Визуальная инструкция: как получить помощь на доске Учительская 2.0, выбрать формат поддержки, подготовить заявку и прийти к результату." />
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #5f6b7a;
+      --bg: #f7f4ff;
+      --white: #ffffff;
+      --violet: #7c3aed;
+      --blue: #2563eb;
+      --cyan: #0891b2;
+      --green: #16a34a;
+      --orange: #f97316;
+      --pink: #db2777;
+      --yellow: #facc15;
+      --line: rgba(23, 32, 51, .1);
+      --shadow: 0 24px 60px rgba(42, 32, 92, .16);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(124, 58, 237, .24), transparent 34rem),
+        radial-gradient(circle at 80% 10%, rgba(37, 99, 235, .18), transparent 28rem),
+        linear-gradient(135deg, #fff7ed 0%, #f7f4ff 42%, #eef9ff 100%);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 52px;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,.62);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 12px 30px rgba(30, 41, 59, .10);
+      font-weight: 800;
+      color: #1f2937;
+      backdrop-filter: blur(16px);
+    }
+
+    .btn--main {
+      background: linear-gradient(135deg, #7c3aed, #2563eb);
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 36px;
+      padding: clamp(26px, 5vw, 58px);
+      background:
+        linear-gradient(135deg, rgba(124, 58, 237, .96), rgba(37, 99, 235, .92)),
+        url("data:image/svg+xml,%3Csvg width='220' height='220' viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='rgba(255,255,255,.25)' stroke-width='2'%3E%3Cpath d='M20 40h180M20 100h180M20 160h180M40 20v180M100 20v180M160 20v180'/%3E%3Ccircle cx='60' cy='60' r='14'/%3E%3Ccircle cx='160' cy='130' r='18'/%3E%3C/g%3E%3C/svg%3E");
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .badge {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.28);
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 82px);
+      line-height: .95;
+      margin: 0 0 18px;
+      letter-spacing: -0.06em;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0;
+      color: rgba(255,255,255,.9);
+      font-size: clamp(17px, 2vw, 24px);
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 320px;
+      border-radius: 32px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.26);
+      padding: 22px;
+      backdrop-filter: blur(16px);
+    }
+
+    .bubble {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 92px;
+      height: 92px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.92);
+      color: var(--ink);
+      font-size: 36px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, .16);
+    }
+
+    .bubble b {
+      display: block;
+      position: absolute;
+      bottom: -30px;
+      width: 150px;
+      text-align: center;
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .b1 { left: 18px; top: 28px; }
+    .b2 { right: 34px; top: 48px; }
+    .b3 { left: 44%; top: 44%; transform: translate(-50%, -50%); width: 116px; height: 116px; font-size: 46px; }
+    .b4 { left: 48px; bottom: 54px; }
+    .b5 { right: 18px; bottom: 44px; }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin: 42px 0 18px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1;
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    .section-title p {
+      max-width: 540px;
+      color: var(--muted);
+      font-weight: 650;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .flow-step {
+      position: relative;
+      min-height: 160px;
+      padding: 18px;
+      border-radius: 24px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .08);
+    }
+
+    .flow-step::after {
+      content: '→';
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--violet);
+      z-index: 2;
+    }
+
+    .flow-step:last-child::after { display: none; }
+
+    .flow-step span {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+
+    .flow-step h3 { margin: 0 0 8px; font-size: 18px; }
+    .flow-step p { margin: 0; color: var(--muted); line-height: 1.45; font-weight: 600; }
+
+    .c1 { background: linear-gradient(135deg, var(--violet), var(--pink)); }
+    .c2 { background: linear-gradient(135deg, var(--blue), var(--cyan)); }
+    .c3 { background: linear-gradient(135deg, var(--orange), var(--yellow)); }
+    .c4 { background: linear-gradient(135deg, var(--green), var(--cyan)); }
+    .c5 { background: linear-gradient(135deg, #111827, var(--violet)); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 230px;
+      padding: 22px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.84);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, .09);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 999px;
+      right: -50px;
+      top: -50px;
+      background: rgba(124, 58, 237, .12);
+    }
+
+    .icon {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(124,58,237,.16), rgba(37,99,235,.16));
+      font-size: 30px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 { margin: 0 0 10px; font-size: 21px; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.5; font-weight: 620; }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 26px;
+      border-radius: 30px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(255,255,255,.72);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+    }
+
+    .panel h3 { margin: 0 0 16px; font-size: 26px; }
+    .checklist { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .checklist li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(124,58,237,.07);
+      color: var(--ink);
+      font-weight: 680;
+      line-height: 1.35;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .matrix-item {
+      padding: 18px;
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, .07);
+    }
+
+    .matrix-item strong { display: block; margin-bottom: 8px; font-size: 17px; }
+    .matrix-item p { margin: 0; color: var(--muted); font-weight: 620; line-height: 1.45; }
+
+    .request-box {
+      padding: clamp(24px, 4vw, 42px);
+      border-radius: 34px;
+      background: linear-gradient(135deg, rgba(255,255,255,.9), rgba(236, 253, 245, .86));
+      border: 1px solid rgba(255,255,255,.82);
+      box-shadow: var(--shadow);
+    }
+
+    .request-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .template {
+      padding: 22px;
+      border-radius: 24px;
+      background: #172033;
+      color: #fff;
+      line-height: 1.75;
+      font-weight: 650;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
+    }
+
+    .note {
+      display: grid;
+      gap: 12px;
+    }
+
+    .note div {
+      padding: 15px;
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-weight: 750;
+    }
+
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid, .split, .request-grid { grid-template-columns: 1fr; }
+      .flow, .cards, .matrix { grid-template-columns: 1fr 1fr; }
+      .flow-step::after { display: none; }
+      .hero-card { min-height: 260px; }
+    }
+
+    @media (max-width: 620px) {
+      .page { width: min(100% - 20px, 1180px); padding-top: 16px; }
+      .hero { border-radius: 26px; }
+      .flow, .cards, .matrix { grid-template-columns: 1fr; }
+      .bubble { width: 72px; height: 72px; font-size: 28px; border-radius: 22px; }
+      .bubble b { font-size: 11px; width: 120px; }
+      .b3 { width: 90px; height: 90px; font-size: 36px; }
+    }
+  </style>
 </head>
-
-<body class="detail-body">
-  <main class="detail-page">
-
-    <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
+<body>
+  <main class="page">
+    <div class="topline">
+      <a class="btn" href="../index.html#board">← Вернуться к доске</a>
+      <a class="btn btn--main" href="../index.html#diagnostic">Подобрать помощь</a>
     </div>
 
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Шаг 3: Материалы и поддержка</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">📚</div>
+    <section class="hero">
+      <span class="badge">🤝 Шаг 3 на доске проекта</span>
+      <div class="hero-grid">
         <div>
           <h1>3. Получи помощь</h1>
           <p>
-            На этой странице собраны материалы, которые помогают быстрее начать работу:
-            шаблоны, чек-листы, инструкции, памятки, примеры и заявки на консультацию.
+            На этом шаге участник превращает задачу в конкретное действие: выбирает формат помощи,
+            готовит короткий запрос наставнику, получает материал, консультацию или проверку работы.
           </p>
+        </div>
+        <div class="hero-card" aria-label="Визуализация получения помощи">
+          <div class="bubble b1">📝<b>Заявка</b></div>
+          <div class="bubble b2">👩‍🏫<b>Наставник</b></div>
+          <div class="bubble b3">🤝<b>Помощь</b></div>
+          <div class="bubble b4">📚<b>Материалы</b></div>
+          <div class="bubble b5">✅<b>Результат</b></div>
         </div>
       </div>
     </section>
 
-    <section class="detail-grid">
+    <section class="section-title">
+      <h2>Маршрут помощи</h2>
+      <p>Двигайтесь по цепочке: чем точнее запрос, тем быстрее наставник даст нужную поддержку.</p>
+    </section>
 
-      <article class="detail-card detail-card--large">
-        <h2>Что можно получить?</h2>
-        <p>
-          Здесь можно выбрать готовый материал под свою задачу. Если вы уже выбрали тему
-          и нашли наставника, этот раздел поможет перейти от идеи к конкретному действию:
-          заполнить шаблон, составить план, оформить презентацию или подготовить защиту.
-        </p>
+    <section class="flow" aria-label="Маршрут получения помощи">
+      <article class="flow-step"><span class="c1">1</span><h3>Опиши задачу</h3><p>Напиши, с чем нужна помощь и какой результат нужен.</p></article>
+      <article class="flow-step"><span class="c2">2</span><h3>Выбери формат</h3><p>Консультация, шаблон, проверка, разбор или готовый материал.</p></article>
+      <article class="flow-step"><span class="c3">3</span><h3>Отправь запрос</h3><p>Укажи срок, класс, тему и что уже готово.</p></article>
+      <article class="flow-step"><span class="c4">4</span><h3>Получай поддержку</h3><p>Наставник помогает исправить, оформить или улучшить работу.</p></article>
+      <article class="flow-step"><span class="c5">5</span><h3>Сдай результат</h3><p>Готовый проект, урок, презентация, подготовка или событие.</p></article>
+    </section>
 
-        <div class="template-box">
-          <strong>Маршрут:</strong><br>
-          Выбрал задачу → нашёл наставника → взял материал → заполнил шаблон → получил результат
-        </div>
-      </article>
+    <section class="section-title">
+      <h2>Какую помощь можно получить?</h2>
+      <p>Выберите карточку по своей ситуации и сразу поймите, что попросить у наставника.</p>
+    </section>
 
-      <article class="detail-card">
-        <h2>Шаблоны проектов</h2>
-        <p>
-          Готовые структуры для школьных, исследовательских, творческих и социокультурных проектов.
-        </p>
-        <ul class="detail-list">
-          <li>паспорт проекта;</li>
-          <li>актуальность;</li>
-          <li>цель и задачи;</li>
-          <li>этапы работы;</li>
-          <li>ожидаемые результаты.</li>
+    <section class="cards">
+      <article class="card"><div class="icon">📄</div><h3>Шаблон</h3><p>Паспорт проекта, план урока, структура исследования, чек-лист или форма заявки.</p></article>
+      <article class="card"><div class="icon">🔍</div><h3>Проверка</h3><p>Наставник смотрит текст, презентацию, цель, задачи, дизайн и логику выступления.</p></article>
+      <article class="card"><div class="icon">💬</div><h3>Консультация</h3><p>Короткая встреча или переписка: что исправить, как улучшить и куда двигаться дальше.</p></article>
+      <article class="card"><div class="icon">🧩</div><h3>Разбор задания</h3><p>Помощь с ВПР, ОГЭ, ЕГЭ, олимпиадой, проектным заданием или исследованием.</p></article>
+      <article class="card"><div class="icon">🎨</div><h3>Оформление</h3><p>Помощь с презентацией, стендом, страницей сайта, буклетом, афишей или визуалом.</p></article>
+      <article class="card"><div class="icon">🤖</div><h3>ИИ-помощь</h3><p>Промпты, идеи, текст, изображения, сайт, чат-бот, ИИ-книга или цифровой двойник.</p></article>
+      <article class="card"><div class="icon">🎤</div><h3>Подготовка защиты</h3><p>Речь, ответы на вопросы, репетиция, структура выступления и финальный чек-лист.</p></article>
+      <article class="card"><div class="icon">🚀</div><h3>Готовый маршрут</h3><p>Пошаговый план: что сделать сегодня, что завтра и как довести дело до результата.</p></article>
+    </section>
+
+    <section class="section-title">
+      <h2>Кому и что просить?</h2>
+      <p>Мини-карта помогает быстро выбрать правильный формат поддержки.</p>
+    </section>
+
+    <section class="matrix">
+      <article class="matrix-item"><strong>📚 Экзамены</strong><p>План подготовки, разбор заданий, диагностика слабых тем.</p></article>
+      <article class="matrix-item"><strong>💡 Проект</strong><p>Тема, цель, задачи, актуальность, продукт и защита.</p></article>
+      <article class="matrix-item"><strong>🤖 ИИ</strong><p>Промпты, безопасное использование, генерация материалов.</p></article>
+      <article class="matrix-item"><strong>🎉 Событие</strong><p>Сценарий, роли, афиша, программа и организация.</p></article>
+      <article class="matrix-item"><strong>👥 Команда</strong><p>Распределение ролей, порядок работы и общий результат.</p></article>
+      <article class="matrix-item"><strong>🎤 Защита</strong><p>Текст выступления, репетиция и ответы на вопросы.</p></article>
+    </section>
+
+    <section class="section-title">
+      <h2>Подсказки для учителя и ученика</h2>
+      <p>Перед обращением к наставнику подготовьте минимум информации — это ускорит помощь.</p>
+    </section>
+
+    <section class="split">
+      <article class="panel">
+        <h3>👩‍🏫 Если вы учитель</h3>
+        <ul class="checklist">
+          <li>✅ Укажите класс, предмет и тему.</li>
+          <li>✅ Напишите, что нужно: урок, проект, презентация, событие или ИИ-инструмент.</li>
+          <li>✅ Приложите черновик, ссылку или идею.</li>
+          <li>✅ Укажите срок, когда нужен результат.</li>
         </ul>
       </article>
 
-      <article class="detail-card">
-        <h2>Чек-листы</h2>
-        <p>
-          Короткие списки проверки, которые помогают понять, всё ли готово перед защитой,
-          конкурсом, уроком или мероприятием.
-        </p>
-        <ul class="detail-list">
-          <li>проверка проекта;</li>
-          <li>проверка презентации;</li>
-          <li>подготовка к выступлению;</li>
-          <li>проверка цифрового продукта.</li>
+      <article class="panel">
+        <h3>🧑‍🎓 Если вы ученик</h3>
+        <ul class="checklist">
+          <li>✅ Напишите, что уже сделали.</li>
+          <li>✅ Скажите, где нужна помощь: тема, текст, оформление или защита.</li>
+          <li>✅ Покажите файл, фото, ссылку или задание.</li>
+          <li>✅ Уточните дату сдачи или защиты.</li>
         </ul>
       </article>
+    </section>
 
-      <article class="detail-card">
-        <h2>Инструкции</h2>
-        <p>
-          Пошаговые материалы для тех, кто хочет сделать сайт, презентацию, ИИ-книгу,
-          чат-бота, интерактивный стенд или другой цифровой продукт.
-        </p>
-        <ul class="detail-list">
-          <li>как начать проект;</li>
-          <li>как оформить работу;</li>
-          <li>как сделать презентацию;</li>
-          <li>как подготовить защиту.</li>
-        </ul>
-      </article>
+    <section class="section-title">
+      <h2>Готовая заявка на помощь</h2>
+      <p>Скопируйте шаблон и заполните пропуски — так наставник быстрее поймёт ваш запрос.</p>
+    </section>
 
-      <article class="detail-card">
-        <h2>Промпты для ИИ</h2>
-        <p>
-          Готовые запросы для нейросетей, которые помогают придумать идею, улучшить текст,
-          составить план, оформить проект или подготовить вопросы для защиты.
-        </p>
-        <ul class="detail-list">
-          <li>промпт для темы проекта;</li>
-          <li>промпт для плана;</li>
-          <li>промпт для презентации;</li>
-          <li>промпт для проверки текста.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Примеры готовых работ</h2>
-        <p>
-          Образцы помогают понять, как может выглядеть итоговый результат:
-          проект, презентация, сайт, ИИ-книга, буклет, стенд или выступление.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Как пользоваться материалами?</h2>
-
-        <div class="template-box">
-          <strong>Порядок работы:</strong><br><br>
-          1. Выберите материал под свою задачу.<br>
-          2. Скачайте или скопируйте шаблон.<br>
-          3. Заполните его своими данными.<br>
-          4. Покажите наставнику для проверки.<br>
-          5. Исправьте замечания.<br>
-          6. Подготовьте итоговый вариант.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Для учителя</h2>
-        <ul class="detail-list">
-          <li>шаблон урока с ИИ;</li>
-          <li>шаблон методической разработки;</li>
-          <li>чек-лист мероприятия;</li>
-          <li>структура проектной заявки;</li>
-          <li>памятка по наставничеству;</li>
-          <li>форма обратной связи.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Для ученика</h2>
-        <ul class="detail-list">
-          <li>шаблон проекта;</li>
-          <li>план исследования;</li>
-          <li>структура презентации;</li>
-          <li>текст защиты;</li>
-          <li>чек-лист подготовки;</li>
-          <li>памятка выступающего.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Бесплатная полка материалов</h2>
-        <p>
-          Ниже можно добавить реальные ссылки на документы, презентации, таблицы,
-          PDF-файлы, Google Диск, Яндекс Диск или страницы сайта.
-        </p>
-
-        <div class="template-box">
-          <strong>Пример списка материалов:</strong><br><br>
-          📄 Шаблон паспорта проекта — ссылка<br>
-          ✅ Чек-лист проверки презентации — ссылка<br>
-          🎤 Шаблон речи для защиты — ссылка<br>
-          🤖 Промпты для работы с ИИ — ссылка<br>
-          🧾 Форма заявки на консультацию — ссылка
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Когда нужна консультация?</h2>
-        <p>
-          Если материал не помог полностью решить задачу, можно обратиться к наставнику.
-          Консультация нужна, когда требуется проверка, совет, корректировка структуры
-          или помощь с подготовкой к защите.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что подготовить перед обращением?</h2>
-        <ul class="detail-list">
-          <li>тему или идею работы;</li>
-          <li>что уже готово;</li>
-          <li>какая помощь нужна;</li>
-          <li>срок выполнения;</li>
-          <li>формат результата;</li>
-          <li>файл или ссылку на работу.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Заявка на помощь</h2>
-
-        <div class="template-box">
-          <strong>Скопируйте и заполните:</strong><br><br>
+    <section class="request-box">
+      <div class="request-grid">
+        <div class="template">
           Здравствуйте! Мне нужна помощь с ____________________________.<br><br>
-          Я учитель / ученик / участник команды: _______________________.<br><br>
+          Я: учитель / ученик / участник команды _______________________.<br><br>
           Моя задача: _________________________________________________.<br><br>
           Что уже готово: _____________________________________________.<br><br>
+          Какая помощь нужна: шаблон / проверка / консультация / оформление / защита.<br><br>
           Нужный результат: ___________________________________________.<br><br>
           Срок выполнения: ____________________________________________.<br><br>
           Ссылка на файл или материал: _________________________________.
         </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Помощь с проектом</h2>
-        <p>
-          Можно получить подсказку по теме, цели, задачам, актуальности,
-          этапам работы, продукту, результатам и оформлению проектной работы.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Помощь с презентацией</h2>
-        <p>
-          Можно проверить структуру слайдов, оформление, логику выступления,
-          читаемость текста, качество иллюстраций и соответствие теме.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Помощь с ИИ</h2>
-        <p>
-          Можно получить подсказки по работе с нейросетями: как написать промпт,
-          как создать изображение, как оформить ИИ-книгу, сайт, чат-бота или цифрового помощника.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Помощь с защитой</h2>
-        <p>
-          Можно подготовить речь, ответы на вопросы, структуру выступления,
-          репетицию защиты и финальный чек-лист перед конкурсом или конференцией.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Кнопки для будущих ссылок</h2>
-        <p>
-          Когда будут готовы реальные формы и файлы, замените ссылки в кнопках
-          на адреса Google Форм, Яндекс Форм, документов или папки с материалами.
-        </p>
-
-        <div class="detail-actions">
-          <a class="detail-btn" href="../index.html#diagnostic">Подобрать помощь</a>
-          <a class="detail-btn detail-btn--light" href="2-naydi-nastavnika.html">Найти наставника</a>
+        <div class="note">
+          <div>🎯 Пишите конкретно: не «помогите», а «проверьте цель и задачи проекта».</div>
+          <div>⏰ Указывайте срок: так наставник понимает срочность.</div>
+          <div>📎 Прикладывайте материалы: файл, ссылку, фото задания или черновик.</div>
+          <div>✅ В конце обозначьте результат: презентация, план, текст, сайт или защита.</div>
         </div>
-      </article>
+      </div>
 
-      <article class="detail-card detail-card--large">
-        <h2>Короткий текст для страницы</h2>
-        <div class="template-box">
-          Выберите нужный материал, скачайте или скопируйте шаблон и заполните его
-          под свой проект. Если после этого нужна помощь, обратитесь к наставнику:
-          он подскажет, что улучшить, как оформить результат и как подготовиться к защите.
-        </div>
-      </article>
-
-    </section>
-
-    <section class="related-section">
-      <h2>Следующий шаг</h2>
-
-      <div class="related-grid">
-        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
-          <span>🎯</span>
-          1. Выбери задачу
-        </a>
-
-        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
-          <span>🤝</span>
-          2. Найди наставника
-        </a>
-
-        <a class="related-card related-card--sky" href="../index.html#diagnostic">
-          <span>🧪</span>
-          Мини-диагностика
-        </a>
-
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
+      <div class="actions">
+        <a class="btn btn--main" href="../index.html#board">Вернуться к доске</a>
+        <a class="btn" href="2-naydi-nastavnika.html">← Найти наставника</a>
+        <a class="btn" href="../index.html#diagnostic">Подобрать помощь</a>
       </div>
     </section>
-
   </main>
 </body>
 </html>
