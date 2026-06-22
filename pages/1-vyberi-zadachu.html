@@ -5,251 +5,633 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>1. Выбери задачу — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Страница выбора задачи в проекте Учительская 2.0: определите проблему, сформулируйте запрос и выберите следующий шаг." />
+  <meta name="description" content="Красочная инструкция для выбора первой задачи на доске Учительская 2.0." />
+  <style>
+    :root {
+      --blue: #2563eb;
+      --cyan: #06b6d4;
+      --purple: #7c3aed;
+      --pink: #ec4899;
+      --orange: #f97316;
+      --green: #16a34a;
+      --yellow: #facc15;
+      --dark: #172033;
+      --muted: #64748b;
+      --card: rgba(255,255,255,.92);
+      --stroke: rgba(148,163,184,.28);
+      --shadow: 0 22px 55px rgba(15,23,42,.14);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body.detail-body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--dark);
+      background:
+        radial-gradient(circle at 12% 12%, rgba(37,99,235,.18), transparent 30%),
+        radial-gradient(circle at 85% 8%, rgba(236,72,153,.16), transparent 28%),
+        radial-gradient(circle at 80% 85%, rgba(22,163,74,.12), transparent 30%),
+        linear-gradient(135deg, #eef6ff 0%, #f8f4ff 45%, #fff7ed 100%);
+    }
+
+    .choose-page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 60px;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .topline a {
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--stroke);
+      color: #1e293b;
+      box-shadow: 0 10px 26px rgba(15,23,42,.08);
+    }
+
+    .hero-choose {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: clamp(28px, 5vw, 56px);
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.96), rgba(124,58,237,.92) 48%, rgba(236,72,153,.9));
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-choose::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,.28), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(250,204,21,.28), transparent 18%),
+        radial-gradient(circle at 50% 110%, rgba(6,182,212,.36), transparent 24%);
+      pointer-events: none;
+    }
+
+    .hero-choose > * { position: relative; z-index: 1; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.32);
+      font-weight: 900;
+      letter-spacing: .02em;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: clamp(24px, 4vw, 42px);
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    .hero-choose h1 {
+      margin: 0 0 14px;
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: .95;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-choose p {
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(17px, 2vw, 23px);
+      line-height: 1.55;
+      color: rgba(255,255,255,.9);
+      font-weight: 600;
+    }
+
+    .hero-visual {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(16px);
+    }
+
+    .mini-step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 12px;
+      align-items: center;
+      background: rgba(255,255,255,.9);
+      color: #172033;
+      border-radius: 22px;
+      padding: 13px;
+      box-shadow: 0 12px 30px rgba(15,23,42,.12);
+    }
+
+    .mini-step span {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      font-size: 26px;
+      background: linear-gradient(135deg, #dbeafe, #fae8ff);
+    }
+
+    .mini-step b { display: block; font-size: 16px; }
+    .mini-step small { color: var(--muted); font-weight: 700; }
+
+    .route-strip {
+      margin: 26px 0;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .route-item {
+      min-height: 128px;
+      border-radius: 26px;
+      padding: 18px;
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      box-shadow: 0 16px 40px rgba(15,23,42,.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .route-item::after {
+      content: "→";
+      position: absolute;
+      right: 14px;
+      top: 10px;
+      color: rgba(37,99,235,.35);
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    .route-item:last-child::after { content: "✓"; color: rgba(22,163,74,.42); }
+    .route-item span { font-size: 30px; display: block; margin-bottom: 10px; }
+    .route-item b { display: block; font-size: 18px; margin-bottom: 6px; }
+    .route-item small { color: var(--muted); font-weight: 700; line-height: 1.4; }
+
+    .section-title {
+      margin: 48px 0 18px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      letter-spacing: -0.04em;
+    }
+
+    .section-title p {
+      margin: 0;
+      max-width: 560px;
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .task-card {
+      border-radius: var(--radius);
+      padding: 22px;
+      min-height: 245px;
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      box-shadow: 0 18px 44px rgba(15,23,42,.09);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .task-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 8px;
+      background: var(--accent, linear-gradient(90deg, var(--blue), var(--cyan)));
+    }
+
+    .task-icon {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      border-radius: 22px;
+      font-size: 30px;
+      background: linear-gradient(135deg, #eff6ff, #fff7ed);
+      box-shadow: inset 0 0 0 1px rgba(148,163,184,.22);
+    }
+
+    .task-card h3 { margin: 0; font-size: 22px; line-height: 1.15; }
+    .task-card p { margin: 0; color: var(--muted); font-weight: 650; line-height: 1.5; }
+
+    .task-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .task-tags span {
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .chooser {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .chooser-card {
+      border-radius: 30px;
+      padding: 26px;
+      color: #fff;
+      min-height: 310px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chooser-card.teacher { background: linear-gradient(135deg, #2563eb, #06b6d4); }
+    .chooser-card.student { background: linear-gradient(135deg, #7c3aed, #ec4899); }
+
+    .chooser-card::after {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      right: -55px;
+      top: -55px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.18);
+    }
+
+    .chooser-card h3 {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 14px;
+      font-size: 28px;
+    }
+
+    .chooser-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 10px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    .chooser-list li {
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.26);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .poster {
+      margin-top: 22px;
+      border-radius: 34px;
+      padding: clamp(22px, 4vw, 42px);
+      background: #fff;
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .poster h2 {
+      margin: 0 0 22px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -0.04em;
+    }
+
+    .poster-flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .poster-node {
+      text-align: center;
+      padding: 18px 12px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #f8fafc, #eef2ff);
+      border: 1px solid #e2e8f0;
+      position: relative;
+      min-height: 152px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .poster-node:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      width: 28px;
+      height: 28px;
+      transform: translateY(-50%) rotate(45deg);
+      background: #fff;
+      border-top: 4px solid #60a5fa;
+      border-right: 4px solid #60a5fa;
+      z-index: 2;
+    }
+
+    .poster-node span { font-size: 34px; display: block; margin-bottom: 9px; }
+    .poster-node b { font-size: 16px; }
+    .poster-node small { color: var(--muted); font-weight: 700; margin-top: 6px; }
+
+    .formula-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .formula-box, .example-box {
+      border-radius: 30px;
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      box-shadow: 0 18px 44px rgba(15,23,42,.08);
+    }
+
+    .formula-box h3, .example-box h3 { margin: 0 0 12px; font-size: 25px; }
+    .blank-line {
+      margin: 12px 0;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      color: #334155;
+      font-weight: 800;
+    }
+
+    .example-box p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: 700;
+      line-height: 1.6;
+    }
+
+    .bottom-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .bottom-actions a {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff;
+      box-shadow: 0 18px 40px rgba(37,99,235,.22);
+    }
+
+    .bottom-actions a.secondary {
+      background: #fff;
+      color: #172033;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 12px 30px rgba(15,23,42,.08);
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, .chooser, .formula-grid { grid-template-columns: 1fr; }
+      .route-strip, .poster-flow { grid-template-columns: 1fr; }
+      .route-item::after, .poster-node:not(:last-child)::after { display: none; }
+      .task-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .task-grid { grid-template-columns: 1fr; }
+      .choose-page { width: min(100% - 22px, 1180px); padding-top: 18px; }
+      .hero-choose { border-radius: 26px; }
+    }
+  </style>
 </head>
-
 <body class="detail-body">
-  <main class="detail-page">
+  <main class="choose-page">
+    <nav class="topline" aria-label="Навигация по странице">
+      <a href="../index.html?auth=1#board">← Вернуться к доске</a>
+      <a href="2-naydi-nastavnika.html">Следующий шаг: наставник →</a>
+    </nav>
 
-    <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
-    </div>
-
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Столбец 2: Что у вас болит?</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">🎯</div>
+    <section class="hero-choose">
+      <span class="badge">🎯 Стартовая карточка доски</span>
+      <div class="hero-grid">
         <div>
           <h1>1. Выбери задачу</h1>
           <p>
-            Первый шаг — понять, какая именно помощь вам нужна. Эта страница поможет
-            сформулировать задачу, выбрать направление и перейти к наставнику,
-            материалам или проектному маршруту.
+            Первый шаг — понять, какая именно помощь нужна. Чем точнее задача,
+            тем быстрее доска подберёт наставника, материалы, шаблон и понятный результат.
           </p>
         </div>
+
+        <div class="hero-visual" aria-label="Быстрый маршрут выбора задачи">
+          <div class="mini-step"><span>🧭</span><div><b>Определи проблему</b><small>Что болит прямо сейчас?</small></div></div>
+          <div class="mini-step"><span>📝</span><div><b>Сформулируй запрос</b><small>Кому, что и к какому сроку?</small></div></div>
+          <div class="mini-step"><span>🚀</span><div><b>Перейди к действию</b><small>Наставник, материалы или проект</small></div></div>
+        </div>
       </div>
     </section>
 
-    <section class="detail-grid">
+    <section class="route-strip" aria-label="Главная схема работы">
+      <article class="route-item"><span>❓</span><b>Задача</b><small>Выбери одну главную проблему.</small></article>
+      <article class="route-item"><span>🤝</span><b>Наставник</b><small>Найди педагога с нужной суперсилой.</small></article>
+      <article class="route-item"><span>📚</span><b>Материалы</b><small>Возьми шаблон, чек-лист или пример.</small></article>
+      <article class="route-item"><span>🛠️</span><b>Действие</b><small>Собери урок, проект или подготовку.</small></article>
+      <article class="route-item"><span>🏆</span><b>Результат</b><small>Получишь готовый продукт.</small></article>
+    </section>
 
-      <article class="detail-card detail-card--large">
-        <h2>Зачем выбирать задачу?</h2>
-        <p>
-          Часто проект не начинается не потому, что нет идеи, а потому что задача
-          сформулирована слишком общо. Например: «нужно сделать проект» — это ещё не задача.
-          Лучше написать: «нужно выбрать тему, оформить цель, сделать презентацию
-          и подготовиться к защите».
-        </p>
-        <p>
-          Чем точнее вы опишете запрос, тем быстрее найдёте нужного наставника,
-          шаблон, чек-лист или готовый пример.
-        </p>
+    <div class="section-title">
+      <h2>Какие задачи можно выбрать?</h2>
+      <p>Нажми мысленно на ту карточку, которая больше всего похожа на твою ситуацию. Потом переходи к наставнику или материалам.</p>
+    </div>
+
+    <section class="task-grid">
+      <article class="task-card" style="--accent: linear-gradient(90deg,#2563eb,#06b6d4)">
+        <div class="task-icon">📚</div>
+        <h3>Подготовка к ВПР, ОГЭ и ЕГЭ</h3>
+        <p>Нужно разобрать задания, найти слабые темы, составить план подготовки и провести диагностику.</p>
+        <div class="task-tags"><span>экзамены</span><span>план</span><span>диагностика</span></div>
       </article>
 
-      <article class="detail-card">
-        <h2>Я не знаю, с чего начать</h2>
-        <p>
-          Выберите этот вариант, если есть желание участвовать в проекте, конкурсе
-          или мероприятии, но пока нет темы, цели и понятного плана работы.
-        </p>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#7c3aed,#ec4899)">
+        <div class="task-icon">💡</div>
+        <h3>Не знаю, как оформить проект</h3>
+        <p>Есть идея или тема, но нужны цель, задачи, актуальность, этапы, презентация и защита.</p>
+        <div class="task-tags"><span>проект</span><span>защита</span><span>оформление</span></div>
       </article>
 
-      <article class="detail-card">
-        <h2>Нужно придумать тему</h2>
-        <p>
-          Подходит для учеников и учителей, которым нужна интересная тема исследования,
-          творческого проекта, социокультурной инициативы или цифрового продукта.
-        </p>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#16a34a,#22c55e)">
+        <div class="task-icon">🤖</div>
+        <h3>Хочу использовать ИИ, но боюсь</h3>
+        <p>Нужно понять, как безопасно применять ИИ для урока, проекта, презентации или материалов.</p>
+        <div class="task-tags"><span>ИИ</span><span>промпты</span><span>безопасность</span></div>
       </article>
 
-      <article class="detail-card">
-        <h2>Нужно оформить проект</h2>
-        <p>
-          Если идея уже есть, но нужно правильно оформить цель, задачи, актуальность,
-          этапы, результаты, список литературы и презентацию для защиты.
-        </p>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#f97316,#facc15)">
+        <div class="task-icon">🌟</div>
+        <h3>Нужно подготовить ученика к олимпиаде</h3>
+        <p>Нужны задания, маршрут подготовки, разбор сложных тем и сопровождение к конкурсу.</p>
+        <div class="task-tags"><span>олимпиада</span><span>НПК</span><span>конкурс</span></div>
       </article>
 
-      <article class="detail-card">
-        <h2>Нужен наставник</h2>
-        <p>
-          Выберите этот путь, если требуется человек, который поможет разобраться,
-          подскажет план, проверит работу, направит ученика или команду.
-        </p>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#ec4899,#fb7185)">
+        <div class="task-icon">🎉</div>
+        <h3>Нужно провести яркое событие</h3>
+        <p>Нужен сценарий, афиша, программа, роли команды и красивое оформление школьного события.</p>
+        <div class="task-tags"><span>сценарий</span><span>афиша</span><span>праздник</span></div>
       </article>
 
-      <article class="detail-card">
-        <h2>Нужны материалы</h2>
-        <p>
-          Подходит, если вам нужны шаблоны, чек-листы, инструкции, образцы,
-          памятки, презентации или готовые структуры для работы.
-        </p>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#0f766e,#14b8a6)">
+        <div class="task-icon">👥</div>
+        <h3>Командная работа без хаоса</h3>
+        <p>Нужно распределить роли, собрать план, назначить сроки и довести команду до результата.</p>
+        <div class="task-tags"><span>команда</span><span>роли</span><span>план</span></div>
       </article>
 
-      <article class="detail-card">
-        <h2>Нужно сделать цифровой продукт</h2>
-        <p>
-          Сайт, чат-бот, ИИ-книга, презентация, интерактивный баннер, квиз,
-          видеоролик или цифровой помощник — всё это можно оформить как проектный результат.
-        </p>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#4338ca,#818cf8)">
+        <div class="task-icon">🧠</div>
+        <h3>Не хватает идей для урока</h3>
+        <p>Нужно сделать урок современным: интерактив, цифровые инструменты, задания и интересный формат.</p>
+        <div class="task-tags"><span>урок</span><span>идеи</span><span>интерактив</span></div>
       </article>
 
-      <article class="detail-card detail-card--large">
-        <h2>Мини-анкета для выбора задачи</h2>
-
-        <div class="template-box">
-          <strong>Заполните 5 строк:</strong><br><br>
-          1. Моя задача: ________________________________<br>
-          2. Для кого это нужно: _________________________<br>
-          3. Что уже есть: _______________________________<br>
-          4. Какой результат нужен: ______________________<br>
-          5. Срок выполнения: ____________________________
-        </div>
-
-        <p>
-          После заполнения мини-анкеты станет понятнее, куда двигаться дальше:
-          искать наставника, брать шаблон, оформлять проект или собирать команду.
-        </p>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#be123c,#f97316)">
+        <div class="task-icon">🧩</div>
+        <h3>Нужно собрать готовый продукт</h3>
+        <p>Сайт, презентация, ИИ-книга, квиз, баннер, видео или электронный помощник.</p>
+        <div class="task-tags"><span>сайт</span><span>продукт</span><span>цифра</span></div>
       </article>
 
-      <article class="detail-card">
-        <h2>Для учителя</h2>
-        <ul class="detail-list">
-          <li>подготовить урок или мероприятие;</li>
-          <li>оформить школьный проект;</li>
-          <li>создать методическую разработку;</li>
-          <li>найти цифровой инструмент;</li>
-          <li>подготовить ученика к конкурсу;</li>
-          <li>создать сайт, презентацию или ИИ-помощника.</li>
+      <article class="task-card" style="--accent: linear-gradient(90deg,#475569,#94a3b8)">
+        <div class="task-icon">🔎</div>
+        <h3>Нужна проверка работы</h3>
+        <p>Уже есть текст, презентация или проект — нужен взгляд наставника и точные правки.</p>
+        <div class="task-tags"><span>проверка</span><span>правки</span><span>качество</span></div>
+      </article>
+    </section>
+
+    <div class="section-title">
+      <h2>Как понять, что выбрать?</h2>
+      <p>Для учителя и ученика задачи могут звучать по-разному, но маршрут один: проблема → помощь → результат.</p>
+    </div>
+
+    <section class="chooser">
+      <article class="chooser-card teacher">
+        <h3>👩‍🏫 Если ты учитель</h3>
+        <ul class="chooser-list">
+          <li>Нужно подготовить урок — выбирай «Не хватает идей для урока».</li>
+          <li>Нужна подготовка детей — выбирай «ВПР, ОГЭ и ЕГЭ».</li>
+          <li>Хочешь использовать нейросети — выбирай «ИИ, но боюсь».</li>
+          <li>Нужно событие — выбирай «Яркое школьное событие».</li>
         </ul>
       </article>
 
-      <article class="detail-card">
-        <h2>Для ученика</h2>
-        <ul class="detail-list">
-          <li>выбрать тему проекта;</li>
-          <li>найти проблему для исследования;</li>
-          <li>составить план работы;</li>
-          <li>подготовить презентацию;</li>
-          <li>написать текст защиты;</li>
-          <li>сделать творческий или цифровой продукт.</li>
+      <article class="chooser-card student">
+        <h3>🧑‍🎓 Если ты ученик</h3>
+        <ul class="chooser-list">
+          <li>Не знаешь тему — выбирай «Оформить проект».</li>
+          <li>Готовишься к экзамену — выбирай «ВПР, ОГЭ и ЕГЭ».</li>
+          <li>Идёшь на олимпиаду — выбирай «Олимпиада».</li>
+          <li>Работаешь в группе — выбирай «Командная работа».</li>
         </ul>
       </article>
+    </section>
 
-      <article class="detail-card detail-card--large">
-        <h2>Как правильно описать свою задачу?</h2>
+    <section class="poster">
+      <h2>Инфографика: путь от задачи к результату</h2>
+      <div class="poster-flow">
+        <div class="poster-node"><span>1️⃣</span><b>Назови проблему</b><small>Что нужно решить?</small></div>
+        <div class="poster-node"><span>2️⃣</span><b>Опиши результат</b><small>Что должно получиться?</small></div>
+        <div class="poster-node"><span>3️⃣</span><b>Выбери формат</b><small>Урок, проект, сайт, подготовка</small></div>
+        <div class="poster-node"><span>4️⃣</span><b>Найди помощь</b><small>Наставник, шаблон, чек-лист</small></div>
+        <div class="poster-node"><span>5️⃣</span><b>Сделай продукт</b><small>Готовая работа или маршрут</small></div>
+      </div>
+    </section>
 
+    <div class="section-title">
+      <h2>Мини-анкета перед стартом</h2>
+      <p>Заполни эти строки — и задача станет понятной для наставника.</p>
+    </div>
+
+    <section class="formula-grid">
+      <article class="formula-box">
+        <h3>📝 Формула запроса</h3>
+        <div class="blank-line">Мне нужно помочь с ____________________________</div>
+        <div class="blank-line">Это нужно для класса / ученика / команды: __________</div>
+        <div class="blank-line">Сейчас уже готово: ___________________________</div>
+        <div class="blank-line">Итоговый результат должен быть: _______________</div>
+        <div class="blank-line">Срок выполнения: _____________________________</div>
+      </article>
+
+      <article class="example-box">
+        <h3>✅ Пример хорошей задачи</h3>
         <p>
-          Хорошая формулировка задачи должна отвечать на четыре вопроса:
-          что нужно сделать, для кого, к какому сроку и какой результат должен получиться.
-        </p>
-
-        <div class="template-box">
-          <strong>Не очень понятно:</strong><br>
-          «Помогите с проектом».<br><br>
-
-          <strong>Хорошо:</strong><br>
           «Нужно помочь ученику 7 класса выбрать тему проекта, составить план,
           оформить презентацию и подготовить речь для защиты до конца месяца».
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Если задача учебная</h2>
+        </p>
+        <br>
         <p>
-          Опишите предмет, класс, тему, что именно нужно сделать и в каком формате
-          должен быть результат: доклад, презентация, исследование, макет, сайт,
-          буклет или защита.
+          Такая формулировка сразу показывает: кому нужна помощь, что делать,
+          какой результат нужен и к какому сроку.
         </p>
       </article>
-
-      <article class="detail-card">
-        <h2>Если задача проектная</h2>
-        <p>
-          Укажите проблему, целевую аудиторию, идею продукта, команду,
-          сроки и ожидаемый результат. Это поможет наставнику быстрее понять,
-          какая помощь нужна.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Если задача цифровая</h2>
-        <p>
-          Напишите, какой продукт хотите создать: сайт, бот, ИИ-книга,
-          презентация, видео, интерактивная доска, тест или электронный помощник.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Если нужна проверка</h2>
-        <p>
-          Укажите, что уже готово: текст, презентация, таблица, проектная заявка,
-          сценарий, сайт или макет. Наставнику будет проще дать точные рекомендации.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Готовые формулы запроса</h2>
-
-        <div class="template-box">
-          <strong>Формула 1:</strong><br>
-          Мне нужно помочь с __________________ для __________________.
-          Сейчас у меня есть __________________. Итоговый результат должен быть
-          в формате __________________.<br><br>
-
-          <strong>Формула 2:</strong><br>
-          Я хочу создать __________________. Мне нужна помощь с темой, планом,
-          оформлением, материалами и подготовкой к защите.<br><br>
-
-          <strong>Формула 3:</strong><br>
-          Ученик/команда работает над темой __________________.
-          Нужен наставник по направлению __________________.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Примеры задач</h2>
-
-        <ul class="detail-list">
-          <li>Создать школьный проект «ИИ-книга для развития читательской грамотности».</li>
-          <li>Подготовить презентацию к защите исследовательской работы.</li>
-          <li>Сделать сайт проекта «Учительская 2.0».</li>
-          <li>Оформить социокультурный проект для школы или наслега.</li>
-          <li>Создать интерактивный баннер, квиз или цифровой стенд.</li>
-          <li>Найти наставника по ИИ, дизайну, олимпиадам или проектной деятельности.</li>
-        </ul>
-      </article>
-
     </section>
 
-    <section class="related-section">
-      <h2>Следующий шаг</h2>
-
-      <div class="related-grid">
-        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
-          <span>🤝</span>
-          2. Найди наставника
-        </a>
-
-        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
-          <span>📚</span>
-          3. Получи помощь
-        </a>
-
-        <a class="related-card related-card--purple" href="../index.html#diagnostic">
-          <span>🧪</span>
-          Пройти мини-диагностику
-        </a>
-
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
-      </div>
-    </section>
-
+    <div class="bottom-actions">
+      <a href="2-naydi-nastavnika.html">Перейти к наставникам</a>
+      <a class="secondary" href="../index.html?auth=1#board">Вернуться к доске</a>
+      <a class="secondary" href="3-poluchi-pomosch.html">Получить помощь</a>
+    </div>
   </main>
 </body>
 </html>
