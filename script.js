@@ -20,22 +20,42 @@ const recommendations = {
   team: 'Лучший маршрут: фасилитатор → распределение ролей → командная работа без хаоса.'
 };
 
+function getSavedUser() {
+  const keys = ['uchitelskayaUser', 'uchitelskaya_user', 'currentUser'];
+
+  for (const key of keys) {
+    try {
+      const value = localStorage.getItem(key);
+      if (!value) continue;
+      const user = JSON.parse(value);
+      if (user && (user.name || user.email || user.role)) return user;
+    } catch (error) {
+      continue;
+    }
+  }
+
+  return null;
+}
+
 function renderLoggedUser() {
   if (!profile) return;
 
-  let user = null;
-
-  try {
-    user = JSON.parse(localStorage.getItem('uchitelskayaUser'));
-  } catch (error) {
-    user = null;
-  }
-
-  if (!user || !user.name) return;
-
+  const user = getSavedUser();
   const avatar = profile.querySelector(':scope > span');
   const name = profile.querySelector('b');
   const role = profile.querySelector('small');
+
+  if (!user || !user.name) {
+    if (avatar) avatar.textContent = '🔐';
+    if (name) name.textContent = 'Войти';
+    if (role) role.textContent = 'Не выполнен вход';
+    profile.title = 'Нажмите, чтобы войти в Учительскую 2.0';
+    profile.style.cursor = 'pointer';
+    profile.addEventListener('click', () => {
+      window.location.href = 'pages/login.html';
+    });
+    return;
+  }
 
   if (avatar) avatar.textContent = user.role === 'Ученик' ? '🧑‍🎓' : '👩‍🏫';
   if (name) name.textContent = user.name;
