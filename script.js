@@ -19,6 +19,27 @@ const recommendations = {
   team: 'Лучший маршрут: фасилитатор → распределение ролей → командная работа без хаоса.'
 };
 
+function adaptWelcomeCard() {
+  const welcomeCard = document.querySelector('[data-column="welcome"] .card');
+
+  if (!welcomeCard) return;
+
+  welcomeCard.dataset.info = 'Нажмите, чтобы войти в Учительскую 2.0 как учитель или ученик.';
+  welcomeCard.dataset.loginLink = 'pages/login.html';
+  welcomeCard.classList.add('card--link');
+
+  const icon = welcomeCard.querySelector('.card__icon');
+  const title = welcomeCard.querySelector('b');
+
+  if (icon) icon.textContent = '🔐';
+  if (title) title.textContent = 'Войти в Учительскую';
+
+  welcomeCard.addEventListener('click', event => {
+    event.preventDefault();
+    window.location.href = welcomeCard.dataset.loginLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -45,6 +66,7 @@ function adaptExamCards() {
   }
 }
 
+adaptWelcomeCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
