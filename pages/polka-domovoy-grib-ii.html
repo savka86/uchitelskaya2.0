@@ -6,7 +6,7 @@
   <title>От интегратора ИИ — проект «Домовый гриб»</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    body{margin:0;background:linear-gradient(135deg,#f7fbef,#e8f7d2,#fff);color:#17311a}.page{width:min(1120px,calc(100% - 28px));margin:auto;padding:28px 0 56px}.hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#0d3311,#4c8d00);color:white}.eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}.hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}.lead{font-size:20px;line-height:1.55;max-width:860px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}.card,.checklist{padding:24px;border-radius:26px;background:white;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}.card h2,.checklist h2{margin-top:0;color:#123f16}.prompt{padding:22px;border-radius:24px;background:#fff9e8;border:2px dashed #c58f00;white-space:pre-wrap;line-height:1.6}.checklist{margin-top:24px}.checklist ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}.checklist li{padding:14px 16px;border-radius:18px;background:#f4faec;font-weight:800}.checklist li::before{content:'☐ ';font-weight:900;color:#5c9f00}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900}.btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+    body{margin:0;background:linear-gradient(135deg,#f7fbef,#e8f7d2,#fff);color:#17311a}.page{width:min(1120px,calc(100% - 28px));margin:auto;padding:28px 0 56px}.hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#0d3311,#4c8d00);color:white}.eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}.hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}.lead{font-size:20px;line-height:1.55;max-width:860px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}.card,.checklist{padding:24px;border-radius:26px;background:white;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}.card h2,.checklist h2{margin-top:0;color:#123f16}.prompt{padding:22px;border-radius:24px;background:#fff9e8;border:2px dashed #c58f00;white-space:pre-wrap;line-height:1.6}.checklist{margin-top:24px}.checklist ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}.checklist li{padding:14px 16px;border-radius:18px;background:#f4faec;font-weight:800}.checklist li::before{content:'☐ ';font-weight:900;color:#5c9f00}.prompt-list{margin:0;padding-left:22px;display:grid;gap:12px}.prompt-list li{padding:14px 16px;border-radius:18px;background:#fff9e8;font-weight:800}.prompt-list li::before{content:''}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900}.btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}@media(max-width:800px){.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -36,6 +36,22 @@
         <li>Термины Serpula lacrymans, мицелий, профилактика написаны одинаково.</li>
         <li>После ИИ-правки текст проверен человеком.</li>
       </ul>
+    </section>
+
+    <section class="checklist">
+      <h2>10 индивидуальных промтов интегратора ИИ</h2>
+      <ol class="prompt-list">
+        <li>Проверь проект о Serpula lacrymans. Не выдумывай факты. Используй только реальные данные: 66 домов, 45 заражённых, 21 незаражённый, 31 избавился, 14 не избавились.</li>
+        <li>Сделай речь защиты на 4–5 минут по проекту о домовом грибе, сохрани реальные цифры и не добавляй новых результатов.</li>
+        <li>Составь 15 вопросов жюри и короткие ответы, опираясь только на опрос, карту, эксперимент и выводы проекта.</li>
+        <li>Проверь текст проекта на повторы, слабые формулировки и места, где нужны более точные научные слова.</li>
+        <li>Сделай список терминов проекта: Serpula lacrymans, мицелий, древесина, влажность, вентиляция, профилактика — с простыми объяснениями.</li>
+        <li>Проверь презентацию: какие слайды перегружены текстом и как сократить их до коротких тезисов.</li>
+        <li>Составь карточки для ученика: сложный вопрос жюри — простой ответ — на какой слайд сослаться.</li>
+        <li>Сделай промпт для генерации инфографики по результатам опроса: 66 домов, 45 заражённых, 21 незаражённый.</li>
+        <li>Проверь, нет ли в выводах неподтверждённых утверждений, которых нет в данных проекта.</li>
+        <li>Сделай план безопасного использования ИИ в этом проекте: что можно улучшать, что нельзя придумывать, что нужно проверять человеком.</li>
+      </ol>
     </section>
 
     <h2>Готовый промпт</h2>
