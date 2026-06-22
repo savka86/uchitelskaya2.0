@@ -166,6 +166,26 @@ function linkChooseTaskCard() {
   });
 }
 
+function linkFindMentorCard() {
+  const mentorCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
+    card.innerText.includes('Найди наставника')
+  );
+
+  if (!mentorCard) return;
+
+  mentorCard.dataset.info = 'Откройте подробную визуальную страницу: как выбрать наставника по задаче, суперсиле и нужному результату.';
+  mentorCard.dataset.mentorLink = 'pages/2-naydi-nastavnika.html';
+  mentorCard.classList.add('card--link');
+  mentorCard.style.cursor = 'pointer';
+  mentorCard.title = 'Открыть страницу «2. Найди наставника»';
+
+  mentorCard.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.href = mentorCard.dataset.mentorLink;
+  });
+}
+
 function adaptExamCards() {
   const examProblemCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
     card.innerText.includes('ВПР') || card.innerText.includes('ОГЭ') || card.innerText.includes('ЕГЭ')
@@ -197,6 +217,7 @@ renderLoggedUser();
 adaptWelcomeCard();
 linkBoardGuideCard();
 linkChooseTaskCard();
+linkFindMentorCard();
 adaptExamCards();
 
 function showInfo(title, text, icon = '💡') {
