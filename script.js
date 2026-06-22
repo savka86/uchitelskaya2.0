@@ -38,20 +38,13 @@ if (!requireLoginBeforeBoard()) {
 const menuBtn = document.querySelector('#menuBtn');
 const searchInput = document.querySelector('#boardSearch');
 const clearSearch = document.querySelector('#clearSearch');
-const cards = Array.from(document.querySelectorAll('.card'));
-const infoBox = document.querySelector('#help');
+const infoBox = document.querySelector('#infoBox');
 const diagnosticBtn = document.querySelector('#diagnosticBtn');
 const quizModal = document.querySelector('#quizModal');
 const quizForm = document.querySelector('#quizForm');
 const quizSelect = document.querySelector('#quizSelect');
 const quizResult = document.querySelector('#quizResult');
 const profile = document.querySelector('.profile');
-
-function hideTopbarExtras() {
-  document.querySelectorAll('.topbar .avatars, .topbar .invite-btn, .topbar .icon-btn').forEach(element => {
-    element.remove();
-  });
-}
 
 const recommendations = {
   design: 'Лучший маршрут: дизайнер образовательных продуктов → шаблон презентации → стенд как у профи.',
@@ -62,6 +55,12 @@ const recommendations = {
   producer: 'Лучший маршрут: учитель-продюсер → сценарий события → ученик — продюсер фестиваля.',
   team: 'Лучший маршрут: фасилитатор → распределение ролей → командная работа без хаоса.'
 };
+
+function hideTopbarExtras() {
+  document.querySelectorAll('.topbar .avatars, .topbar .invite-btn, .topbar .icon-btn').forEach(element => {
+    element.remove();
+  });
+}
 
 function renderLoggedUser() {
   if (!profile) return;
@@ -126,144 +125,111 @@ function adaptWelcomeCard() {
   });
 }
 
-function linkBoardGuideCard() {
-  const guideCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
-    card.innerText.includes('Как пользоваться доской')
-  );
+function makeCardActive(card, link, info, title) {
+  if (!card) return;
 
-  if (!guideCard) return;
+  card.dataset.info = info;
+  card.dataset.activeLink = link;
+  card.classList.add('card--link');
+  card.style.cursor = 'pointer';
+  card.title = title;
 
-  guideCard.dataset.info = 'Откройте подробную красочную инструкцию: как двигаться по 7 столбцам, выбирать карточки, находить наставника и получать результат.';
-  guideCard.dataset.guideLink = 'pages/kak-polzovatsya-doskoy.html';
-  guideCard.classList.add('card--link');
-  guideCard.style.cursor = 'pointer';
-  guideCard.title = 'Открыть инструкцию по работе с доской';
-
-  guideCard.addEventListener('click', event => {
+  card.addEventListener('click', event => {
     event.preventDefault();
     event.stopImmediatePropagation();
-    window.location.href = guideCard.dataset.guideLink;
+    window.location.href = card.dataset.activeLink;
   });
+}
+
+function linkBoardGuideCard() {
+  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
+    item.innerText.includes('Как пользоваться доской')
+  );
+
+  makeCardActive(
+    card,
+    'pages/kak-polzovatsya-doskoy.html',
+    'Откройте подробную красочную инструкцию: как двигаться по 7 столбцам, выбирать карточки, находить наставника и получать результат.',
+    'Открыть инструкцию по работе с доской'
+  );
 }
 
 function linkChooseTaskCard() {
-  const chooseTaskCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
-    card.innerText.includes('Выбери задачу')
+  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
+    item.innerText.includes('Выбери задачу')
   );
 
-  if (!chooseTaskCard) return;
-
-  chooseTaskCard.dataset.info = 'Откройте подробную визуальную страницу: как выбрать задачу, определить маршрут и перейти к наставнику.';
-  chooseTaskCard.dataset.taskLink = 'pages/1-vyberi-zadachu.html';
-  chooseTaskCard.classList.add('card--link');
-  chooseTaskCard.style.cursor = 'pointer';
-  chooseTaskCard.title = 'Открыть страницу «1. Выбери задачу»';
-
-  chooseTaskCard.addEventListener('click', event => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.href = chooseTaskCard.dataset.taskLink;
-  });
+  makeCardActive(
+    card,
+    'pages/1-vyberi-zadachu.html',
+    'Откройте подробную визуальную страницу: как выбрать задачу, определить маршрут и перейти к наставнику.',
+    'Открыть страницу «1. Выбери задачу»'
+  );
 }
 
 function linkFindMentorCard() {
-  const mentorCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
-    card.innerText.includes('Найди наставника')
+  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
+    item.innerText.includes('Найди наставника')
   );
 
-  if (!mentorCard) return;
-
-  mentorCard.dataset.info = 'Откройте подробную визуальную страницу: как выбрать наставника по задаче, суперсиле и нужному результату.';
-  mentorCard.dataset.mentorLink = 'pages/2-naydi-nastavnika.html';
-  mentorCard.classList.add('card--link');
-  mentorCard.style.cursor = 'pointer';
-  mentorCard.title = 'Открыть страницу «2. Найди наставника»';
-
-  mentorCard.addEventListener('click', event => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.href = mentorCard.dataset.mentorLink;
-  });
+  makeCardActive(
+    card,
+    'pages/2-naydi-nastavnika.html',
+    'Откройте подробную визуальную страницу: как выбрать наставника по задаче, суперсиле и нужному результату.',
+    'Открыть страницу «2. Найди наставника»'
+  );
 }
 
 function linkGetHelpCard() {
-  const helpCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
-    card.innerText.includes('Получи помощь')
+  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
+    item.innerText.includes('Получи помощь')
   );
 
-  if (!helpCard) return;
-
-  helpCard.dataset.info = 'Откройте подробную визуальную страницу: как получить помощь, подготовить заявку, выбрать формат поддержки и довести задачу до результата.';
-  helpCard.dataset.helpLink = 'pages/3-poluchi-pomosch.html';
-  helpCard.classList.add('card--link');
-  helpCard.style.cursor = 'pointer';
-  helpCard.title = 'Открыть страницу «3. Получи помощь»';
-
-  helpCard.addEventListener('click', event => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.href = helpCard.dataset.helpLink;
-  });
+  makeCardActive(
+    card,
+    'pages/3-poluchi-pomosch.html',
+    'Откройте подробную визуальную страницу: как получить помощь, подготовить заявку, выбрать формат поддержки и довести задачу до результата.',
+    'Открыть страницу «3. Получи помощь»'
+  );
 }
 
 function linkFillRequestCard() {
-  const requestCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
-    card.innerText.includes('Заполни заявку')
+  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
+    item.innerText.includes('Заполни заявку')
   );
 
-  if (!requestCard) return;
-
-  requestCard.dataset.info = 'Откройте подробную визуальную страницу: как правильно заполнить заявку, описать задачу, срок, материалы и ожидаемый результат.';
-  requestCard.dataset.requestLink = 'pages/4-zapolni-zayavku.html';
-  requestCard.classList.add('card--link');
-  requestCard.style.cursor = 'pointer';
-  requestCard.title = 'Открыть страницу «4. Заполни заявку»';
-
-  requestCard.addEventListener('click', event => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.href = requestCard.dataset.requestLink;
-  });
+  makeCardActive(
+    card,
+    'pages/4-zapolni-zayavku.html',
+    'Откройте подробную визуальную страницу: как правильно заполнить заявку, описать задачу, срок, материалы и ожидаемый результат.',
+    'Открыть страницу «4. Заполни заявку»'
+  );
 }
 
 function linkGetResultCard() {
-  const resultCard = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(card =>
-    card.innerText.includes('Получи результат')
+  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
+    item.innerText.includes('Получи результат')
   );
 
-  if (!resultCard) return;
-
-  resultCard.dataset.info = 'Откройте подробную визуальную страницу: как проверить итог, доработать материал, применить его и показать готовый результат.';
-  resultCard.dataset.resultLink = 'pages/5-poluchi-rezultat.html';
-  resultCard.classList.add('card--link');
-  resultCard.style.cursor = 'pointer';
-  resultCard.title = 'Открыть страницу «5. Получи результат»';
-
-  resultCard.addEventListener('click', event => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.href = resultCard.dataset.resultLink;
-  });
+  makeCardActive(
+    card,
+    'pages/5-poluchi-rezultat.html',
+    'Откройте подробную визуальную страницу: как проверить итог, доработать материал, применить его и показать готовый результат.',
+    'Открыть страницу «5. Получи результат»'
+  );
 }
 
 function linkProjectFormatCard() {
-  const projectCard = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(card =>
-    card.innerText.includes('Не знаю, как оформить проект')
+  const card = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(item =>
+    item.innerText.includes('Не знаю, как оформить проект')
   );
 
-  if (!projectCard) return;
-
-  projectCard.dataset.info = 'Откройте подробную визуальную страницу: как оформить школьный проект, написать проблему, актуальность, цель, задачи, продукт, результат и подготовить защиту.';
-  projectCard.dataset.projectLink = 'pages/ne-znayu-kak-oformit-proekt.html';
-  projectCard.classList.add('card--link');
-  projectCard.style.cursor = 'pointer';
-  projectCard.title = 'Открыть страницу «Не знаю, как оформить проект»';
-
-  projectCard.addEventListener('click', event => {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.href = projectCard.dataset.projectLink;
-  });
+  makeCardActive(
+    card,
+    'pages/ne-znayu-kak-oformit-proekt.html',
+    'Откройте подробную визуальную страницу: как оформить школьный проект, написать проблему, актуальность, цель, задачи, продукт, результат и подготовить защиту.',
+    'Открыть страницу «Не знаю, как оформить проект»'
+  );
 }
 
 function adaptExamCards() {
@@ -292,9 +258,75 @@ function adaptExamCards() {
   }
 }
 
+function loadMushroomProjectShelf() {
+  const shelf = document.querySelector('[data-column="materials"]');
+  if (!shelf) return;
+
+  shelf.querySelectorAll('.card').forEach(card => card.remove());
+
+  const projectCards = [
+    {
+      icon: '🌟',
+      title: 'От наставника одарённых',
+      info: 'Проект «Serpula lacrymans»: подготовка к НПК, ОВСУ и защите перед жюри. Акцент — новизна, практическая значимость, ответы на вопросы.',
+      href: 'pages/project-domovoy-grib.html#talent'
+    },
+    {
+      icon: '🧩',
+      title: 'От методиста проекта',
+      info: 'Паспорт исследования: тема, цель, задачи, гипотеза, объект, предмет, методы, этапы и выводы по проекту о домовом грибе.',
+      href: 'pages/project-domovoy-grib.html#method'
+    },
+    {
+      icon: '🏗️',
+      title: 'От архитектора содержания',
+      info: 'Логика работы: проблема деревянных домов → опрос 66 домов → карта заражённости → эксперимент → рекомендации.',
+      href: 'pages/project-domovoy-grib.html#content'
+    },
+    {
+      icon: '✏️',
+      title: 'От дизайнера продукта',
+      info: 'Визуальная упаковка проекта: зелёная палитра, карта Намцев, диаграммы 66/45/31/14, фотографии образцов и чистая презентация.',
+      href: 'pages/project-domovoy-grib.html#design'
+    },
+    {
+      icon: '💻',
+      title: 'От интегратора ИИ',
+      info: 'ИИ-поддержка проекта: речь для защиты, вопросы жюри, проверка цифр, исправление текста и подготовка карточек «вопрос — ответ».',
+      href: 'pages/project-domovoy-grib.html#ai'
+    },
+    {
+      icon: '🎬',
+      title: 'От учителя-продюсера',
+      info: 'Сценарий защиты: сильное начало, главный визуальный аргумент, карта заражённости, эксперимент и финальные рекомендации жителям.',
+      href: 'pages/project-domovoy-grib.html#producer'
+    },
+    {
+      icon: '👥',
+      title: 'От фасилитатора',
+      info: 'Роли команды проекта: исследователь, дизайнер, спикер, проверяющий данных и ответственный за материалы.',
+      href: 'pages/project-domovoy-grib.html#team'
+    }
+  ];
+
+  projectCards.forEach(item => {
+    const card = document.createElement('a');
+    card.className = 'card card--link';
+    card.href = item.href;
+    card.dataset.info = item.info;
+    card.innerHTML = `
+      <span class="card__icon">${item.icon}</span>
+      <b>${item.title}</b>
+    `;
+    shelf.appendChild(card);
+  });
+}
+
 hideTopbarExtras();
 renderLoggedUser();
 adaptWelcomeCard();
+adaptExamCards();
+loadMushroomProjectShelf();
 linkBoardGuideCard();
 linkChooseTaskCard();
 linkFindMentorCard();
@@ -302,7 +334,8 @@ linkGetHelpCard();
 linkFillRequestCard();
 linkGetResultCard();
 linkProjectFormatCard();
-adaptExamCards();
+
+const cards = Array.from(document.querySelectorAll('.card'));
 
 function showInfo(title, text, icon = '💡') {
   if (!infoBox) return;
@@ -319,6 +352,19 @@ function showInfo(title, text, icon = '💡') {
 function setActiveCard(card) {
   cards.forEach(item => item.classList.remove('is-active'));
   card.classList.add('is-active');
+}
+
+function flashTarget(target) {
+  target.classList.add('is-targeted');
+  setTimeout(() => target.classList.remove('is-targeted'), 1400);
+}
+
+function highlightByRole(role) {
+  cards.forEach(card => {
+    if (card.dataset.tags === role || card.dataset.role === role) {
+      card.classList.add('is-active');
+    }
+  });
 }
 
 cards.forEach(card => {
@@ -356,19 +402,6 @@ cards.forEach(card => {
   });
 });
 
-function flashTarget(target) {
-  target.classList.add('is-targeted');
-  setTimeout(() => target.classList.remove('is-targeted'), 1400);
-}
-
-function highlightByRole(role) {
-  cards.forEach(card => {
-    if (card.dataset.tags === role || card.dataset.role === role) {
-      card.classList.add('is-active');
-    }
-  });
-}
-
 searchInput?.addEventListener('input', () => {
   const query = searchInput.value.trim().toLowerCase();
 
@@ -379,6 +412,7 @@ searchInput?.addEventListener('input', () => {
 });
 
 clearSearch?.addEventListener('click', () => {
+  if (!searchInput) return;
   searchInput.value = '';
   cards.forEach(card => card.classList.remove('is-hidden'));
   searchInput.focus();
@@ -389,6 +423,7 @@ menuBtn?.addEventListener('click', () => {
 });
 
 diagnosticBtn?.addEventListener('click', () => {
+  if (!quizModal) return;
   if (typeof quizModal.showModal === 'function') {
     quizModal.showModal();
   } else {
@@ -398,8 +433,8 @@ diagnosticBtn?.addEventListener('click', () => {
 
 quizForm?.addEventListener('submit', event => {
   event.preventDefault();
-  const value = quizSelect.value;
-  quizResult.textContent = value ? recommendations[value] : 'Сначала выберите задачу.';
+  const value = quizSelect?.value;
+  if (quizResult) quizResult.textContent = value ? recommendations[value] : 'Сначала выберите задачу.';
 });
 
 document.addEventListener('keydown', event => {
