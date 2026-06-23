@@ -5,427 +5,627 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Хочу сделать командную работу без хаоса — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Страница для организации командной работы без хаоса: роли, правила, канбан-доска, план встреч, чек-лист и заявка к наставнику." />
+  <meta name="description" content="Красочная страница для организации командной работы без хаоса: роли, правила, канбан-доска, план встречи, чек-лист и заявка к фасилитатору." />
+  <style>
+    :root {
+      --team-blue: #2563eb;
+      --team-sky: #38bdf8;
+      --team-green: #22c55e;
+      --team-mint: #d9f99d;
+      --team-yellow: #facc15;
+      --team-orange: #fb923c;
+      --team-pink: #fb7185;
+      --team-purple: #8b5cf6;
+      --team-dark: #102033;
+      --team-soft: #f8fbff;
+    }
+
+    body.team-page-body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--team-dark);
+      background:
+        radial-gradient(circle at 8% 6%, rgba(56, 189, 248, .32), transparent 30%),
+        radial-gradient(circle at 92% 10%, rgba(251, 146, 60, .30), transparent 28%),
+        radial-gradient(circle at 50% 98%, rgba(139, 92, 246, .18), transparent 34%),
+        linear-gradient(135deg, #ecfeff 0%, #fff7ed 48%, #f5f3ff 100%);
+    }
+
+    .team-page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .team-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .team-link,
+    .team-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, .10);
+    }
+
+    .team-link {
+      color: #0f172a;
+      background: rgba(255, 255, 255, .82);
+      border: 1px solid rgba(37, 99, 235, .12);
+    }
+
+    .team-button {
+      color: white;
+      background: linear-gradient(135deg, var(--team-blue), var(--team-purple));
+    }
+
+    .team-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      background:
+        linear-gradient(135deg, rgba(37, 99, 235, .94), rgba(139, 92, 246, .92)),
+        linear-gradient(45deg, #2563eb, #8b5cf6);
+      color: white;
+      box-shadow: 0 26px 70px rgba(37, 99, 235, .24);
+    }
+
+    .team-hero::before,
+    .team-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .16);
+      pointer-events: none;
+    }
+
+    .team-hero::before {
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      top: -70px;
+    }
+
+    .team-hero::after {
+      width: 140px;
+      height: 140px;
+      left: 36%;
+      bottom: -60px;
+    }
+
+    .team-hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .team-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .18);
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+
+    .team-hero h1 {
+      max-width: 760px;
+      margin: 18px 0 14px;
+      font-size: clamp(34px, 6vw, 64px);
+      line-height: .95;
+      letter-spacing: -.05em;
+    }
+
+    .team-hero p {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.55;
+      color: rgba(255, 255, 255, .92);
+    }
+
+    .team-illustration {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .17);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, .24);
+    }
+
+    .team-people {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .person-card {
+      min-height: 110px;
+      border-radius: 22px;
+      padding: 12px;
+      background: white;
+      color: var(--team-dark);
+      text-align: center;
+      font-weight: 900;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .14);
+    }
+
+    .person-card span {
+      display: block;
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    .team-mini-board {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .team-mini-board div {
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .92);
+      color: var(--team-dark);
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .team-section {
+      margin-top: 28px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 16px;
+      font-size: clamp(26px, 4vw, 38px);
+      letter-spacing: -.03em;
+    }
+
+    .section-title span {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      color: white;
+      background: linear-gradient(135deg, var(--team-orange), var(--team-pink));
+      box-shadow: 0 14px 34px rgba(251, 113, 133, .28);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .team-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .team-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      padding: 24px;
+      background: rgba(255, 255, 255, .92);
+      border: 1px solid rgba(37, 99, 235, .10);
+      box-shadow: 0 18px 46px rgba(15, 23, 42, .10);
+    }
+
+    .team-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 8px;
+      background: linear-gradient(90deg, var(--team-sky), var(--team-green), var(--team-yellow), var(--team-pink), var(--team-purple));
+    }
+
+    .team-card h2,
+    .team-card h3 {
+      margin: 0 0 12px;
+      letter-spacing: -.02em;
+    }
+
+    .team-card p {
+      margin: 0;
+      line-height: 1.65;
+      color: #334155;
+      font-size: 16px;
+    }
+
+    .team-icon {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 22px;
+      margin-bottom: 16px;
+      font-size: 30px;
+      background: linear-gradient(135deg, #eff6ff, #fef3c7);
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .route-step {
+      position: relative;
+      min-height: 150px;
+      border-radius: 24px;
+      padding: 18px;
+      background: white;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, .09);
+      border: 1px solid rgba(148, 163, 184, .2);
+    }
+
+    .route-step b {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      color: white;
+      background: linear-gradient(135deg, var(--team-blue), var(--team-purple));
+      font-size: 18px;
+    }
+
+    .route-step h3 {
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+
+    .route-step p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .role-card {
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(135deg, #ffffff, #f0f9ff);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .08);
+      border: 1px solid rgba(14, 165, 233, .16);
+    }
+
+    .role-card span {
+      font-size: 30px;
+    }
+
+    .role-card h3 {
+      margin: 10px 0 6px;
+      font-size: 18px;
+    }
+
+    .role-card p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .kanban-col {
+      border-radius: 26px;
+      padding: 18px;
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, .09);
+      border: 1px solid rgba(15, 23, 42, .08);
+    }
+
+    .kanban-col h3 {
+      margin: 0 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .task-note {
+      padding: 12px;
+      border-radius: 16px;
+      margin-top: 10px;
+      background: #f8fafc;
+      border: 1px dashed rgba(37, 99, 235, .28);
+      color: #334155;
+      font-weight: 800;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+    }
+
+    .check-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+    }
+
+    .template-box {
+      border-radius: 26px;
+      padding: 24px;
+      background: #0f172a;
+      color: white;
+      box-shadow: 0 20px 46px rgba(15, 23, 42, .18);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .template-box strong {
+      color: #fde68a;
+    }
+
+    .cta {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+      margin-top: 30px;
+      padding: 28px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, #f97316, #ec4899, #8b5cf6);
+      color: white;
+      box-shadow: 0 24px 64px rgba(236, 72, 153, .28);
+    }
+
+    .cta h2 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: -.04em;
+    }
+
+    .cta p {
+      margin: 0;
+      max-width: 780px;
+      color: rgba(255, 255, 255, .92);
+      line-height: 1.6;
+      font-size: 18px;
+    }
+
+    .cta-emoji {
+      font-size: 88px;
+      filter: drop-shadow(0 14px 18px rgba(15, 23, 42, .22));
+    }
+
+    @media (max-width: 980px) {
+      .team-hero-grid,
+      .team-grid,
+      .team-grid.two,
+      .route,
+      .roles-grid,
+      .kanban,
+      .cta {
+        grid-template-columns: 1fr;
+      }
+
+      .team-topline {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
 </head>
 
-<body class="detail-body">
-  <main class="detail-page">
-
-    <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
+<body class="team-page-body">
+  <main class="team-page">
+    <div class="team-topline">
+      <a class="team-link" href="../index.html">← Назад к доске</a>
+      <a class="team-button" href="../index.html#diagnostic">Пройти мини-диагностику</a>
     </div>
 
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Столбец 2: Что у вас болит?</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">👥</div>
+    <section class="team-hero">
+      <div class="team-hero-grid">
         <div>
+          <span class="team-badge">👥 Столбец 2: Что у вас болит?</span>
           <h1>Хочу сделать командную работу без хаоса</h1>
           <p>
-            Эта страница поможет организовать работу команды так, чтобы каждый участник
-            понимал свою роль, сроки, задачи и общий результат. Здесь собраны правила,
-            шаблоны, чек-листы и простой маршрут командной работы.
+            Команда работает спокойно, когда у всех есть общая цель, понятные роли,
+            короткие задачи, сроки и место, где видно движение к результату.
+            Эта страница поможет быстро навести порядок в проекте, событии или групповой работе.
           </p>
         </div>
+
+        <div class="team-illustration" aria-label="Инфографика командной работы">
+          <div class="team-people">
+            <div class="person-card"><span>🧑‍💼</span>Лидер</div>
+            <div class="person-card"><span>✍️</span>Автор</div>
+            <div class="person-card"><span>🎨</span>Дизайнер</div>
+          </div>
+          <div class="team-mini-board">
+            <div>Нужно</div>
+            <div>В работе</div>
+            <div>Готово</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="detail-grid">
-
-      <article class="detail-card detail-card--large">
-        <h2>Что это значит?</h2>
-        <p>
-          Командная работа часто превращается в хаос, когда нет общего плана,
-          роли не распределены, задачи записаны только в голове, а ответственность
-          лежит на одном человеке. В итоге часть участников перегружена, часть —
-          не понимает, что делать.
-        </p>
-        <p>
-          Чтобы команда работала спокойно, нужно заранее договориться о цели,
-          ролях, сроках, правилах связи и способе проверки результата.
-        </p>
-
-        <div class="template-box">
-          <strong>Главная формула:</strong><br>
-          Цель → Роли → Задачи → Сроки → Контроль → Результат
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кому подходит эта карточка?</h2>
-        <ul class="detail-list">
-          <li>команде учеников, которая делает проект;</li>
-          <li>учителю-наставнику проектной группы;</li>
-          <li>классному руководителю;</li>
-          <li>организатору школьного события;</li>
-          <li>педагогу, который распределяет задачи между коллегами;</li>
-          <li>участникам конкурса, хакатона или проектной сессии.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кто может помочь?</h2>
-        <p>
-          Подойдёт наставник с суперсилой <strong>«Фасилитатор команды»</strong>.
-          Он помогает провести встречу, распределить роли, записать задачи,
-          договориться о правилах и запустить работу без хаоса.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Маршрут командной работы</h2>
-
-        <div class="template-box">
-          <strong>1. Определить общий результат</strong><br>
-          Что команда должна сделать в конце: проект, сайт, презентацию, событие, исследование?<br><br>
-
-          <strong>2. Распределить роли</strong><br>
-          Кто отвечает за идею, текст, дизайн, выступление, сбор материалов, технику?<br><br>
-
-          <strong>3. Разделить работу на задачи</strong><br>
-          Большую работу нужно разбить на маленькие понятные шаги.<br><br>
-
-          <strong>4. Поставить сроки</strong><br>
-          У каждой задачи должен быть ответственный и дата выполнения.<br><br>
-
-          <strong>5. Проводить короткие встречи</strong><br>
-          Лучше 10 минут регулярно, чем один большой разговор в последний день.<br><br>
-
-          <strong>6. Проверять результат</strong><br>
-          Команда должна видеть, что уже сделано, что в работе и что осталось.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Почему возникает хаос?</h2>
-        <ul class="detail-list">
-          <li>нет единой цели;</li>
-          <li>никто не записывает задачи;</li>
-          <li>роли не распределены;</li>
-          <li>сроки не обозначены;</li>
-          <li>все ждут указаний от одного человека;</li>
-          <li>нет общего места для материалов;</li>
-          <li>команда вспоминает о работе в последний момент.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что делает команду сильной?</h2>
-        <ul class="detail-list">
-          <li>понятная цель;</li>
-          <li>чёткие роли;</li>
-          <li>короткие задачи;</li>
-          <li>видимые сроки;</li>
-          <li>уважительное общение;</li>
-          <li>регулярная проверка прогресса;</li>
-          <li>общая ответственность за результат.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Роли в команде</h2>
-
-        <div class="template-box">
-          <strong>Лидер команды</strong> — следит за общим движением и сроками.<br><br>
-          <strong>Исследователь</strong> — ищет информацию, факты, примеры и источники.<br><br>
-          <strong>Автор текста</strong> — пишет описание проекта, сценарий, речь или статью.<br><br>
-          <strong>Дизайнер</strong> — отвечает за оформление, презентацию, афишу, карточки.<br><br>
-          <strong>Технический специалист</strong> — помогает с сайтом, файлами, видео, ИИ-инструментами.<br><br>
-          <strong>Спикер</strong> — готовит выступление и представляет результат.<br><br>
-          <strong>Координатор материалов</strong> — собирает файлы, ссылки, фото, документы.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Правило одной ответственности</h2>
-        <p>
-          У каждой задачи должен быть один главный ответственный. Помогать могут многие,
-          но отвечать за выполнение должен конкретный участник.
-        </p>
-
-        <div class="template-box">
-          <strong>Плохо:</strong><br>
-          «Все делают презентацию».<br><br>
-
-          <strong>Хорошо:</strong><br>
-          «Саша собирает текст, Айаана делает дизайн, Ярик проверяет картинки,
-          Николара готовит выступление».
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Правило короткой задачи</h2>
-        <p>
-          Задача должна быть такой, чтобы её можно было выполнить и проверить.
-          Не пишите «сделать проект». Лучше разделить проект на маленькие шаги.
-        </p>
-
-        <div class="template-box">
-          <strong>Вместо:</strong> сделать презентацию.<br><br>
-          <strong>Лучше:</strong><br>
-          1. Собрать текст для 3 слайдов.<br>
-          2. Найти 5 фотографий.<br>
-          3. Сделать титульный слайд.<br>
-          4. Проверить ошибки.<br>
-          5. Подготовить речь на 2 минуты.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Командная таблица задач</h2>
-
-        <div class="template-box">
-          <strong>Название проекта:</strong> _______________________________<br><br>
-          <strong>Общий результат:</strong> ________________________________<br><br>
-
-          <strong>Задача 1:</strong> _______________________________<br>
-          Ответственный: __________________ Срок: ________________ Статус: __________<br><br>
-
-          <strong>Задача 2:</strong> _______________________________<br>
-          Ответственный: __________________ Срок: ________________ Статус: __________<br><br>
-
-          <strong>Задача 3:</strong> _______________________________<br>
-          Ответственный: __________________ Срок: ________________ Статус: __________<br><br>
-
-          <strong>Задача 4:</strong> _______________________________<br>
-          Ответственный: __________________ Срок: ________________ Статус: __________
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Канбан-доска</h2>
-        <p>
-          Самый простой способ убрать хаос — использовать доску из трёх колонок.
-          Её можно сделать на бумаге, в тетради, на доске, в таблице или в онлайн-сервисе.
-        </p>
-
-        <div class="template-box">
-          <strong>Нужно сделать</strong><br>
-          Здесь лежат задачи, которые ещё не начаты.<br><br>
-
-          <strong>В работе</strong><br>
-          Здесь задачи, которые сейчас выполняются.<br><br>
-
-          <strong>Готово</strong><br>
-          Здесь задачи, которые уже завершены и проверены.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Правила командной встречи</h2>
-        <ul class="detail-list">
-          <li>говорим коротко и по делу;</li>
-          <li>не перебиваем друг друга;</li>
-          <li>каждый сообщает, что сделал;</li>
-          <li>сразу записываем новые задачи;</li>
-          <li>не ищем виноватых, а ищем решение;</li>
-          <li>в конце встречи фиксируем следующий шаг.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>План встречи на 15 минут</h2>
-
-        <div class="template-box">
-          <strong>1–3 минуты:</strong> вспомнить общий результат команды.<br><br>
-          <strong>3–7 минут:</strong> каждый говорит, что уже сделал.<br><br>
-          <strong>7–10 минут:</strong> определить, что мешает работе.<br><br>
-          <strong>10–13 минут:</strong> распределить новые задачи.<br><br>
-          <strong>13–15 минут:</strong> записать сроки и ответственных.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как договориться о правилах?</h2>
-        <p>
-          В начале работы команда должна принять 5–7 простых правил.
-          Они помогут избежать споров и недопонимания.
-        </p>
-
-        <div class="template-box">
-          <strong>Примеры правил:</strong><br>
-          Отвечаем на сообщения вовремя.<br>
-          Не удаляем чужие материалы без согласования.<br>
-          Если не успеваешь — предупреждаешь заранее.<br>
-          Критикуем идею, а не человека.<br>
-          Все важные решения записываем.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что делать, если кто-то не участвует?</h2>
-        <p>
-          Сначала нужно спокойно выяснить причину: не понял задачу, боится ошибиться,
-          не успевает, нет доступа к материалам или роль не подходит.
-          После этого лучше дать более понятную и короткую задачу.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что делать, если все спорят?</h2>
-        <p>
-          Вернитесь к общей цели. Спросите: какой вариант быстрее приведёт к результату?
-          Если спор не решается, можно проголосовать или обратиться к наставнику-фасилитатору.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>План командной работы на неделю</h2>
-
-        <div class="template-box">
-          <strong>День 1:</strong> определить цель, продукт и роли.<br><br>
-          <strong>День 2:</strong> собрать материалы и распределить первые задачи.<br><br>
-          <strong>День 3:</strong> подготовить черновик текста, презентации или продукта.<br><br>
-          <strong>День 4:</strong> проверить, что готово, и исправить слабые места.<br><br>
-          <strong>День 5:</strong> собрать общий вариант.<br><br>
-          <strong>День 6:</strong> провести репетицию или тестирование.<br><br>
-          <strong>День 7:</strong> представить результат и подвести итоги.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что взять с бесплатной полки?</h2>
-        <ul class="detail-list">
-          <li>шаблон распределения ролей;</li>
-          <li>таблицу задач команды;</li>
-          <li>чек-лист командной встречи;</li>
-          <li>шаблон канбан-доски;</li>
-          <li>памятку лидера команды;</li>
-          <li>форму самооценки участника;</li>
-          <li>шаблон итогового отчёта команды.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как использовать ИИ?</h2>
-        <p>
-          ИИ можно попросить помочь распределить роли, составить план работы,
-          разбить большую задачу на маленькие шаги, придумать правила команды
-          или подготовить чек-лист проверки результата.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Промпт для ИИ</h2>
-        <div class="template-box">
-          Ты — помощник фасилитатора школьной команды.
-          Помоги организовать командную работу над проектом «__________».
-          Участников: ____. Срок: ____ дней.
-          Составь роли, список задач, план встреч, правила команды и чек-лист результата.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Чек-лист команды без хаоса</h2>
-
-        <div class="template-box">
-          ✅ Есть общий результат.<br>
-          ✅ Все понимают цель проекта.<br>
-          ✅ Роли распределены.<br>
-          ✅ У каждой задачи есть ответственный.<br>
-          ✅ У каждой задачи есть срок.<br>
-          ✅ Есть общая таблица или доска задач.<br>
-          ✅ Команда проводит короткие встречи.<br>
-          ✅ Все материалы хранятся в одном месте.<br>
-          ✅ Есть правила общения.<br>
-          ✅ Готовый результат проверяется всей командой.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Памятка лидера команды</h2>
-        <ul class="detail-list">
-          <li>не делай всё сам;</li>
-          <li>задавай понятные вопросы;</li>
-          <li>записывай договорённости;</li>
-          <li>следи за сроками;</li>
-          <li>поддерживай участников;</li>
-          <li>помогай решать трудности;</li>
-          <li>помни, что лидер — это не начальник, а координатор.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Памятка участника</h2>
-        <ul class="detail-list">
-          <li>знай свою роль;</li>
-          <li>уточняй задачу, если не понял;</li>
-          <li>соблюдай сроки;</li>
-          <li>предупреждай, если не успеваешь;</li>
-          <li>помогай другим;</li>
-          <li>сохраняй материалы в общее место;</li>
-          <li>участвуй в обсуждении результата.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Заявка к наставнику-фасилитатору</h2>
-
-        <div class="template-box">
-          Здравствуйте! Нам нужна помощь в организации командной работы.<br><br>
-          Название проекта или события: _______________________________.<br><br>
-          Количество участников: _____________________________________.<br><br>
-          Что нужно сделать в итоге: _________________________________.<br><br>
-          Сейчас проблема в том, что: роли не распределены / нет плана / нет сроков / все спорят / никто не понимает задачи.<br><br>
-          Что уже готово: ___________________________________________.<br><br>
-          Нужна помощь с: распределением ролей / планом задач / встречей команды / таблицей / правилами / подготовкой результата.<br><br>
-          Срок выполнения: __________________________________________.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Первый маленький шаг</h2>
-        <p>
-          Не пытайтесь сразу решить все проблемы команды. Начните с простого:
-          запишите общий результат и распределите 3 ближайшие задачи.
-        </p>
-
-        <div class="template-box">
-          <strong>Сегодня:</strong><br>
-          1 общий результат → 3 задачи → 3 ответственных → 3 срока
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Короткий текст для страницы</h2>
-        <div class="template-box">
-          Чтобы командная работа не превратилась в хаос, начните с общего результата.
-          Затем распределите роли, разбейте работу на маленькие задачи, назначьте
-          ответственных и сроки. Используйте простую доску «Нужно сделать — В работе — Готово»
-          и проводите короткие встречи для проверки прогресса.
-        </div>
-      </article>
-
-    </section>
-
-    <section class="related-section">
-      <h2>Следующий шаг</h2>
-
-      <div class="related-grid">
-        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
-          <span>🤝</span>
-          Найти фасилитатора
-        </a>
-
-        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
-          <span>📚</span>
-          Получить материалы
-        </a>
-
-        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
-          <span>🎯</span>
-          Вернуться к выбору задачи
-        </a>
-
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
+    <section class="team-section">
+      <h2 class="section-title"><span>1</span> Почему появляется хаос?</h2>
+      <div class="team-grid">
+        <article class="team-card">
+          <div class="team-icon">🎯</div>
+          <h3>Нет общей цели</h3>
+          <p>Участники делают разные вещи, потому что не договорились, какой итог нужен команде.</p>
+        </article>
+        <article class="team-card">
+          <div class="team-icon">🌀</div>
+          <h3>Роли размыты</h3>
+          <p>Все вроде бы заняты, но непонятно, кто отвечает за текст, дизайн, выступление и сроки.</p>
+        </article>
+        <article class="team-card">
+          <div class="team-icon">⏰</div>
+          <h3>Нет контроля сроков</h3>
+          <p>Задачи вспоминаются в последний момент, а часть работы остаётся на одном человеке.</p>
+        </article>
       </div>
     </section>
 
+    <section class="team-section">
+      <h2 class="section-title"><span>2</span> Формула спокойной команды</h2>
+      <div class="route">
+        <article class="route-step"><b>1</b><h3>Цель</h3><p>Определяем, какой результат нужен в конце.</p></article>
+        <article class="route-step"><b>2</b><h3>Роли</h3><p>Каждый понимает свою зону ответственности.</p></article>
+        <article class="route-step"><b>3</b><h3>Задачи</h3><p>Большую работу делим на маленькие шаги.</p></article>
+        <article class="route-step"><b>4</b><h3>Сроки</h3><p>У каждой задачи есть дата и ответственный.</p></article>
+        <article class="route-step"><b>5</b><h3>Связь</h3><p>Договариваемся, где обсуждаем вопросы.</p></article>
+        <article class="route-step"><b>6</b><h3>Итог</h3><p>Проверяем результат и готовим защиту.</p></article>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <h2 class="section-title"><span>3</span> Роли в команде</h2>
+      <div class="roles-grid">
+        <article class="role-card"><span>🧭</span><h3>Координатор</h3><p>Следит за планом, сроками и движением команды.</p></article>
+        <article class="role-card"><span>🔎</span><h3>Исследователь</h3><p>Собирает факты, примеры, данные и полезные материалы.</p></article>
+        <article class="role-card"><span>✍️</span><h3>Автор</h3><p>Готовит текст, сценарий, описание проекта или речь.</p></article>
+        <article class="role-card"><span>🎨</span><h3>Дизайнер</h3><p>Оформляет презентацию, афишу, стенд или карточки.</p></article>
+        <article class="role-card"><span>💻</span><h3>Техник</h3><p>Работает с файлами, сайтом, видео, звуком и цифровыми сервисами.</p></article>
+        <article class="role-card"><span>🎤</span><h3>Спикер</h3><p>Готовит выступление и представляет результат команды.</p></article>
+        <article class="role-card"><span>📦</span><h3>Хранитель материалов</h3><p>Собирает фото, ссылки, документы и готовые версии файлов.</p></article>
+        <article class="role-card"><span>✅</span><h3>Проверяющий</h3><p>Смотрит ошибки, соответствие требованиям и качество итоговой работы.</p></article>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <h2 class="section-title"><span>4</span> Простая канбан-доска</h2>
+      <div class="kanban">
+        <article class="kanban-col">
+          <h3>📌 Нужно сделать</h3>
+          <div class="task-note">Собрать идеи</div>
+          <div class="task-note">Распределить роли</div>
+          <div class="task-note">Подготовить список материалов</div>
+        </article>
+        <article class="kanban-col">
+          <h3>⚙️ В работе</h3>
+          <div class="task-note">Сделать 3 слайда</div>
+          <div class="task-note">Написать вступление</div>
+          <div class="task-note">Подобрать фотографии</div>
+        </article>
+        <article class="kanban-col">
+          <h3>🏁 Готово</h3>
+          <div class="task-note">Утверждена тема</div>
+          <div class="task-note">Создан общий файл</div>
+          <div class="task-note">Назначен координатор</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <h2 class="section-title"><span>5</span> План встречи на 15 минут</h2>
+      <div class="team-grid two">
+        <article class="team-card">
+          <div class="team-icon">⏱️</div>
+          <h3>Короткая структура</h3>
+          <p>
+            1–3 мин: вспомнить общий результат.<br>
+            3–7 мин: каждый говорит, что сделал.<br>
+            7–10 мин: найти трудности.<br>
+            10–13 мин: записать новые задачи.<br>
+            13–15 мин: договориться о следующем шаге.
+          </p>
+        </article>
+        <article class="team-card">
+          <div class="team-icon">💬</div>
+          <h3>Правила разговора</h3>
+          <p>
+            Говорим коротко, не перебиваем, не ищем виноватых, фиксируем решения письменно,
+            в конце встречи каждый понимает, что делает дальше.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <h2 class="section-title"><span>6</span> Чек-лист без хаоса</h2>
+      <div class="team-grid two">
+        <article class="team-card">
+          <div class="checklist">
+            <div class="check-item"><span>✅</span><span>Есть общий результат, понятный всем участникам.</span></div>
+            <div class="check-item"><span>✅</span><span>У каждой задачи назначен один главный ответственный.</span></div>
+            <div class="check-item"><span>✅</span><span>Задачи записаны не в голове, а в общем списке.</span></div>
+            <div class="check-item"><span>✅</span><span>Сроки видны команде и регулярно проверяются.</span></div>
+            <div class="check-item"><span>✅</span><span>Есть место для файлов, ссылок, фото и черновиков.</span></div>
+            <div class="check-item"><span>✅</span><span>Команда проводит короткие встречи без лишних споров.</span></div>
+          </div>
+        </article>
+
+        <article class="team-card">
+          <h3>Кто может помочь?</h3>
+          <p>
+            Подойдёт наставник с суперсилой <strong>«Фасилитатор»</strong>.
+            Он поможет провести встречу, распределить роли, оформить доску задач,
+            наладить правила общения и довести команду до результата.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <h2 class="section-title"><span>7</span> Готовая заявка наставнику</h2>
+      <div class="template-box">
+        <strong>Здравствуйте! Нам нужна помощь с командной работой.</strong><br><br>
+        Название проекта или события: ________________________________<br><br>
+        Участники команды: __________________________________________<br><br>
+        Что сейчас вызывает трудности: роли / сроки / споры / план / материалы / выступление.<br><br>
+        Какой результат нужен: проект / презентация / событие / исследование / защита.<br><br>
+        Срок выполнения: ___________________________________________<br><br>
+        Что хотим получить после встречи: распределённые роли, список задач, план и понятный следующий шаг.
+      </div>
+    </section>
+
+    <section class="cta">
+      <div>
+        <h2>Команда без хаоса — это команда с понятным маршрутом</h2>
+        <p>
+          Начните с маленького шага: запишите цель, назначьте роли и заведите доску
+          «Нужно сделать — В работе — Готово». После этого даже большая задача станет управляемой.
+        </p>
+      </div>
+      <div class="cta-emoji" aria-hidden="true">🤝</div>
+    </section>
   </main>
 </body>
 </html>
