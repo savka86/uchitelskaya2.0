@@ -201,6 +201,12 @@ function makeCardActive(card, link, info, title) {
   });
 }
 
+function findBoardCard(column, text) {
+  return Array.from(document.querySelectorAll(`[data-column="${column}"] .card`)).find(item =>
+    item.innerText.includes(text)
+  );
+}
+
 function renderTeacherRoles() {
   const column = document.querySelector('[data-column="teachers"]');
   if (!column) return;
@@ -237,10 +243,7 @@ function adaptExamProblemCard() {
 }
 
 function linkBoardGuideCard() {
-  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
-    item.innerText.includes('Как пользоваться доской')
-  );
-
+  const card = findBoardCard('welcome', 'Как пользоваться доской');
   makeCardActive(
     card,
     'pages/kak-polzovatsya-doskoy.html',
@@ -250,10 +253,7 @@ function linkBoardGuideCard() {
 }
 
 function linkChooseTaskCard() {
-  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
-    item.innerText.includes('Выбери задачу')
-  );
-
+  const card = findBoardCard('welcome', 'Выбери задачу');
   makeCardActive(
     card,
     'pages/1-vyberi-zadachu.html',
@@ -263,10 +263,7 @@ function linkChooseTaskCard() {
 }
 
 function linkFindMentorCard() {
-  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
-    item.innerText.includes('Найди наставника')
-  );
-
+  const card = findBoardCard('welcome', 'Найди наставника');
   makeCardActive(
     card,
     'pages/2-naydi-nastavnika.html',
@@ -276,10 +273,7 @@ function linkFindMentorCard() {
 }
 
 function linkGetHelpCard() {
-  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
-    item.innerText.includes('Получи помощь')
-  );
-
+  const card = findBoardCard('welcome', 'Получи помощь');
   makeCardActive(
     card,
     'pages/3-poluchi-pomosch.html',
@@ -289,10 +283,7 @@ function linkGetHelpCard() {
 }
 
 function linkFillRequestCard() {
-  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
-    item.innerText.includes('Заполни заявку')
-  );
-
+  const card = findBoardCard('welcome', 'Заполни заявку');
   makeCardActive(
     card,
     'pages/4-zapolni-zayavku.html',
@@ -302,10 +293,7 @@ function linkFillRequestCard() {
 }
 
 function linkGetResultCard() {
-  const card = Array.from(document.querySelectorAll('[data-column="welcome"] .card')).find(item =>
-    item.innerText.includes('Получи результат')
-  );
-
+  const card = findBoardCard('welcome', 'Получи результат');
   makeCardActive(
     card,
     'pages/5-poluchi-rezultat.html',
@@ -315,15 +303,42 @@ function linkGetResultCard() {
 }
 
 function linkProjectFormatCard() {
-  const card = Array.from(document.querySelectorAll('[data-column="problems"] .card')).find(item =>
-    item.innerText.includes('Не знаю, как оформить проект')
-  );
-
+  const card = findBoardCard('problems', 'Не знаю, как оформить проект');
   makeCardActive(
     card,
     'pages/ne-znayu-kak-oformit-proekt.html',
     'Откройте подробную визуальную страницу: как оформить школьный проект, написать проблему, актуальность, цель, задачи, продукт, результат и подготовить защиту.',
     'Открыть страницу «Не знаю, как оформить проект»'
+  );
+}
+
+function linkAiFearCard() {
+  const card = findBoardCard('problems', 'Хочу использовать ИИ, но боюсь');
+  makeCardActive(
+    card,
+    'pages/hochu-ispolzovat-ii-no-boyus.html',
+    'Откройте красочную страницу: как начать использовать ИИ без страха, с правилами безопасности, примерами и поддержкой наставника.',
+    'Открыть страницу «Хочу использовать ИИ, но боюсь»'
+  );
+}
+
+function linkOlympiadCard() {
+  const card = findBoardCard('problems', 'Нужно подготовить ученика к олимпиаде');
+  makeCardActive(
+    card,
+    'pages/nuzhno-podgotovit-uchenika-k-olimpiade.html',
+    'Откройте красочную страницу: как составить маршрут подготовки олимпиадника, разобрать задания, вести прогресс и подключить наставника.',
+    'Открыть страницу «Нужно подготовить ученика к олимпиаде»'
+  );
+}
+
+function linkSchoolEventCard() {
+  const card = findBoardCard('problems', 'Нужно провести яркое школьное событие');
+  makeCardActive(
+    card,
+    'pages/nuzhno-provesti-yarkoe-shkolnoe-sobytie.html',
+    'Откройте красочную страницу: как придумать идею, собрать команду, подготовить сценарий, оформление, медиаплан и провести событие без хаоса.',
+    'Открыть страницу «Нужно провести яркое школьное событие»'
   );
 }
 
@@ -404,6 +419,9 @@ linkGetHelpCard();
 linkFillRequestCard();
 linkGetResultCard();
 linkProjectFormatCard();
+linkAiFearCard();
+linkOlympiadCard();
+linkSchoolEventCard();
 
 const cards = Array.from(document.querySelectorAll('.card'));
 
