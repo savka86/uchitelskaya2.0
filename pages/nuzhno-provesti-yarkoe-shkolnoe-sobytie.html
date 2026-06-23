@@ -5,418 +5,723 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Нужно провести яркое школьное событие — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Страница для подготовки яркого школьного события: идея, сценарий, команда, афиша, медиаплан, чек-лист и заявка к наставнику." />
+  <meta name="description" content="Красочная страница для подготовки школьного события: идея, команда, сценарий, оформление, репетиции, медиаплан и итоговый отчёт." />
+  <style>
+    :root {
+      --event-blue: #2563eb;
+      --event-purple: #7c3aed;
+      --event-pink: #ec4899;
+      --event-orange: #f97316;
+      --event-yellow: #facc15;
+      --event-green: #16a34a;
+      --event-mint: #dffaf3;
+      --event-sky: #e0f2fe;
+      --event-cream: #fff7ed;
+      --event-ink: #182033;
+      --event-muted: #64748b;
+      --event-card: rgba(255,255,255,.92);
+      --event-shadow: 0 24px 60px rgba(37,99,235,.16);
+    }
+
+    body.detail-body {
+      background:
+        radial-gradient(circle at top left, rgba(250,204,21,.28), transparent 34%),
+        radial-gradient(circle at top right, rgba(236,72,153,.20), transparent 32%),
+        linear-gradient(135deg, #f8fbff 0%, #eef6ff 40%, #fff7ed 100%);
+    }
+
+    .event-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 26px 18px 64px;
+      color: var(--event-ink);
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .event-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .event-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.86);
+      color: #1d4ed8;
+      text-decoration: none;
+      font-weight: 900;
+      box-shadow: 0 10px 28px rgba(37,99,235,.10);
+      border: 1px solid rgba(37,99,235,.16);
+    }
+
+    .event-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.94), rgba(124,58,237,.90) 52%, rgba(236,72,153,.92)),
+        radial-gradient(circle at 85% 10%, rgba(250,204,21,.55), transparent 28%);
+      color: white;
+      box-shadow: var(--event-shadow);
+    }
+
+    .event-hero::before,
+    .event-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,.17);
+      pointer-events: none;
+    }
+
+    .event-hero::before {
+      width: 260px;
+      height: 260px;
+      right: -72px;
+      top: -88px;
+    }
+
+    .event-hero::after {
+      width: 180px;
+      height: 180px;
+      left: -60px;
+      bottom: -80px;
+    }
+
+    .event-hero__grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.45fr .9fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .event-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.35);
+      font-weight: 900;
+      backdrop-filter: blur(10px);
+    }
+
+    .event-hero h1 {
+      margin: 16px 0 14px;
+      font-size: clamp(34px, 6vw, 68px);
+      line-height: .98;
+      letter-spacing: -1.8px;
+    }
+
+    .event-hero p {
+      max-width: 760px;
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.55;
+      color: rgba(255,255,255,.92);
+    }
+
+    .event-illustration {
+      min-height: 320px;
+      display: grid;
+      place-items: center;
+      border-radius: 30px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.28);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
+      position: relative;
+    }
+
+    .event-stage {
+      width: min(310px, 100%);
+      border-radius: 28px;
+      padding: 24px;
+      background: rgba(255,255,255,.92);
+      color: var(--event-ink);
+      box-shadow: 0 22px 45px rgba(15,23,42,.22);
+      transform: rotate(-2deg);
+      text-align: center;
+    }
+
+    .event-stage__screen {
+      border-radius: 20px;
+      padding: 22px 16px;
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      border: 2px dashed rgba(249,115,22,.5);
+      font-size: 52px;
+    }
+
+    .event-stage strong {
+      display: block;
+      margin-top: 14px;
+      font-size: 22px;
+      color: #7c2d12;
+    }
+
+    .event-confetti {
+      position: absolute;
+      font-size: 30px;
+      filter: drop-shadow(0 8px 10px rgba(15,23,42,.2));
+    }
+
+    .event-confetti--1 { top: 24px; left: 32px; }
+    .event-confetti--2 { top: 42px; right: 34px; }
+    .event-confetti--3 { bottom: 34px; left: 50px; }
+    .event-confetti--4 { bottom: 28px; right: 58px; }
+
+    .event-strip {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      margin: 18px 0 26px;
+    }
+
+    .event-strip span {
+      display: grid;
+      min-height: 86px;
+      place-items: center;
+      gap: 6px;
+      text-align: center;
+      padding: 12px 8px;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 12px 24px rgba(15,23,42,.08);
+      font-weight: 900;
+      color: #334155;
+      border: 1px solid rgba(148,163,184,.18);
+    }
+
+    .event-strip b {
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .event-section {
+      margin-top: 26px;
+    }
+
+    .event-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 16px;
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -.8px;
+    }
+
+    .event-title__num {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      color: white;
+      background: linear-gradient(135deg, var(--event-orange), var(--event-pink));
+      box-shadow: 0 14px 28px rgba(236,72,153,.25);
+      font-size: 24px;
+      flex: 0 0 auto;
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .event-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 210px;
+      border-radius: 28px;
+      padding: 22px;
+      background: var(--event-card);
+      border: 1px solid rgba(148,163,184,.18);
+      box-shadow: 0 18px 42px rgba(15,23,42,.08);
+    }
+
+    .event-card::after {
+      content: "";
+      position: absolute;
+      width: 92px;
+      height: 92px;
+      right: -32px;
+      bottom: -34px;
+      border-radius: 50%;
+      background: rgba(37,99,235,.08);
+    }
+
+    .event-card h3 {
+      margin: 0 0 10px;
+      font-size: 23px;
+    }
+
+    .event-card p,
+    .event-card li {
+      font-size: 16px;
+      line-height: 1.55;
+      color: var(--event-muted);
+    }
+
+    .event-card ul {
+      padding-left: 20px;
+      margin: 10px 0 0;
+    }
+
+    .event-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #dbeafe, #fce7f3);
+      font-size: 30px;
+    }
+
+    .event-wide {
+      grid-column: span 2;
+    }
+
+    .event-full {
+      grid-column: 1 / -1;
+    }
+
+    .event-process {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .event-step {
+      border-radius: 26px;
+      background: white;
+      padding: 20px;
+      border: 1px solid rgba(148,163,184,.18);
+      box-shadow: 0 16px 34px rgba(15,23,42,.07);
+    }
+
+    .event-step b {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 12px;
+      border-radius: 16px;
+      color: white;
+      background: linear-gradient(135deg, var(--event-blue), var(--event-purple));
+      font-size: 22px;
+    }
+
+    .event-step h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .event-step p {
+      margin: 0;
+      color: var(--event-muted);
+      line-height: 1.5;
+    }
+
+    .event-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .event-template {
+      border-radius: 28px;
+      padding: 24px;
+      background: #0f172a;
+      color: white;
+      box-shadow: 0 22px 46px rgba(15,23,42,.18);
+    }
+
+    .event-template h3 {
+      margin: 0 0 14px;
+      font-size: 25px;
+    }
+
+    .event-template p,
+    .event-template li {
+      color: rgba(255,255,255,.84);
+      line-height: 1.65;
+    }
+
+    .event-template code {
+      display: block;
+      white-space: normal;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 14px;
+      border-radius: 18px;
+      color: #fde68a;
+      font-family: inherit;
+      line-height: 1.6;
+    }
+
+    .event-checklist {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .event-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(148,163,184,.18);
+      color: #334155;
+      font-weight: 800;
+    }
+
+    .event-check span {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .event-cta {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+      align-items: center;
+      border-radius: 34px;
+      padding: 28px;
+      background: linear-gradient(135deg, #fff7ed, #fef3c7 45%, #dcfce7);
+      border: 1px solid rgba(249,115,22,.18);
+      box-shadow: 0 20px 50px rgba(249,115,22,.16);
+    }
+
+    .event-cta h2 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 5vw, 48px);
+      color: #9a3412;
+    }
+
+    .event-cta p {
+      margin: 0;
+      font-size: 18px;
+      color: #7c2d12;
+      line-height: 1.55;
+    }
+
+    .event-cta__art {
+      display: grid;
+      place-items: center;
+      min-height: 210px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.65);
+      text-align: center;
+      font-size: 72px;
+    }
+
+    .event-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .event-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: #1d4ed8;
+      color: white;
+      text-decoration: none;
+      font-weight: 950;
+      box-shadow: 0 12px 28px rgba(29,78,216,.24);
+    }
+
+    .event-btn--light {
+      background: white;
+      color: #1d4ed8;
+    }
+
+    @media (max-width: 900px) {
+      .event-hero__grid,
+      .event-board,
+      .event-cta {
+        grid-template-columns: 1fr;
+      }
+
+      .event-grid,
+      .event-process,
+      .event-checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .event-wide,
+      .event-full {
+        grid-column: auto;
+      }
+
+      .event-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
 </head>
 
 <body class="detail-body">
-  <main class="detail-page">
-
-    <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
+  <main class="event-page">
+    <div class="event-topline">
+      <a class="event-link" href="../index.html">← Назад к доске</a>
+      <a class="event-link" href="../index.html#diagnostic">📋 Мини-диагностика</a>
     </div>
 
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Столбец 2: Что у вас болит?</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">🎉</div>
+    <section class="event-hero">
+      <div class="event-hero__grid">
         <div>
+          <span class="event-badge">🎉 Столбец 2: Что у вас болит?</span>
           <h1>Нужно провести яркое школьное событие</h1>
           <p>
-            Эта страница поможет превратить обычное мероприятие в запоминающееся школьное событие:
-            придумать идею, собрать команду, написать сценарий, оформить афишу,
-            подготовить медиаплан и провести всё без хаоса.
+            Эта страница помогает превратить обычное мероприятие в событие с идеей,
+            атмосферой, командой, сценарием, афишей, медиапланом и понятным результатом.
           </p>
         </div>
+
+        <div class="event-illustration" aria-label="Иллюстрация школьного события">
+          <span class="event-confetti event-confetti--1">✨</span>
+          <span class="event-confetti event-confetti--2">🎈</span>
+          <span class="event-confetti event-confetti--3">📸</span>
+          <span class="event-confetti event-confetti--4">🌟</span>
+          <div class="event-stage">
+            <div class="event-stage__screen">🎤🎭🎬</div>
+            <strong>Идея + команда + эмоция</strong>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="detail-grid">
+    <div class="event-strip" aria-label="Маршрут события">
+      <span><b>💡</b>Идея</span>
+      <span><b>👥</b>Команда</span>
+      <span><b>📝</b>Сценарий</span>
+      <span><b>🎨</b>Оформление</span>
+      <span><b>🎧</b>Репетиция</span>
+      <span><b>🎉</b>Проведение</span>
+      <span><b>📸</b>Итоги</span>
+    </div>
 
-      <article class="detail-card detail-card--large">
-        <h2>Что это значит?</h2>
-        <p>
-          Яркое школьное событие — это не просто концерт, классный час или линейка.
-          Это событие, у которого есть идея, атмосфера, роли, сценарий, визуальный стиль,
-          понятная подготовка и результат, который хочется показать другим.
-        </p>
-        <p>
-          Чтобы мероприятие получилось сильным, важно заранее ответить на вопросы:
-          для кого оно проводится, зачем, кто участвует, что увидят зрители
-          и какой след событие оставит после себя.
-        </p>
+    <section class="event-section">
+      <h2 class="event-title"><span class="event-title__num">1</span> Что делает событие ярким?</h2>
+      <div class="event-grid">
+        <article class="event-card">
+          <div class="event-icon">💡</div>
+          <h3>Одна сильная идея</h3>
+          <p>Событие должно отвечать на вопрос: зачем мы это проводим и какую эмоцию хотим оставить у участников.</p>
+        </article>
 
-        <div class="template-box">
-          <strong>Главная формула:</strong><br>
-          Идея → Команда → Сценарий → Афиша → Репетиция → Проведение → Итоги
-        </div>
-      </article>
+        <article class="event-card">
+          <div class="event-icon">🎭</div>
+          <h3>Живой формат</h3>
+          <p>Лучше работают квесты, станции, мастер-классы, игры, выставки, дискуссии и короткие выступления с участием детей.</p>
+        </article>
 
-      <article class="detail-card">
-        <h2>Кому подходит эта карточка?</h2>
-        <ul class="detail-list">
-          <li>учителю, который готовит школьное мероприятие;</li>
-          <li>классному руководителю;</li>
-          <li>педагогу-организатору;</li>
-          <li>команде учеников;</li>
-          <li>наставнику школьного проекта;</li>
-          <li>ответственному за праздник, акцию или фестиваль.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кто может помочь?</h2>
-        <p>
-          Подойдёт наставник с суперсилой <strong>«Учитель-продюсер»</strong>.
-          Он помогает собрать идею, сценарий, роли, афишу, медиаплан и понятный маршрут подготовки.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Какие события можно провести?</h2>
-
-        <ul class="detail-list">
-          <li>школьный фестиваль;</li>
-          <li>день науки;</li>
-          <li>литературная гостиная;</li>
-          <li>проектная ярмарка;</li>
-          <li>педагогический десант;</li>
-          <li>квест для учеников;</li>
-          <li>интеллектуальная игра;</li>
-          <li>выставка проектов;</li>
-          <li>акция добрых дел;</li>
-          <li>цифровой день с ИИ;</li>
-          <li>праздник класса или школы;</li>
-          <li>социокультурное событие для села или района.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 1. Определите идею</h2>
-        <p>
-          Событие начинается не со сценария, а с идеи. Нужно понять, ради чего
-          проводится мероприятие и какую эмоцию должны получить участники.
-        </p>
-
-        <div class="template-box">
-          <strong>Формула идеи:</strong><br>
-          Мы проводим событие для ______________________,
-          чтобы ______________________,
-          через формат ______________________.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 2. Определите аудиторию</h2>
-        <p>
-          Одно и то же событие будет разным для учеников начальной школы,
-          старшеклассников, родителей, педагогов или жителей села.
-          Поэтому важно сразу понять, для кого вы готовите программу.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 3. Соберите команду</h2>
-        <p>
-          Даже небольшое мероприятие легче провести, если роли распределены заранее.
-          Команда помогает не держать всё на одном человеке.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Команда события</h2>
-
-        <div class="template-box">
-          <strong>Координатор</strong> — следит за общим планом.<br><br>
-          <strong>Сценарист</strong> — пишет ход мероприятия и тексты ведущих.<br><br>
-          <strong>Ведущие</strong> — проводят событие на сцене или в классе.<br><br>
-          <strong>Дизайнер</strong> — делает афишу, пригласительные, оформление.<br><br>
-          <strong>Технический ответственный</strong> — звук, экран, презентация, музыка.<br><br>
-          <strong>Медиа-команда</strong> — фото, видео, посты, отчёт.<br><br>
-          <strong>Ответственный за участников</strong> — списки, роли, репетиции.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 4. Выберите формат</h2>
-        <ul class="detail-list">
-          <li>концерт;</li>
-          <li>квест;</li>
-          <li>выставка;</li>
-          <li>ярмарка проектов;</li>
-          <li>мастер-класс;</li>
-          <li>интеллектуальная игра;</li>
-          <li>творческая лаборатория;</li>
-          <li>открытая защита проектов;</li>
-          <li>смешанный формат.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 5. Придумайте название</h2>
-        <p>
-          Название должно быть коротким, понятным и запоминающимся.
-          Хорошее название помогает создать настроение и привлечь участников.
-        </p>
-
-        <div class="template-box">
-          <strong>Примеры:</strong><br>
-          «День больших идей»<br>
-          «Школа будущего»<br>
-          «Фестиваль добрых дел»<br>
-          «Проектный старт»<br>
-          «ИИ-день в школе»<br>
-          «Открытая учительская»
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Паспорт школьного события</h2>
-
-        <div class="template-box">
-          <strong>Название события:</strong> _______________________________<br><br>
-          <strong>Дата и время:</strong> ___________________________________<br><br>
-          <strong>Место проведения:</strong> _______________________________<br><br>
-          <strong>Целевая аудитория:</strong> ______________________________<br><br>
-          <strong>Главная идея:</strong> ___________________________________<br><br>
-          <strong>Цель события:</strong> ___________________________________<br><br>
-          <strong>Формат:</strong> концерт / квест / фестиваль / выставка / игра / другое<br><br>
-          <strong>Ответственный:</strong> _________________________________<br><br>
-          <strong>Команда:</strong> _______________________________________<br><br>
-          <strong>Ожидаемый результат:</strong> ____________________________
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Структура сценария</h2>
-        <ul class="detail-list">
-          <li>открытие события;</li>
-          <li>приветствие участников;</li>
-          <li>объяснение цели и правил;</li>
-          <li>основные блоки программы;</li>
-          <li>интерактив с участниками;</li>
-          <li>подведение итогов;</li>
-          <li>благодарность и финальное фото.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что делает событие ярким?</h2>
-        <ul class="detail-list">
-          <li>понятная идея;</li>
-          <li>единый стиль оформления;</li>
-          <li>активное участие детей;</li>
-          <li>музыка и визуальные элементы;</li>
-          <li>интерактив, а не только выступления;</li>
-          <li>фото-зона или цифровой стенд;</li>
-          <li>эмоциональный финал;</li>
-          <li>итоговый пост, видео или отчёт.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Шаблон сценария</h2>
-
-        <div class="template-box">
-          <strong>1. Вступление</strong><br>
-          Ведущие приветствуют участников и объясняют тему события.<br><br>
-
-          <strong>2. Разогрев</strong><br>
-          Короткий вопрос, игра, голосование или интерактив.<br><br>
-
-          <strong>3. Основная часть</strong><br>
-          Выступления, станции, задания, мастер-классы или презентации.<br><br>
-
-          <strong>4. Активность участников</strong><br>
-          Квест, командная работа, творческое задание или обсуждение.<br><br>
-
-          <strong>5. Итоги</strong><br>
-          Что получилось, кто участвовал, какой результат создан.<br><br>
-
-          <strong>6. Финал</strong><br>
-          Благодарность, общее фото, приглашение к следующему шагу.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Афиша события</h2>
-        <p>
-          Афиша должна быстро отвечать на главные вопросы: что происходит,
-          когда, где, для кого и почему стоит прийти.
-        </p>
-
-        <div class="template-box">
-          <strong>На афише должны быть:</strong><br>
-          название события;<br>
-          дата и время;<br>
-          место проведения;<br>
-          для кого событие;<br>
-          1–2 яркие фразы;<br>
-          организаторы;<br>
-          QR-код или контакт.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Медиаплан</h2>
-        <p>
-          Медиаплан помогает заранее подготовить публикации, фотографии,
-          видео и итоговый отчёт.
-        </p>
-
-        <div class="template-box">
-          <strong>До события:</strong> афиша, анонс, приглашение.<br><br>
-          <strong>Во время события:</strong> фото, короткие видео, цитаты участников.<br><br>
-          <strong>После события:</strong> пост-отчёт, лучшие кадры, результаты, благодарность.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>План подготовки на 7 дней</h2>
-
-        <div class="template-box">
-          <strong>День 1:</strong> выбрать идею, формат и аудиторию.<br><br>
-          <strong>День 2:</strong> собрать команду и распределить роли.<br><br>
-          <strong>День 3:</strong> написать сценарный план.<br><br>
-          <strong>День 4:</strong> подготовить афишу, музыку, презентацию и реквизит.<br><br>
-          <strong>День 5:</strong> провести первую репетицию.<br><br>
-          <strong>День 6:</strong> проверить технику, списки участников и оформление.<br><br>
-          <strong>День 7:</strong> провести событие, сделать фото, собрать отзывы.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что взять с бесплатной полки?</h2>
-        <ul class="detail-list">
-          <li>шаблон сценария;</li>
-          <li>шаблон афиши;</li>
-          <li>чек-лист подготовки события;</li>
-          <li>таблицу распределения ролей;</li>
-          <li>медиаплан;</li>
-          <li>форму обратной связи;</li>
-          <li>шаблон итогового отчёта.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как использовать ИИ?</h2>
-        <p>
-          ИИ можно использовать как помощника для генерации идей, названия,
-          структуры сценария, текста афиши, вопросов для викторины и плана публикаций.
-          Но итоговый сценарий нужно обязательно проверить и адаптировать под школу.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Промпт для ИИ</h2>
-        <div class="template-box">
-          Ты — помощник педагога-организатора. 
-          Придумай яркое школьное событие на тему «__________» для учеников ___ класса.
-          Дай название, цель, формат, сценарный план на 40 минут, роли команды,
-          идеи для афиши и медиаплан до и после события.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Чек-лист готовности</h2>
-
-        <div class="template-box">
-          ✅ Есть название события.<br>
-          ✅ Понятна цель и аудитория.<br>
-          ✅ Назначен ответственный.<br>
-          ✅ Распределены роли команды.<br>
-          ✅ Написан сценарий.<br>
-          ✅ Готова афиша или объявление.<br>
-          ✅ Подготовлены музыка, презентация и реквизит.<br>
-          ✅ Проверена техника.<br>
-          ✅ Проведена репетиция.<br>
-          ✅ Подготовлен фото- или видеоответственный.<br>
-          ✅ Есть план итогового поста или отчёта.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Частые ошибки</h2>
-        <ul class="detail-list">
-          <li>нет общей идеи события;</li>
-          <li>всё держится на одном человеке;</li>
-          <li>сценарий написан в последний день;</li>
-          <li>не проверена техника;</li>
-          <li>нет репетиции;</li>
-          <li>участники не знают свои роли;</li>
-          <li>нет афиши и анонса;</li>
-          <li>после события не собраны итоги.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Первый маленький шаг</h2>
-        <p>
-          Не начинайте сразу с большого сценария. Сначала заполните три строки:
-          тема, аудитория и формат события.
-        </p>
-
-        <div class="template-box">
-          <strong>Сегодня:</strong><br>
-          Тема события: ____________________<br>
-          Для кого: ________________________<br>
-          Формат: __________________________
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Заявка к наставнику</h2>
-
-        <div class="template-box">
-          Здравствуйте! Мне нужна помощь в подготовке школьного события.<br><br>
-          Тема события: ______________________________________________.<br><br>
-          Для кого проводится: _______________________________________.<br><br>
-          Формат: концерт / квест / фестиваль / игра / выставка / другое.<br><br>
-          Что уже готово: идея / сценарий / команда / афиша / ничего нет.<br><br>
-          Нужна помощь с: идеей / сценарием / афишей / медиапланом / распределением ролей / репетицией.<br><br>
-          Дата проведения: __________________________________________.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Короткий текст для страницы</h2>
-        <div class="template-box">
-          Чтобы провести яркое школьное событие, начните с идеи и аудитории.
-          Затем выберите формат, соберите команду, распределите роли, напишите сценарий,
-          подготовьте афишу, проведите репетицию и обязательно зафиксируйте результат:
-          фотографии, отзывы, пост или итоговый отчёт.
-        </div>
-      </article>
-
-    </section>
-
-    <section class="related-section">
-      <h2>Следующий шаг</h2>
-
-      <div class="related-grid">
-        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
-          <span>🤝</span>
-          Найти учителя-продюсера
-        </a>
-
-        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
-          <span>📚</span>
-          Получить материалы
-        </a>
-
-        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
-          <span>🎯</span>
-          Вернуться к выбору задачи
-        </a>
-
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
+        <article class="event-card">
+          <div class="event-icon">🎨</div>
+          <h3>Единый стиль</h3>
+          <p>Афиша, презентация, музыка, фото-зона, таблички и финальный пост должны выглядеть как часть одного события.</p>
+        </article>
       </div>
     </section>
 
+    <section class="event-section">
+      <h2 class="event-title"><span class="event-title__num">2</span> Чем поможет наставник?</h2>
+      <div class="event-grid">
+        <article class="event-card">
+          <div class="event-icon">🎬</div>
+          <h3>Соберёт концепцию</h3>
+          <p>Поможет выбрать тему, название, главную мысль, аудиторию и формат мероприятия.</p>
+        </article>
+
+        <article class="event-card">
+          <div class="event-icon">🧩</div>
+          <h3>Разложит подготовку</h3>
+          <p>Составит понятный план: кто за что отвечает, что сделать заранее и когда провести репетицию.</p>
+        </article>
+
+        <article class="event-card">
+          <div class="event-icon">📣</div>
+          <h3>Усилит впечатление</h3>
+          <p>Подскажет, как оформить афишу, пригласить участников, продумать финал и подготовить медиаматериалы.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="event-section">
+      <h2 class="event-title"><span class="event-title__num">3</span> Какие события можно провести?</h2>
+      <div class="event-grid">
+        <article class="event-card">
+          <div class="event-icon">🏫</div>
+          <h3>Для школы</h3>
+          <ul>
+            <li>день науки;</li>
+            <li>фестиваль проектов;</li>
+            <li>неделя предмета;</li>
+            <li>интеллектуальная игра.</li>
+          </ul>
+        </article>
+
+        <article class="event-card">
+          <div class="event-icon">🌍</div>
+          <h3>Для села или района</h3>
+          <ul>
+            <li>выставка работ;</li>
+            <li>акция добрых дел;</li>
+            <li>профориентационный день;</li>
+            <li>социокультурный проект.</li>
+          </ul>
+        </article>
+
+        <article class="event-card">
+          <div class="event-icon">🤖</div>
+          <h3>С цифровым акцентом</h3>
+          <ul>
+            <li>ИИ-день в школе;</li>
+            <li>цифровая выставка;</li>
+            <li>квест с QR-кодами;</li>
+            <li>медиафестиваль.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="event-section">
+      <h2 class="event-title"><span class="event-title__num">4</span> Маршрут подготовки</h2>
+      <div class="event-process">
+        <article class="event-step">
+          <b>1</b>
+          <h3>Опишите задачу</h3>
+          <p>Что за событие, для кого, где проходит, сколько времени есть на подготовку.</p>
+        </article>
+
+        <article class="event-step">
+          <b>2</b>
+          <h3>Соберите команду</h3>
+          <p>Назначьте координатора, ведущих, дизайнера, технику, медиа и ответственных за участников.</p>
+        </article>
+
+        <article class="event-step">
+          <b>3</b>
+          <h3>Сделайте сценарий</h3>
+          <p>Пропишите начало, основные блоки, интерактив, финал, музыку и переходы.</p>
+        </article>
+
+        <article class="event-step">
+          <b>4</b>
+          <h3>Проведите и покажите итог</h3>
+          <p>После события подготовьте фото, короткий отчёт, благодарности и выводы.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="event-section">
+      <h2 class="event-title"><span class="event-title__num">5</span> Готовые заготовки</h2>
+      <div class="event-board">
+        <article class="event-template">
+          <h3>Паспорт события</h3>
+          <code>
+            Название: ______________________<br>
+            Дата и место: ___________________<br>
+            Для кого: _______________________<br>
+            Главная идея: ___________________<br>
+            Формат: ________________________<br>
+            Команда: _______________________<br>
+            Результат: ______________________
+          </code>
+        </article>
+
+        <article class="event-template">
+          <h3>Каркас сценария</h3>
+          <code>
+            1. Приветствие и настрой<br>
+            2. Объяснение идеи и правил<br>
+            3. Основные блоки программы<br>
+            4. Интерактив с участниками<br>
+            5. Подведение итогов<br>
+            6. Финальное фото и благодарность
+          </code>
+        </article>
+      </div>
+    </section>
+
+    <section class="event-section">
+      <h2 class="event-title"><span class="event-title__num">6</span> Чек-лист перед проведением</h2>
+      <div class="event-checklist">
+        <div class="event-check"><span>✓</span> Есть понятная идея и название.</div>
+        <div class="event-check"><span>✓</span> Назначены ответственные за роли.</div>
+        <div class="event-check"><span>✓</span> Сценарий разбит по времени.</div>
+        <div class="event-check"><span>✓</span> Подготовлены афиша и объявления.</div>
+        <div class="event-check"><span>✓</span> Проверены звук, экран и материалы.</div>
+        <div class="event-check"><span>✓</span> Проведена хотя бы одна репетиция.</div>
+        <div class="event-check"><span>✓</span> Есть план фото, видео и итогового поста.</div>
+        <div class="event-check"><span>✓</span> Продуман финал и благодарности.</div>
+      </div>
+    </section>
+
+    <section class="event-cta">
+      <div>
+        <h2>Сделайте событие заметным</h2>
+        <p>
+          Обратитесь к наставнику по направлению <strong>«Учитель-продюсер»</strong>.
+          Вместе вы соберёте идею, распределите роли, подготовите сценарий,
+          оформите материалы и проведёте мероприятие без лишней суеты.
+        </p>
+        <div class="event-actions">
+          <a class="event-btn" href="2-naydi-nastavnika.html">🎬 Найти учителя-продюсера</a>
+          <a class="event-btn event-btn--light" href="3-poluchi-pomosch.html">📚 Получить материалы</a>
+        </div>
+      </div>
+      <div class="event-cta__art">🎉<br><span style="font-size:28px;font-weight:950;color:#9a3412;">праздник с идеей</span></div>
+    </section>
+
+    <section class="event-section">
+      <div class="event-grid">
+        <article class="event-card event-wide">
+          <div class="event-icon">📝</div>
+          <h3>Заявка наставнику</h3>
+          <p>
+            Здравствуйте! Нужно провести школьное событие. Тема: __________.
+            Аудитория: __________. Дата: __________. Нужна помощь с идеей,
+            сценарием, командой, оформлением и медиапланом.
+          </p>
+        </article>
+
+        <article class="event-card">
+          <div class="event-icon">⭐</div>
+          <h3>Главная мысль</h3>
+          <p>Яркое событие — это не больше шума, а больше смысла, участия, эмоций и хорошо подготовленного результата.</p>
+        </article>
+      </div>
+    </section>
   </main>
 </body>
 </html>
