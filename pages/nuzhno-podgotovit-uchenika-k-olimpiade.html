@@ -5,372 +5,705 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Нужно подготовить ученика к олимпиаде — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Страница для подготовки ученика к олимпиаде: диагностика уровня, план занятий, разбор заданий, наставник, материалы и чек-лист." />
+  <meta name="description" content="Красочная страница для подготовки ученика к олимпиаде: диагностика уровня, маршрут, план занятий, разбор ошибок, чек-листы и помощь наставника." />
+  <style>
+    :root {
+      --olymp-blue: #2563eb;
+      --olymp-sky: #e0f2fe;
+      --olymp-green: #16a34a;
+      --olymp-mint: #dcfce7;
+      --olymp-yellow: #facc15;
+      --olymp-orange: #fb923c;
+      --olymp-red: #ef4444;
+      --olymp-violet: #7c3aed;
+      --olymp-ink: #172554;
+      --olymp-soft: #f8fafc;
+    }
+
+    body.detail-body {
+      background:
+        radial-gradient(circle at top left, rgba(250, 204, 21, .25), transparent 30%),
+        radial-gradient(circle at top right, rgba(37, 99, 235, .18), transparent 35%),
+        linear-gradient(135deg, #f8fafc 0%, #eef2ff 48%, #ecfeff 100%);
+    }
+
+    .olymp-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 54px;
+      color: var(--olymp-ink);
+      font-family: Arial, sans-serif;
+    }
+
+    .olymp-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .olymp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: white;
+      color: #1d4ed8;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, .12);
+      border: 1px solid rgba(37, 99, 235, .14);
+    }
+
+    .olymp-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      background:
+        linear-gradient(120deg, rgba(37, 99, 235, .95), rgba(124, 58, 237, .9)),
+        radial-gradient(circle at 85% 20%, rgba(250, 204, 21, .85), transparent 28%);
+      color: white;
+      box-shadow: 0 24px 60px rgba(37, 99, 235, .25);
+    }
+
+    .olymp-hero::before,
+    .olymp-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .14);
+    }
+
+    .olymp-hero::before {
+      width: 220px;
+      height: 220px;
+      right: -60px;
+      top: -70px;
+    }
+
+    .olymp-hero::after {
+      width: 140px;
+      height: 140px;
+      left: 46%;
+      bottom: -70px;
+    }
+
+    .olymp-hero__grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(260px, .7fr);
+      gap: 26px;
+      align-items: center;
+    }
+
+    .olymp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .18);
+      border: 1px solid rgba(255, 255, 255, .28);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .olymp-hero h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -.04em;
+    }
+
+    .olymp-hero p {
+      margin: 18px 0 0;
+      font-size: 19px;
+      line-height: 1.6;
+      max-width: 760px;
+      color: rgba(255, 255, 255, .92);
+    }
+
+    .olymp-hero__picture {
+      min-height: 270px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .14);
+      border: 1px solid rgba(255, 255, 255, .24);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+    }
+
+    .olymp-hero__picture .big {
+      font-size: 92px;
+      display: block;
+      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .18));
+    }
+
+    .olymp-hero__picture strong {
+      display: block;
+      margin-top: 12px;
+      font-size: 24px;
+    }
+
+    .olymp-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin: 22px 0;
+    }
+
+    .olymp-stat {
+      background: white;
+      border-radius: 24px;
+      padding: 20px;
+      min-height: 120px;
+      box-shadow: 0 16px 38px rgba(15, 23, 42, .08);
+      border: 1px solid rgba(37, 99, 235, .12);
+    }
+
+    .olymp-stat span {
+      font-size: 34px;
+    }
+
+    .olymp-stat b {
+      display: block;
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .olymp-stat small {
+      display: block;
+      margin-top: 6px;
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    .olymp-section {
+      margin-top: 24px;
+      padding: 28px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .84);
+      box-shadow: 0 18px 46px rgba(15, 23, 42, .08);
+      border: 1px solid rgba(148, 163, 184, .22);
+      backdrop-filter: blur(10px);
+    }
+
+    .olymp-section h2 {
+      margin: 0 0 18px;
+      font-size: clamp(26px, 3.2vw, 38px);
+      color: #1e3a8a;
+      letter-spacing: -.03em;
+    }
+
+    .olymp-section p {
+      font-size: 17px;
+      line-height: 1.65;
+      color: #334155;
+    }
+
+    .olymp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .olymp-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: 22px;
+      background: #fff;
+      border: 1px solid rgba(37, 99, 235, .12);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .07);
+    }
+
+    .olymp-card::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      top: -28px;
+      width: 92px;
+      height: 92px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, .08);
+    }
+
+    .olymp-card .icon {
+      display: inline-grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: var(--olymp-sky);
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    .olymp-card h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      color: #172554;
+    }
+
+    .olymp-card p,
+    .olymp-card li {
+      font-size: 16px;
+      line-height: 1.55;
+      color: #475569;
+    }
+
+    .olymp-route {
+      display: grid;
+      gap: 14px;
+      counter-reset: route;
+    }
+
+    .olymp-step {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 24px;
+      background: linear-gradient(90deg, #eff6ff, #ffffff);
+      border: 1px solid rgba(37, 99, 235, .12);
+    }
+
+    .olymp-step__num {
+      width: 58px;
+      height: 58px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--olymp-blue), var(--olymp-violet));
+      color: white;
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(37, 99, 235, .22);
+    }
+
+    .olymp-step h3 {
+      margin: 0 0 6px;
+      font-size: 21px;
+      color: #1e3a8a;
+    }
+
+    .olymp-step p {
+      margin: 0;
+    }
+
+    .olymp-plan {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .week {
+      border-radius: 24px;
+      padding: 20px;
+      color: #172554;
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border: 1px solid rgba(148, 163, 184, .22);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, .07);
+    }
+
+    .week:nth-child(1) { border-top: 8px solid var(--olymp-blue); }
+    .week:nth-child(2) { border-top: 8px solid var(--olymp-green); }
+    .week:nth-child(3) { border-top: 8px solid var(--olymp-orange); }
+    .week:nth-child(4) { border-top: 8px solid var(--olymp-violet); }
+
+    .week strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .week span {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-weight: 800;
+    }
+
+    .olymp-checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 16px;
+      border-radius: 20px;
+      background: #f8fafc;
+      border: 1px dashed rgba(37, 99, 235, .24);
+      font-weight: 700;
+      color: #334155;
+    }
+
+    .check-item span {
+      flex: 0 0 auto;
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .olymp-alert {
+      border-radius: 28px;
+      padding: 24px;
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      border: 1px solid rgba(251, 146, 60, .32);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .olymp-alert .icon {
+      font-size: 58px;
+      text-align: center;
+    }
+
+    .olymp-template {
+      padding: 22px;
+      border-radius: 24px;
+      background: #0f172a;
+      color: white;
+      line-height: 1.7;
+      font-size: 16px;
+      box-shadow: 0 18px 42px rgba(15, 23, 42, .22);
+    }
+
+    .olymp-template strong {
+      color: #fde68a;
+    }
+
+    .olymp-cta {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 22px;
+      align-items: center;
+      border-radius: 34px;
+      padding: 30px;
+      background: linear-gradient(135deg, #16a34a, #2563eb);
+      color: white;
+      box-shadow: 0 24px 58px rgba(37, 99, 235, .22);
+    }
+
+    .olymp-cta h2 {
+      margin: 0 0 10px;
+      color: white;
+      font-size: clamp(28px, 3vw, 42px);
+    }
+
+    .olymp-cta p {
+      color: rgba(255, 255, 255, .92);
+      margin: 0;
+      max-width: 780px;
+    }
+
+    .olymp-cta__icon {
+      font-size: 92px;
+      line-height: 1;
+    }
+
+    .olymp-related {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .olymp-related a {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border-radius: 22px;
+      text-decoration: none;
+      color: #172554;
+      background: white;
+      border: 1px solid rgba(37, 99, 235, .12);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, .07);
+      font-weight: 900;
+    }
+
+    .olymp-related span {
+      font-size: 30px;
+    }
+
+    @media (max-width: 900px) {
+      .olymp-hero__grid,
+      .olymp-stats,
+      .olymp-grid,
+      .olymp-plan,
+      .olymp-checklist,
+      .olymp-cta,
+      .olymp-related {
+        grid-template-columns: 1fr;
+      }
+
+      .olymp-hero,
+      .olymp-section,
+      .olymp-cta {
+        padding: 22px;
+        border-radius: 24px;
+      }
+
+      .olymp-alert {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
-
 <body class="detail-body">
-  <main class="detail-page">
-
-    <div class="detail-topline">
-      <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
-      <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
+  <main class="olymp-page">
+    <div class="olymp-topline">
+      <a class="olymp-link" href="../index.html">← Назад к доске</a>
+      <a class="olymp-link" href="../index.html#diagnostic">📋 Мини-диагностика</a>
     </div>
 
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Столбец 2: Что у вас болит?</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">🏆</div>
+    <section class="olymp-hero">
+      <div class="olymp-hero__grid">
         <div>
+          <span class="olymp-badge">📗 Столбец 2: Что у вас болит?</span>
           <h1>Нужно подготовить ученика к олимпиаде</h1>
           <p>
-            Эта страница поможет выстроить понятную подготовку ученика к олимпиаде:
-            определить уровень, выбрать наставника, составить план занятий,
-            подобрать задания и подготовить ученика к разбору сложных вопросов.
+            Здесь собран понятный маршрут: определить уровень ученика, увидеть сильные стороны,
+            разобрать трудности, составить план занятий и спокойно довести подготовку до результата.
+          </p>
+        </div>
+        <div class="olymp-hero__picture" aria-label="Иллюстрация подготовки к олимпиаде">
+          <div>
+            <span class="big">🏆</span>
+            <strong>Диагностика → тренировка → уверенность</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="olymp-stats" aria-label="Ключевые опоры подготовки">
+      <article class="olymp-stat">
+        <span>🎯</span>
+        <b>1 цель</b>
+        <small>Понять, к какому этапу и уровню готовится ученик.</small>
+      </article>
+      <article class="olymp-stat">
+        <span>🧭</span>
+        <b>1 маршрут</b>
+        <small>Разделить работу на темы, недели и типы заданий.</small>
+      </article>
+      <article class="olymp-stat">
+        <span>🧠</span>
+        <b>3 навыка</b>
+        <small>Логика, внимательность, объяснение решения.</small>
+      </article>
+      <article class="olymp-stat">
+        <span>✅</span>
+        <b>1 результат</b>
+        <small>Ученик понимает формат и увереннее решает сложные задания.</small>
+      </article>
+    </section>
+
+    <section class="olymp-section">
+      <h2>Что это значит?</h2>
+      <div class="olymp-grid">
+        <article class="olymp-card">
+          <span class="icon">🔍</span>
+          <h3>Сначала — диагностика</h3>
+          <p>Нужно увидеть, что ученик уже умеет, где теряется и какие задания вызывают затруднение.</p>
+        </article>
+        <article class="olymp-card">
+          <span class="icon">🧩</span>
+          <h3>Затем — система</h3>
+          <p>Подготовка идёт по шагам: тема, тренировка, разбор, повторение и пробный тур.</p>
+        </article>
+        <article class="olymp-card">
+          <span class="icon">🤝</span>
+          <h3>Рядом — наставник</h3>
+          <p>Наставник помогает подобрать задания, объяснить сложные места и поддержать ребёнка.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="olymp-section">
+      <h2>Маршрут подготовки</h2>
+      <div class="olymp-route">
+        <article class="olymp-step">
+          <div class="olymp-step__num">1</div>
+          <div>
+            <h3>Определить предмет, класс и цель</h3>
+            <p>Уточните этап, срок, опыт участия и желаемый результат: попробовать силы, пройти дальше или улучшить прошлый балл.</p>
+          </div>
+        </article>
+        <article class="olymp-step">
+          <div class="olymp-step__num">2</div>
+          <div>
+            <h3>Провести мини-диагностику</h3>
+            <p>Дайте 5–7 заданий разного уровня: базовые, средние, повышенные и одно задание на рассуждение.</p>
+          </div>
+        </article>
+        <article class="olymp-step">
+          <div class="olymp-step__num">3</div>
+          <div>
+            <h3>Собрать индивидуальный план</h3>
+            <p>Разделите подготовку на небольшие блоки: темы, типы задач, повторение, тренировочные работы и отдых.</p>
+          </div>
+        </article>
+        <article class="olymp-step">
+          <div class="olymp-step__num">4</div>
+          <div>
+            <h3>Разбирать ход решения</h3>
+            <p>Важно не просто получить ответ, а понять логику: почему выбран такой способ и где могла появиться ошибка.</p>
+          </div>
+        </article>
+        <article class="olymp-step">
+          <div class="olymp-step__num">5</div>
+          <div>
+            <h3>Провести пробный тур</h3>
+            <p>Создайте условия, похожие на настоящее испытание: ограниченное время, самостоятельное решение и спокойный анализ после.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="olymp-section">
+      <h2>План на 4 недели</h2>
+      <div class="olymp-plan">
+        <article class="week">
+          <span>1 неделя</span>
+          <strong>Диагностика и база</strong>
+          <p>Проверить уровень, повторить ключевые темы, составить карту трудностей.</p>
+        </article>
+        <article class="week">
+          <span>2 неделя</span>
+          <strong>Типовые задания</strong>
+          <p>Разобрать основные виды задач и научиться видеть подсказки в условии.</p>
+        </article>
+        <article class="week">
+          <span>3 неделя</span>
+          <strong>Сложные случаи</strong>
+          <p>Тренировать нестандартное мышление, оформление ответа и объяснение решения.</p>
+        </article>
+        <article class="week">
+          <span>4 неделя</span>
+          <strong>Пробный тур</strong>
+          <p>Решить тренировочный вариант, разобрать ошибки и настроиться психологически.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="olymp-section">
+      <h2>Что тренировать?</h2>
+      <div class="olymp-grid">
+        <article class="olymp-card">
+          <span class="icon">📖</span>
+          <h3>Понимание условия</h3>
+          <p>Ученик учится выделять важные данные, ограничения, вопрос и скрытую подсказку.</p>
+        </article>
+        <article class="olymp-card">
+          <span class="icon">💡</span>
+          <h3>Нестандартный ход</h3>
+          <p>Разбираются разные способы решения: через схему, таблицу, пример, закономерность или доказательство.</p>
+        </article>
+        <article class="olymp-card">
+          <span class="icon">🕒</span>
+          <h3>Работу со временем</h3>
+          <p>Ребёнок учится не застревать на одном задании и распределять силы на весь тур.</p>
+        </article>
+        <article class="olymp-card">
+          <span class="icon">✍️</span>
+          <h3>Оформление ответа</h3>
+          <p>Решение должно быть понятным: шаги, объяснение, аккуратная запись и итог.</p>
+        </article>
+        <article class="olymp-card">
+          <span class="icon">🧘</span>
+          <h3>Спокойствие</h3>
+          <p>Сложное задание — не повод сдаваться. Его можно разобрать на части и начать с простого.</p>
+        </article>
+        <article class="olymp-card">
+          <span class="icon">🔁</span>
+          <h3>Разбор ошибок</h3>
+          <p>Ошибка показывает, какую тему повторить и какой приём потренировать в следующий раз.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="olymp-section">
+      <h2>Чек-лист готовности</h2>
+      <div class="olymp-checklist">
+        <div class="check-item"><span>✓</span>Ученик знает формат и правила выбранного этапа.</div>
+        <div class="check-item"><span>✓</span>Есть список тем, которые нужно повторить.</div>
+        <div class="check-item"><span>✓</span>Решены задания прошлых лет или похожие варианты.</div>
+        <div class="check-item"><span>✓</span>Ошибки разобраны спокойно и понятно.</div>
+        <div class="check-item"><span>✓</span>Ученик умеет объяснить ход решения.</div>
+        <div class="check-item"><span>✓</span>Проведён пробный тур с ограничением времени.</div>
+        <div class="check-item"><span>✓</span>Есть памятка: что делать до, во время и после работы.</div>
+        <div class="check-item"><span>✓</span>Учитель видит, чем может помочь наставник.</div>
+      </div>
+    </section>
+
+    <section class="olymp-section">
+      <h2>Как разбирать ошибку?</h2>
+      <div class="olymp-alert">
+        <div class="icon">🛠️</div>
+        <div>
+          <p>
+            Ошибка — это не провал, а точка роста. Разберите её по вопросам:
+            что было понятно, где возникла трудность, какой шаг оказался неверным,
+            как можно решить иначе и что нужно повторить перед следующей тренировкой.
           </p>
         </div>
       </div>
     </section>
 
-    <section class="detail-grid">
-
-      <article class="detail-card detail-card--large">
-        <h2>Что это значит?</h2>
-        <p>
-          Подготовка к олимпиаде — это не просто решение большого количества заданий.
-          Важно понять уровень ученика, найти сильные и слабые стороны, подобрать
-          правильные материалы и научить ребёнка думать нестандартно.
-        </p>
-        <p>
-          Олимпиадная подготовка строится постепенно: сначала диагностика,
-          затем план, потом регулярные тренировки, разбор ошибок и пробные туры.
-        </p>
-
-        <div class="template-box">
-          <strong>Главная формула:</strong><br>
-          Диагностика → План → Тренировка → Разбор ошибок → Пробный тур → Результат
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кому подходит эта карточка?</h2>
-        <ul class="detail-list">
-          <li>учителю, который готовит ученика к олимпиаде;</li>
-          <li>классному руководителю, который ищет наставника;</li>
-          <li>ученику, который хочет попробовать олимпиаду;</li>
-          <li>родителю, который хочет понять маршрут подготовки;</li>
-          <li>команде педагогов, которая развивает работу с одарёнными детьми.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кто может помочь?</h2>
-        <p>
-          Подойдёт наставник по олимпиадной подготовке, предметник или педагог,
-          который умеет разбирать нестандартные задания, видеть ошибки мышления
-          и составлять индивидуальный маршрут ученика.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Маршрут подготовки</h2>
-
-        <div class="template-box">
-          <strong>1. Определить предмет и уровень</strong><br>
-          Какой предмет? Какой класс? Был ли опыт участия?<br><br>
-
-          <strong>2. Провести диагностику</strong><br>
-          Дать несколько заданий разного уровня и посмотреть, где возникают трудности.<br><br>
-
-          <strong>3. Составить план</strong><br>
-          Разделить подготовку на темы, недели и типы заданий.<br><br>
-
-          <strong>4. Решать задания регулярно</strong><br>
-          Лучше 2–3 раза в неделю по 30–45 минут, чем один раз долго и без системы.<br><br>
-
-          <strong>5. Разбирать ошибки</strong><br>
-          Главное — не только найти правильный ответ, но и понять ход решения.<br><br>
-
-          <strong>6. Провести пробный тур</strong><br>
-          Решить задания в условиях, похожих на настоящую олимпиаду.<br><br>
-
-          <strong>7. Подготовить психологически</strong><br>
-          Научить ученика не бояться сложных заданий и распределять время.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 1. Диагностика уровня</h2>
-        <p>
-          Сначала нужно понять, что ученик уже умеет. Для этого можно дать
-          5–7 заданий: простые, средние и сложные. По результатам видно,
-          какие темы нужно повторить, а где можно переходить к олимпиадному уровню.
-        </p>
-
-        <div class="template-box">
-          <strong>Мини-диагностика:</strong><br>
-          2 базовых задания<br>
-          2 задания среднего уровня<br>
-          2 олимпиадных задания<br>
-          1 задание на рассуждение
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 2. Найти сильные стороны</h2>
-        <p>
-          У каждого ученика есть свои сильные стороны: логика, память, внимание,
-          воображение, грамотность, скорость, умение рассуждать. Подготовка будет
-          эффективнее, если опираться на то, что уже получается хорошо.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Шаг 3. Найти слабые места</h2>
-        <p>
-          Ошибки — это не провал, а подсказка. Нужно понять, где именно трудность:
-          в теории, внимательности, чтении условия, оформлении решения или нехватке времени.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Индивидуальная карта ученика</h2>
-
-        <div class="template-box">
-          <strong>ФИО ученика:</strong> _______________________________<br><br>
-          <strong>Класс:</strong> _____________________________________<br><br>
-          <strong>Предмет:</strong> ___________________________________<br><br>
-          <strong>Опыт участия:</strong> не участвовал / школьный этап / муниципальный этап / региональный этап<br><br>
-          <strong>Сильные стороны:</strong> ___________________________<br><br>
-          <strong>Трудности:</strong> _________________________________<br><br>
-          <strong>Цель подготовки:</strong> ___________________________<br><br>
-          <strong>Срок до олимпиады:</strong> _________________________<br><br>
-          <strong>Наставник:</strong> _________________________________
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что тренировать?</h2>
-        <ul class="detail-list">
-          <li>понимание условия задания;</li>
-          <li>поиск нестандартного способа решения;</li>
-          <li>умение объяснять ход мысли;</li>
-          <li>аккуратное оформление ответа;</li>
-          <li>работу с временем;</li>
-          <li>умение не сдаваться на сложном задании.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Чего не стоит делать?</h2>
-        <ul class="detail-list">
-          <li>не давать сразу слишком сложные задания;</li>
-          <li>не ругать за ошибки;</li>
-          <li>не готовить только по ответам;</li>
-          <li>не перегружать ученика каждый день;</li>
-          <li>не сравнивать с другими детьми;</li>
-          <li>не оставлять подготовку на последнюю неделю.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>План подготовки на 4 недели</h2>
-
-        <div class="template-box">
-          <strong>1 неделя — диагностика и база</strong><br>
-          Проверить уровень, повторить основные темы, определить трудности.<br><br>
-
-          <strong>2 неделя — типовые олимпиадные задания</strong><br>
-          Решать задания по темам, учиться видеть скрытые подсказки в условии.<br><br>
-
-          <strong>3 неделя — сложные задания и разбор ошибок</strong><br>
-          Разбирать нестандартные задачи, учиться объяснять решение.<br><br>
-
-          <strong>4 неделя — пробный тур</strong><br>
-          Провести тренировочную олимпиаду, разобрать результат и подготовить ученика психологически.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>План одного занятия</h2>
-        <ul class="detail-list">
-          <li>5 минут — разминка;</li>
-          <li>10 минут — повторение нужной темы;</li>
-          <li>20 минут — решение заданий;</li>
-          <li>10 минут — разбор ошибок;</li>
-          <li>5 минут — вывод и домашнее задание.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как разбирать ошибку?</h2>
-        <p>
-          Ошибку нужно разбирать спокойно. Важно спросить ученика:
-          что он понял из условия, какой способ выбрал, где остановился,
-          что можно было сделать иначе.
-        </p>
-
-        <div class="template-box">
-          <strong>Вопросы для разбора:</strong><br>
-          Где возникла трудность?<br>
-          Что было понятно?<br>
-          Какой шаг оказался неверным?<br>
-          Как можно решить по-другому?<br>
-          Что запомнить на будущее?
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Чек-лист готовности к олимпиаде</h2>
-
-        <div class="template-box">
-          ✅ Ученик знает формат олимпиады.<br>
-          ✅ Понимает, сколько времени даётся на задания.<br>
-          ✅ Решал задания прошлых лет или похожие задания.<br>
-          ✅ Умеет читать условие внимательно.<br>
-          ✅ Может объяснить ход решения.<br>
-          ✅ Знает свои сильные стороны.<br>
-          ✅ Понимает типичные ошибки.<br>
-          ✅ Прошёл хотя бы один пробный тур.<br>
-          ✅ Готов психологически к сложным заданиям.<br>
-          ✅ Не боится пропустить задание и вернуться к нему позже.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Материалы для бесплатной полки</h2>
-        <ul class="detail-list">
-          <li>план подготовки на месяц;</li>
-          <li>шаблон индивидуальной карты ученика;</li>
-          <li>чек-лист готовности к олимпиаде;</li>
-          <li>таблица разбора ошибок;</li>
-          <li>список заданий по уровням;</li>
-          <li>памятка для ученика перед олимпиадой.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как использовать ИИ?</h2>
-        <p>
-          ИИ можно использовать как помощника: попросить составить план подготовки,
-          придумать тренировочные вопросы, объяснить сложную тему простыми словами
-          или составить таблицу ошибок. Но все ответы нужно проверять учителю.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Промпт для ИИ</h2>
-        <div class="template-box">
-          Ты — помощник учителя по олимпиадной подготовке. 
-          Составь план подготовки ученика ___ класса к олимпиаде по предмету «__________».
-          Укажи темы, типы заданий, график занятий на 4 недели, способы проверки
-          и рекомендации для наставника.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Таблица разбора ошибок</h2>
-
-        <div class="template-box">
-          <strong>Задание:</strong> _______________________________<br><br>
-          <strong>Что получилось:</strong> _________________________<br><br>
-          <strong>Где возникла ошибка:</strong> ____________________<br><br>
-          <strong>Причина ошибки:</strong> не понял условие / забыл правило / поспешил / выбрал неверный способ<br><br>
-          <strong>Как исправить:</strong> __________________________<br><br>
-          <strong>Что повторить:</strong> __________________________
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Памятка ученику</h2>
-        <ul class="detail-list">
-          <li>внимательно читай условие;</li>
-          <li>сначала решай понятные задания;</li>
-          <li>не трать всё время на одну задачу;</li>
-          <li>записывай ход решения;</li>
-          <li>проверяй ответ;</li>
-          <li>не паникуй, если задание кажется сложным.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Памятка наставнику</h2>
-        <ul class="detail-list">
-          <li>сначала поддержите ученика;</li>
-          <li>не начинайте с самых трудных заданий;</li>
-          <li>фиксируйте прогресс;</li>
-          <li>разбирайте ошибки без давления;</li>
-          <li>учите рассуждать, а не угадывать;</li>
-          <li>проводите короткие регулярные тренировки.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Заявка к наставнику</h2>
-
-        <div class="template-box">
-          Здравствуйте! Мне нужна помощь в подготовке ученика к олимпиаде.<br><br>
-          Предмет: ________________________________________________.<br><br>
-          Класс ученика: ___________________________________________.<br><br>
-          Опыт участия: ___________________________________________.<br><br>
-          Что уже получается хорошо: _______________________________.<br><br>
-          Какие трудности есть: ____________________________________.<br><br>
-          Срок до олимпиады: ______________________________________.<br><br>
-          Нужна помощь с: планом / заданиями / разбором ошибок / пробным туром / психологической подготовкой.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Первый маленький шаг</h2>
-        <p>
-          Не нужно сразу составлять огромную программу. Начните с мини-диагностики:
-          дайте ученику 5 заданий разного уровня и посмотрите, где нужна помощь.
-        </p>
-
-        <div class="template-box">
-          <strong>Сегодня:</strong><br>
-          5 заданий → разбор → карта сильных сторон → план на неделю
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Короткий текст для страницы</h2>
-        <div class="template-box">
-          Подготовка к олимпиаде начинается с диагностики уровня ученика.
-          Определите сильные стороны, найдите трудности, составьте план занятий,
-          регулярно решайте задания и обязательно разбирайте ошибки. Наставник поможет
-          подобрать маршрут, материалы и провести пробный тур.
-        </div>
-      </article>
-
-    </section>
-
-    <section class="related-section">
-      <h2>Следующий шаг</h2>
-
-      <div class="related-grid">
-        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
-          <span>🤝</span>
-          Найти наставника
-        </a>
-
-        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
-          <span>📚</span>
-          Получить материалы
-        </a>
-
-        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
-          <span>🎯</span>
-          Вернуться к выбору задачи
-        </a>
-
-        <a class="related-card related-card--blue" href="../index.html">
-          <span>📌</span>
-          Открыть главную доску
-        </a>
+    <section class="olymp-section">
+      <h2>Готовый текст заявки наставнику</h2>
+      <div class="olymp-template">
+        <strong>Здравствуйте!</strong><br>
+        Мне нужно подготовить ученика к олимпиаде.<br><br>
+        <strong>Предмет:</strong> ________________________________<br>
+        <strong>Класс:</strong> _________________________________<br>
+        <strong>Этап:</strong> школьный / муниципальный / региональный<br>
+        <strong>Срок:</strong> _________________________________<br>
+        <strong>Что уже получается:</strong> _____________________<br>
+        <strong>Какие трудности есть:</strong> ____________________<br>
+        <strong>Нужна помощь:</strong> диагностика / план / задания / разбор ошибок / пробный тур.
       </div>
     </section>
 
+    <section class="olymp-cta">
+      <div>
+        <h2>К кому обратиться?</h2>
+        <p>
+          Выберите наставника с суперсилой «Наставник одарённых». Он поможет провести диагностику,
+          составить маршрут, подобрать задания, разобрать ошибки и подготовить ученика без перегруза.
+        </p>
+      </div>
+      <div class="olymp-cta__icon">🌟</div>
+    </section>
+
+    <nav class="olymp-related" aria-label="Следующие шаги">
+      <a href="2-naydi-nastavnika.html"><span>🤝</span>Найти наставника</a>
+      <a href="3-poluchi-pomosch.html"><span>📚</span>Получить материалы</a>
+      <a href="1-vyberi-zadachu.html"><span>🎯</span>Выбрать задачу</a>
+      <a href="../index.html"><span>📌</span>Открыть доску</a>
+    </nav>
   </main>
 </body>
 </html>
