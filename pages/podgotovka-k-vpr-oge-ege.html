@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Подготовка к ВПР, ОГЭ и ЕГЭ — Учительская 2.0</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <meta name="description" content="Красочная страница Учительской 2.0: как организовать подготовку к ВПР, ОГЭ и ЕГЭ без хаоса — диагностика, план, задания, пробники, работа над ошибками и поддержка наставника." />
+  <style>
+    :root {
+      --exam-blue: #2563eb;
+      --exam-sky: #38bdf8;
+      --exam-violet: #7c3aed;
+      --exam-green: #16a34a;
+      --exam-orange: #f97316;
+      --exam-red: #ef4444;
+      --exam-yellow: #facc15;
+      --exam-ink: #172033;
+      --exam-muted: #64748b;
+      --exam-card: rgba(255,255,255,.9);
+      --exam-border: rgba(37,99,235,.16);
+    }
+
+    body.detail-body {
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,.32), transparent 34%),
+        radial-gradient(circle at 90% 8%, rgba(250,204,21,.34), transparent 28%),
+        radial-gradient(circle at 12% 85%, rgba(124,58,237,.22), transparent 32%),
+        linear-gradient(135deg, #eef8ff 0%, #fff7ed 48%, #f5f3ff 100%);
+      color: var(--exam-ink);
+    }
+
+    .exam-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 26px 18px 54px;
+    }
+
+    .exam-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .exam-back,
+    .exam-pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 800;
+      color: #1e3a8a;
+      background: rgba(255,255,255,.76);
+      border: 1px solid rgba(37,99,235,.16);
+      box-shadow: 0 10px 25px rgba(37,99,235,.09);
+    }
+
+    .exam-pill-link {
+      color: #6d28d9;
+    }
+
+    .exam-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      min-height: 330px;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.96), rgba(124,58,237,.94)),
+        linear-gradient(135deg, #2563eb, #7c3aed);
+      color: #fff;
+      box-shadow: 0 30px 70px rgba(37,99,235,.26);
+    }
+
+    .exam-hero::before,
+    .exam-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255,255,255,.13);
+    }
+
+    .exam-hero::before {
+      width: 260px;
+      height: 260px;
+      right: -80px;
+      top: -80px;
+    }
+
+    .exam-hero::after {
+      width: 190px;
+      height: 190px;
+      left: 44%;
+      bottom: -96px;
+    }
+
+    .exam-hero__content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .exam-badge {
+      display: inline-flex;
+      width: fit-content;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.25);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .exam-hero h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: .98;
+      letter-spacing: -1.8px;
+    }
+
+    .exam-hero p {
+      margin: 18px 0 0;
+      max-width: 720px;
+      font-size: 19px;
+      line-height: 1.65;
+      color: rgba(255,255,255,.92);
+    }
+
+    .exam-illustration {
+      position: relative;
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+    }
+
+    .exam-board {
+      width: min(360px, 100%);
+      border-radius: 28px;
+      padding: 20px;
+      background: rgba(255,255,255,.96);
+      color: var(--exam-ink);
+      box-shadow: 0 24px 55px rgba(15,23,42,.24);
+      transform: rotate(2deg);
+    }
+
+    .exam-board__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-weight: 900;
+      color: #1e40af;
+    }
+
+    .exam-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .exam-bar {
+      display: grid;
+      grid-template-columns: 56px 1fr 40px;
+      gap: 10px;
+      align-items: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .exam-bar span:nth-child(2) {
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--c), rgba(255,255,255,.2));
+      width: var(--w);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+    }
+
+    .floating-card {
+      position: absolute;
+      padding: 12px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.96);
+      color: var(--exam-ink);
+      font-weight: 900;
+      box-shadow: 0 16px 32px rgba(15,23,42,.18);
+    }
+
+    .floating-card--one { left: 0; top: 8px; transform: rotate(-8deg); }
+    .floating-card--two { right: 4px; bottom: 4px; transform: rotate(7deg); }
+
+    .exam-section {
+      margin-top: 24px;
+    }
+
+    .exam-section__title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 16px;
+      font-size: clamp(25px, 3vw, 36px);
+      letter-spacing: -.8px;
+    }
+
+    .exam-number {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      color: white;
+      background: linear-gradient(135deg, var(--exam-blue), var(--exam-violet));
+      box-shadow: 0 14px 26px rgba(37,99,235,.22);
+      font-weight: 1000;
+    }
+
+    .exam-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .exam-grid--two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .exam-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+      border-radius: 26px;
+      padding: 22px;
+      background: var(--exam-card);
+      border: 1px solid var(--exam-border);
+      box-shadow: 0 18px 44px rgba(37,99,235,.10);
+    }
+
+    .exam-card::after {
+      content: "";
+      position: absolute;
+      right: -45px;
+      top: -45px;
+      width: 115px;
+      height: 115px;
+      border-radius: 999px;
+      background: var(--soft);
+    }
+
+    .exam-icon {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      font-size: 28px;
+      background: var(--soft);
+      margin-bottom: 14px;
+    }
+
+    .exam-card h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .exam-card p,
+    .exam-card li {
+      color: var(--exam-muted);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .exam-card ul {
+      padding-left: 20px;
+      margin: 10px 0 0;
+    }
+
+    .exam-roadmap {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .exam-step {
+      position: relative;
+      min-height: 170px;
+      border-radius: 24px;
+      padding: 18px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(37,99,235,.14);
+      box-shadow: 0 16px 34px rgba(15,23,42,.08);
+    }
+
+    .exam-step b {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      color: #fff;
+      background: var(--step);
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .exam-step h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .exam-step p {
+      margin: 0;
+      color: var(--exam-muted);
+      line-height: 1.55;
+    }
+
+    .exam-table {
+      overflow: hidden;
+      border-radius: 26px;
+      background: rgba(255,255,255,.94);
+      border: 1px solid var(--exam-border);
+      box-shadow: 0 18px 44px rgba(15,23,42,.08);
+    }
+
+    .exam-table table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .exam-table th,
+    .exam-table td {
+      padding: 16px 18px;
+      text-align: left;
+      border-bottom: 1px solid rgba(148,163,184,.18);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .exam-table th {
+      background: linear-gradient(135deg, rgba(37,99,235,.10), rgba(124,58,237,.10));
+      color: #1e40af;
+      font-weight: 1000;
+    }
+
+    .exam-checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .exam-check {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-radius: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(22,163,74,.14);
+      box-shadow: 0 12px 24px rgba(22,163,74,.08);
+      line-height: 1.5;
+    }
+
+    .exam-check span {
+      display: grid;
+      place-items: center;
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      border-radius: 11px;
+      background: rgba(34,197,94,.16);
+      color: #15803d;
+      font-weight: 1000;
+    }
+
+    .exam-template {
+      border-radius: 28px;
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(239,246,255,.96));
+      border: 1px solid rgba(37,99,235,.16);
+      box-shadow: 0 20px 46px rgba(37,99,235,.10);
+    }
+
+    .exam-template pre {
+      white-space: pre-wrap;
+      margin: 0;
+      font: 700 16px/1.7 Arial, sans-serif;
+      color: #1f2937;
+    }
+
+    .exam-cta {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      border-radius: 30px;
+      padding: 28px;
+      background: linear-gradient(135deg, #f97316, #facc15);
+      color: #431407;
+      box-shadow: 0 24px 56px rgba(249,115,22,.22);
+    }
+
+    .exam-cta h2 {
+      margin: 0 0 8px;
+      font-size: clamp(25px, 3vw, 38px);
+    }
+
+    .exam-cta p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.55;
+      max-width: 780px;
+    }
+
+    .exam-cta a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 220px;
+      padding: 16px 20px;
+      border-radius: 18px;
+      background: #fff;
+      color: #7c2d12;
+      text-decoration: none;
+      font-weight: 1000;
+      box-shadow: 0 14px 28px rgba(67,20,7,.15);
+    }
+
+    .related-section {
+      margin-top: 26px;
+    }
+
+    @media (max-width: 900px) {
+      .exam-hero__content,
+      .exam-grid,
+      .exam-grid--two,
+      .exam-roadmap,
+      .exam-checklist,
+      .exam-cta {
+        grid-template-columns: 1fr;
+      }
+
+      .exam-hero {
+        padding: 24px;
+      }
+
+      .floating-card {
+        position: static;
+        transform: none;
+        margin-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body class="detail-body">
+  <main class="exam-page">
+    <div class="exam-topline">
+      <a class="exam-back" href="../index.html">← Назад к доске</a>
+      <a class="exam-pill-link" href="../index.html#diagnostic">📋 Мини-диагностика</a>
+    </div>
+
+    <section class="exam-hero">
+      <div class="exam-hero__content">
+        <div>
+          <span class="exam-badge">Столбец 2: Что у вас болит?</span>
+          <h1>📚 Подготовка к ВПР, ОГЭ и ЕГЭ</h1>
+          <p>
+            Когда впереди проверочные и экзамены, важно не просто «решать всё подряд»,
+            а увидеть слабые места, составить понятный маршрут, регулярно тренироваться
+            и спокойно разбирать ошибки. Эта страница помогает организовать подготовку без перегруза.
+          </p>
+        </div>
+
+        <div class="exam-illustration" aria-hidden="true">
+          <div class="floating-card floating-card--one">⏱️ режим</div>
+          <div class="exam-board">
+            <div class="exam-board__top">
+              <span>Карта подготовки</span>
+              <span>✅</span>
+            </div>
+            <div class="exam-bars">
+              <div class="exam-bar" style="--c:#22c55e;--w:92%"><span>Темы</span><span></span><strong>92%</strong></div>
+              <div class="exam-bar" style="--c:#38bdf8;--w:76%"><span>Тест</span><span></span><strong>76%</strong></div>
+              <div class="exam-bar" style="--c:#f97316;--w:64%"><span>Ошибки</span><span></span><strong>64%</strong></div>
+              <div class="exam-bar" style="--c:#a855f7;--w:84%"><span>Пробник</span><span></span><strong>84%</strong></div>
+            </div>
+          </div>
+          <div class="floating-card floating-card--two">🎯 цель</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2 class="exam-section__title"><span class="exam-number">1</span> С чего начать подготовку?</h2>
+      <div class="exam-grid">
+        <article class="exam-card" style="--soft: rgba(37,99,235,.12);">
+          <div class="exam-icon">🔎</div>
+          <h3>Диагностика</h3>
+          <p>Сначала определите, какие задания уже получаются, а какие требуют повторения и тренировки.</p>
+        </article>
+        <article class="exam-card" style="--soft: rgba(249,115,22,.14);">
+          <div class="exam-icon">🧩</div>
+          <h3>Карта тем</h3>
+          <p>Разбейте подготовку на небольшие блоки: теория, типовые задания, сложные случаи и повторение.</p>
+        </article>
+        <article class="exam-card" style="--soft: rgba(34,197,94,.14);">
+          <div class="exam-icon">📅</div>
+          <h3>План без перегруза</h3>
+          <p>Лучше заниматься регулярно по понятному графику, чем пытаться выучить всё за один вечер.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2 class="exam-section__title"><span class="exam-number">2</span> Маршрут подготовки</h2>
+      <div class="exam-roadmap">
+        <article class="exam-step" style="--step:#2563eb;">
+          <b>1</b>
+          <h3>Проверьте уровень</h3>
+          <p>Дайте короткий диагностический вариант и отметьте проблемные задания.</p>
+        </article>
+        <article class="exam-step" style="--step:#7c3aed;">
+          <b>2</b>
+          <h3>Разберите ошибки</h3>
+          <p>Не ругайте за ошибки — превратите их в список тем для повторения.</p>
+        </article>
+        <article class="exam-step" style="--step:#f97316;">
+          <b>3</b>
+          <h3>Тренируйте типы</h3>
+          <p>Берите один формат задания и доводите его до уверенного выполнения.</p>
+        </article>
+        <article class="exam-step" style="--step:#16a34a;">
+          <b>4</b>
+          <h3>Проводите пробники</h3>
+          <p>Учите ребёнка работать со временем, бланками и порядком выполнения.</p>
+        </article>
+        <article class="exam-step" style="--step:#ef4444;">
+          <b>5</b>
+          <h3>Закрепляйте результат</h3>
+          <p>Возвращайтесь к сложным темам и фиксируйте личный прогресс.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2 class="exam-section__title"><span class="exam-number">3</span> Что подготовить учителю?</h2>
+      <div class="exam-grid exam-grid--two">
+        <article class="exam-card" style="--soft: rgba(56,189,248,.14);">
+          <div class="exam-icon">🗂️</div>
+          <h3>Папка материалов</h3>
+          <ul>
+            <li>кодификатор или список проверяемых тем;</li>
+            <li>диагностический вариант;</li>
+            <li>банк типовых заданий;</li>
+            <li>таблица ошибок и прогресса.</li>
+          </ul>
+        </article>
+        <article class="exam-card" style="--soft: rgba(250,204,21,.18);">
+          <div class="exam-icon">🎯</div>
+          <h3>Личная цель ученика</h3>
+          <p>Важно поставить достижимую цель: повысить результат, закрыть конкретные темы, научиться оформлять ответы или работать быстрее.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2 class="exam-section__title"><span class="exam-number">4</span> План на 4 недели</h2>
+      <div class="exam-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Неделя</th>
+              <th>Главная задача</th>
+              <th>Что делает ученик</th>
+              <th>Что делает наставник</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1</strong></td>
+              <td>Диагностика</td>
+              <td>Решает короткий вариант, отмечает сложные задания.</td>
+              <td>Составляет карту пробелов и выбирает приоритеты.</td>
+            </tr>
+            <tr>
+              <td><strong>2</strong></td>
+              <td>Повторение тем</td>
+              <td>Разбирает правила, выполняет задания по одному типу.</td>
+              <td>Объясняет сложные места и даёт тренировочные карточки.</td>
+            </tr>
+            <tr>
+              <td><strong>3</strong></td>
+              <td>Практика</td>
+              <td>Решает варианты с ограничением по времени.</td>
+              <td>Проверяет ответы и показывает, как исправить ошибки.</td>
+            </tr>
+            <tr>
+              <td><strong>4</strong></td>
+              <td>Пробник</td>
+              <td>Выполняет работу в формате экзамена или проверки.</td>
+              <td>Подводит итог и даёт план последнего повторения.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2 class="exam-section__title"><span class="exam-number">5</span> Форматы занятий</h2>
+      <div class="exam-grid">
+        <article class="exam-card" style="--soft: rgba(34,197,94,.14);">
+          <div class="exam-icon">⚡</div>
+          <h3>Разминка на 7 минут</h3>
+          <p>Короткие задания в начале урока помогают держать навык в рабочем состоянии.</p>
+        </article>
+        <article class="exam-card" style="--soft: rgba(124,58,237,.12);">
+          <div class="exam-icon">🧠</div>
+          <h3>Разбор одного типа</h3>
+          <p>Ученики учатся видеть алгоритм, а не просто угадывать ответ.</p>
+        </article>
+        <article class="exam-card" style="--soft: rgba(239,68,68,.12);">
+          <div class="exam-icon">🛠️</div>
+          <h3>Мастерская ошибок</h3>
+          <p>Ошибки становятся материалом для роста: нашли, объяснили, исправили, повторили.</p>
+        </article>
+        <article class="exam-card" style="--soft: rgba(56,189,248,.14);">
+          <div class="exam-icon">⏱️</div>
+          <h3>Тренировка времени</h3>
+          <p>Ребёнок понимает, сколько минут можно тратить на разные задания.</p>
+        </article>
+        <article class="exam-card" style="--soft: rgba(250,204,21,.18);">
+          <div class="exam-icon">📝</div>
+          <h3>Мини-пробник</h3>
+          <p>Небольшая проверочная работа показывает реальный прогресс без лишнего стресса.</p>
+        </article>
+        <article class="exam-card" style="--soft: rgba(249,115,22,.14);">
+          <div class="exam-icon">🤝</div>
+          <h3>Работа в парах</h3>
+          <p>Ученики объясняют решения друг другу и лучше запоминают алгоритмы.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2 class="exam-section__title"><span class="exam-number">6</span> Чек-лист готовности</h2>
+      <div class="exam-checklist">
+        <div class="exam-check"><span>✓</span><strong>Ученик знает формат работы и типы заданий.</strong></div>
+        <div class="exam-check"><span>✓</span><strong>Есть список тем, которые нужно повторить в первую очередь.</strong></div>
+        <div class="exam-check"><span>✓</span><strong>Ошибки записываются и разбираются, а не просто исправляются.</strong></div>
+        <div class="exam-check"><span>✓</span><strong>Пробные варианты выполняются с ограничением по времени.</strong></div>
+        <div class="exam-check"><span>✓</span><strong>Ученик понимает, как оформлять ответы и проверять себя.</strong></div>
+        <div class="exam-check"><span>✓</span><strong>Учитель видит динамику и может вовремя изменить маршрут.</strong></div>
+      </div>
+    </section>
+
+    <section class="exam-section">
+      <h2 class="exam-section__title"><span class="exam-number">7</span> Готовая заявка наставнику</h2>
+      <div class="exam-template">
+        <pre>Здравствуйте! Мне нужна помощь с подготовкой ученика к ВПР / ОГЭ / ЕГЭ.
+
+Предмет: ________________________________.
+Класс: __________________________________.
+Цель подготовки: повысить результат / закрыть пробелы / отработать сложные задания / подготовиться к пробнику.
+Сложности ученика: ______________________.
+Срок: ___________________________________.
+Что нужно получить: план подготовки, подбор заданий, разбор ошибок, пробный вариант или консультацию.</pre>
+      </div>
+    </section>
+
+    <section class="exam-cta">
+      <div>
+        <h2>Подготовка без паники и перегруза</h2>
+        <p>
+          Обратитесь к наставнику, чтобы собрать понятный маршрут: диагностика, темы,
+          задания, пробники, работа над ошибками и спокойное движение к результату.
+        </p>
+      </div>
+      <a href="2-naydi-nastavnika.html">Найти наставника</a>
+    </section>
+
+    <section class="related-section">
+      <h2>Следующий шаг</h2>
+      <div class="related-grid">
+        <a class="related-card related-card--green" href="2-naydi-nastavnika.html">
+          <span>🤝</span>
+          Найти наставника
+        </a>
+        <a class="related-card related-card--sky" href="3-poluchi-pomosch.html">
+          <span>📚</span>
+          Получить материалы
+        </a>
+        <a class="related-card related-card--purple" href="1-vyberi-zadachu.html">
+          <span>🎯</span>
+          Вернуться к выбору задачи
+        </a>
+        <a class="related-card related-card--blue" href="../index.html">
+          <span>📌</span>
+          Открыть главную доску
+        </a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
