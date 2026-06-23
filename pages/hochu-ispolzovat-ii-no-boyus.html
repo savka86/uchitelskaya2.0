@@ -5,342 +5,1201 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Хочу использовать ИИ, но боюсь — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
-  <meta name="description" content="Страница для педагогов, которые хотят использовать искусственный интеллект, но боятся ошибок, сложностей и рисков. Простые шаги, правила безопасности и готовые промпты." />
+  <meta name="description" content="Красочная страница для педагогов, которые хотят безопасно применять ИИ в уроках, проектах и подготовке материалов с поддержкой наставника." />
+
+  <style>
+    :root {
+      --ink: #15305f;
+      --muted: #597098;
+      --blue: #2563eb;
+      --sky: #0ea5e9;
+      --cyan: #06b6d4;
+      --green: #22c55e;
+      --mint: #dffcf0;
+      --yellow: #facc15;
+      --orange: #fb923c;
+      --pink: #ec4899;
+      --purple: #7c3aed;
+      --paper: #ffffff;
+      --soft: #f4f8ff;
+      --line: rgba(37, 99, 235, .18);
+      --shadow: 0 20px 45px rgba(21, 48, 95, .13);
+      --radius: 28px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body.detail-body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(14, 165, 233, .18), transparent 28%),
+        radial-gradient(circle at 92% 12%, rgba(236, 72, 153, .14), transparent 30%),
+        radial-gradient(circle at 50% 95%, rgba(34, 197, 94, .16), transparent 32%),
+        linear-gradient(180deg, #eef7ff 0%, #fff7fb 42%, #f3fff8 100%);
+      font-family: Arial, sans-serif;
+    }
+
+    .ai-page {
+      width: min(1180px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    .detail-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .back-link,
+    .detail-btn {
+      text-decoration: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, .12);
+    }
+
+    .back-link {
+      background: rgba(255, 255, 255, .86);
+      color: var(--blue);
+      border: 1px solid rgba(37, 99, 235, .18);
+    }
+
+    .detail-btn {
+      color: #fff;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+    }
+
+    .ai-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.95), rgba(234,246,255,.92)),
+        radial-gradient(circle at 86% 22%, rgba(250, 204, 21, .28), transparent 22%);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, .9);
+    }
+
+    .ai-hero::before,
+    .ai-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(1px);
+      opacity: .7;
+    }
+
+    .ai-hero::before {
+      width: 220px;
+      height: 220px;
+      background: rgba(14, 165, 233, .14);
+      right: -70px;
+      top: -70px;
+    }
+
+    .ai-hero::after {
+      width: 180px;
+      height: 180px;
+      background: rgba(236, 72, 153, .11);
+      left: -65px;
+      bottom: -70px;
+    }
+
+    .ai-hero__content {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      color: #155e75;
+      background: #cffafe;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .ai-hero h1 {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 74px);
+      line-height: .98;
+      color: #163b91;
+      letter-spacing: -1.8px;
+    }
+
+    .ai-hero p {
+      margin: 18px 0 0;
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.55;
+      color: #38527d;
+      max-width: 760px;
+    }
+
+    .ai-hero__actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .ai-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 13px 18px;
+      border-radius: 18px;
+      text-decoration: none;
+      font-weight: 900;
+      color: #fff;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 14px 28px rgba(124, 58, 237, .22);
+    }
+
+    .ai-action--light {
+      color: var(--blue);
+      background: #fff;
+      border: 1px solid rgba(37, 99, 235, .18);
+      box-shadow: 0 12px 24px rgba(21, 48, 95, .09);
+    }
+
+    .ai-illustration {
+      min-height: 330px;
+      position: relative;
+      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(219, 234, 254, .85), rgba(255,255,255,.9));
+      border: 1px solid rgba(37, 99, 235, .14);
+      overflow: hidden;
+    }
+
+    .ai-blob {
+      position: absolute;
+      inset: 28px 24px auto auto;
+      width: 160px;
+      height: 160px;
+      border-radius: 45% 55% 52% 48%;
+      background: linear-gradient(135deg, #bfdbfe, #e9d5ff);
+    }
+
+    .teacher-card {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      right: 26px;
+      border-radius: 26px;
+      padding: 22px;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.9);
+      box-shadow: 0 18px 36px rgba(21, 48, 95, .12);
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .teacher-face {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #fef3c7, #fbcfe8);
+      display: grid;
+      place-items: center;
+      font-size: 56px;
+      box-shadow: inset 0 -10px 0 rgba(251, 146, 60, .18);
+    }
+
+    .teacher-card strong {
+      display: block;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .teacher-card span {
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .bot-bubble {
+      position: absolute;
+      right: 22px;
+      top: 28px;
+      width: 185px;
+      border-radius: 26px;
+      padding: 18px;
+      background: #ffffff;
+      box-shadow: 0 18px 32px rgba(21, 48, 95, .12);
+      border: 1px solid rgba(14, 165, 233, .18);
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .bot-bubble .bot {
+      font-size: 58px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .spark {
+      position: absolute;
+      font-size: 32px;
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    .spark--one { left: 26px; top: 34px; }
+    .spark--two { left: 62px; top: 116px; animation-delay: .8s; }
+    .spark--three { right: 42px; bottom: 148px; animation-delay: 1.2s; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .ai-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .stat-pill {
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 12px 28px rgba(21, 48, 95, .08);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .stat-pill b {
+      display: block;
+      font-size: 28px;
+      color: var(--blue);
+    }
+
+    .stat-pill span {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .ai-section {
+      margin-top: 22px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      overflow: hidden;
+    }
+
+    .ai-section__head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .num {
+      min-width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(21, 48, 95, .12);
+    }
+
+    .num--blue { background: linear-gradient(135deg, var(--blue), var(--sky)); }
+    .num--purple { background: linear-gradient(135deg, var(--purple), #a855f7); }
+    .num--green { background: linear-gradient(135deg, #10b981, var(--green)); }
+    .num--pink { background: linear-gradient(135deg, var(--pink), #fb7185); }
+    .num--orange { background: linear-gradient(135deg, var(--orange), var(--yellow)); color: #7c2d12; }
+
+    .ai-section h2 {
+      margin: 0;
+      font-size: clamp(26px, 3vw, 42px);
+      color: #173b87;
+    }
+
+    .ai-section__lead {
+      margin: -6px 0 18px 68px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .fear-grid,
+    .mentor-grid,
+    .materials-grid,
+    .safety-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .fear-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .fear-card,
+    .mentor-card,
+    .material-card,
+    .safe-card,
+    .prompt-card {
+      position: relative;
+      border-radius: 24px;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid rgba(37, 99, 235, .14);
+      box-shadow: 0 12px 28px rgba(21, 48, 95, .08);
+      overflow: hidden;
+    }
+
+    .fear-card::after,
+    .mentor-card::after,
+    .material-card::after,
+    .safe-card::after {
+      content: "";
+      position: absolute;
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      right: -22px;
+      top: -22px;
+      opacity: .18;
+    }
+
+    .fear-card:nth-child(1)::after { background: var(--sky); }
+    .fear-card:nth-child(2)::after { background: var(--pink); }
+    .fear-card:nth-child(3)::after { background: var(--green); }
+    .fear-card:nth-child(4)::after { background: var(--purple); }
+
+    .icon-big {
+      width: 62px;
+      height: 62px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      margin-bottom: 14px;
+      background: #eff6ff;
+    }
+
+    .fear-card h3,
+    .mentor-card h3,
+    .material-card h3,
+    .safe-card h3,
+    .prompt-card h3 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 21px;
+    }
+
+    .fear-card p,
+    .mentor-card p,
+    .material-card p,
+    .safe-card p,
+    .prompt-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .mentor-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .mentor-card:nth-child(1) { background: #f5f3ff; }
+    .mentor-card:nth-child(2) { background: #eff6ff; }
+    .mentor-card:nth-child(3) { background: #ecfeff; }
+    .mentor-card:nth-child(4) { background: #fff7ed; }
+
+    .materials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .material-card {
+      min-height: 150px;
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .material-card:nth-child(1) { background: #eff6ff; }
+    .material-card:nth-child(2) { background: #fdf2f8; }
+    .material-card:nth-child(3) { background: #f0fdf4; }
+    .material-card:nth-child(4) { background: #fffbeb; }
+    .material-card:nth-child(5) { background: #ecfeff; }
+    .material-card:nth-child(6) { background: #f5f3ff; }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      counter-reset: step;
+    }
+
+    .step-card {
+      position: relative;
+      min-height: 185px;
+      padding: 22px;
+      border-radius: 26px;
+      background: #fff;
+      border: 1px solid rgba(37, 99, 235, .16);
+      box-shadow: 0 12px 26px rgba(21, 48, 95, .08);
+    }
+
+    .step-card::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      margin-bottom: 18px;
+    }
+
+    .step-card:not(:last-child)::after {
+      content: "➜";
+      position: absolute;
+      right: -22px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      color: var(--pink);
+      font-size: 28px;
+      box-shadow: 0 8px 20px rgba(21, 48, 95, .12);
+    }
+
+    .step-card h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .step-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .safety-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .safe-card {
+      background: #f8fbff;
+    }
+
+    .safe-card ul,
+    .prompt-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .safe-card li,
+    .prompt-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #344b72;
+      line-height: 1.45;
+    }
+
+    .safe-card li::before {
+      content: "✓";
+      min-width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--green);
+      font-weight: 900;
+    }
+
+    .safe-card--no li::before {
+      content: "!";
+      background: var(--pink);
+    }
+
+    .prompt-zone {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .prompt-card {
+      background: #fff7ed;
+    }
+
+    .formula {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .formula span {
+      display: block;
+      padding: 13px 14px;
+      border-radius: 16px;
+      color: #164e63;
+      background: #ecfeff;
+      border: 1px dashed rgba(6, 182, 212, .45);
+      font-weight: 800;
+    }
+
+    .prompt-example {
+      background: #f5f3ff;
+      border-radius: 24px;
+      padding: 20px;
+      border: 1px solid rgba(124, 58, 237, .16);
+    }
+
+    .prompt-example h3 {
+      margin: 0 0 12px;
+      color: #5b21b6;
+      font-size: 22px;
+    }
+
+    .prompt-example p {
+      margin: 0;
+      color: #44337a;
+      line-height: 1.55;
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 15px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(37, 99, 235, .12);
+      color: #344b72;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .check-item span {
+      min-width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 900;
+    }
+
+    .cta {
+      margin-top: 22px;
+      border-radius: 32px;
+      padding: 32px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 12% 25%, rgba(255,255,255,.26), transparent 24%),
+        radial-gradient(circle at 86% 18%, rgba(250,204,21,.34), transparent 28%),
+        linear-gradient(135deg, #1d4ed8 0%, #7c3aed 55%, #ec4899 100%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .cta h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.05;
+    }
+
+    .cta p {
+      margin: 16px 0 0;
+      font-size: 19px;
+      line-height: 1.55;
+      color: rgba(255,255,255,.9);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      background: #fff;
+      color: #5b21b6;
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .cta-button--ghost {
+      background: rgba(255,255,255,.17);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.32);
+    }
+
+    .mentor-picture {
+      min-height: 270px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mentor-picture .desk {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 34px;
+      height: 76px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.9);
+    }
+
+    .person {
+      position: absolute;
+      bottom: 72px;
+      width: 110px;
+      height: 138px;
+      border-radius: 60px 60px 26px 26px;
+      background: #fff;
+      display: grid;
+      place-items: start center;
+      padding-top: 20px;
+      font-size: 56px;
+      box-shadow: 0 20px 35px rgba(0,0,0,.12);
+    }
+
+    .person--one {
+      left: 52px;
+      background: linear-gradient(180deg, #ccfbf1, #fff);
+    }
+
+    .person--two {
+      right: 52px;
+      background: linear-gradient(180deg, #dbeafe, #fff);
+    }
+
+    .laptop {
+      position: absolute;
+      left: 50%;
+      bottom: 74px;
+      transform: translateX(-50%);
+      width: 112px;
+      height: 74px;
+      border-radius: 12px;
+      background: #dbeafe;
+      border: 6px solid #fff;
+      box-shadow: 0 10px 20px rgba(0,0,0,.12);
+    }
+
+    .heart-bubble {
+      position: absolute;
+      right: 38px;
+      top: 26px;
+      padding: 13px 16px;
+      border-radius: 22px;
+      background: #fff;
+      color: var(--pink);
+      font-size: 28px;
+      box-shadow: 0 14px 28px rgba(0,0,0,.12);
+    }
+
+    .related-section {
+      margin-top: 22px;
+      padding: 28px;
+      background: rgba(255,255,255,.86);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.9);
+    }
+
+    .related-section h2 {
+      margin: 0 0 16px;
+      font-size: 32px;
+      color: #173b87;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .related-card {
+      min-height: 112px;
+      border-radius: 22px;
+      padding: 18px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      box-shadow: 0 12px 24px rgba(21,48,95,.11);
+    }
+
+    .related-card span {
+      font-size: 32px;
+    }
+
+    .related-card--green { background: linear-gradient(135deg, #16a34a, #22c55e); }
+    .related-card--sky { background: linear-gradient(135deg, #0284c7, #38bdf8); }
+    .related-card--purple { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+    .related-card--blue { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
+
+    @media (max-width: 980px) {
+      .ai-hero__content,
+      .cta-grid,
+      .prompt-zone {
+        grid-template-columns: 1fr;
+      }
+
+      .fear-grid,
+      .mentor-grid,
+      .ai-strip,
+      .related-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .materials-grid,
+      .roadmap,
+      .safety-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .step-card:not(:last-child)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .ai-page {
+        width: min(100% - 18px, 1180px);
+        padding-top: 12px;
+      }
+
+      .ai-hero,
+      .ai-section,
+      .cta,
+      .related-section {
+        padding: 20px;
+        border-radius: 24px;
+      }
+
+      .ai-hero h1 {
+        letter-spacing: -1px;
+      }
+
+      .teacher-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .teacher-face {
+        margin: 0 auto;
+      }
+
+      .fear-grid,
+      .mentor-grid,
+      .materials-grid,
+      .roadmap,
+      .safety-grid,
+      .ai-strip,
+      .checklist,
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-section__lead {
+        margin-left: 0;
+      }
+
+      .material-card {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-topline {
+        align-items: stretch;
+      }
+
+      .back-link,
+      .detail-btn {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 
 <body class="detail-body">
-  <main class="detail-page">
+  <main class="ai-page">
 
     <div class="detail-topline">
       <a class="back-link back-link--ghost" href="../index.html">← Назад к доске</a>
       <a class="detail-btn" href="../index.html#diagnostic">Мини-диагностика</a>
     </div>
 
-    <section class="detail-hero">
-      <span class="detail-hero__badge">Столбец 2: Что у вас болит?</span>
-
-      <div class="detail-hero__main">
-        <div class="detail-hero__icon">🤖</div>
+    <section class="ai-hero">
+      <div class="ai-hero__content">
         <div>
+          <span class="ai-badge">🤖 Столбец 2: Что у вас болит?</span>
           <h1>Хочу использовать ИИ, но боюсь</h1>
           <p>
-            Эта страница для учителей, которые хотят попробовать нейросети,
-            но переживают: «А вдруг я сделаю неправильно?», «А если ИИ ошибётся?»,
-            «А можно ли это использовать в школе?». Здесь собран безопасный и простой маршрут.
+            Нейросети могут помогать учителю в подготовке уроков, проектов и материалов.
+            Но начинать легче не в одиночку, а с понятной схемой, безопасными правилами
+            и поддержкой наставника.
           </p>
+          <div class="ai-hero__actions">
+            <a class="ai-action" href="#first-step">🚀 Сделать первый шаг</a>
+            <a class="ai-action ai-action--light" href="#safety">🛡️ Посмотреть правила безопасности</a>
+          </div>
+        </div>
+
+        <div class="ai-illustration" aria-label="Учитель и цифровой помощник">
+          <div class="ai-blob"></div>
+          <div class="spark spark--one">✨</div>
+          <div class="spark spark--two">💡</div>
+          <div class="spark spark--three">📌</div>
+          <div class="bot-bubble">
+            <span class="bot">🤖</span>
+            Я рядом, чтобы помочь!
+          </div>
+          <div class="teacher-card">
+            <div class="teacher-face">👩‍🏫</div>
+            <div>
+              <strong>Без страха и спешки</strong>
+              <span>Разбираем задачу, пробуем простой запрос и проверяем результат вместе.</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="detail-grid">
+    <div class="ai-strip" aria-label="Короткая инфографика">
+      <div class="stat-pill"><b>1</b><span>маленькая задача для начала</span></div>
+      <div class="stat-pill"><b>4</b><span>шага до готового материала</span></div>
+      <div class="stat-pill"><b>6</b><span>идей для урока и проекта</span></div>
+      <div class="stat-pill"><b>0</b><span>личных данных в запросе</span></div>
+    </div>
 
-      <article class="detail-card detail-card--large">
-        <h2>Что это значит?</h2>
-        <p>
-          Страх перед ИИ — это нормально. Новые инструменты сначала кажутся сложными:
-          непонятно, где зарегистрироваться, что писать в запросе, можно ли доверять ответам
-          и как не нарушить правила безопасности.
-        </p>
-        <p>
-          Главное — не начинать с трудных задач. Первый шаг должен быть маленьким:
-          попросить ИИ помочь составить план урока, придумать вопросы, улучшить текст
-          или подготовить черновик задания.
-        </p>
+    <section class="ai-section">
+      <div class="ai-section__head">
+        <div class="num num--blue">1</div>
+        <h2>Почему возникает тревога?</h2>
+      </div>
+      <p class="ai-section__lead">
+        Чаще всего пугает не сама технология, а неопределённость: непонятно, как начать,
+        как оценить ответ и где граница безопасного применения.
+      </p>
 
-        <div class="template-box">
-          <strong>Главная мысль:</strong><br>
-          ИИ не заменяет учителя. ИИ помогает учителю быстрее подготовить черновик,
-          найти идеи, оформить материал и сэкономить время.
+      <div class="fear-grid">
+        <article class="fear-card">
+          <div class="icon-big">❓</div>
+          <h3>Неясный старт</h3>
+          <p>Сложно выбрать сервис, сформулировать задачу и понять, какой результат ждать.</p>
+        </article>
+
+        <article class="fear-card">
+          <div class="icon-big">⚠️</div>
+          <h3>Риск ошибок</h3>
+          <p>Ответ может быть неточным, поэтому его нельзя брать без просмотра и правок.</p>
+        </article>
+
+        <article class="fear-card">
+          <div class="icon-big">🛡️</div>
+          <h3>Вопрос безопасности</h3>
+          <p>Важно не передавать личные данные детей и закрытые школьные материалы.</p>
+        </article>
+
+        <article class="fear-card">
+          <div class="icon-big">🧩</div>
+          <h3>Ощущение сложности</h3>
+          <p>Кажется, что нужно долго учиться, хотя первый опыт можно получить за 15 минут.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ai-section">
+      <div class="ai-section__head">
+        <div class="num num--purple">2</div>
+        <h2>Чем поможет наставник?</h2>
+      </div>
+
+      <div class="mentor-grid">
+        <article class="mentor-card">
+          <div class="icon-big">💬</div>
+          <h3>Объяснит простыми словами</h3>
+          <p>Без сложных терминов и лишней теории.</p>
+        </article>
+
+        <article class="mentor-card">
+          <div class="icon-big">💻</div>
+          <h3>Покажет полезные сервисы</h3>
+          <p>Подберёт инструмент под урок, проект или презентацию.</p>
+        </article>
+
+        <article class="mentor-card">
+          <div class="icon-big">✍️</div>
+          <h3>Поможет составить запрос</h3>
+          <p>Научит указывать предмет, класс, тему и формат ответа.</p>
+        </article>
+
+        <article class="mentor-card">
+          <div class="icon-big">🔎</div>
+          <h3>Научит проверять результат</h3>
+          <p>Подскажет, как найти слабые места и доработать материал.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ai-section">
+      <div class="ai-section__head">
+        <div class="num num--green">3</div>
+        <h2>Что можно сделать вместе?</h2>
+      </div>
+      <p class="ai-section__lead">
+        Начните с того, что реально пригодится на ближайшем уроке, педсовете,
+        конкурсе или в работе с учениками.
+      </p>
+
+      <div class="materials-grid">
+        <article class="material-card">
+          <div class="icon-big">📋</div>
+          <div>
+            <h3>План урока</h3>
+            <p>Цель, этапы, задания, рефлексия и домашняя работа.</p>
+          </div>
+        </article>
+
+        <article class="material-card">
+          <div class="icon-big">📊</div>
+          <div>
+            <h3>Презентация</h3>
+            <p>Короткая структура с яркими слайдами и понятными акцентами.</p>
+          </div>
+        </article>
+
+        <article class="material-card">
+          <div class="icon-big">✅</div>
+          <div>
+            <h3>Карточки и тесты</h3>
+            <p>Материалы для повторения, закрепления и быстрой проверки.</p>
+          </div>
+        </article>
+
+        <article class="material-card">
+          <div class="icon-big">💡</div>
+          <div>
+            <h3>Идеи для проекта</h3>
+            <p>Темы, вопросы, цель, задачи и первый план действий.</p>
+          </div>
+        </article>
+
+        <article class="material-card">
+          <div class="icon-big">🗺️</div>
+          <div>
+            <h3>Маршрутный лист</h3>
+            <p>Пошаговая работа для ученика или команды.</p>
+          </div>
+        </article>
+
+        <article class="material-card">
+          <div class="icon-big">📘</div>
+          <div>
+            <h3>Памятка или буклет</h3>
+            <p>Краткая наглядная информация для печати или сайта.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="ai-section" id="first-step">
+      <div class="ai-section__head">
+        <div class="num num--pink">4</div>
+        <h2>Как проходит помощь?</h2>
+      </div>
+
+      <div class="roadmap">
+        <article class="step-card">
+          <h3>Расскажите задачу</h3>
+          <p>Например: нужен план урока, карточки, текст, презентация или идея проекта.</p>
+        </article>
+
+        <article class="step-card">
+          <h3>Выберите инструмент</h3>
+          <p>Наставник подскажет, где удобнее подготовить материал и какой формат выбрать.</p>
+        </article>
+
+        <article class="step-card">
+          <h3>Попробуйте вместе</h3>
+          <p>Вы пишете первый запрос, смотрите ответ и спокойно улучшаете его.</p>
+        </article>
+
+        <article class="step-card">
+          <h3>Получите результат</h3>
+          <p>Готовый вариант можно доработать, распечатать или разместить на сайте.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ai-section" id="safety">
+      <div class="ai-section__head">
+        <div class="num num--orange">5</div>
+        <h2>Правила безопасной работы</h2>
+      </div>
+
+      <div class="safety-grid">
+        <article class="safe-card">
+          <div class="icon-big">🟢</div>
+          <h3>Можно</h3>
+          <ul>
+            <li>Просить идеи, план, структуру или черновик.</li>
+            <li>Использовать обезличенные описания учебной ситуации.</li>
+            <li>Проверять факты, даты, формулировки и уровень сложности.</li>
+            <li>Адаптировать ответ под свой класс и задачу.</li>
+          </ul>
+        </article>
+
+        <article class="safe-card safe-card--no">
+          <div class="icon-big">🔴</div>
+          <h3>Нельзя без защиты</h3>
+          <ul>
+            <li>Вставлять фамилии, телефоны, адреса и личные данные учеников.</li>
+            <li>Передавать медицинскую информацию или семейные обстоятельства.</li>
+            <li>Публиковать ответ без проверки учителем.</li>
+            <li>Использовать закрытые документы как обычный текст для запроса.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="ai-section">
+      <div class="ai-section__head">
+        <div class="num num--blue">6</div>
+        <h2>Формула хорошего запроса</h2>
+      </div>
+
+      <div class="prompt-zone">
+        <article class="prompt-card">
+          <div class="icon-big">🧠</div>
+          <h3>Соберите запрос из 5 частей</h3>
+          <div class="formula">
+            <span>1. Роль: «Ты — помощник учителя»</span>
+            <span>2. Предмет и класс</span>
+            <span>3. Тема занятия</span>
+            <span>4. Что нужно получить</span>
+            <span>5. Формат: список, таблица, план или текст</span>
+          </div>
+        </article>
+
+        <article class="prompt-example">
+          <h3>Пример</h3>
+          <p>
+            Ты — помощник учителя русского языка. Составь план урока для 5 класса
+            на тему «Имя существительное». Урок длится 40 минут. Добавь цель,
+            этапы работы, 3 задания и короткую рефлексию. Ответ оформи списком.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ai-section">
+      <div class="ai-section__head">
+        <div class="num num--green">7</div>
+        <h2>Чек-лист перед использованием</h2>
+      </div>
+
+      <div class="checklist">
+        <div class="check-item"><span>✓</span>Материал соответствует теме урока.</div>
+        <div class="check-item"><span>✓</span>Задания подходят возрасту учеников.</div>
+        <div class="check-item"><span>✓</span>Нет фактических ошибок и спорных утверждений.</div>
+        <div class="check-item"><span>✓</span>Не указаны персональные данные детей.</div>
+        <div class="check-item"><span>✓</span>Текст можно объяснить своими словами.</div>
+        <div class="check-item"><span>✓</span>Учитель внёс правки и отвечает за итог.</div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="cta-grid">
+        <div>
+          <h2>Сделайте первый шаг без страха</h2>
+          <p>
+            Обратитесь к наставнику по направлению <strong>«Интегратор ИИ»</strong>.
+            Вместе вы спокойно освоите инструменты, подготовите первый материал
+            и поймёте, как применять цифрового помощника в работе.
+          </p>
+          <div class="cta-buttons">
+            <a class="cta-button" href="2-naydi-nastavnika.html">🤝 Найти наставника</a>
+            <a class="cta-button cta-button--ghost" href="3-poluchi-pomosch.html">📚 Взять материалы</a>
+          </div>
         </div>
-      </article>
 
-      <article class="detail-card">
-        <h2>Почему учителя боятся ИИ?</h2>
-        <ul class="detail-list">
-          <li>непонятно, с чего начать;</li>
-          <li>страшно ошибиться в промпте;</li>
-          <li>кажется, что это слишком сложно;</li>
-          <li>есть опасение за качество ответов;</li>
-          <li>не хочется нарушить правила безопасности;</li>
-          <li>нет готовых примеров для уроков.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Правильный подход</h2>
-        <p>
-          Используйте ИИ как помощника, а не как автора окончательного решения.
-          Всё, что предлагает нейросеть, нужно читать, проверять, адаптировать
-          под свой класс, предмет, возраст детей и образовательную задачу.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Безопасный маршрут для первого раза</h2>
-
-        <div class="template-box">
-          <strong>1. Выберите маленькую задачу</strong><br>
-          Например: придумать 5 вопросов, составить план урока или упростить текст.<br><br>
-
-          <strong>2. Напишите простой запрос</strong><br>
-          Укажите предмет, класс, тему и нужный результат.<br><br>
-
-          <strong>3. Получите черновик</strong><br>
-          Не используйте ответ сразу — сначала прочитайте и проверьте.<br><br>
-
-          <strong>4. Исправьте под себя</strong><br>
-          Добавьте свой стиль, требования школы и особенности класса.<br><br>
-
-          <strong>5. Используйте только проверенный вариант</strong><br>
-          Финальное решение всегда принимает учитель.
+        <div class="mentor-picture" aria-label="Наставник помогает учителю">
+          <div class="heart-bubble">💗</div>
+          <div class="person person--one">👩‍🏫</div>
+          <div class="person person--two">👨‍🏫</div>
+          <div class="laptop"></div>
+          <div class="desk"></div>
         </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что можно доверить ИИ?</h2>
-        <ul class="detail-list">
-          <li>составить план урока;</li>
-          <li>придумать вопросы по тексту;</li>
-          <li>создать карточки для повторения;</li>
-          <li>подготовить черновик презентации;</li>
-          <li>сформулировать тему проекта;</li>
-          <li>упростить сложный текст;</li>
-          <li>придумать игру или разминку;</li>
-          <li>составить чек-лист.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что нельзя отдавать ИИ без проверки?</h2>
-        <ul class="detail-list">
-          <li>итоговые оценки учеников;</li>
-          <li>персональные данные детей;</li>
-          <li>медицинскую или личную информацию;</li>
-          <li>конфликтные ситуации;</li>
-          <li>официальные документы без проверки;</li>
-          <li>ответы, которые требуют точных фактов и дат.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Правило безопасности</h2>
-
-        <div class="template-box">
-          <strong>Не вставляйте в ИИ:</strong><br>
-          фамилии учеников, телефоны, адреса, личные данные, медицинскую информацию,
-          пароли, документы с персональными данными и закрытые школьные материалы.<br><br>
-
-          <strong>Можно писать так:</strong><br>
-          «Ученик 5 класса испытывает трудности с чтением текста» вместо указания ФИО.<br><br>
-
-          <strong>Лучшее правило:</strong><br>
-          Если сомневаетесь, уберите личные данные и замените их общим описанием.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Кто может помочь?</h2>
-        <p>
-          Подойдёт наставник с суперсилой <strong>«Интегратор ИИ»</strong>.
-          Он поможет выбрать инструмент, написать первый промпт, проверить результат
-          и показать, как использовать ИИ в уроке, проекте или подготовке материалов.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>Первый шаг на 15 минут</h2>
-        <p>
-          Не нужно сразу создавать сложного чат-бота или сайт. Начните с одной простой задачи:
-          попросите ИИ подготовить 5 вопросов к теме урока или помочь оформить план занятия.
-        </p>
-
-        <div class="template-box">
-          <strong>Сегодня я пробую:</strong><br>
-          1 маленький запрос → 1 черновик → 1 проверка → 1 готовый материал.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>10 готовых промптов для учителя</h2>
-
-        <div class="template-box">
-          <strong>1. План урока</strong><br>
-          Составь план урока по теме «__________» для ___ класса. Урок должен быть на 40 минут.
-          Добавь цель, этапы, задания и рефлексию.<br><br>
-
-          <strong>2. Вопросы по теме</strong><br>
-          Придумай 10 вопросов по теме «__________» для учеников ___ класса:
-          5 простых, 3 средних и 2 сложных.<br><br>
-
-          <strong>3. Карточки для повторения</strong><br>
-          Создай 12 карточек для повторения темы «__________».
-          На одной стороне вопрос, на другой — короткий ответ.<br><br>
-
-          <strong>4. Объяснение простыми словами</strong><br>
-          Объясни тему «__________» простыми словами для ученика ___ класса.
-          Добавь 2 примера из жизни.<br><br>
-
-          <strong>5. Задания разного уровня</strong><br>
-          Придумай задания по теме «__________» трёх уровней сложности:
-          базовый, средний и повышенный.<br><br>
-
-          <strong>6. Мини-тест</strong><br>
-          Создай мини-тест из 10 вопросов по теме «__________».
-          Дай 4 варианта ответа и отметь правильный.<br><br>
-
-          <strong>7. Игра на урок</strong><br>
-          Придумай короткую учебную игру на 7 минут по теме «__________»
-          для ___ класса.<br><br>
-
-          <strong>8. Рефлексия</strong><br>
-          Предложи 5 вариантов рефлексии в конце урока по теме «__________».<br><br>
-
-          <strong>9. Проектная идея</strong><br>
-          Предложи 5 идей школьных проектов по теме «__________»
-          для учеников ___ класса.<br><br>
-
-          <strong>10. Улучшение текста</strong><br>
-          Улучши этот текст, сделай его понятнее, грамотнее и короче.
-          Сохрани смысл: «__________».
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Как писать хороший промпт?</h2>
-        <p>
-          Хороший запрос должен быть конкретным. Укажите роль ИИ, предмет, класс,
-          тему, формат ответа и ограничения.
-        </p>
-
-        <div class="template-box">
-          <strong>Формула промпта:</strong><br>
-          Ты — помощник учителя. Предмет: ________. Класс: ________.
-          Тема: ________. Нужно подготовить: ________.
-          Формат ответа: список / таблица / план / текст.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Плохой и хороший запрос</h2>
-
-        <div class="template-box">
-          <strong>Плохо:</strong><br>
-          Сделай урок.<br><br>
-
-          <strong>Хорошо:</strong><br>
-          Составь план урока русского языка для 5 класса на тему
-          «Имя существительное». Урок на 40 минут. Добавь цель, 5 этапов,
-          задания для учеников и рефлексию.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Чек-лист проверки ответа ИИ</h2>
-
-        <div class="template-box">
-          ✅ Ответ соответствует теме урока.<br>
-          ✅ Подходит возрасту учеников.<br>
-          ✅ Нет фактических ошибок.<br>
-          ✅ Нет лишних или странных заданий.<br>
-          ✅ Нет персональных данных.<br>
-          ✅ Текст можно объяснить своими словами.<br>
-          ✅ Задания реально выполнить на уроке.<br>
-          ✅ Учитель внёс свои правки.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>ИИ для проекта</h2>
-        <p>
-          Нейросеть может помочь придумать тему, сформулировать цель и задачи,
-          составить план, подготовить презентацию, сделать вопросы для защиты
-          и улучшить текст проекта.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>ИИ для урока</h2>
-        <p>
-          ИИ может помочь с разминкой, объяснением темы, карточками,
-          вопросами, тестами, домашним заданием, рефлексией и идеями для групповой работы.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>ИИ для творчества</h2>
-        <p>
-          Можно создавать идеи сказок, иллюстраций, открыток, сценариев,
-          постеров, викторин, настольных игр, цифровых книг и интерактивных заданий.
-        </p>
-      </article>
-
-      <article class="detail-card">
-        <h2>ИИ для экономии времени</h2>
-        <p>
-          Нейросеть помогает быстрее подготовить черновик, но не отменяет
-          профессиональную роль учителя. Учитель проверяет, выбирает, исправляет
-          и отвечает за итоговый материал.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Мини-практика для педсовета</h2>
-
-        <div class="template-box">
-          <strong>Задание на 15 минут:</strong><br><br>
-          1. Выберите тему урока.<br>
-          2. Напишите промпт по формуле.<br>
-          3. Получите ответ ИИ.<br>
-          4. Найдите 2 удачных идеи.<br>
-          5. Найдите 1 ошибку или слабое место.<br>
-          6. Исправьте материал под свой класс.
-        </div>
-      </article>
-
-      <article class="detail-card">
-        <h2>Что взять с бесплатной полки?</h2>
-        <ul class="detail-list">
-          <li>памятку «Как писать промпты»;</li>
-          <li>10 промптов для учителя;</li>
-          <li>чек-лист безопасного использования ИИ;</li>
-          <li>шаблон плана урока с ИИ;</li>
-          <li>шаблон проектной идеи;</li>
-          <li>примеры ИИ-заданий для урока.</li>
-        </ul>
-      </article>
-
-      <article class="detail-card">
-        <h2>Когда обратиться к наставнику?</h2>
-        <p>
-          Обратитесь к интегратору ИИ, если не получается написать запрос,
-          ответ нейросети выглядит странно, нужно создать цифровой продукт
-          или хочется безопасно внедрить ИИ в уроки и проекты.
-        </p>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Заявка на помощь по ИИ</h2>
-
-        <div class="template-box">
-          Здравствуйте! Я хочу использовать ИИ, но пока не уверен(а), с чего начать.<br><br>
-          Мой предмет / направление: ________________________________.<br><br>
-          Класс или аудитория: _____________________________________.<br><br>
-          Мне нужно помочь с: уроком / проектом / презентацией / текстом / изображениями / сайтом / чат-ботом.<br><br>
-          Что я хочу получить в итоге: ______________________________.<br><br>
-          Срок: _________________________________________________.
-        </div>
-      </article>
-
-      <article class="detail-card detail-card--large">
-        <h2>Короткий текст для страницы</h2>
-        <div class="template-box">
-          Не бойтесь ИИ: начните с маленькой задачи на 15 минут.
-          Попросите нейросеть подготовить черновик плана, вопросов или карточек,
-          затем обязательно проверьте и адаптируйте результат под свой класс.
-          ИИ — это помощник, а окончательное решение всегда остаётся за учителем.
-        </div>
-      </article>
-
+      </div>
     </section>
 
     <section class="related-section">
