@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>От методиста проекта — Учительская 2.0</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body{margin:0;background:linear-gradient(135deg,#f7fbef,#eef8df 45%,#fff);color:#17311a}
+    .page{width:min(1680px,calc(100% - 28px));margin:auto;padding:28px 0 56px}
+    .hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#17311a,#5c9f00);color:white;box-shadow:0 24px 60px rgba(16,61,19,.22)}
+    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}
+    .hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}
+    .lead{font-size:20px;line-height:1.55;max-width:900px}
+    .guide{margin-top:28px;padding:28px;border-radius:30px;background:#fffdf4;border:1px solid rgba(197,143,0,.25);box-shadow:0 18px 45px rgba(18,63,22,.08)}
+    .guide h2{margin:0 0 12px;color:#123f16;font-size:clamp(26px,4vw,42px)}
+    .guide-intro{font-size:18px;line-height:1.65;max-width:980px}
+    .help-box{background:#fff7df;border-radius:22px;padding:22px;margin-top:18px;border:1px solid #eadc9c;line-height:1.6}
+    .steps-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:14px;margin-top:22px}
+    .step-card{padding:16px;border-radius:22px;background:white;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}
+    .step-card h3{margin:0 0 10px;color:#123f16;font-size:15px;line-height:1.25}
+    .step-card p,.step-card li{line-height:1.45;font-size:13px}
+    .step-card ul,.step-card ol{padding-left:18px}
+    .example{background:#f4faec;border-left:5px solid #5c9f00;border-radius:14px;padding:12px;margin-top:10px;font-size:13px;line-height:1.45}
+    .route{background:linear-gradient(135deg,#ffffff,#f4faec)}
+    .route .step-card{border-left:7px solid #5c9f00}
+    .anti{background:linear-gradient(135deg,#fff,#eef6ff)}
+    .anti .step-card{border-left:7px solid #2b6cb0}
+    .anti .example{background:#eef6ff;border-left-color:#2b6cb0}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+    .btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer}
+    .btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}
+    @media(max-width:1100px){.steps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:700px){.steps-grid{grid-template-columns:1fr}.guide{padding:20px}.step-card{padding:18px}.step-card h3{font-size:18px}.step-card p,.step-card li,.example{font-size:15px}}
+  </style>
+</head>
+<body>
+<main class="page">
+
+  <section class="hero">
+    <span class="eyebrow">🧩 Бесплатная полка · отдельное окошко</span>
+    <h1>От методиста проекта</h1>
+    <p class="lead">Я помогаю оформить научный аппарат проекта: тему, цель, задачи, гипотезу, объект, предмет, методы, этапы и выводы.</p>
+  </section>
+
+  <section class="guide" style="background:linear-gradient(135deg,#ffffff,#fff7df);">
+    <p class="eyebrow" style="background:#fff7df;color:#6b5b16;">🔍 С чего начать</p>
+    <h2>Разберите два примера</h2>
+    <p class="guide-intro">Разберите два примера: как написать исследовательскую работу и как оформить проект.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px;">
+      <article class="step-card" style="border-left:7px solid #5c9f00;"><h3>Исследовательская работа</h3><p>В исследовании главное — найти ответ на вопрос и сделать вывод.</p><div class="example"><b>Пример:</b><br>Ученик задаёт вопрос, собирает данные, анализирует результаты и объясняет, что получилось.</div></article>
+      <article class="step-card" style="border-left:7px solid #c58f00;"><h3>Проект</h3><p>В проекте главное — решить проблему и создать полезный продукт.</p><div class="example" style="background:#fff7df;border-left-color:#c58f00;"><b>Пример:</b><br>Ученик видит проблему, предлагает решение и показывает готовый результат: книгу, сайт, памятку, макет или инструкцию.</div></article>
+    </div>
+  </section>
+
+  <section class="guide">
+    <p class="eyebrow" style="background:#f4faec;color:#123f16;">🍄 Инструкция для ученика 7 класса</p>
+    <h2>Как написать исследовательскую работу по биологии с нуля</h2>
+    <p class="guide-intro">Исследовательская работа пишется не сразу целиком, а через ответы на простые вопросы. Если последовательно пройти все шаги, получится почти готовый черновик.</p>
+    <div class="help-box"><h3 style="margin-top:0;color:#6b5b16;">Как пользоваться инструкцией?</h3><p>Читай каждый шаг и отвечай на вопросы. После каждого шага есть пример по теме настоящего домового гриба.</p></div>
+    <div class="steps-grid">
+      <article class="step-card"><h3>Шаг 1. Тема</h3><p>О чём моя работа? Что хочу узнать?</p><div class="example">Работа о домовом грибе, который разрушает деревянные дома.</div></article>
+      <article class="step-card"><h3>Шаг 2. Актуальность</h3><p>Почему тема важна?</p><div class="example">В селе много деревянных домов, поэтому важно знать, как часто встречается гриб.</div></article>
+      <article class="step-card"><h3>Шаг 3. Цель</h3><p>Что я хочу узнать?</p><div class="example">Изучить заражённость домов настоящим домовым грибом.</div></article>
+      <article class="step-card"><h3>Шаг 4. Задачи</h3><p>Что сделать?</p><div class="example"><ol><li>Изучить литературу.</li><li>Провести опрос.</li><li>Составить карту.</li><li>Провести эксперимент.</li><li>Сделать выводы.</li></ol></div></article>
+      <article class="step-card"><h3>Шаг 5. Объект и предмет</h3><p>Что изучается?</p><div class="example">Объект — деревянные дома. Предмет — факторы заражения.</div></article>
+      <article class="step-card"><h3>Шаг 6. Гипотеза</h3><p>Какой результат предполагаю?</p><div class="example">Если в доме влажно и плохая вентиляция, риск заражения выше.</div></article>
+      <article class="step-card"><h3>Шаг 7. Литература</h3><p>Что уже известно?</p><div class="example">Домовый гриб развивается во влажных местах и разрушает древесину.</div></article>
+      <article class="step-card"><h3>Шаг 8. Методы</h3><p>Как получать данные?</p><div class="example">Анализ литературы, опрос, наблюдение, эксперимент, карта.</div></article>
+      <article class="step-card"><h3>Шаг 9. Исследование</h3><p>Что сделал?</p><div class="example">Проверены данные по 66 домам: 45 заражённых, 21 незаражённый.</div></article>
+      <article class="step-card"><h3>Шаг 10. Анализ</h3><p>Что показали результаты?</p><div class="example">Заражённых домов больше половины, значит проблема актуальна.</div></article>
+      <article class="step-card"><h3>Шаг 11. Выводы</h3><p>Что доказал?</p><div class="example">Гриб встречается часто, его развитию помогают влажность и плохая вентиляция.</div></article>
+      <article class="step-card"><h3>Шаг 12. Заключение</h3><p>Короткий итог.</p><div class="example">Проблема заражения домов значима и требует профилактики.</div></article>
+      <article class="step-card"><h3>Шаг 13. Источники</h3><p>Что указать?</p><div class="example">Книги, статьи, сайты и данные опроса.</div></article>
+      <article class="step-card"><h3>Шаг 14. Приложения</h3><p>Что добавить?</p><div class="example">Фото, таблицы, анкеты, графики.</div></article>
+    </div>
+  </section>
+
+  <section class="guide route">
+    <p class="eyebrow" style="background:#f4faec;color:#123f16;">📚 Проектный маршрут</p>
+    <h2>Как оформить проект «МоИИстории»</h2>
+    <p class="guide-intro">В проекте главное — создать полезный продукт. В «МоИИстории» таким продуктом становится персональная ИИ-книга для ребёнка.</p>
+    <div class="help-box"><h3 style="margin-top:0;color:#6b5b16;">Главная идея проекта</h3><p>Проект помогает детям заинтересоваться чтением через персональные книги, созданные с помощью ИИ: по имени, интересам и описанию ребёнка.</p></div>
+    <div class="steps-grid">
+      <article class="step-card"><h3>Шаг 1. Проблема</h3><p>Многие дети мало читают.</p><div class="example">Если ребёнок становится героем истории, читать интереснее.</div></article>
+      <article class="step-card"><h3>Шаг 2. Тема</h3><p>Как назвать идею?</p><div class="example">«МоИИстории»: персональные ИИ-книги для повышения интереса к чтению.</div></article>
+      <article class="step-card"><h3>Шаг 3. Актуальность</h3><p>Почему проект нужен?</p><div class="example">Дети часто выбирают видео и игры вместо книг.</div></article>
+      <article class="step-card"><h3>Шаг 4. Цель</h3><p>Что создать?</p><div class="example">Создать прототип сервиса персональных ИИ-книг.</div></article>
+      <article class="step-card"><h3>Шаг 5. Продукт</h3><p>Что получится?</p><div class="example">Книга, анкета, обложка, презентация и инструкция.</div></article>
+      <article class="step-card"><h3>Шаг 6. Аудитория</h3><p>Для кого проект?</p><div class="example">Ученики начальной школы, родители, учителя.</div></article>
+      <article class="step-card"><h3>Шаг 7. Задачи</h3><p>Что сделать?</p><div class="example">Изучить проблему, подготовить анкету, создать книгу, проверить и улучшить.</div></article>
+      <article class="step-card"><h3>Шаг 8. Роли</h3><p>Кто за что отвечает?</p><div class="example">Лидер, исследователь, дизайнер, текстовик, спикер.</div></article>
+      <article class="step-card"><h3>Шаг 9. Материалы</h3><p>Что собрать?</p><div class="example">Имя, возраст, интересы, жанр истории, пожелания.</div></article>
+      <article class="step-card"><h3>Шаг 10. Прототип</h3><p>Первая версия.</p><div class="example">Мини-книга из 6–10 страниц.</div></article>
+      <article class="step-card"><h3>Шаг 11. Тест</h3><p>Проверь с ребёнком.</p><div class="example">Что понравилось? Кто герой? Что улучшить?</div></article>
+      <article class="step-card"><h3>Шаг 12. Улучшение</h3><p>Что изменить?</p><div class="example">Сделать текст короче, добавить иллюстрации, подготовить печать.</div></article>
+      <article class="step-card"><h3>Шаг 13. Защита</h3><p>Что сказать жюри?</p><div class="example">Проблема, продукт, польза, роль ИИ, отзывы.</div></article>
+      <article class="step-card"><h3>Шаг 14. Результат</h3><p>Что представить?</p><div class="example">Готовая ИИ-книга, слайды, отзывы и план развития.</div></article>
+    </div>
+  </section>
+
+  <section class="guide anti">
+    <p class="eyebrow" style="background:#eef6ff;color:#264f73;">🛡️ Антиплагиат</p>
+    <h2>Антиплагиат: что это, зачем нужен и как пользоваться</h2>
+    <p class="guide-intro">Антиплагиат — это проверка текста на совпадения с другими источниками. Он помогает писать своими словами, честно указывать источники и улучшать качество работы.</p>
+    <div class="help-box" style="background:#eef6ff;border-color:#b9d6f2;"><h3 style="margin-top:0;color:#264f73;">Главное правило</h3><p>Можно пользоваться книгами, сайтами и ИИ, но важно переработать материал, добавить свои наблюдения, результаты, выводы и ссылки на источники.</p></div>
+    <div class="steps-grid">
+      <article class="step-card"><h3>1. Что это?</h3><p>Проверка текста на совпадения.</p><div class="example">Показывает похожие места.</div></article>
+      <article class="step-card"><h3>2. Зачем нужен?</h3><p>Чтобы проверить самостоятельность работы.</p><div class="example">Помогает увидеть слабые места.</div></article>
+      <article class="step-card"><h3>3. Для чего полезен?</h3><p>Для защиты, конкурса или сдачи учителю.</p><div class="example">Работа становится честнее и сильнее.</div></article>
+      <article class="step-card"><h3>4. Как пользоваться?</h3><p>Вставь текст в сервис проверки и изучи отчёт.</p><div class="example">Проверить → исправить → проверить ещё раз.</div></article>
+      <article class="step-card"><h3>5. Что исправлять?</h3><p>Длинные совпадения и чужие выводы без ссылки.</p><div class="example">Пересказать своими словами и добавить источник.</div></article>
+      <article class="step-card"><h3>6. Чего нельзя?</h3><p>Нельзя выдавать чужой текст за свой.</p><div class="example">Правильно — понять материал и написать самому.</div></article>
+      <article class="step-card"><h3>7. Мини-план</h3><p>Сделай список правок.</p><div class="example"><ol><li>Проверить.</li><li>Найти совпадения.</li><li>Переписать.</li><li>Добавить источники.</li><li>Повторить проверку.</li></ol></div></article>
+    </div>
+    <div class="help-box" style="background:#fff;border-color:#b9d6f2;"><h3 style="margin-top:0;color:#264f73;">Подсказка для защиты</h3><p>Можно сказать: «Я использовал источники для изучения темы, но основные формулировки, результаты и выводы написал своими словами».</p></div>
+  </section>
+
+  <div class="actions">
+    <a class="btn" href="../index.html#materials">Вернуться в бесплатную полку</a>
+    <a class="btn btn--light" href="project-domovoy-grib.html">Все окошки проекта</a>
+  </div>
+
+</main>
+</body>
+</html>
