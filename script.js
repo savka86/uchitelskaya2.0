@@ -342,6 +342,16 @@ function linkSchoolEventCard() {
   );
 }
 
+function linkTeamworkCard() {
+  const card = findBoardCard('problems', 'Хочу сделать командную работу без хаоса');
+  makeCardActive(
+    card,
+    'pages/hochu-sdelat-komandnuyu-rabotu-bez-haosa.html',
+    'Откройте красочную страницу: как распределить роли, поставить задачи, сделать канбан-доску, провести короткую встречу и довести команду до результата.',
+    'Открыть страницу «Хочу сделать командную работу без хаоса»'
+  );
+}
+
 function loadMushroomProjectShelf() {
   const shelf = document.querySelector('[data-column="materials"]');
   if (!shelf) return;
@@ -422,6 +432,7 @@ linkProjectFormatCard();
 linkAiFearCard();
 linkOlympiadCard();
 linkSchoolEventCard();
+linkTeamworkCard();
 
 const cards = Array.from(document.querySelectorAll('.card'));
 
