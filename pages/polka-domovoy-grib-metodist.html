@@ -12,35 +12,25 @@
     .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}
     .hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}
     .lead{font-size:20px;line-height:1.55;max-width:860px}
-    .grid,.materials,.boost{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
-    .materials,.boost{grid-template-columns:repeat(5,1fr)}
-    .card,.checklist,.material,.boost-card,.template,.step-card{padding:24px;border-radius:26px;background:white;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}
-    .material b,.boost-card b{display:block;color:#123f16;margin-bottom:8px}
-    .card h2,.checklist h2,.template h2{margin-top:0;color:#123f16}
     .passport{display:grid;gap:12px;margin-top:24px}
     .row{padding:18px;border-radius:18px;background:white;border-left:8px solid #5c9f00;box-shadow:0 12px 30px rgba(18,63,22,.08)}
-    .checklist,.template{margin-top:24px}
-    .checklist ul{list-style:none;padding:0;margin:0;display:grid;gap:12px}
-    .checklist li{padding:14px 16px;border-radius:18px;background:#f4faec;font-weight:800}
-    .checklist li::before{content:'☐ ';font-weight:900;color:#5c9f00}
-    .prompt-list{margin:0;padding-left:22px;display:grid;gap:12px}
-    .prompt-list li{padding:14px 16px;border-radius:18px;background:#fff9e8;font-weight:800}
-    .template{background:#fff9e8;border:2px dashed #c58f00}
-    .mini{white-space:pre-wrap;background:#fff;padding:18px;border-radius:18px;line-height:1.55}
-    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-    .btn,button.btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer}
-    .btn--light,button.btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}
     .guide{margin-top:28px;padding:28px;border-radius:30px;background:#fffdf4;border:1px solid rgba(197,143,0,.25);box-shadow:0 18px 45px rgba(18,63,22,.08)}
     .guide h2{margin:0 0 12px;color:#123f16;font-size:clamp(26px,4vw,42px)}
     .guide-intro{font-size:18px;line-height:1.65;max-width:920px}
     .help-box{background:#fff7df;border-radius:22px;padding:22px;margin-top:18px;border:1px solid #eadc9c}
     .steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:22px}
+    .step-card{padding:24px;border-radius:26px;background:white;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}
     .step-card h3{margin:0 0 12px;color:#123f16}
     .step-card p,.step-card li{line-height:1.55}
     .step-card ul,.step-card ol{padding-left:22px}
     .example{background:#f4faec;border-left:6px solid #5c9f00;border-radius:16px;padding:14px;margin-top:12px}
     .example b{color:#123f16}
-    @media(max-width:900px){.grid,.materials,.boost{grid-template-columns:1fr}}
+    .route{background:linear-gradient(135deg,#ffffff,#f4faec);border-color:rgba(92,159,0,.28)}
+    .route .step-card{border-left:7px solid #5c9f00}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+    .btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer}
+    .btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}
+    @media(max-width:900px){.steps-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -238,6 +228,192 @@
         </ul>
         <div class="example"><b>Пример подписи:</b><br>Приложение 1. Фотографии образцов древесины с признаками поражения настоящим домовым грибом.</div>
       </article>
+    </div>
+  </section>
+
+  <section class="guide route">
+    <p class="eyebrow" style="background:#f4faec;color:#123f16;">🧭 Шаблон-маршрут по образцу работы</p>
+    <h2>Как написать исследовательскую работу по биологии на примере домового гриба</h2>
+    <p class="guide-intro">Этот маршрут помогает ученику 7 класса не писать работу сразу целиком, а двигаться по шагам: ответить на вопросы, посмотреть образец и постепенно собрать черновик.</p>
+
+    <div class="steps-grid">
+      <article class="step-card">
+        <h3>Шаг 1. Выбери проблему</h3>
+        <p><b>Спроси себя:</b></p>
+        <ul>
+          <li>Что интересного я заметил вокруг себя?</li>
+          <li>Какая биологическая проблема существует рядом со мной?</li>
+          <li>Что можно изучить самостоятельно?</li>
+        </ul>
+        <div class="example"><b>Пример автора работы:</b><br>«Во многих домах нашего села появляется домовый гриб и разрушает древесину».<br><br><b>Из этого появляется тема:</b><br>«Заражённость домовым грибом жилищного фонда села Намцы».</div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 2. Объясни, почему это важно</h3>
+        <p><b>Ответь на вопросы:</b></p>
+        <ul>
+          <li>Чем опасен объект исследования?</li>
+          <li>Почему людям нужно знать о нём больше?</li>
+          <li>Какую пользу принесёт моя работа?</li>
+        </ul>
+        <div class="example"><b>Пример:</b><br>Домовый гриб разрушает деревянные дома, может вызывать проблемы со здоровьем и требует больших затрат на ремонт.<br><br>Так получается раздел <b>«Актуальность»</b>.</div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 3. Сформулируй цель</h3>
+        <p><b>Вопрос:</b> что я хочу узнать?</p>
+        <p><b>Шаблон:</b> цель исследования — изучить...</p>
+        <div class="example"><b>Пример:</b><br>«Цель исследования — изучение заражённости домовым грибом жилищного фонда села Намцы».</div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 4. Составь задачи</h3>
+        <p><b>Вопрос:</b> что нужно сделать для достижения цели?</p>
+        <div class="example"><b>Пример:</b>
+          <ol>
+            <li>Изучить информацию о домовых грибах.</li>
+            <li>Узнать, насколько часто встречается заражение.</li>
+            <li>Составить карту распространения.</li>
+            <li>Провести эксперимент.</li>
+            <li>Разработать рекомендации.</li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 5. Определи объект и предмет исследования</h3>
+        <p><b>Вопрос:</b> что именно я исследую?</p>
+        <div class="example"><b>Объект</b> — большое явление.<br><b>Пример:</b> жилищный фонд села Намцы.<br><br><b>Предмет</b> — конкретная сторона объекта.<br><b>Пример:</b> факторы заражения домовыми грибами.</div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 6. Выдвинь гипотезу</h3>
+        <p><b>Вопрос:</b> какой результат я ожидаю?</p>
+        <p><b>Шаблон:</b> предположим, что...</p>
+        <div class="example"><b>Пример:</b><br>«Предположим, что домовый гриб чаще появляется в домах с высокой влажностью и плохой вентиляцией».</div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 7. Изучи литературу</h3>
+        <p><b>Ответь на вопросы:</b></p>
+        <ul>
+          <li>Что такое домовый гриб?</li>
+          <li>Какие виды бывают?</li>
+          <li>Где они растут?</li>
+          <li>Какой вред наносят?</li>
+        </ul>
+        <div class="example"><b>Из ответов получается первая глава.</b><br>В образце это: «Глава 1. Краткая информация о домовых грибах».</div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 8. Подумай, как собирать данные</h3>
+        <p><b>Вопрос:</b> как я буду получать информацию?</p>
+        <div class="example"><b>В работе использовались:</b>
+          <ul>
+            <li>опрос жителей;</li>
+            <li>наблюдение;</li>
+            <li>фотографирование;</li>
+            <li>эксперимент;</li>
+            <li>сравнение результатов.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 9. Проведи исследование</h3>
+        <p><b>Задай себе вопросы:</b></p>
+        <ul>
+          <li>Сколько человек или домов я опросил?</li>
+          <li>Что показал опрос?</li>
+          <li>Какие результаты получил?</li>
+        </ul>
+        <div class="example"><b>В образце:</b>
+          <ul>
+            <li>опрошено 66 домов;</li>
+            <li>заражено 45 домов;</li>
+            <li>чаще всего гриб находили под полом.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 10. Представь результаты</h3>
+        <p><b>Вопрос:</b> как показать результаты наглядно?</p>
+        <div class="example"><b>Можно использовать:</b>
+          <ul>
+            <li>таблицы;</li>
+            <li>диаграммы;</li>
+            <li>карты;</li>
+            <li>фотографии.</li>
+          </ul>
+          В образце использованы все четыре способа.
+        </div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 11. Проведи эксперимент</h3>
+        <p><b>Ответь на вопросы:</b></p>
+        <ul>
+          <li>Что я проверяю?</li>
+          <li>Какие материалы использую?</li>
+          <li>Что изменяю?</li>
+          <li>Что наблюдаю?</li>
+        </ul>
+        <div class="example"><b>В образце:</b>
+          <ul>
+            <li>гриб выращивали в банках;</li>
+            <li>часть древесины обработали специальным средством;</li>
+            <li>наблюдали рост грибницы.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 12. Проанализируй результаты</h3>
+        <p><b>Спроси себя:</b></p>
+        <ul>
+          <li>Что получилось?</li>
+          <li>Почему это произошло?</li>
+          <li>Какие факторы оказались самыми важными?</li>
+        </ul>
+        <div class="example"><b>В образце выяснилось:</b>
+          <ul>
+            <li>гриб чаще появляется при сырости;</li>
+            <li>основное место появления — подполье;</li>
+            <li>обработанная древесина заражалась хуже.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 13. Сделай выводы</h3>
+        <p><b>Проверь:</b></p>
+        <ul>
+          <li>Выполнил ли я задачи?</li>
+          <li>Достиг ли цели?</li>
+          <li>Подтвердилась ли гипотеза?</li>
+        </ul>
+        <div class="example"><b>Правило:</b><br>Каждый вывод должен отвечать на одну задачу исследования.</div>
+      </article>
+
+      <article class="step-card">
+        <h3>Шаг 14. Оформи список литературы и приложения</h3>
+        <p><b>Добавь:</b></p>
+        <ul>
+          <li>книги;</li>
+          <li>статьи;</li>
+          <li>сайты;</li>
+          <li>фотографии;</li>
+          <li>таблицы;</li>
+          <li>анкеты;</li>
+          <li>дополнительные материалы.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="help-box">
+      <h3 style="margin-top:0;color:#6b5b16;">Финальная подсказка</h3>
+      <p>Когда ученик выберет свою тему исследования по биологии, этот маршрут можно превратить в персональный план. Нужно отвечать на вопросы по шагам — и из ответов получится почти готовое введение и план всей работы.</p>
     </div>
   </section>
 
