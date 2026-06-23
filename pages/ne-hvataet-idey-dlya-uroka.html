@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Не хватает идей для урока — Учительская 2.0</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <meta name="description" content="Красочная страница для педагогов: как быстро найти идею для урока, выбрать формат, собрать структуру занятия и обратиться к наставнику." />
+  <style>
+    :root {
+      --idea-blue: #2563eb;
+      --idea-sky: #e0f2fe;
+      --idea-mint: #dcfce7;
+      --idea-yellow: #fef3c7;
+      --idea-orange: #fed7aa;
+      --idea-pink: #fce7f3;
+      --idea-violet: #ede9fe;
+      --idea-dark: #172554;
+      --idea-text: #24304f;
+    }
+
+    body.detail-body {
+      background:
+        radial-gradient(circle at 8% 8%, rgba(250, 204, 21, .38), transparent 32%),
+        radial-gradient(circle at 94% 2%, rgba(56, 189, 248, .35), transparent 30%),
+        linear-gradient(135deg, #f8fbff 0%, #ecfeff 45%, #fff7ed 100%);
+    }
+
+    .ideas-page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+      color: var(--idea-text);
+    }
+
+    .ideas-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .ideas-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.84);
+      color: #1e40af;
+      font-weight: 900;
+      box-shadow: 0 12px 30px rgba(37, 99, 235, .12);
+      border: 1px solid rgba(59, 130, 246, .22);
+    }
+
+    .ideas-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 34px;
+      background:
+        linear-gradient(135deg, rgba(37, 99, 235, .96), rgba(124, 58, 237, .92)),
+        radial-gradient(circle at 88% 18%, rgba(255,255,255,.42), transparent 26%);
+      color: white;
+      box-shadow: 0 24px 60px rgba(37, 99, 235, .28);
+    }
+
+    .ideas-hero::before,
+    .ideas-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+    }
+
+    .ideas-hero::before { width: 220px; height: 220px; right: -70px; top: -70px; }
+    .ideas-hero::after { width: 160px; height: 160px; left: 42%; bottom: -90px; }
+
+    .ideas-hero__grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .ideas-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.18);
+      color: #fff7ed;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .ideas-hero h1 {
+      margin: 0 0 14px;
+      font-size: clamp(32px, 5vw, 62px);
+      line-height: 1.04;
+      letter-spacing: -1.4px;
+    }
+
+    .ideas-hero p {
+      margin: 0;
+      font-size: 19px;
+      line-height: 1.65;
+      max-width: 760px;
+      color: rgba(255,255,255,.92);
+    }
+
+    .ideas-illustration {
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 30px;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.26);
+    }
+
+    .ideas-board {
+      background: white;
+      color: #1f2a44;
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 18px 38px rgba(15, 23, 42, .18);
+    }
+
+    .ideas-board__top {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .ideas-dot { width: 12px; height: 12px; border-radius: 50%; background: #fb7185; }
+    .ideas-dot:nth-child(2) { background: #facc15; }
+    .ideas-dot:nth-child(3) { background: #22c55e; }
+
+    .ideas-note {
+      padding: 12px;
+      border-radius: 16px;
+      font-weight: 900;
+      margin: 9px 0;
+      background: #eff6ff;
+    }
+
+    .ideas-note:nth-child(3) { background: #fef3c7; }
+    .ideas-note:nth-child(4) { background: #dcfce7; }
+    .ideas-note:nth-child(5) { background: #fce7f3; }
+
+    .ideas-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .ideas-stat {
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(37, 99, 235, .13);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, .08);
+    }
+
+    .ideas-stat strong {
+      display: block;
+      font-size: 32px;
+      color: var(--idea-blue);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .ideas-section {
+      margin-top: 24px;
+      background: rgba(255,255,255,.82);
+      border-radius: 30px;
+      padding: 26px;
+      border: 1px solid rgba(148, 163, 184, .18);
+      box-shadow: 0 18px 45px rgba(30, 64, 175, .08);
+    }
+
+    .ideas-section h2 {
+      margin: 0 0 18px;
+      font-size: clamp(25px, 3vw, 38px);
+      color: var(--idea-dark);
+    }
+
+    .ideas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .idea-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: 20px;
+      min-height: 160px;
+      background: white;
+      border: 1px solid rgba(148, 163, 184, .22);
+      box-shadow: 0 14px 28px rgba(15, 23, 42, .06);
+    }
+
+    .idea-card--blue { background: var(--idea-sky); }
+    .idea-card--green { background: var(--idea-mint); }
+    .idea-card--yellow { background: var(--idea-yellow); }
+    .idea-card--orange { background: var(--idea-orange); }
+    .idea-card--pink { background: var(--idea-pink); }
+    .idea-card--violet { background: var(--idea-violet); }
+
+    .idea-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: white;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, .09);
+      font-size: 28px;
+      margin-bottom: 14px;
+    }
+
+    .idea-card h3 {
+      margin: 0 0 8px;
+      color: #111827;
+      font-size: 20px;
+    }
+
+    .idea-card p {
+      margin: 0;
+      line-height: 1.55;
+      color: #475569;
+      font-weight: 650;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .route-step {
+      background: white;
+      border-radius: 24px;
+      padding: 20px;
+      border: 2px dashed rgba(37, 99, 235, .24);
+      position: relative;
+    }
+
+    .route-number {
+      display: inline-grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
+      color: white;
+      font-weight: 1000;
+      margin-bottom: 12px;
+    }
+
+    .mini-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .mini-column {
+      border-radius: 24px;
+      padding: 16px;
+      background: #f8fafc;
+      min-height: 210px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .mini-column h3 { margin: 0 0 12px; color: #1e3a8a; }
+    .mini-ticket {
+      background: white;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 9px 0;
+      font-weight: 800;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, .07);
+    }
+
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .check-item {
+      background: white;
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-weight: 850;
+      border-left: 6px solid #22c55e;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, .05);
+    }
+
+    .template-box {
+      background: #0f172a;
+      color: #e0f2fe;
+      border-radius: 24px;
+      padding: 22px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .template-box strong { color: #fde68a; }
+
+    .ideas-cta {
+      margin-top: 24px;
+      border-radius: 30px;
+      padding: 28px;
+      background: linear-gradient(135deg, #f97316, #ec4899);
+      color: white;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      box-shadow: 0 22px 48px rgba(236, 72, 153, .26);
+    }
+
+    .ideas-cta h2 { margin: 0 0 8px; color: white; }
+    .ideas-cta p { margin: 0; line-height: 1.6; color: rgba(255,255,255,.92); }
+
+    .ideas-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: white;
+      color: #be123c;
+      text-decoration: none;
+      font-weight: 1000;
+      box-shadow: 0 14px 26px rgba(15, 23, 42, .16);
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .ideas-hero__grid,
+      .ideas-stats,
+      .ideas-grid,
+      .route,
+      .mini-board,
+      .checklist,
+      .ideas-cta {
+        grid-template-columns: 1fr;
+      }
+
+      .ideas-hero { padding: 24px; }
+      .ideas-section { padding: 20px; }
+    }
+  </style>
+</head>
+<body class="detail-body">
+  <main class="ideas-page">
+    <div class="ideas-topline">
+      <a class="ideas-link" href="../index.html#board">← Назад к доске</a>
+      <a class="ideas-link" href="2-naydi-nastavnika.html">🏗️ Найти архитектора содержания</a>
+    </div>
+
+    <section class="ideas-hero">
+      <div class="ideas-hero__grid">
+        <div>
+          <span class="ideas-badge">🧠 Столбец 2: Что у вас болит?</span>
+          <h1>Не хватает идей для урока</h1>
+          <p>
+            Когда кажется, что все приёмы уже использованы, важно не искать «волшебную» идею,
+            а быстро собрать понятный конструктор урока: цель, активность, материал, роль ученика
+            и видимый результат. Наставник поможет превратить тему в живое занятие без лишней суеты.
+          </p>
+        </div>
+
+        <div class="ideas-illustration" aria-label="Мини-инфографика идей урока">
+          <div class="ideas-board">
+            <div class="ideas-board__top"><span class="ideas-dot"></span><span class="ideas-dot"></span><span class="ideas-dot"></span></div>
+            <div class="ideas-note">💡 Вопрос урока</div>
+            <div class="ideas-note">🎲 Активность учеников</div>
+            <div class="ideas-note">🧩 Материал для работы</div>
+            <div class="ideas-note">✅ Итоговый продукт</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ideas-stats" aria-label="Что даст страница">
+      <article class="ideas-stat"><strong>6</strong><span>форматов урока для быстрого выбора</span></article>
+      <article class="ideas-stat"><strong>4</strong><span>шага от темы до готового занятия</span></article>
+      <article class="ideas-stat"><strong>12</strong><span>идей активностей для класса</span></article>
+      <article class="ideas-stat"><strong>15</strong><span>минут на первый черновик урока</span></article>
+    </section>
+
+    <section class="ideas-section">
+      <h2>Почему идеи заканчиваются?</h2>
+      <div class="ideas-grid">
+        <article class="idea-card idea-card--blue"><div class="idea-icon">⏰</div><h3>Мало времени</h3><p>Нужно быстро подготовить урок, а сил на долгий поиск уже нет.</p></article>
+        <article class="idea-card idea-card--yellow"><div class="idea-icon">🔁</div><h3>Повторяются приёмы</h3><p>Хочется уйти от однообразных заданий и добавить движение мысли.</p></article>
+        <article class="idea-card idea-card--pink"><div class="idea-icon">🧑‍🎓</div><h3>Разный уровень класса</h3><p>Одним ученикам легко, другим сложно, поэтому нужен гибкий формат.</p></article>
+      </div>
+    </section>
+
+    <section class="ideas-section">
+      <h2>6 форматов, которые оживят урок</h2>
+      <div class="ideas-grid">
+        <article class="idea-card idea-card--green"><div class="idea-icon">🔍</div><h3>Урок-расследование</h3><p>Ученики ищут доказательства, сравнивают факты и делают вывод.</p></article>
+        <article class="idea-card idea-card--violet"><div class="idea-icon">🎭</div><h3>Ролевая ситуация</h3><p>Класс получает роли, обсуждает проблему и защищает позицию.</p></article>
+        <article class="idea-card idea-card--orange"><div class="idea-icon">🧩</div><h3>Станции заданий</h3><p>Команды проходят несколько точек: теория, практика, проверка, вывод.</p></article>
+        <article class="idea-card idea-card--blue"><div class="idea-icon">🗺️</div><h3>Маршрутный лист</h3><p>Ученик идёт по шагам и видит, что уже выполнено.</p></article>
+        <article class="idea-card idea-card--yellow"><div class="idea-icon">💬</div><h3>Дискуссия</h3><p>В центре урока — вопрос, на который нельзя ответить одним словом.</p></article>
+        <article class="idea-card idea-card--pink"><div class="idea-icon">🎨</div><h3>Мини-продукт</h3><p>Итогом становится памятка, схема, постер, карточка или короткое выступление.</p></article>
+      </div>
+    </section>
+
+    <section class="ideas-section">
+      <h2>Маршрут создания идеи</h2>
+      <div class="route">
+        <article class="route-step"><span class="route-number">1</span><h3>Возьмите тему</h3><p>Запишите тему урока простыми словами.</p></article>
+        <article class="route-step"><span class="route-number">2</span><h3>Сформулируйте вопрос</h3><p>Сделайте вопрос, который заставляет думать.</p></article>
+        <article class="route-step"><span class="route-number">3</span><h3>Выберите активность</h3><p>Добавьте работу в паре, группе или с карточками.</p></article>
+        <article class="route-step"><span class="route-number">4</span><h3>Определите результат</h3><p>Пусть у ученика будет понятный продукт урока.</p></article>
+      </div>
+    </section>
+
+    <section class="ideas-section">
+      <h2>Мини-доска идей для урока</h2>
+      <div class="mini-board">
+        <article class="mini-column"><h3>Старт</h3><div class="mini-ticket">Проблемный вопрос</div><div class="mini-ticket">Картинка-загадка</div><div class="mini-ticket">Верно или неверно?</div></article>
+        <article class="mini-column"><h3>Изучение</h3><div class="mini-ticket">Схема по тексту</div><div class="mini-ticket">Работа с примерами</div><div class="mini-ticket">Короткое объяснение</div></article>
+        <article class="mini-column"><h3>Практика</h3><div class="mini-ticket">Карточки по уровням</div><div class="mini-ticket">Работа в парах</div><div class="mini-ticket">Мини-кейс</div></article>
+        <article class="mini-column"><h3>Итог</h3><div class="mini-ticket">3 вывода</div><div class="mini-ticket">Памятка</div><div class="mini-ticket">Билет на выход</div></article>
+      </div>
+    </section>
+
+    <section class="ideas-section">
+      <h2>Чек-лист хорошей идеи</h2>
+      <div class="checklist">
+        <div class="check-item">✅ У идеи есть учебная цель.</div>
+        <div class="check-item">✅ Ученик не только слушает, но и действует.</div>
+        <div class="check-item">✅ Задание подходит возрасту класса.</div>
+        <div class="check-item">✅ Есть понятный результат урока.</div>
+        <div class="check-item">✅ Материалы можно быстро подготовить.</div>
+        <div class="check-item">✅ Учитель может объяснить ход занятия за минуту.</div>
+      </div>
+    </section>
+
+    <section class="ideas-section">
+      <h2>Готовый запрос наставнику</h2>
+      <div class="template-box">
+        <strong>Здравствуйте!</strong><br>
+        Мне нужна идея для урока по теме: ________________________________.<br><br>
+        Предмет и класс: _______________________________________________.<br><br>
+        Что хочется получить: необычный старт / групповую работу / карточки / маршрутный лист / мини-проект / рефлексию.<br><br>
+        Особенности класса: ____________________________________________.<br><br>
+        Итог урока должен быть таким: __________________________________.
+      </div>
+    </section>
+
+    <section class="ideas-cta">
+      <div>
+        <h2>Идея появится быстрее, если собрать её по шагам</h2>
+        <p>Обратитесь к наставнику с суперсилой «Учитель-архитектор содержания». Он поможет превратить обычную тему в понятный, живой и результативный урок.</p>
+      </div>
+      <a class="ideas-button" href="2-naydi-nastavnika.html">Найти наставника</a>
+    </section>
+  </main>
+</body>
+</html>
