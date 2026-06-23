@@ -124,26 +124,31 @@
     }
 
     .section-nav {
-      margin: 18px 0;
-      padding: 16px;
-      border-radius: 26px;
-      background: rgba(255,255,255,.94);
+      width: min(980px, 100%);
+      margin: 20px auto 24px;
+      padding: 18px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.96);
       border: 1px solid rgba(47, 125, 50, .16);
       box-shadow: var(--shadow);
+      text-align: center;
     }
 
     .section-nav-title {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       color: var(--green-dark);
       font-size: 16px;
       font-weight: 900;
+      text-align: center;
     }
 
     .section-nav-list {
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
       gap: 10px;
-      margin: 0;
+      margin: 0 auto;
       padding: 0;
       list-style: none;
     }
@@ -151,6 +156,7 @@
     .section-nav a {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       min-height: 38px;
       padding: 9px 12px;
       border-radius: 999px;
@@ -161,6 +167,7 @@
       font-size: 13px;
       font-weight: 900;
       line-height: 1.2;
+      text-align: center;
     }
 
     .section-nav a:hover { background: var(--yellow); }
