@@ -21,6 +21,8 @@
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
@@ -121,6 +123,48 @@
       box-shadow: none;
     }
 
+    .section-nav {
+      margin: 18px 0;
+      padding: 16px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(47, 125, 50, .16);
+      box-shadow: var(--shadow);
+    }
+
+    .section-nav-title {
+      margin: 0 0 12px;
+      color: var(--green-dark);
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .section-nav-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .section-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ffffff, #f5ffe9);
+      border: 1px solid rgba(47, 125, 50, .18);
+      color: var(--green-dark);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .section-nav a:hover { background: var(--yellow); }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
@@ -135,6 +179,7 @@
       border-radius: 28px;
       padding: clamp(20px, 3vw, 32px);
       box-shadow: var(--shadow);
+      scroll-margin-top: 18px;
     }
 
     .half { grid-column: span 6; }
@@ -143,7 +188,7 @@
     .card h2 {
       margin: 0 0 12px;
       color: var(--green-dark);
-      font-size: clamp(18px, 2vw, 16px);
+      font-size: clamp(16px, 1.8vw, 20px);
       line-height: 1.18;
       letter-spacing: -.01em;
     }
@@ -311,6 +356,8 @@
       th, td { padding: 10px; font-size: 14px; }
       .hero-actions { flex-direction: column; }
       .btn { width: 100%; }
+      .section-nav { padding: 12px; }
+      .section-nav a { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -323,10 +370,26 @@
       <h1>Наставник одарённых детей</h1>
       <p class="lead">Красочная страница-маршрут для педагога, который сопровождает талантливых школьников: от диагностики и индивидуального маршрута до олимпиад, проектов, портфолио и анализа достижений.</p>
       <div class="hero-actions">
-        <a class="btn" href="#route">Открыть маршрут</a>
+        <a class="btn" href="#route-work">Открыть маршрут</a>
         <a class="btn secondary" href="#prompts">ИИ-подсказки для учителя</a>
       </div>
     </section>
+
+    <nav class="section-nav" aria-label="Разделы страницы">
+      <p class="section-nav-title">Быстрый переход по материалу</p>
+      <ul class="section-nav-list">
+        <li><a href="#route-work">Маршрут работы с одарённым ребёнком</a></li>
+        <li><a href="#iom">Индивидуальный образовательный маршрут</a></li>
+        <li><a href="#individual-plan">План индивидуальной работы</a></li>
+        <li><a href="#year-cycle">Циклограмма наставника на учебный год</a></li>
+        <li><a href="#diagnostics">Диагностика</a></li>
+        <li><a href="#organization">Организация работы</a></li>
+        <li><a href="#effectiveness">Оценка эффективности</a></li>
+        <li><a href="#gifted-types">Виды одарённости</a></li>
+        <li><a href="#student-self">Самооценка ученика</a></li>
+        <li><a href="#prompts">ИИ-подсказки для наставника</a></li>
+      </ul>
+    </nav>
 
     <section class="card role-card">
       <h2>🧭 Роль наставника</h2>
@@ -349,7 +412,7 @@
     </section>
 
     <section class="grid" id="route">
-      <article class="card">
+      <article class="card" id="route-work">
         <h2>🚀 Маршрут работы с одарённым ребёнком</h2>
         <p>Основа маршрута — индивидуальность, возрастная доступность, последовательность, сотрудничество педагога, ребёнка и родителей, а также создание ситуации успеха.</p>
         <div class="route">
@@ -376,7 +439,7 @@
         </div>
       </article>
 
-      <article class="card half">
+      <article class="card half" id="iom">
         <h2>📌 Индивидуальный образовательный маршрут</h2>
         <table>
           <tbody>
@@ -390,7 +453,7 @@
         </table>
       </article>
 
-      <article class="card half">
+      <article class="card half" id="individual-plan">
         <h2>🎯 План индивидуальной работы</h2>
         <table>
           <thead>
@@ -409,7 +472,7 @@
         </table>
       </article>
 
-      <article class="card">
+      <article class="card" id="year-cycle">
         <h2>📅 Циклограмма наставника на учебный год</h2>
         <div class="months">
           <div class="month"><b>Сентябрь</b>Диагностика одарённости, карта одарённости, выявление интересов.</div>
@@ -423,7 +486,7 @@
         </div>
       </article>
 
-      <article class="card third">
+      <article class="card third" id="diagnostics">
         <h2>🔎 Диагностика</h2>
         <ul class="checklist">
           <li>Провести методику «Карта одарённости».</li>
@@ -435,7 +498,7 @@
         </ul>
       </article>
 
-      <article class="card third">
+      <article class="card third" id="organization">
         <h2>🌱 Организация работы</h2>
         <ul class="checklist">
           <li>Изучить память, мышление, речь и индивидуальные особенности.</li>
@@ -447,7 +510,7 @@
         </ul>
       </article>
 
-      <article class="card third">
+      <article class="card third" id="effectiveness">
         <h2>📈 Оценка эффективности</h2>
         <ul class="checklist">
           <li>Участие в олимпиадах и конкурсах: количество, уровень, результат.</li>
@@ -459,7 +522,7 @@
         </ul>
       </article>
 
-      <article class="card half">
+      <article class="card half" id="gifted-types">
         <h2>🧠 Виды одарённости</h2>
         <table>
           <thead>
@@ -476,7 +539,7 @@
         </table>
       </article>
 
-      <article class="card half">
+      <article class="card half" id="student-self">
         <h2>💬 Самооценка ученика</h2>
         <p>Эти вопросы помогают ребёнку увидеть свой рост и понять, какой шаг сделать дальше.</p>
         <ul class="checklist">
