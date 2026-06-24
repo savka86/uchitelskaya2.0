@@ -3,79 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Как сделать презентацию по шаблону — дизайнер продукта</title>
+  <title>Как оформить презентацию красиво — дизайнер продукта</title>
   <style>
-    :root{
-      --forest:#123f16;
-      --deep:#07330c;
-      --leaf:#5c9f00;
-      --lime:#9bd21b;
-      --gold:#c58f00;
-      --sun:#ffc72c;
-      --mint:#eef8df;
-      --paper:#fffdf7;
-      --ink:#17311a;
-      --blue:#3579e8;
-      --red:#d83b32;
-      --shadow:0 22px 60px rgba(18,63,22,.14);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      color:var(--ink);
-      background:
-        radial-gradient(circle at 15% 5%,rgba(155,210,27,.30),transparent 30%),
-        radial-gradient(circle at 90% 10%,rgba(255,199,44,.22),transparent 26%),
-        linear-gradient(135deg,#f7fbef,#eef8df 45%,#fff);
-      font-family:Inter,Arial,sans-serif;
-    }
-    a{color:inherit}
-    .page{width:min(1360px,calc(100% - 28px));margin:auto;padding:24px 0 64px}
-    .hero{
-      position:relative;overflow:hidden;
-      padding:42px;border-radius:38px;
-      background:linear-gradient(135deg,var(--deep),var(--forest) 48%,var(--leaf));
-      color:white;box-shadow:var(--shadow);
-    }
-    .hero:before{content:"";position:absolute;width:520px;height:520px;right:-150px;top:-210px;border-radius:999px;border:46px solid rgba(255,255,255,.16)}
-    .hero:after{content:"";position:absolute;width:360px;height:130px;right:-60px;bottom:24px;border-radius:999px;background:rgba(255,199,44,.22);transform:rotate(-18deg)}
-    .hero__content{position:relative;z-index:1;max-width:930px}
-    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900;letter-spacing:.02em}
-    h1{font-size:clamp(34px,5.4vw,68px);line-height:.98;margin:18px 0 12px;letter-spacing:-.04em}
-    h2{font-size:clamp(25px,3.3vw,42px);line-height:1.06;margin:0 0 18px;color:var(--forest);letter-spacing:-.02em}
-    h3{font-size:21px;margin:0 0 10px;color:var(--forest)}
-    .lead{font-size:clamp(18px,2.2vw,24px);line-height:1.48;max-width:880px;margin:0 0 24px;color:#f4ffe8}
-    .hero-actions,.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
-    .btn,button.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 19px;border-radius:999px;background:var(--forest);color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer;box-shadow:0 12px 28px rgba(18,63,22,.18)}
-    .hero .btn{background:white;color:var(--forest)}
-    .btn--gold{background:var(--sun)!important;color:#2c2600!important}
-    .topnav{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}
-    .topnav a{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.14);font-weight:800;text-decoration:none;color:white;font-size:14px}
-    .section{margin-top:24px;padding:28px;border-radius:34px;background:rgba(255,255,255,.82);box-shadow:var(--shadow);border:1px solid rgba(92,159,0,.14);backdrop-filter:blur(8px)}
-    .section.dark{background:linear-gradient(135deg,var(--forest),#275c12);color:white}.section.dark h2,.section.dark h3{color:white}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-    .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-    .slides-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .card,.slide-card{padding:22px;border-radius:26px;background:white;box-shadow:0 14px 35px rgba(18,63,22,.09);border:1px solid rgba(92,159,0,.16);position:relative;overflow:hidden}
-    .slide-card{display:flex;flex-direction:column;gap:12px;min-height:330px}
-    .slide-card:before{content:attr(data-slide);position:absolute;right:16px;top:12px;font-size:64px;font-weight:1000;color:rgba(92,159,0,.12);line-height:1}
-    .slide-card h3{padding-right:58px}
-    .tag{display:inline-flex;width:max-content;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:#eef8df;color:var(--forest);font-weight:900;font-size:13px}
-    .num{width:42px;height:42px;border-radius:14px;background:var(--leaf);color:white;display:grid;place-items:center;font-weight:900;margin-bottom:12px}
-    .soft{background:#f7fbef}.gold{background:#fff7d8;border-color:rgba(197,143,0,.35)}.green{background:#eef8df}.blue{background:#edf4ff;border-color:rgba(53,121,232,.25)}
-    p,li{line-height:1.55}.muted{color:#55705a}.small{font-size:14px}.strong{font-weight:900;color:var(--forest)}
-    ul,ol{margin:8px 0 0;padding-left:20px}li{margin:5px 0}
-    .copybox{white-space:pre-wrap;background:#fff;padding:20px;border-radius:22px;border:1px dashed rgba(197,143,0,.7);line-height:1.58;font-weight:750;color:#244129}
-    .example{background:#f7fbef;border-left:6px solid var(--leaf);padding:14px 16px;border-radius:18px;margin-top:auto}
-    .design-note{background:#fff7d8;border-left:6px solid var(--sun);padding:14px 16px;border-radius:18px}
-    .check{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}.check li{padding:15px 16px;border-radius:18px;background:#f4faec;font-weight:850}.check li:before{content:"✓";display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--leaf);color:white;margin-right:8px;font-weight:1000}
-    .table{width:100%;border-collapse:separate;border-spacing:0 10px}.table th{text-align:left;color:var(--forest);font-size:14px}.table td,.table th{padding:13px 14px;background:white}.table td:first-child,.table th:first-child{border-radius:16px 0 0 16px;font-weight:900}.table td:last-child,.table th:last-child{border-radius:0 16px 16px 0}
-    .footer{margin-top:24px;padding:28px;border-radius:34px;background:var(--forest);color:white;text-align:center}.footer h2{color:white;margin-bottom:10px}
-    @media(max-width:1100px){.slides-grid,.grid4{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:repeat(2,1fr)}}
-    @media(max-width:760px){.slides-grid,.grid,.grid3,.grid4,.check{grid-template-columns:1fr}.hero{padding:28px}.page{width:min(100% - 18px,1360px)}}
-    @media print{body{background:white}.hero,.section,.card,.slide-card{box-shadow:none}.topnav,.actions,.hero-actions{display:none}.page{width:100%;padding:0}.section{break-inside:avoid}}
+    :root{--forest:#123f16;--deep:#07330c;--leaf:#5c9f00;--lime:#9bd21b;--gold:#c58f00;--sun:#ffc72c;--mint:#eef8df;--paper:#fffdf7;--ink:#17311a;--blue:#3579e8;--shadow:0 22px 60px rgba(18,63,22,.14)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at 15% 5%,rgba(155,210,27,.30),transparent 30%),radial-gradient(circle at 90% 10%,rgba(255,199,44,.22),transparent 26%),linear-gradient(135deg,#f7fbef,#eef8df 45%,#fff);font-family:Inter,Arial,sans-serif}a{color:inherit}.page{width:min(1360px,calc(100% - 28px));margin:auto;padding:24px 0 64px}
+    .hero{position:relative;overflow:hidden;padding:42px;border-radius:38px;background:linear-gradient(135deg,var(--deep),var(--forest) 48%,var(--leaf));color:white;box-shadow:var(--shadow)}.hero:before{content:"";position:absolute;width:520px;height:520px;right:-150px;top:-210px;border-radius:999px;border:46px solid rgba(255,255,255,.16)}.hero:after{content:"🎨\A🖥️\A📊";white-space:pre;position:absolute;right:40px;top:34px;font-size:74px;line-height:1.05;opacity:.88}.hero__content{position:relative;z-index:1;max-width:930px}.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900;letter-spacing:.02em}h1{font-size:clamp(34px,5.4vw,68px);line-height:.98;margin:18px 0 12px;letter-spacing:-.04em}h2{font-size:clamp(25px,3.3vw,42px);line-height:1.06;margin:0 0 18px;color:var(--forest);letter-spacing:-.02em}h3{font-size:21px;margin:0 0 10px;color:var(--forest)}.lead{font-size:clamp(18px,2.2vw,24px);line-height:1.48;max-width:880px;margin:0 0 24px;color:#f4ffe8}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}.btn,button.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 19px;border-radius:999px;background:var(--forest);color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer;box-shadow:0 12px 28px rgba(18,63,22,.18)}.hero .btn{background:white;color:var(--forest)}.btn--gold{background:var(--sun)!important;color:#2c2600!important}.topnav{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 0}.topnav a{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.14);font-weight:800;text-decoration:none;color:white;font-size:14px}
+    .section{margin-top:24px;padding:28px;border-radius:34px;background:rgba(255,255,255,.82);box-shadow:var(--shadow);border:1px solid rgba(92,159,0,.14);backdrop-filter:blur(8px)}.section.dark{background:linear-gradient(135deg,var(--forest),#275c12);color:white}.section.dark h2,.section.dark h3{color:white}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{padding:22px;border-radius:26px;background:white;box-shadow:0 14px 35px rgba(18,63,22,.09);border:1px solid rgba(92,159,0,.16);position:relative;overflow:hidden}.num{width:42px;height:42px;border-radius:14px;background:var(--leaf);color:white;display:grid;place-items:center;font-weight:900;margin-bottom:12px}.soft{background:#f7fbef}.gold{background:#fff7d8;border-color:rgba(197,143,0,.35)}.green{background:#eef8df}.blue{background:#edf4ff;border-color:rgba(53,121,232,.25)}p,li{line-height:1.55}.muted{color:#55705a}.copybox{white-space:pre-wrap;background:#fff;padding:20px;border-radius:22px;border:1px dashed rgba(197,143,0,.7);line-height:1.58;font-weight:750;color:#244129}.check{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:0;list-style:none}.check li{padding:15px 16px;border-radius:18px;background:#f4faec;font-weight:850}.check li:before{content:"✓";display:inline-grid;place-items:center;width:24px;height:24px;border-radius:8px;background:var(--leaf);color:white;margin-right:8px;font-weight:1000}.footer{margin-top:24px;padding:28px;border-radius:34px;background:var(--forest);color:white;text-align:center}.footer h2{color:white;margin-bottom:10px}
+    @media(max-width:1100px){.grid4{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.grid3,.grid4,.check{grid-template-columns:1fr}.hero{padding:28px}.hero:after{position:relative;display:block;right:auto;top:auto;text-align:left;margin-top:18px}.page{width:min(100% - 18px,1360px)}}@media print{body{background:white}.hero,.section,.card{box-shadow:none}.topnav,.actions{display:none}.page{width:100%;padding:0}.section{break-inside:avoid}}
   </style>
 </head>
 <body>
@@ -83,15 +17,14 @@
     <section class="hero">
       <div class="hero__content">
         <span class="eyebrow">🎨 Бесплатная полка · дизайнер продукта</span>
-        <h1>Как сделать презентацию по шаблону</h1>
-        <p class="lead">Пошаговая инструкция для проекта «Заражённость настоящим домовым грибом Serpula lacrymans жилищного фонда села Намцы». Ученик берёт шаблон презентации и заполняет каждый слайд по примеру.</p>
-        <div class="hero-actions">
+        <h1>Как оформить презентацию красиво</h1>
+        <p class="lead">Пошаговая визуальная подсказка для проекта «Заражённость настоящим домовым грибом Serpula lacrymans жилищного фонда села Намцы». Блок с пошаговым заполнением слайдов перенесён на страницу методиста.</p>
+        <div class="actions">
           <button class="btn" onclick="window.print()">🖨️ Распечатать инструкцию</button>
-          <button class="btn btn--gold" onclick="copyText('fullPlan')">📋 Скопировать весь план</button>
+          <a class="btn btn--gold" href="polka-domovoy-grib-metodist.html#slides">🖥️ Открыть блок слайдов у методиста</a>
         </div>
         <nav class="topnav" aria-label="Навигация">
           <a href="#logic">Логика</a>
-          <a href="#slides">Слайды</a>
           <a href="#design">Оформление</a>
           <a href="#check">Проверка</a>
           <a href="#copy">Скопировать</a>
@@ -102,128 +35,15 @@
     <section class="section" id="logic">
       <h2>Сначала пойми логику шаблона</h2>
       <div class="grid3">
-        <article class="card green">
-          <div class="num">1</div>
-          <h3>Не начинай с дизайна</h3>
-          <p>Сначала заполни смысл: тема, актуальность, цель, задачи, методы, результаты. Красивое оформление делается после текста.</p>
-        </article>
-        <article class="card gold">
-          <div class="num">2</div>
-          <h3>Один слайд — одна мысль</h3>
-          <p>На слайде не должно быть всего текста работы. Слайд помогает выступать, а не заменяет доклад.</p>
-        </article>
-        <article class="card blue">
-          <div class="num">3</div>
-          <h3>Шаблон — это маршрут</h3>
-          <p>Каждый слайд отвечает на один вопрос: что изучали, зачем, как, что получили и к чему пришли.</p>
-        </article>
+        <article class="card green"><div class="num">1</div><h3>Не начинай с дизайна</h3><p>Сначала заполни смысл: тема, актуальность, цель, задачи, методы, результаты. Красивое оформление делается после текста.</p></article>
+        <article class="card gold"><div class="num">2</div><h3>Один слайд — одна мысль</h3><p>На слайде не должно быть всего текста работы. Слайд помогает выступать, а не заменяет доклад.</p></article>
+        <article class="card blue"><div class="num">3</div><h3>Шаблон — это маршрут</h3><p>Каждый слайд отвечает на один вопрос: что изучали, зачем, как, что получили и к чему пришли.</p></article>
       </div>
     </section>
 
     <section class="section dark">
       <h2>Главное правило дизайнера продукта</h2>
       <p class="lead">Презентация должна помогать жюри быстро понять работу: проблему, ход исследования, результаты, выводы и пользу проекта.</p>
-    </section>
-
-    <section class="section" id="slides">
-      <h2>Пошагово по слайдам шаблона</h2>
-      <div class="slides-grid">
-        <article class="slide-card" data-slide="1">
-          <span class="tag">Титульный слайд</span>
-          <h3>Название работы</h3>
-          <p><b>Что написать:</b> название исследовательской работы или проекта, группу, ФИО, должность, регион.</p>
-          <div class="example"><b>Пример:</b><br>«Заражённость настоящим домовым грибом Serpula lacrymans жилищного фонда села Намцы»<br>ФИО автора, класс, школа, регион.</div>
-          <div class="design-note"><b>Дизайн:</b> крупное название, 1 фото деревянного дома или фрагмент древесины, минимум текста.</div>
-        </article>
-
-        <article class="slide-card" data-slide="2">
-          <span class="tag">Проблематика / актуальность</span>
-          <h3>Почему тема важна?</h3>
-          <p><b>Что написать:</b> какая проблема есть рядом, кого она касается, почему её нужно изучать.</p>
-          <div class="example"><b>Пример:</b><br>В селе много деревянных домов. Домовый гриб разрушает древесину, появляется во влажных местах и может привести к ремонту или повреждению конструкций.</div>
-          <div class="design-note"><b>Дизайн:</b> 3 коротких тезиса + значок «проблема».</div>
-        </article>
-
-        <article class="slide-card" data-slide="3">
-          <span class="tag">Гипотеза</span>
-          <h3>Что предполагаем?</h3>
-          <p><b>Что написать:</b> предположение, которое можно проверить через опрос, наблюдение, карту или эксперимент.</p>
-          <div class="example"><b>Пример:</b><br>Предположим, что домовый гриб чаще появляется в домах с высокой влажностью, плохой вентиляцией и старыми деревянными конструкциями.</div>
-          <div class="design-note"><b>Дизайн:</b> выдели гипотезу в отдельной рамке.</div>
-        </article>
-
-        <article class="slide-card" data-slide="4">
-          <span class="tag">Цель</span>
-          <h3>Что хотим изучить?</h3>
-          <p><b>Что написать:</b> цель должна начинаться с действия: изучить, выявить, определить, оценить.</p>
-          <div class="example"><b>Пример:</b><br>Цель исследования — изучить заражённость настоящим домовым грибом деревянного жилищного фонда села Намцы.</div>
-          <div class="design-note"><b>Дизайн:</b> цель — крупно, без длинного абзаца.</div>
-        </article>
-
-        <article class="slide-card" data-slide="5">
-          <span class="tag">Задачи</span>
-          <h3>Что нужно сделать?</h3>
-          <p><b>Что написать:</b> 4–5 задач по порядку: литература, опрос, карта, эксперимент, рекомендации.</p>
-          <div class="example"><b>Пример:</b><br>1. Изучить информацию о домовых грибах.<br>2. Провести опрос жителей.<br>3. Составить карту распространения.<br>4. Провести эксперимент.<br>5. Разработать рекомендации.</div>
-          <div class="design-note"><b>Дизайн:</b> лучше список с цифрами, не больше 5 пунктов.</div>
-        </article>
-
-        <article class="slide-card" data-slide="6">
-          <span class="tag">Схема выполнения</span>
-          <h3>Как шла работа?</h3>
-          <p><b>Что написать:</b> этапы выполнения исследования или проекта.</p>
-          <div class="example"><b>Пример:</b><br>1 этап — изучение литературы.<br>2 этап — опрос жителей.<br>3 этап — карта заражения.<br>4 этап — эксперимент с древесиной.<br>5 этап — выводы и рекомендации.</div>
-          <div class="design-note"><b>Дизайн:</b> сделай линию времени или 5 карточек-этапов.</div>
-        </article>
-
-        <article class="slide-card" data-slide="7">
-          <span class="tag">Методы</span>
-          <h3>Чем пользовались?</h3>
-          <p><b>Что написать:</b> только те методы, которые реально использовались.</p>
-          <div class="example"><b>Пример:</b><br>Опрос жителей, наблюдение, фотографирование, составление карты, макроскопическое определение, эксперимент, сравнение результатов.</div>
-          <div class="design-note"><b>Дизайн:</b> методы можно показать иконками: анкета, карта, фото, банка, таблица.</div>
-        </article>
-
-        <article class="slide-card" data-slide="8">
-          <span class="tag">Результаты</span>
-          <h3>Что получилось?</h3>
-          <p><b>Что написать:</b> главные числа, факты и наблюдения.</p>
-          <div class="example"><b>Пример:</b><br>Опрошено 66 домов. Признаки заражения выявлены в 45 домах. В 21 доме признаки заражения не обнаружены. Чаще всего гриб находили под полом.</div>
-          <div class="design-note"><b>Дизайн:</b> крупные цифры 66, 45, 21 + диаграмма.</div>
-        </article>
-
-        <article class="slide-card" data-slide="9">
-          <span class="tag">Продукт / польза</span>
-          <h3>Что даёт работа?</h3>
-          <p><b>Что написать:</b> для исследования — ожидаемые результаты; для проекта — конечный продукт.</p>
-          <div class="example"><b>Пример:</b><br>Результаты исследования помогают увидеть распространённость проблемы и подготовить рекомендации для жителей по профилактике появления домового гриба.</div>
-          <div class="design-note"><b>Дизайн:</b> покажи продукт: памятка, карта риска, рекомендации, чек-лист.</div>
-        </article>
-
-        <article class="slide-card" data-slide="10">
-          <span class="tag">Риски</span>
-          <h3>Что могло помешать?</h3>
-          <p><b>Что написать:</b> трудности, которые могли повлиять на работу.</p>
-          <div class="example"><b>Пример:</b><br>Не все жители могли ответить на вопросы. Не во все помещения можно было попасть. Условия влажности могли меняться в разное время года.</div>
-          <div class="design-note"><b>Дизайн:</b> 3 риска + рядом 3 способа уменьшить риск.</div>
-        </article>
-
-        <article class="slide-card" data-slide="11">
-          <span class="tag">Источники</span>
-          <h3>Откуда взяли информацию?</h3>
-          <p><b>Что написать:</b> книги, сайты, статьи, материалы опроса и собственные наблюдения.</p>
-          <div class="example"><b>Пример:</b><br>1. Учебник биологии.<br>2. Энциклопедия грибов.<br>3. Интернет-источники о Serpula lacrymans.<br>4. Результаты опроса жителей.</div>
-          <div class="design-note"><b>Дизайн:</b> не перегружай слайд, 4–6 источников достаточно.</div>
-        </article>
-
-        <article class="slide-card" data-slide="12">
-          <span class="tag">Финальный слайд</span>
-          <h3>Спасибо за внимание</h3>
-          <p><b>Что написать:</b> короткий вывод и благодарность.</p>
-          <div class="example"><b>Пример:</b><br>Исследование показало, что проблема домового гриба актуальна для деревянного жилищного фонда. Важно проводить профилактику: снижать влажность, улучшать вентиляцию и обрабатывать древесину.</div>
-          <div class="design-note"><b>Дизайн:</b> 1 сильный вывод + фото или символ проекта.</div>
-        </article>
-      </div>
     </section>
 
     <section class="section" id="design">
@@ -283,7 +103,7 @@
       <p>Слайды показывают главное, а ученик объясняет подробности устно.</p>
       <div class="actions" style="justify-content:center">
         <a class="btn btn--gold" href="../index.html#board">← Вернуться к доске</a>
-        <a class="btn" href="polka-domovoy-grib-metodist.html">Открыть страницу методиста</a>
+        <a class="btn" href="polka-domovoy-grib-metodist.html#slides">Открыть пошаговый блок слайдов</a>
       </div>
     </section>
   </main>
@@ -294,11 +114,7 @@
       if(!el) return;
       const text=el.innerText || el.textContent;
       try{await navigator.clipboard.writeText(text); alert('Скопировано');}
-      catch(e){
-        const range=document.createRange(); range.selectNodeContents(el);
-        const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
-        alert('Выделено. Нажмите Ctrl + C.');
-      }
+      catch(e){const range=document.createRange(); range.selectNodeContents(el); const sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(range); alert('Выделено. Нажмите Ctrl + C.');}
     }
   </script>
 </body>
