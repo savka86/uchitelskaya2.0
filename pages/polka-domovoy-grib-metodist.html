@@ -33,7 +33,7 @@
     .step-card p,.step-card li{line-height:1.45;font-size:13px}
     .step-card ul,.step-card ol{padding-left:18px}
     .example{background:#f4faec;border-left:5px solid #5c9f00;border-radius:14px;padding:12px;margin-top:10px;font-size:13px;line-height:1.45}
-    .guide:not(.route):not(.anti) .step-card:nth-child(1):after{content:"🏠"}.guide:not(.route):not(.anti) .step-card:nth-child(2):after{content:"⚠️"}.guide:not(.route):not(.anti) .step-card:nth-child(3):after{content:"🎯"}.guide:not(.route):not(.anti) .step-card:nth-child(4):after{content:"📝"}.guide:not(.route):not(.anti) .step-card:nth-child(5):after{content:"🔎"}.guide:not(.route):not(.anti) .step-card:nth-child(6):after{content:"💡"}.guide:not(.route):not(.anti) .step-card:nth-child(7):after{content:"📚"}.guide:not(.route):not(.anti) .step-card:nth-child(8):after{content:"🧪"}.guide:not(.route):not(.anti) .step-card:nth-child(9):after{content:"66";font-weight:900;color:#2b6cb0}.guide:not(.route):not(.anti) .step-card:nth-child(10):after{content:"📊"}.guide:not(.route):not(.anti) .step-card:nth-child(11):after{content:"✅"}.guide:not(.route):not(.anti) .step-card:nth-child(12):after{content:"🧾"}.guide:not(.route):not(.anti) .step-card:nth-child(13):after{content:"🔗"}.guide:not(.route):not(.anti) .step-card:nth-child(14):after{content:"📎"}
+    .guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(1):after{content:"🏠"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(2):after{content:"⚠️"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(3):after{content:"🎯"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(4):after{content:"📝"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(5):after{content:"🔎"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(6):after{content:"💡"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(7):after{content:"📚"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(8):after{content:"🧪"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(9):after{content:"66";font-weight:900;color:#2b6cb0}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(10):after{content:"📊"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(11):after{content:"✅"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(12):after{content:"🧾"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(13):after{content:"🔗"}.guide:not(.route):not(.anti):not(.defense) .step-card:nth-child(14):after{content:"📎"}
     .route{background:linear-gradient(135deg,#ffffff,#eaffdf)}
     .route .step-card{border-left:7px solid #5c9f00}
     .route .step-card:before{background:linear-gradient(90deg,#5c9f00,#92d050)}
@@ -43,6 +43,11 @@
     .anti .step-card:before{background:linear-gradient(90deg,#2b6cb0,#78b7ff)}
     .anti .example{background:#eef6ff;border-left-color:#2b6cb0}
     .anti .step-card:nth-child(1):after{content:"🔍"}.anti .step-card:nth-child(2):after{content:"🛡️"}.anti .step-card:nth-child(3):after{content:"🎓"}.anti .step-card:nth-child(4):after{content:"🖥"}.anti .step-card:nth-child(5):after{content:"✏️"}.anti .step-card:nth-child(6):after{content:"🚫"}.anti .step-card:nth-child(7):after{content:"📋"}
+    .defense{background:linear-gradient(135deg,#fff7df,#fff,#f4faec)}
+    .defense .step-card{border-left:7px solid #c58f00}
+    .defense .step-card:before{background:linear-gradient(90deg,#c58f00,#ffc857,#5c9f00)}
+    .defense .example{background:#fff7df;border-left-color:#c58f00}
+    .defense .step-card:nth-child(1):after{content:"🎤"}.defense .step-card:nth-child(2):after{content:"🧭"}.defense .step-card:nth-child(3):after{content:"🖥"}.defense .step-card:nth-child(4):after{content:"🎯"}.defense .step-card:nth-child(5):after{content:"📊"}.defense .step-card:nth-child(6):after{content:"🧠"}.defense .step-card:nth-child(7):after{content:"❓"}.defense .step-card:nth-child(8):after{content:"🗣"}.defense .step-card:nth-child(9):after{content:"⏱"}.defense .step-card:nth-child(10):after{content:"🏆"}
     .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
     .btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer;box-shadow:0 12px 26px rgba(18,63,22,.18)}
     .btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}
@@ -130,6 +135,26 @@
       <article class="step-card"><h3>7. Мини-план</h3><p>Сделай список правок.</p><div class="example"><ol><li>Проверить.</li><li>Найти совпадения.</li><li>Переписать.</li><li>Добавить источники.</li><li>Повторить проверку.</li></ol></div></article>
     </div>
     <div class="help-box" style="background:#fff;border-color:#b9d6f2;"><h3 style="margin-top:0;color:#264f73;">Подсказка для защиты</h3><p>Можно сказать: «Я использовал источники для изучения темы, но основные формулировки, результаты и выводы написал своими словами».</p></div>
+  </section>
+
+  <section class="guide defense">
+    <p class="eyebrow" style="background:#fff7df;color:#6b5b16;">🎤 Защита на НПК</p>
+    <h2>Как готовиться к защите проекта или исследовательской работы перед экспертами</h2>
+    <p class="guide-intro">На НПК важно не просто показать слайды, а спокойно объяснить, какую проблему вы изучали, что сделали, какие результаты получили и почему работа полезна.</p>
+    <div class="help-box"><h3 style="margin-top:0;color:#6b5b16;">Главная формула выступления</h3><p><b>Проблема → цель → задачи → методы → результаты → вывод или продукт → практическая польза.</b> Если ученик уверенно проходит эту цепочку, защита выглядит логично и убедительно.</p></div>
+    <div class="steps-grid">
+      <article class="step-card"><h3>1. Пойми свою работу</h3><p>Ученик должен объяснить тему простыми словами.</p><div class="example">Не заучивать текст, а понимать: что исследовали, зачем и что получилось.</div></article>
+      <article class="step-card"><h3>2. Подготовь структуру речи</h3><p>Речь должна идти по порядку.</p><div class="example">Вступление → проблема → цель → методы → результаты → выводы → благодарность.</div></article>
+      <article class="step-card"><h3>3. Проверь слайды</h3><p>На слайде одна главная мысль.</p><div class="example">Меньше длинного текста, больше схем, фото, таблиц, диаграмм и ключевых слов.</div></article>
+      <article class="step-card"><h3>4. Выучи научный аппарат</h3><p>Эксперты часто спрашивают цель, задачи, объект, предмет и гипотезу.</p><div class="example">Ученик должен различать: объект — что изучаем, предмет — какую сторону изучаем.</div></article>
+      <article class="step-card"><h3>5. Покажи доказательства</h3><p>Нужны не только слова, но и подтверждения.</p><div class="example">Опрос, карта, эксперимент, фотографии, таблицы, отзывы, готовый продукт.</div></article>
+      <article class="step-card"><h3>6. Подготовь ответы</h3><p>Составь список возможных вопросов экспертов.</p><div class="example">Почему выбрали тему? Как проверяли гипотезу? Что было самым трудным? В чём польза?</div></article>
+      <article class="step-card"><h3>7. Тренируй сложные вопросы</h3><p>Если не знаешь ответ, нельзя молчать или спорить.</p><div class="example">Можно сказать: «Этот вопрос требует уточнения, но по нашим данным видно...»</div></article>
+      <article class="step-card"><h3>8. Репетируй вслух</h3><p>Выступление нужно проговорить несколько раз.</p><div class="example">Один раз перед собой, один раз перед наставником, один раз перед классом.</div></article>
+      <article class="step-card"><h3>9. Следи за временем</h3><p>Речь должна укладываться в регламент.</p><div class="example">Обычно лучше подготовить короткую версию на 3–5 минут и расширенную на 7 минут.</div></article>
+      <article class="step-card"><h3>10. Финальный чек-лист</h3><p>Перед защитой проверь всё заранее.</p><div class="example"><ol><li>Слайды открываются.</li><li>Речь распечатана.</li><li>Продукт готов.</li><li>Источники указаны.</li><li>Ответы на вопросы подготовлены.</li></ol></div></article>
+    </div>
+    <div class="help-box"><h3 style="margin-top:0;color:#6b5b16;">Фраза для начала защиты</h3><p>«Здравствуйте, уважаемые эксперты. Тема моей работы — ... Я выбрал эту тему, потому что проблема актуальна для ... Цель моей работы — ... В ходе работы я ...»</p></div>
   </section>
 
   <div class="actions">
