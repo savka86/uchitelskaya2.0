@@ -3,88 +3,265 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Учитель-архитектор содержания — Учительская 2.0</title>
+  <title>Архитектор содержания — проект о домовом грибе</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    body{margin:0;background:linear-gradient(135deg,#f8fff1,#edf8df,#fff);color:#17311a}
-    .page{width:min(1280px,calc(100% - 28px));margin:auto;padding:28px 0 56px}
-    .hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#0e3212,#6aa800);color:white;box-shadow:0 24px 60px rgba(16,61,19,.22)}
-    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}
-    .hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}
-    .lead{font-size:20px;line-height:1.55;max-width:900px}
-    .route,.materials{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0}
-    .step,.material,.card,.template{padding:22px;border-radius:24px;background:white;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}
-    .step{border-top:8px solid #5c9f00;font-weight:900}
-    .material b{display:block;color:#123f16;margin-bottom:8px}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
-    .card h2,.template h2{margin-top:0;color:#123f16}
-    .template{margin-top:24px;background:#fff9e8;border:2px dashed #c58f00}
-    .mini{white-space:pre-wrap;background:#fff;padding:18px;border-radius:18px;line-height:1.55}
-    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-    .btn,button.btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer}
-    .btn--light,button.btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}
-    @media(max-width:1000px){.route,.materials,.grid{grid-template-columns:1fr 1fr}}
-    @media(max-width:640px){.route,.materials,.grid{grid-template-columns:1fr}.hero{padding:24px}}
+    :root{
+      --green:#14532d;
+      --lime:#84cc16;
+      --mint:#dcfce7;
+      --yellow:#facc15;
+      --orange:#fb923c;
+      --brown:#92400e;
+      --sky:#38bdf8;
+      --blue:#2563eb;
+      --red:#ef4444;
+      --ink:#17311a;
+      --soft:#f7fee7;
+      --white:#ffffff;
+      --shadow:0 24px 70px rgba(20,83,45,.16);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(132,204,22,.35), transparent 34%),
+        radial-gradient(circle at top right, rgba(56,189,248,.26), transparent 30%),
+        linear-gradient(135deg,#f7fee7 0%,#ecfccb 38%,#fff7ed 100%);
+    }
+
+    .page{width:min(1180px,calc(100% - 28px));margin:auto;padding:24px 0 58px}
+
+    .topline{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+    .back,.pill-link{
+      display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;
+      padding:12px 16px;border-radius:999px;background:rgba(255,255,255,.78);
+      color:var(--green);border:1px solid rgba(20,83,45,.15);box-shadow:0 12px 30px rgba(20,83,45,.08)
+    }
+
+    .hero{
+      position:relative;overflow:hidden;border-radius:38px;padding:38px;
+      background:linear-gradient(135deg,#052e16 0%,#166534 46%,#84cc16 100%);
+      color:white;box-shadow:var(--shadow);
+      display:grid;grid-template-columns:1.25fr .75fr;gap:28px;align-items:center;
+    }
+    .hero:before{content:"";position:absolute;inset:auto -80px -120px auto;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.13)}
+    .hero:after{content:"";position:absolute;inset:30px auto auto -90px;width:240px;height:240px;border-radius:50%;background:rgba(250,204,21,.22)}
+    .hero > *{position:relative;z-index:1}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.17);font-weight:900;backdrop-filter:blur(8px)}
+    h1{font-size:clamp(34px,5vw,66px);line-height:.98;margin:18px 0 12px;letter-spacing:-.05em}
+    .lead{font-size:clamp(18px,2vw,22px);line-height:1.6;max-width:760px;margin:0;color:rgba(255,255,255,.92)}
+    .hero-art{display:grid;gap:14px}
+    .big-icon{font-size:86px;text-align:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:34px;padding:28px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+    .hero-note{background:white;color:var(--green);border-radius:24px;padding:18px;font-weight:900;box-shadow:0 18px 40px rgba(0,0,0,.16)}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:22px 0}
+    .stat{padding:22px;border-radius:28px;background:white;box-shadow:var(--shadow);border:1px solid rgba(20,83,45,.12);position:relative;overflow:hidden}
+    .stat:after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:rgba(132,204,22,.22)}
+    .stat strong{display:block;font-size:44px;line-height:1;color:var(--green)}
+    .stat span{display:block;font-weight:900;margin-top:8px;color:#365314}
+    .stat small{display:block;margin-top:8px;line-height:1.45;color:#4b5563}
+    .stat:nth-child(2) strong{color:var(--orange)}
+    .stat:nth-child(3) strong{color:var(--blue)}
+    .stat:nth-child(4) strong{color:var(--red)}
+
+    .section-title{display:flex;align-items:center;gap:12px;margin:34px 0 16px}
+    .section-title span{display:grid;place-items:center;width:54px;height:54px;border-radius:18px;background:var(--green);color:white;font-size:26px;box-shadow:0 14px 30px rgba(20,83,45,.22)}
+    .section-title h2{margin:0;font-size:clamp(26px,3vw,38px);color:var(--green);letter-spacing:-.03em}
+
+    .logic-map{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:18px 0}
+    .logic-step{position:relative;background:white;border-radius:28px;padding:22px;box-shadow:var(--shadow);border:1px solid rgba(20,83,45,.12);min-height:178px}
+    .logic-step:not(:last-child):after{content:"→";position:absolute;right:-17px;top:50%;transform:translateY(-50%);background:var(--yellow);color:#713f12;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;font-weight:1000;z-index:2;box-shadow:0 8px 20px rgba(146,64,14,.18)}
+    .logic-step b{display:block;font-size:18px;margin:10px 0 8px;color:var(--green)}
+    .logic-step p{margin:0;line-height:1.45;color:#4b5563}
+    .logic-icon{font-size:36px}
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+    .card,.template,.timeline,.focus-card{background:white;border-radius:30px;padding:26px;box-shadow:var(--shadow);border:1px solid rgba(20,83,45,.13)}
+    .card h3,.template h3,.timeline h3,.focus-card h3{margin:0 0 12px;color:var(--green);font-size:24px}
+    .card p,.focus-card p{line-height:1.65;margin:0;color:#374151}
+    .card ul{margin:12px 0 0;padding-left:20px;line-height:1.75;color:#374151}
+    .highlight{background:linear-gradient(135deg,#fff7ed,#fef9c3);border:2px dashed rgba(251,146,60,.55)}
+    .blue{background:linear-gradient(135deg,#eff6ff,#e0f2fe);border-color:rgba(37,99,235,.18)}
+    .green{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:rgba(22,101,52,.18)}
+    .pink{background:linear-gradient(135deg,#fff1f2,#ffe4e6);border-color:rgba(239,68,68,.16)}
+
+    .builder{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:18px}
+    .focus-card{padding:22px;min-height:190px}
+    .focus-card .num{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:16px;background:var(--green);color:white;font-weight:1000;margin-bottom:12px}
+    .focus-card:nth-child(2) .num{background:var(--blue)}
+    .focus-card:nth-child(3) .num{background:var(--orange)}
+    .focus-card:nth-child(4) .num{background:#7c3aed}
+    .focus-card:nth-child(5) .num{background:#dc2626}
+    .focus-card:nth-child(6) .num{background:#0891b2}
+
+    .timeline{margin-top:18px;background:linear-gradient(135deg,#ffffff,#f7fee7)}
+    .time-row{display:grid;grid-template-columns:170px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid rgba(20,83,45,.12)}
+    .time-row:last-child{border-bottom:0}
+    .time-row b{color:var(--green)}
+    .time-row p{margin:0;line-height:1.55;color:#374151}
+
+    .template{margin-top:18px;background:#fffbea;border:2px dashed rgba(146,64,14,.35)}
+    .mini{white-space:pre-wrap;background:white;padding:20px;border-radius:22px;line-height:1.62;border:1px solid rgba(146,64,14,.16);color:#374151}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+    .btn,button.btn{border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:999px;background:var(--green);color:white;font-weight:1000;box-shadow:0 14px 30px rgba(20,83,45,.18)}
+    .btn--light,button.btn--light{background:white;color:var(--green);border:1px solid rgba(20,83,45,.18)}
+    .btn--orange{background:var(--orange)}
+
+    .rubric{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .rubric div{background:white;border-radius:24px;padding:18px;border:1px solid rgba(20,83,45,.12);box-shadow:0 14px 34px rgba(20,83,45,.1)}
+    .rubric b{display:block;color:var(--green);margin-bottom:8px}
+    .rubric span{line-height:1.45;color:#4b5563}
+
+    @media(max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .stats,.logic-map,.rubric{grid-template-columns:1fr 1fr}
+      .logic-step:not(:last-child):after{display:none}
+      .builder{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:680px){
+      .page{width:min(100% - 18px,1180px);padding-top:12px}
+      .hero{padding:24px;border-radius:28px}
+      .stats,.logic-map,.grid,.builder,.rubric{grid-template-columns:1fr}
+      .time-row{grid-template-columns:1fr}
+      .big-icon{font-size:64px;padding:20px}
+      .card,.template,.timeline,.focus-card{padding:20px;border-radius:24px}
+    }
   </style>
 </head>
 <body>
 <main class="page">
 
+  <div class="topline">
+    <a class="back" href="../index.html#materials">← Назад в бесплатную полку</a>
+    <a class="pill-link" href="project-domovoy-grib.html">🍄 Все окошки проекта</a>
+  </div>
+
   <section class="hero">
-    <span class="eyebrow">🏗️ Бесплатная полка · отдельное окошко</span>
-    <h1>Учитель-архитектор содержания</h1>
-    <p class="lead">Создаёт системные сборники, пособия и электронные курсы для всей школы. Помогает не просто собрать материалы, а выстроить их в понятную систему: по классам, темам, разделам, уровням сложности и результатам обучения.</p>
+    <div>
+      <span class="eyebrow">🏗️ Окошко архитектора содержания · проект «Домовой гриб»</span>
+      <h1>Как выстроить логику исследования</h1>
+      <p class="lead">Эта страница помогает превратить материалы о настоящем домовом грибе <b>Serpula lacrymans</b> в понятную защиту: проблема, опрос, карта, эксперимент, выводы и практические рекомендации для жителей.</p>
+      <div class="actions">
+        <a class="btn" href="#logic">Смотреть логику</a>
+        <a class="btn btn--light" href="#template">Взять шаблон</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="big-icon">🏠🍄🧩</div>
+      <div class="hero-note">Архитектор содержания отвечает за порядок: чтобы жюри сразу поняло, зачем, как и к какому результату пришёл проект.</div>
+    </div>
   </section>
 
-  <section class="route">
-    <div class="step">1. Собрать материалы</div>
-    <div class="step">2. Разложить по классам</div>
-    <div class="step">3. Создать структуру курса</div>
-    <div class="step">4. Оформить сборник или пособие</div>
+  <section class="stats" aria-label="Ключевые числа проекта">
+    <article class="stat"><strong>66</strong><span>домов</span><small>можно показать как основу опроса и диагностики ситуации.</small></article>
+    <article class="stat"><strong>45</strong><span>ответов / признаков</span><small>используются для анализа и группировки наблюдений.</small></article>
+    <article class="stat"><strong>31</strong><span>случай внимания</span><small>помогает выделить зоны риска и частые причины.</small></article>
+    <article class="stat"><strong>14</strong><span>важных выводов</span><small>превращаются в рекомендации, памятку и защиту.</small></article>
+  </section>
+
+  <section id="logic">
+    <div class="section-title"><span>🧭</span><h2>Карта логики проекта</h2></div>
+    <div class="logic-map">
+      <article class="logic-step"><div class="logic-icon">⚠️</div><b>Проблема</b><p>В деревянных домах появляется разрушение древесины, сырость и следы грибкового поражения.</p></article>
+      <article class="logic-step"><div class="logic-icon">🔎</div><b>Исследование</b><p>Собираются данные: опрос жителей, фото, наблюдения, признаки заражения.</p></article>
+      <article class="logic-step"><div class="logic-icon">🗺️</div><b>Карта</b><p>Результаты распределяются по микрорайонам, чтобы увидеть очаги и зоны риска.</p></article>
+      <article class="logic-step"><div class="logic-icon">🧪</div><b>Эксперимент</b><p>Проверяется влияние условий: влажность, обработка древесины, хранение образцов.</p></article>
+      <article class="logic-step"><div class="logic-icon">✅</div><b>Результат</b><p>Создаются выводы, памятка, рекомендации и понятная защита проекта.</p></article>
+    </div>
   </section>
 
   <section class="grid">
-    <article class="card">
-      <h2>Что делает</h2>
-      <p>Помогает учителю превратить разрозненные задания, конспекты, ссылки, презентации и проверочные работы в единую систему, которой удобно пользоваться каждый год.</p>
+    <article class="card green">
+      <h3>Что делает архитектор содержания?</h3>
+      <p>Он собирает разрозненные факты в единую историю. Не просто «много информации», а понятный путь: почему тема важна, что проверяли, какие данные получили и что можно сделать на практике.</p>
     </article>
-    <article class="card">
-      <h2>Для чего нужен</h2>
-      <p>Чтобы у школы были готовые электронные курсы, сборники заданий, методические пособия и материалы, которые можно передавать коллегам и использовать в работе с учениками.</p>
+    <article class="card highlight">
+      <h3>Главная задача страницы</h3>
+      <p>Помочь ученику и наставнику быстро разложить проект по смысловым блокам, убрать лишнее, усилить доказательства и подготовить красивую защиту перед жюри.</p>
     </article>
-    <article class="card">
-      <h2>Пример</h2>
-      <p><b>Учитель математики:</b> создаёт OneNote-сборник по всем классам, где есть темы, теория, примеры, задания, самостоятельные работы, контрольные и материалы для повторения.</p>
+    <article class="card blue">
+      <h3>Как объяснить актуальность?</h3>
+      <ul>
+        <li>деревянные дома требуют бережного отношения;</li>
+        <li>домовой гриб может разрушать древесину;</li>
+        <li>многие жители не знают ранние признаки поражения;</li>
+        <li>проект даёт практическую пользу для села.</li>
+      </ul>
     </article>
-    <article class="card">
-      <h2>Итоговый продукт</h2>
-      <p>Системный сборник, электронное пособие, курс в OneNote, папка с материалами по классам, база заданий или навигационная карта учебного содержания.</p>
+    <article class="card pink">
+      <h3>Что показать на защите?</h3>
+      <ul>
+        <li>фото признаков поражения древесины;</li>
+        <li>диаграмму опроса;</li>
+        <li>карту распространения;</li>
+        <li>эксперимент с образцами;</li>
+        <li>памятку для жителей.</li>
+      </ul>
     </article>
   </section>
 
-  <section class="materials">
-    <article class="material"><b>Структура</b>Классы → темы → уроки → задания → контроль → повторение.</article>
-    <article class="material"><b>Навигация</b>Чтобы любой учитель быстро нашёл нужный материал.</article>
-    <article class="material"><b>Единый стиль</b>Одинаковые названия, оформление, папки, таблицы и подписи.</article>
-    <article class="material"><b>Практическая польза</b>Материалы можно использовать на уроках, консультациях и при подготовке к проверочным работам.</article>
+  <section>
+    <div class="section-title"><span>🧱</span><h2>Из чего собрать содержание</h2></div>
+    <div class="builder">
+      <article class="focus-card"><span class="num">1</span><h3>Проблема</h3><p>Коротко объяснить, почему заражение древесины важно для жителей и школы.</p></article>
+      <article class="focus-card"><span class="num">2</span><h3>Цель</h3><p>Выявить признаки и распространённость настоящего домового гриба в жилищном фонде.</p></article>
+      <article class="focus-card"><span class="num">3</span><h3>Методы</h3><p>Опрос, наблюдение, фотофиксация, карта, анализ данных и небольшой эксперимент.</p></article>
+      <article class="focus-card"><span class="num">4</span><h3>Данные</h3><p>Цифры, диаграммы и примеры, которые подтверждают выводы проекта.</p></article>
+      <article class="focus-card"><span class="num">5</span><h3>Новизна</h3><p>Локальное исследование по конкретному населённому пункту, а не общая справка из интернета.</p></article>
+      <article class="focus-card"><span class="num">6</span><h3>Продукт</h3><p>Памятка, карта, рекомендации и готовый маршрут профилактики для жителей.</p></article>
+    </div>
   </section>
 
-  <section class="template">
-    <h2>Мини-шаблон для сборника</h2>
-    <div class="mini" id="copyText">Название сборника: Математика. 5–9 классы.
-Разделы: теория, примеры, задания, самостоятельные работы, контрольные, повторение.
-Формат: OneNote-сборник или электронное пособие.
-Польза: учитель быстро находит материал, ученики получают понятную систему подготовки.
-Итог: готовый курс, который можно использовать всей школой.</div>
+  <section class="timeline">
+    <h3>📌 Маршрут подготовки защиты</h3>
+    <div class="time-row"><b>Шаг 1 · Смысл</b><p>Сформулировать проблему одним предложением: что происходит, кого касается и почему это важно.</p></div>
+    <div class="time-row"><b>Шаг 2 · Доказательства</b><p>Отобрать только сильные материалы: фото, цифры опроса, карту, эксперимент и выводы.</p></div>
+    <div class="time-row"><b>Шаг 3 · Визуал</b><p>Каждый смысловой блок превратить в слайд: минимум текста, крупные числа, понятные подписи.</p></div>
+    <div class="time-row"><b>Шаг 4 · Речь</b><p>Подготовить выступление по схеме: проблема → что сделали → что получили → чем полезно.</p></div>
+    <div class="time-row"><b>Шаг 5 · Вопросы жюри</b><p>Заранее подготовить ответы: почему выбрали тему, как собирали данные, что нового, где применить результат.</p></div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>🎯</span><h2>Критерии сильной работы</h2></div>
+    <div class="rubric">
+      <div><b>Понятная тема</b><span>Сразу видно, что именно изучали и зачем.</span></div>
+      <div><b>Связная логика</b><span>Каждый раздел продолжает предыдущий.</span></div>
+      <div><b>Свои данные</b><span>Есть опрос, наблюдения, фото или эксперимент.</span></div>
+      <div><b>Практическая польза</b><span>Итог можно применить в школе или селе.</span></div>
+    </div>
+  </section>
+
+  <section class="template" id="template">
+    <h3>📝 Мини-шаблон содержания проекта</h3>
+    <div class="mini" id="copyText">Название: Заражённость настоящим домовым грибом Serpula lacrymans жилищного фонда села Намцы.
+
+Проблема: в деревянных домах могут появляться признаки поражения древесины, но жители не всегда знают, как их распознать и предупредить распространение.
+
+Цель: изучить признаки и распространённость домового гриба, определить возможные зоны риска и подготовить рекомендации.
+
+Задачи:
+1. Изучить информацию о настоящем домовом грибе.
+2. Провести опрос и наблюдение.
+3. Составить диаграммы и карту распространения.
+4. Провести небольшой эксперимент с образцами.
+5. Подготовить выводы и памятку для жителей.
+
+Логика защиты: проблема → методы → данные → карта → эксперимент → выводы → рекомендации.</div>
     <div class="actions">
-      <button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('copyText').innerText)">Скопировать шаблон</button>
-      <button class="btn btn--light" onclick="window.print()">Распечатать</button>
+      <button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('copyText').innerText)">📋 Скопировать шаблон</button>
+      <button class="btn btn--light" onclick="window.print()">🖨️ Распечатать</button>
+      <a class="btn btn--orange" href="project-domovoy-grib.html">🍄 Открыть весь проект</a>
     </div>
   </section>
 
   <div class="actions">
-    <a class="btn" href="../index.html#materials">Вернуться в бесплатную полку</a>
-    <a class="btn btn--light" href="project-domovoy-grib.html">Все окошки проекта</a>
+    <a class="btn" href="../index.html#materials">← Вернуться в бесплатную полку</a>
+    <a class="btn btn--light" href="polka-domovoy-grib-metodist.html">🧩 Окошко методиста</a>
+    <a class="btn btn--light" href="polka-domovoy-grib-ii.html">💻 Окошко ИИ</a>
   </div>
 
 </main>
