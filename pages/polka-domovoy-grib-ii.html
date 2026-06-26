@@ -3,118 +3,252 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Интегратор ИИ — Учительская 2.0</title>
+  <title>Интегратор ИИ — проект о домовом грибе</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    body{margin:0;background:linear-gradient(135deg,#f7fbef,#eef8df 45%,#fff);color:#17311a}
-    .page{width:min(1680px,calc(100% - 28px));margin:auto;padding:28px 0 56px}
-    .hero{padding:34px;border-radius:34px;background:linear-gradient(135deg,#17311a,#5c9f00);color:white;box-shadow:0 24px 60px rgba(16,61,19,.22)}
-    .eyebrow{display:inline-flex;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}
-    .hero h1{font-size:clamp(32px,5vw,62px);line-height:1;margin:18px 0 12px}
-    .lead{font-size:20px;line-height:1.55;max-width:980px}
-    .guide{margin-top:28px;padding:28px;border-radius:30px;background:#fffdf4;border:1px solid rgba(197,143,0,.25);box-shadow:0 18px 45px rgba(18,63,22,.08)}
-    .guide h2{margin:0 0 12px;color:#123f16;font-size:clamp(26px,4vw,42px)}
-    .guide-intro{font-size:18px;line-height:1.65;max-width:1050px}
-    .help-box{background:#fff7df;border-radius:22px;padding:22px;margin-top:18px;border:1px solid #eadc9c;line-height:1.6}
-    .steps-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:14px;margin-top:22px}
-    .step-card{padding:16px;border-radius:22px;background:white;box-shadow:0 18px 45px rgba(18,63,22,.1);border:1px solid rgba(92,159,0,.18)}
-    .step-card h3{margin:0 0 10px;color:#123f16;font-size:15px;line-height:1.25}
-    .step-card p,.step-card li{line-height:1.45;font-size:13px}.step-card ul,.step-card ol{padding-left:18px}
-    .example{background:#f4faec;border-left:5px solid #5c9f00;border-radius:14px;padding:12px;margin-top:10px;font-size:13px;line-height:1.45}
-    .blue{background:linear-gradient(135deg,#ffffff,#eef6ff)}.blue .step-card{border-left:7px solid #2b6cb0}.blue .example{background:#eef6ff;border-left-color:#2b6cb0}
-    .route{background:linear-gradient(135deg,#ffffff,#f4faec)}.route .step-card{border-left:7px solid #5c9f00}
-    .gold{background:linear-gradient(135deg,#ffffff,#fff7df)}.gold .step-card{border-left:7px solid #c58f00}.gold .example{background:#fff7df;border-left-color:#c58f00}
-    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{padding:14px 18px;border-radius:999px;background:#123f16;color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer}.btn--light{background:white;color:#123f16;border:1px solid rgba(18,63,22,.2)}
-    @media(max-width:1100px){.steps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:700px){.steps-grid{grid-template-columns:1fr}.guide{padding:20px}.step-card{padding:18px}.step-card h3{font-size:18px}.step-card p,.step-card li,.example{font-size:15px}}
+    :root{
+      --navy:#0f172a;
+      --blue:#2563eb;
+      --cyan:#06b6d4;
+      --violet:#7c3aed;
+      --pink:#ec4899;
+      --green:#16a34a;
+      --lime:#84cc16;
+      --yellow:#facc15;
+      --orange:#fb923c;
+      --ink:#14213d;
+      --muted:#64748b;
+      --card:#ffffff;
+      --shadow:0 24px 70px rgba(15,23,42,.15);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%,rgba(6,182,212,.30),transparent 31%),
+        radial-gradient(circle at 92% 8%,rgba(124,58,237,.28),transparent 34%),
+        radial-gradient(circle at 48% 100%,rgba(132,204,22,.26),transparent 36%),
+        linear-gradient(135deg,#eef6ff 0%,#f5f3ff 45%,#ecfeff 100%);
+    }
+
+    .page{width:min(1180px,calc(100% - 28px));margin:auto;padding:24px 0 58px}
+    .topline{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+    .back,.pill-link{
+      display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;
+      padding:12px 16px;border-radius:999px;background:rgba(255,255,255,.84);
+      color:var(--blue);border:1px solid rgba(37,99,235,.16);box-shadow:0 12px 30px rgba(15,23,42,.08)
+    }
+
+    .hero{
+      position:relative;overflow:hidden;border-radius:40px;padding:38px;
+      display:grid;grid-template-columns:1.18fr .82fr;gap:28px;align-items:center;
+      color:white;background:linear-gradient(135deg,#0f172a 0%,#1d4ed8 42%,#06b6d4 74%,#84cc16 100%);
+      box-shadow:var(--shadow);
+    }
+    .hero:before{content:"";position:absolute;right:-100px;bottom:-135px;width:390px;height:390px;border-radius:50%;background:rgba(255,255,255,.14)}
+    .hero:after{content:"";position:absolute;left:-90px;top:-90px;width:270px;height:270px;border-radius:50%;background:rgba(250,204,21,.20)}
+    .hero>*{position:relative;z-index:1}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.17);font-weight:900;backdrop-filter:blur(8px)}
+    h1{font-size:clamp(34px,5vw,66px);line-height:.98;margin:18px 0 12px;letter-spacing:-.05em}
+    .lead{font-size:clamp(18px,2vw,22px);line-height:1.58;max-width:820px;margin:0;color:rgba(255,255,255,.94)}
+    .hero-art{display:grid;gap:14px}
+    .big-icon{font-size:86px;text-align:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:34px;padding:28px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+    .hero-note{background:white;color:#0f172a;border-radius:24px;padding:18px;font-weight:900;box-shadow:0 18px 40px rgba(0,0,0,.16);line-height:1.45}
+
+    .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:22px 0}
+    .quick-card{padding:22px;border-radius:28px;background:white;box-shadow:var(--shadow);border:1px solid rgba(37,99,235,.12);position:relative;overflow:hidden;min-height:150px}
+    .quick-card:after{content:"";position:absolute;right:-28px;top:-28px;width:88px;height:88px;border-radius:50%;background:rgba(6,182,212,.18)}
+    .quick-card strong{display:block;font-size:42px;line-height:1;color:var(--blue)}
+    .quick-card span{display:block;font-weight:1000;margin-top:8px;color:#1e3a8a}
+    .quick-card small{display:block;margin-top:8px;line-height:1.45;color:var(--muted)}
+    .quick-card:nth-child(2) strong{color:var(--violet)}
+    .quick-card:nth-child(3) strong{color:var(--green)}
+    .quick-card:nth-child(4) strong{color:var(--orange)}
+
+    .section-title{display:flex;align-items:center;gap:12px;margin:34px 0 16px}
+    .section-title span{display:grid;place-items:center;width:54px;height:54px;border-radius:18px;background:var(--blue);color:white;font-size:26px;box-shadow:0 14px 30px rgba(37,99,235,.22)}
+    .section-title h2{margin:0;font-size:clamp(26px,3vw,38px);color:#1e3a8a;letter-spacing:-.03em}
+
+    .dosdont{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+    .panel,.prompt-card,.template,.timeline,.mini-dashboard,.result-card{background:white;border-radius:30px;padding:26px;box-shadow:var(--shadow);border:1px solid rgba(37,99,235,.13)}
+    .panel h3,.prompt-card h3,.template h3,.timeline h3,.mini-dashboard h3,.result-card h3{margin:0 0 12px;color:#1e3a8a;font-size:24px}
+    .panel p,.prompt-card p,.result-card p{line-height:1.65;margin:0;color:#374151}
+    .panel ul{margin:12px 0 0;padding-left:20px;line-height:1.75;color:#374151}
+    .can{background:linear-gradient(135deg,#ecfdf5,#f0fdf4);border-color:rgba(22,163,74,.20)}
+    .cant{background:linear-gradient(135deg,#fff1f2,#fff7ed);border-color:rgba(236,72,153,.18)}
+    .blue-card{background:linear-gradient(135deg,#eff6ff,#ecfeff)}
+    .violet-card{background:linear-gradient(135deg,#f5f3ff,#faf5ff)}
+    .yellow-card{background:linear-gradient(135deg,#fffbeb,#fff7ed)}
+
+    .route{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:18px 0}
+    .step{position:relative;background:white;border-radius:28px;padding:22px;box-shadow:var(--shadow);border:1px solid rgba(37,99,235,.12);min-height:178px}
+    .step:not(:last-child):after{content:"→";position:absolute;right:-17px;top:50%;transform:translateY(-50%);background:var(--yellow);color:#713f12;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;font-weight:1000;z-index:2;box-shadow:0 8px 20px rgba(146,64,14,.18)}
+    .step .num{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:15px;background:var(--blue);color:white;font-weight:1000;margin-bottom:12px}
+    .step:nth-child(2) .num{background:var(--cyan)}
+    .step:nth-child(3) .num{background:var(--violet)}
+    .step:nth-child(4) .num{background:var(--green)}
+    .step:nth-child(5) .num{background:var(--orange)}
+    .step b{display:block;font-size:18px;color:#1e3a8a;margin-bottom:8px}
+    .step p{margin:0;line-height:1.45;color:#4b5563}
+
+    .prompt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px}
+    .prompt-card{min-height:260px;position:relative;overflow:hidden}
+    .prompt-card:before{content:"";position:absolute;inset:0 0 auto;height:8px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--violet))}
+    .prompt-icon{font-size:38px;margin:8px 0 12px}
+    .prompt-box{white-space:pre-wrap;background:#f8fafc;border:1px dashed rgba(37,99,235,.28);border-radius:18px;padding:14px;margin-top:12px;line-height:1.5;color:#334155;font-weight:800}
+
+    .dashboard{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-top:18px}
+    .bar{display:grid;grid-template-columns:130px 1fr 46px;gap:10px;align-items:center;margin:14px 0;font-weight:900;color:#374151}
+    .bar-line{height:16px;border-radius:999px;background:#dbeafe;overflow:hidden}
+    .bar-line span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green))}
+
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+    .result-card{padding:22px;min-height:170px}
+    .result-card .icon{font-size:34px;margin-bottom:10px}
+
+    .mini{white-space:pre-wrap;background:white;padding:20px;border-radius:22px;line-height:1.62;border:1px solid rgba(37,99,235,.16);color:#374151}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+    .btn,button.btn{border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:999px;background:var(--blue);color:white;font-weight:1000;box-shadow:0 14px 30px rgba(37,99,235,.18)}
+    .btn--light,button.btn--light{background:white;color:var(--blue);border:1px solid rgba(37,99,235,.18)}
+    .btn--green{background:var(--green)}
+    .btn--violet{background:var(--violet)}
+
+    @media(max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .quick,.route,.cards{grid-template-columns:1fr 1fr}
+      .prompt-grid{grid-template-columns:1fr 1fr}
+      .dashboard,.dosdont{grid-template-columns:1fr}
+      .step:not(:last-child):after{display:none}
+    }
+    @media(max-width:680px){
+      .page{width:min(100% - 18px,1180px);padding-top:12px}
+      .hero{padding:24px;border-radius:28px}
+      .quick,.route,.prompt-grid,.cards{grid-template-columns:1fr}
+      .big-icon{font-size:64px;padding:20px}
+      .panel,.prompt-card,.template,.timeline,.mini-dashboard,.result-card{padding:20px;border-radius:24px}
+      .bar{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
 <main class="page">
+  <div class="topline">
+    <a class="back" href="../index.html#materials">← Назад в бесплатную полку</a>
+    <a class="pill-link" href="project-domovoy-grib.html">🍄 Все окошки проекта</a>
+  </div>
 
   <section class="hero">
-    <span class="eyebrow">🧩 Бесплатная полка · отдельное окошко</span>
-    <h1>Интегратор ИИ</h1>
-    <p class="lead">Я помогаю использовать искусственный интеллект в проекте: задавать правильные вопросы, оформлять текст, готовить презентацию, речь, анкету, выводы и проверять работу без искажения фактов.</p>
-  </section>
-
-  <section class="guide gold">
-    <p class="eyebrow" style="background:#fff7df;color:#6b5b16;">🤖 С чего начать</p>
-    <h2>ИИ — помощник, а не автор работы</h2>
-    <p class="guide-intro">ИИ можно использовать как наставника: он помогает объяснить, сократить, оформить, проверить и предложить структуру. Но факты, наблюдения, опросы, фотографии, выводы и защита должны принадлежать ученику.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px;">
-      <article class="step-card"><h3>Можно</h3><p>Попросить ИИ объяснить тему, составить план, проверить логику, сделать речь по слайдам, оформить таблицу, придумать вопросы для анкеты.</p></article>
-      <article class="step-card"><h3>Нельзя</h3><p>Просить ИИ выдумать результаты, источники, проценты, адреса, фотографии, опыт или выводы, которых не было в настоящей работе.</p></article>
+    <div>
+      <span class="eyebrow">💻 Бесплатная полка · интегратор ИИ</span>
+      <h1>ИИ-помощник для проекта о домовом грибе</h1>
+      <p class="lead">Эта страница показывает, как безопасно использовать искусственный интеллект в исследовательской работе: составить промпты, оформить речь, подготовить вопросы жюри, проверить логику и не исказить реальные данные.</p>
+      <div class="actions">
+        <a class="btn" href="#prompts">Взять промпты</a>
+        <a class="btn btn--light" href="#ethics">Правила честности</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="big-icon">🤖🍄📊</div>
+      <div class="hero-note">ИИ не автор исследования. Он помощник: объясняет, сокращает, проверяет и помогает красиво оформить настоящие данные ученика.</div>
     </div>
   </section>
 
-  <section class="guide blue">
-    <p class="eyebrow" style="background:#eef6ff;color:#17456f;">📘 Инструкция для ученика</p>
-    <h2>Как пользоваться ИИ в исследовательской работе и проекте</h2>
-    <p class="guide-intro">Не надо сразу просить: «Напиши мне всю работу». Лучше идти по шагам. Тогда ИИ помогает думать, а не заменяет ученика.</p>
-    <div class="help-box"><h3 style="margin-top:0;color:#6b5b16;">Главное правило</h3><p>Каждый запрос к ИИ должен содержать: тему, класс, цель, реальные данные и просьбу не придумывать новые факты.</p></div>
-    <div class="steps-grid">
-      <article class="step-card"><h3>Шаг 1. Назови роль ИИ</h3><p>Сначала скажи, кем должен быть ИИ.</p><div class="example">Ты — помощник ученика 7 класса по исследовательской работе.</div></article>
-      <article class="step-card"><h3>Шаг 2. Дай тему</h3><p>ИИ должен знать, о чём работа.</p><div class="example">Тема: заражённость домов настоящим домовым грибом.</div></article>
-      <article class="step-card"><h3>Шаг 3. Укажи задачу</h3><p>Проси не всё сразу, а один конкретный результат.</p><div class="example">Помоги сформулировать актуальность простым языком.</div></article>
-      <article class="step-card"><h3>Шаг 4. Дай реальные данные</h3><p>Вставь только те цифры, которые есть в работе.</p><div class="example">Опрос: 66 домов, 45 заражённых, 21 без признаков.</div></article>
-      <article class="step-card"><h3>Шаг 5. Запрети выдумки</h3><p>Всегда добавляй ограничение.</p><div class="example">Не добавляй новых фактов, источников и процентов.</div></article>
-      <article class="step-card"><h3>Шаг 6. Проси таблицу</h3><p>Таблица помогает увидеть логику.</p><div class="example">Сделай таблицу: задача — метод — результат — вывод.</div></article>
-      <article class="step-card"><h3>Шаг 7. Проверяй ответ</h3><p>Сверь текст с настоящими данными.</p><div class="example">Если ИИ написал 70 домов вместо 66 — исправь или попроси переписать.</div></article>
-      <article class="step-card"><h3>Шаг 8. Упрощай текст</h3><p>ИИ хорошо объясняет сложное простыми словами.</p><div class="example">Объясни, что такое гипотеза, для ученика 7 класса.</div></article>
-      <article class="step-card"><h3>Шаг 9. Готовь речь</h3><p>ИИ помогает сделать речь по слайдам.</p><div class="example">Сделай речь на 3 минуты по плану презентации.</div></article>
-      <article class="step-card"><h3>Шаг 10. Делай вопросы</h3><p>Можно подготовиться к жюри.</p><div class="example">Придумай 10 вопросов жюри и короткие ответы.</div></article>
-      <article class="step-card"><h3>Шаг 11. Улучшай выводы</h3><p>ИИ проверит, отвечают ли выводы задачам.</p><div class="example">Проверь: каждый вывод отвечает своей задаче?</div></article>
-      <article class="step-card"><h3>Шаг 12. Оформляй слайды</h3><p>ИИ поможет сократить длинный текст.</p><div class="example">Сократи этот абзац до 3 пунктов для слайда.</div></article>
-      <article class="step-card"><h3>Шаг 13. Проверь стиль</h3><p>Текст должен быть школьным и понятным.</p><div class="example">Перепиши без сложных слов, но научно.</div></article>
-      <article class="step-card"><h3>Шаг 14. Укажи вклад</h3><p>На защите честно скажи, как использовал ИИ.</p><div class="example">ИИ помог оформить текст и речь, но данные собраны автором.</div></article>
+  <section class="quick" aria-label="Что делает ИИ">
+    <article class="quick-card"><strong>01</strong><span>Речь</span><small>Помогает подготовить выступление по слайдам простым языком.</small></article>
+    <article class="quick-card"><strong>02</strong><span>Вопросы жюри</span><small>Готовит возможные вопросы и короткие уверенные ответы.</small></article>
+    <article class="quick-card"><strong>03</strong><span>Проверка</span><small>Сверяет цель, задачи, методы, результаты и выводы.</small></article>
+    <article class="quick-card"><strong>04</strong><span>Карточки</span><small>Создаёт таблицы, чек-листы, памятки и блоки «вопрос — ответ».</small></article>
+  </section>
+
+  <section id="ethics">
+    <div class="section-title"><span>🛡️</span><h2>Главное правило: ИИ помогает, но не выдумывает</h2></div>
+    <div class="dosdont">
+      <article class="panel can"><h3>✅ Можно</h3><ul><li>объяснить сложные термины простыми словами;</li><li>сократить длинный текст для слайда;</li><li>составить план защиты;</li><li>подготовить вопросы жюри;</li><li>оформить таблицу «задача — метод — результат»;</li><li>проверить, все ли выводы связаны с задачами.</li></ul></article>
+      <article class="panel cant"><h3>⛔ Нельзя</h3><ul><li>выдумывать результаты опроса;</li><li>придумывать проценты, адреса и источники;</li><li>заменять реальные фото и наблюдения;</li><li>писать выводы без данных;</li><li>выдавать текст ИИ за полностью авторскую работу;</li><li>добавлять факты, которых не было в исследовании.</li></ul></article>
     </div>
   </section>
 
-  <section class="guide route">
-    <p class="eyebrow" style="background:#f4faec;color:#123f16;">🍄 Пример 1</p>
-    <h2>Как использовать ИИ в исследовательской работе про домовый гриб</h2>
-    <p class="guide-intro">В исследовании ИИ нужен для оформления и проверки логики. Он не должен заменять опрос, эксперимент, карту и наблюдения.</p>
-    <div class="steps-grid">
-      <article class="step-card"><h3>1. Актуальность</h3><p>Попроси объяснить, почему проблема важна.</p><div class="example">Сделай актуальность по теме домового гриба для 7 класса.</div></article>
-      <article class="step-card"><h3>2. Цель</h3><p>Проверь, начинается ли цель с действия.</p><div class="example">Сформулируй цель со словом «изучить».</div></article>
-      <article class="step-card"><h3>3. Задачи</h3><p>Разложи работу по шагам.</p><div class="example">Литература, опрос, карта, эксперимент, выводы.</div></article>
-      <article class="step-card"><h3>4. Методы</h3><p>Свяжи каждый метод с задачей.</p><div class="example">Опрос нужен, чтобы узнать распространённость.</div></article>
-      <article class="step-card"><h3>5. Результаты</h3><p>Попроси оформить цифры кратко.</p><div class="example">66 домов: 45 заражённых, 21 без признаков.</div></article>
-      <article class="step-card"><h3>6. Выводы</h3><p>Проверь, не повторяют ли выводы описание.</p><div class="example">Вывод должен объяснять, что показали результаты.</div></article>
-      <article class="step-card"><h3>7. Защита</h3><p>Подготовь ответы на вопросы жюри.</p><div class="example">Зачем вы использовали опрос? Что доказал эксперимент?</div></article>
+  <section>
+    <div class="section-title"><span>🧭</span><h2>Маршрут работы с ИИ</h2></div>
+    <div class="route">
+      <article class="step"><span class="num">1</span><b>Назови роль</b><p>ИИ должен понимать, что он помощник ученика, а не автор работы.</p></article>
+      <article class="step"><span class="num">2</span><b>Дай тему</b><p>Укажи тему: домовой гриб, деревянные дома, признаки поражения.</p></article>
+      <article class="step"><span class="num">3</span><b>Вставь данные</b><p>Используй только реальные числа, фото, наблюдения и выводы.</p></article>
+      <article class="step"><span class="num">4</span><b>Запрети выдумки</b><p>Добавь фразу: «Не придумывай новые факты и источники».</p></article>
+      <article class="step"><span class="num">5</span><b>Проверь ответ</b><p>Сверь каждый текст с материалами проекта перед использованием.</p></article>
     </div>
   </section>
 
-  <section class="guide gold">
-    <p class="eyebrow" style="background:#fff7df;color:#6b5b16;">📚 Пример 2</p>
-    <h2>Как использовать ИИ в проекте «МоИИстории»</h2>
-    <p class="guide-intro">В проекте ИИ помогает создать продукт: персональную книгу, анкету, текст страниц, обложку, презентацию и инструкцию для пользователя.</p>
-    <div class="steps-grid">
-      <article class="step-card"><h3>1. Проблема</h3><p>ИИ помогает сформулировать проблему.</p><div class="example">Дети мало читают, потому что книги не всегда связаны с их интересами.</div></article>
-      <article class="step-card"><h3>2. Идея продукта</h3><p>Опиши, что создаёшь.</p><div class="example">Персональная ИИ-книга, где ребёнок становится героем.</div></article>
-      <article class="step-card"><h3>3. Анкета</h3><p>Попроси вопросы для сбора данных.</p><div class="example">Имя, возраст, интересы, любимые герои, мечта.</div></article>
-      <article class="step-card"><h3>4. Сюжет</h3><p>ИИ помогает сделать черновик сказки.</p><div class="example">Создай историю на 10 страниц для ребёнка 7 лет.</div></article>
-      <article class="step-card"><h3>5. Иллюстрации</h3><p>ИИ помогает составить промпты для картинок.</p><div class="example">Опиши сцену, героя, стиль, фон и настроение.</div></article>
-      <article class="step-card"><h3>6. Тестирование</h3><p>Попроси вопросы обратной связи.</p><div class="example">Было ли интересно читать? Узнал ли ребёнок себя?</div></article>
-      <article class="step-card"><h3>7. Улучшение</h3><p>ИИ помогает обработать отзывы.</p><div class="example">Сделай список, что улучшить в книге после тестирования.</div></article>
+  <section id="prompts">
+    <div class="section-title"><span>✍️</span><h2>Готовые промпты для проекта</h2></div>
+    <div class="prompt-grid">
+      <article class="prompt-card blue-card"><div class="prompt-icon">🎤</div><h3>Речь по слайдам</h3><p>Для подготовки спокойного выступления на 2–3 минуты.</p><div class="prompt-box">Ты — помощник ученика 7 класса. Помоги написать речь для защиты проекта о домовом грибе. Используй только мои данные. Не придумывай новые факты. Сделай речь простой, уверенной и логичной.</div></article>
+      <article class="prompt-card violet-card"><div class="prompt-icon">❓</div><h3>Вопросы жюри</h3><p>Для тренировки перед защитой.</p><div class="prompt-box">Придумай 10 вопросов жюри по проекту о заражённости домов настоящим домовым грибом. К каждому вопросу дай короткий ответ. Не добавляй факты, которых нет в работе.</div></article>
+      <article class="prompt-card yellow-card"><div class="prompt-icon">🧪</div><h3>Проверка эксперимента</h3><p>Чтобы объяснить, зачем нужен опыт.</p><div class="prompt-box">Помоги объяснить эксперимент с образцами древесины простым языком: цель, что сравнивали, что наблюдали, какой вывод можно сделать. Не выдумывай результат.</div></article>
+      <article class="prompt-card blue-card"><div class="prompt-icon">📊</div><h3>Цифры и выводы</h3><p>Для аккуратного описания результатов.</p><div class="prompt-box">Оформи данные в таблицу: показатель — что означает — какой вывод. Данные: 66 домов, 45 с признаками заражения, 21 без признаков. Не меняй числа.</div></article>
+      <article class="prompt-card violet-card"><div class="prompt-icon">🗺️</div><h3>Карта заражённости</h3><p>Чтобы объяснить визуал проекта.</p><div class="prompt-box">Помоги подготовить текст для слайда с картой заражённости. Объясни, зачем нужна карта, что она показывает и как помогает жителям. Не добавляй новые адреса.</div></article>
+      <article class="prompt-card yellow-card"><div class="prompt-icon">📋</div><h3>Памятка жителям</h3><p>Для практического результата проекта.</p><div class="prompt-box">Составь памятку для жителей: как заметить возможные признаки домового гриба и что делать для профилактики. Пиши осторожно, без медицинских и юридических обещаний.</div></article>
     </div>
   </section>
 
-  <section class="guide blue">
-    <p class="eyebrow" style="background:#eef6ff;color:#17456f;">🧾 Готовый запрос</p>
-    <h2>Мини-шаблон промпта для ученика</h2>
-    <div class="help-box" style="background:#eef6ff;border-color:#bdd7f0;">
-      <p><b>Скопируй и подставь своё:</b></p>
-      <p>Ты — помощник ученика ___ класса. Я делаю исследовательскую работу/проект на тему: «___». Помоги мне ___ . Используй только эти данные: ___ . Не добавляй новых фактов, источников, процентов и результатов. Ответ сделай простым школьным языком.</p>
+  <section>
+    <div class="section-title"><span>📊</span><h2>ИИ-панель проекта</h2></div>
+    <div class="dashboard">
+      <article class="mini-dashboard">
+        <h3>Что уже можно проверить с ИИ</h3>
+        <div class="bar"><span>Актуальность</span><div class="bar-line"><span style="width:92%"></span></div><b>92%</b></div>
+        <div class="bar"><span>Цель и задачи</span><div class="bar-line"><span style="width:86%"></span></div><b>86%</b></div>
+        <div class="bar"><span>Речь</span><div class="bar-line"><span style="width:78%"></span></div><b>78%</b></div>
+        <div class="bar"><span>Вопросы жюри</span><div class="bar-line"><span style="width:95%"></span></div><b>95%</b></div>
+      </article>
+      <article class="panel blue-card">
+        <h3>Как читать эти показатели?</h3>
+        <p>Это не настоящая оценка жюри, а визуальная подсказка: какие части проекта удобнее всего усилить с помощью ИИ. Самые полезные зоны — речь, вопросы жюри, таблицы, выводы и понятные формулировки.</p>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>🧩</span><h2>Что получится в итоге</h2></div>
+    <div class="cards">
+      <article class="result-card"><div class="icon">🎤</div><h3>Речь защиты</h3><p>Короткая, понятная, без лишнего текста.</p></article>
+      <article class="result-card"><div class="icon">🃏</div><h3>Карточки ответов</h3><p>Вопрос жюри → опора → уверенный ответ.</p></article>
+      <article class="result-card"><div class="icon">📋</div><h3>Чек-лист фактов</h3><p>Проверка: числа, методы, выводы, источники.</p></article>
+      <article class="result-card"><div class="icon">🚀</div><h3>Готовность к защите</h3><p>Ученик понимает работу и говорит своими словами.</p></article>
+    </div>
+  </section>
+
+  <section class="template" id="copy">
+    <h3>📝 Универсальный запрос к ИИ</h3>
+    <div class="mini" id="copyText">Ты — помощник ученика 7 класса по исследовательской работе.
+
+Тема: заражённость настоящим домовым грибом Serpula lacrymans жилищного фонда села Намцы.
+
+Помоги мне: ____________________________________________.
+
+Используй только эти реальные данные: ____________________________________________.
+
+Не придумывай новые факты, проценты, источники, адреса и выводы.
+
+Пиши простым школьным языком, но научно и аккуратно.
+
+В конце проверь, связаны ли ответ, цель, задачи и выводы между собой.</div>
+    <div class="actions">
+      <button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('copyText').innerText)">📋 Скопировать запрос</button>
+      <button class="btn btn--light" onclick="window.print()">🖨️ Распечатать</button>
+      <a class="btn btn--violet" href="project-domovoy-grib.html">🍄 Открыть весь проект</a>
     </div>
   </section>
 
   <div class="actions">
-    <a class="btn btn--light" href="../index.html#board">← Вернуться в бесплатную полку</a>
-    <a class="btn" href="../index.html">Все окошки проекта</a>
+    <a class="btn" href="../index.html#materials">← Вернуться в бесплатную полку</a>
+    <a class="btn btn--light" href="polka-domovoy-grib-metodist.html">🧩 Окошко методиста</a>
+    <a class="btn btn--light" href="polka-domovoy-grib-dizainer.html">✏️ Окошко дизайнера</a>
   </div>
-
 </main>
 </body>
 </html>
