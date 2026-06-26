@@ -3,176 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Фасилитатор командной работы — ДЛЯ ОВСУ Грибы Аман (1)</title>
+  <title>Фасилитатор — проект о домовом грибе</title>
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    :root{--green:#123f16;--green2:#5c9f00;--lime:#e8f8d9;--yellow:#fff2bd;--orange:#ffb347;--paper:#fffdf4;--ink:#17311a;--muted:#5d715f;--line:rgba(18,63,22,.16)}
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,#fff8cf 0,#eefbdc 36%,#f7fbef 70%,#fff 100%);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.page{width:min(1180px,calc(100% - 28px));margin:auto;padding:28px 0 64px}.hero{position:relative;overflow:hidden;padding:36px;border-radius:36px;background:linear-gradient(135deg,#103b16,#64a800);color:#fff;box-shadow:0 22px 60px rgba(18,63,22,.22)}.hero:after{content:"";position:absolute;right:-70px;top:-80px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.16)}.eyebrow{display:inline-flex;gap:8px;align-items:center;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900}.hero h1{font-size:clamp(34px,5vw,66px);line-height:1;margin:18px 0 12px}.lead{font-size:20px;line-height:1.55;max-width:900px;margin:0}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}.btn,button.btn{padding:14px 18px;border-radius:999px;background:var(--green);color:white;text-decoration:none;font-weight:900;border:0;cursor:pointer;box-shadow:0 12px 28px rgba(18,63,22,.16)}.btn--light,button.btn--light{background:white;color:var(--green);border:1px solid rgba(18,63,22,.22)}.btn--orange,button.btn--orange{background:#d97800;color:#fff}.notice{margin-top:22px;padding:18px 20px;border-radius:24px;background:#fff9dc;border:2px dashed #d7a600;font-weight:800}.navgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}.navcard{padding:20px;border-radius:24px;background:white;border:1px solid var(--line);box-shadow:0 16px 40px rgba(18,63,22,.08)}.navcard b{display:block;font-size:20px;color:var(--green);margin-bottom:8px}.section{margin-top:24px;padding:26px;border-radius:30px;background:rgba(255,255,255,.9);border:1px solid var(--line);box-shadow:0 18px 50px rgba(18,63,22,.09)}.section h2{margin:0 0 10px;color:var(--green);font-size:30px}.section h3{margin:22px 0 10px;color:#2d5d21}.hint{margin:0 0 18px;color:var(--muted);line-height:1.55}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{display:grid;gap:7px}.field label{font-weight:900;color:#244c22}.field input,.field textarea{width:100%;padding:13px 14px;border-radius:16px;border:1px solid rgba(18,63,22,.18);background:#fff;font:inherit;color:var(--ink);outline:none}.field textarea{min-height:110px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--green2);box-shadow:0 0 0 4px rgba(92,159,0,.12)}.full{grid-column:1/-1}.team-table,.metric-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:20px;border:1px solid var(--line);background:white}.team-table th,.metric-table th{background:linear-gradient(135deg,#dff4c7,#fff0a8);color:#17311a;text-align:left}.team-table th,.team-table td,.metric-table th,.metric-table td{padding:10px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);vertical-align:top}.team-table tr:last-child td,.metric-table tr:last-child td{border-bottom:0}.team-table th:last-child,.team-table td:last-child,.metric-table th:last-child,.metric-table td:last-child{border-right:0}.team-table input,.metric-table input{width:100%;border:0;background:#fffdf4;padding:9px;border-radius:10px;font:inherit}.step-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}.step{padding:18px;border-radius:22px;background:linear-gradient(180deg,#fff,#f2fae9);border:1px solid var(--line)}.step b{display:block;color:var(--green);font-size:18px;margin-bottom:6px}.copybox{white-space:pre-wrap;line-height:1.65;padding:18px;border-radius:20px;background:#fffdf4;border:1px dashed #d7a600;margin-top:12px}.print-title{display:none}@media(max-width:900px){.navgrid,.form-grid,.step-list{grid-template-columns:1fr}.hero{padding:26px}.section{padding:20px}}@media print{body{background:white}.hero,.actions,.navgrid,.notice .btn{box-shadow:none}.page{width:100%;padding:0}.section{break-inside:avoid;box-shadow:none}.btn{display:none}.print-title{display:block}}
+    :root{
+      --teal:#0f766e;--cyan:#06b6d4;--blue:#2563eb;--violet:#7c3aed;--green:#16a34a;--lime:#84cc16;--yellow:#facc15;--orange:#f97316;--pink:#ec4899;--ink:#15313a;--muted:#64748b;--shadow:0 24px 70px rgba(15,118,110,.16)
+    }
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 10% 0%,rgba(6,182,212,.28),transparent 32%),radial-gradient(circle at 92% 8%,rgba(132,204,22,.25),transparent 34%),radial-gradient(circle at 50% 100%,rgba(124,58,237,.18),transparent 36%),linear-gradient(135deg,#ecfeff 0%,#f0fdf4 45%,#f5f3ff 100%)}
+    .page{width:min(1180px,calc(100% - 28px));margin:auto;padding:24px 0 58px}.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap}.back,.pill-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;padding:12px 16px;border-radius:999px;background:rgba(255,255,255,.84);color:var(--teal);border:1px solid rgba(15,118,110,.16);box-shadow:0 12px 30px rgba(15,118,110,.08)}
+    .hero{position:relative;overflow:hidden;border-radius:40px;padding:38px;display:grid;grid-template-columns:1.18fr .82fr;gap:28px;align-items:center;color:white;background:linear-gradient(135deg,#064e3b 0%,#0f766e 38%,#06b6d4 70%,#7c3aed 100%);box-shadow:var(--shadow)}.hero:before{content:"";position:absolute;right:-100px;bottom:-135px;width:390px;height:390px;border-radius:50%;background:rgba(255,255,255,.14)}.hero:after{content:"";position:absolute;left:-90px;top:-90px;width:270px;height:270px;border-radius:50%;background:rgba(250,204,21,.20)}.hero>*{position:relative;z-index:1}.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;background:rgba(255,255,255,.18);font-weight:900;backdrop-filter:blur(8px)}h1{font-size:clamp(34px,5vw,66px);line-height:.98;margin:18px 0 12px;letter-spacing:-.05em}.lead{font-size:clamp(18px,2vw,22px);line-height:1.58;max-width:830px;margin:0;color:rgba(255,255,255,.94)}.hero-art{display:grid;gap:14px}.big-icon{font-size:86px;text-align:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:34px;padding:28px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}.hero-note{background:white;color:#064e3b;border-radius:24px;padding:18px;font-weight:900;box-shadow:0 18px 40px rgba(0,0,0,.16);line-height:1.45}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}.btn,button.btn{border:0;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border-radius:999px;background:var(--teal);color:white;font-weight:1000;box-shadow:0 14px 30px rgba(15,118,110,.20)}.btn--light,button.btn--light{background:white;color:var(--teal);border:1px solid rgba(15,118,110,.20)}.btn--violet{background:var(--violet)}.btn--orange{background:var(--orange)}
+    .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:22px 0}.quick-card{padding:22px;border-radius:28px;background:white;box-shadow:var(--shadow);border:1px solid rgba(15,118,110,.13);position:relative;overflow:hidden;min-height:150px}.quick-card:after{content:"";position:absolute;right:-28px;top:-28px;width:88px;height:88px;border-radius:50%;background:rgba(6,182,212,.18)}.quick-card strong{display:block;font-size:42px;line-height:1;color:var(--teal)}.quick-card span{display:block;font-weight:1000;margin-top:8px;color:#115e59}.quick-card small{display:block;margin-top:8px;line-height:1.45;color:var(--muted)}.quick-card:nth-child(2) strong{color:var(--blue)}.quick-card:nth-child(3) strong{color:var(--violet)}.quick-card:nth-child(4) strong{color:var(--orange)}
+    .section-title{display:flex;align-items:center;gap:12px;margin:34px 0 16px}.section-title span{display:grid;place-items:center;width:54px;height:54px;border-radius:18px;background:var(--teal);color:white;font-size:26px;box-shadow:0 14px 30px rgba(15,118,110,.22)}.section-title h2{margin:0;font-size:clamp(26px,3vw,38px);color:#115e59;letter-spacing:-.03em}
+    .map{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin:18px 0}.step{position:relative;background:white;border-radius:28px;padding:22px;box-shadow:var(--shadow);border:1px solid rgba(15,118,110,.14);min-height:180px}.step:not(:last-child):after{content:"→";position:absolute;right:-17px;top:50%;transform:translateY(-50%);background:var(--yellow);color:#713f12;border-radius:999px;width:34px;height:34px;display:grid;place-items:center;font-weight:1000;z-index:2;box-shadow:0 8px 20px rgba(146,64,14,.18)}.step .num{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:15px;background:var(--teal);color:white;font-weight:1000;margin-bottom:12px}.step:nth-child(2) .num{background:var(--cyan)}.step:nth-child(3) .num{background:var(--blue)}.step:nth-child(4) .num{background:var(--violet)}.step:nth-child(5) .num{background:var(--green)}.step b{display:block;font-size:18px;color:#115e59;margin-bottom:8px}.step p{margin:0;line-height:1.45;color:#4b5563}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.card,.template,.timeline,.role-card,.board-card,.form-panel{background:white;border-radius:30px;padding:26px;box-shadow:var(--shadow);border:1px solid rgba(15,118,110,.14)}.card h3,.template h3,.timeline h3,.role-card h3,.board-card h3,.form-panel h3{margin:0 0 12px;color:#115e59;font-size:24px}.card p,.role-card p,.board-card p{line-height:1.65;margin:0;color:#374151}.card ul{margin:12px 0 0;padding-left:20px;line-height:1.75;color:#374151}.teal-card{background:linear-gradient(135deg,#ecfeff,#f0fdfa)}.green-card{background:linear-gradient(135deg,#ecfdf5,#f0fdf4)}.blue-card{background:linear-gradient(135deg,#eff6ff,#ecfeff)}.violet-card{background:linear-gradient(135deg,#f5f3ff,#faf5ff)}
+    .roles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.role-card{padding:22px;min-height:190px}.role-card .icon{font-size:36px;margin-bottom:10px}.role-card b{display:block;color:#115e59;font-size:18px;margin-bottom:8px}.role-card small{line-height:1.45;color:var(--muted);display:block}.kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}.board-card{padding:18px;min-height:210px}.board-card h3{font-size:20px}.task{margin:10px 0 0;padding:12px;border-radius:16px;background:#f8fafc;border:1px solid rgba(15,118,110,.12);font-weight:800;color:#334155}
+    .timeline{margin-top:18px;background:linear-gradient(135deg,#fff,#ecfeff)}.time-row{display:grid;grid-template-columns:180px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid rgba(15,118,110,.14)}.time-row:last-child{border-bottom:0}.time-row b{color:#115e59}.time-row p{margin:0;line-height:1.55;color:#374151}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:grid;gap:7px}.field label{font-weight:1000;color:#115e59}.field input,.field textarea{width:100%;padding:13px 14px;border-radius:16px;border:1px solid rgba(15,118,110,.18);background:#fff;font:inherit;color:var(--ink);outline:none}.field textarea{min-height:100px;resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--teal);box-shadow:0 0 0 4px rgba(15,118,110,.12)}.full{grid-column:1/-1}.mini{white-space:pre-wrap;background:white;padding:20px;border-radius:22px;line-height:1.62;border:1px solid rgba(15,118,110,.18);color:#374151}.copybox{white-space:pre-wrap;background:#ecfeff;border:1px dashed rgba(15,118,110,.45);border-radius:18px;padding:14px;margin-top:12px;line-height:1.5;color:#374151;font-weight:800}
+    @media(max-width:1000px){.hero{grid-template-columns:1fr}.quick,.map,.roles,.kanban{grid-template-columns:1fr 1fr}.step:not(:last-child):after{display:none}}@media(max-width:680px){.page{width:min(100% - 18px,1180px);padding-top:12px}.hero{padding:24px;border-radius:28px}.quick,.map,.grid,.roles,.kanban,.form-grid{grid-template-columns:1fr}.big-icon{font-size:64px;padding:20px}.card,.template,.timeline,.role-card,.board-card,.form-panel{padding:20px;border-radius:24px}.time-row{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
 <main class="page">
+  <div class="topline"><a class="back" href="../index.html#materials">← Назад в бесплатную полку</a><a class="pill-link" href="project-domovoy-grib.html">🍄 Все окошки проекта</a></div>
+
   <section class="hero">
-    <span class="eyebrow">👥 Фасилитатор · командная работа</span>
-    <h1>ДЛЯ ОВСУ Грибы Аман (1)</h1>
-    <p class="lead">Страница помогает команде пройти путь от вызова к решению: заполнить роли, вопросы, ресурсы, план действий, выводы исследования, выбранную идею и первые метрики успеха прототипа.</p>
-    <div class="actions">
-      <button class="btn btn--orange" onclick="downloadFilledWord()">Скачать заполненную работу Word</button>
-      <button class="btn" onclick="downloadEmptyWord()">Скачать пустой шаблон Word</button>
-      <button class="btn btn--light" onclick="window.print()">Распечатать страницу</button>
-      <button class="btn btn--light" onclick="clearForm()">Очистить поля</button>
-    </div>
+    <div><span class="eyebrow">👥 Бесплатная полка · фасилитатор</span><h1>Командная работа без хаоса</h1><p class="lead">Фасилитатор помогает команде проекта договориться о правилах, распределить роли, провести встречу, собрать идеи, выбрать решение и довести работу до результата без споров и потерянных задач.</p><div class="actions"><a class="btn" href="#session">План сессии</a><a class="btn btn--light" href="#form">Заполнить команду</a><button class="btn btn--orange" onclick="downloadFilledWord()">Скачать Word</button></div></div>
+    <div class="hero-art" aria-hidden="true"><div class="big-icon">👥🧭✅</div><div class="hero-note">Главная суперсила фасилитатора — сделать так, чтобы каждый участник понимал свою роль, срок и вклад в общий проект.</div></div>
   </section>
 
-  <div class="notice">Важное замечание: этот документ динамичный и будет дополняться по мере появления информации. Заполняйте формы постепенно: сначала команда и вызов, затем выводы исследования, потом решение и метрики.</div>
+  <section class="quick"><article class="quick-card"><strong>01</strong><span>Роли</span><small>Кто исследует, кто оформляет, кто выступает, кто проверяет данные.</small></article><article class="quick-card"><strong>02</strong><span>Правила</span><small>Как команда договаривается, принимает решения и не спорит бесконечно.</small></article><article class="quick-card"><strong>03</strong><span>Доска задач</span><small>Что сделать, кто отвечает, когда готово, что уже выполнено.</small></article><article class="quick-card"><strong>04</strong><span>Результат</span><small>Проект движется по плану: без хаоса, забытых файлов и срочных переделок.</small></article></section>
 
-  <section class="navgrid">
-    <article class="navcard"><b>1. На пути к решению вызова</b>Школа, наставник, команда, проблема, ключевой вопрос, вызов, роли, вопросы, ресурсы, план действий и фото-видеофиксация.</article>
-    <article class="navcard"><b>2. Выводы исследования</b>Ключевые результаты анализа и признаки, по которым команда поймёт, что вызов решён.</article>
-    <article class="navcard"><b>3. Решение</b>Идеи, выбранная идея, цель по SMART и первые метрики успеха прототипа.</article>
-  </section>
+  <section><div class="section-title"><span>🧭</span><h2>Маршрут фасилитатора</h2></div><div class="map"><article class="step"><span class="num">1</span><b>Собрать команду</b><p>Понять, кто участвует и какая у каждого сильная сторона.</p></article><article class="step"><span class="num">2</span><b>Уточнить вызов</b><p>Сформулировать проблему: что именно команда хочет изменить.</p></article><article class="step"><span class="num">3</span><b>Раздать роли</b><p>Назначить ответственных за исследование, дизайн, речь, проверку и файлы.</p></article><article class="step"><span class="num">4</span><b>Вести доску</b><p>Переносить задачи: надо сделать → в работе → готово → проверено.</p></article><article class="step"><span class="num">5</span><b>Закрыть результат</b><p>Проверить продукт, речь, ссылки, фото, выводы и финальную защиту.</p></article></div></section>
 
-  <section class="section" id="form1">
-    <h2>Форма 1. На пути к решению вызова</h2>
-    <p class="hint">Заполните базовые сведения о проекте и распределите командные роли.</p>
-    <div class="form-grid">
-      <div class="field"><label>Название школы</label><input id="school" placeholder="___________________________________"></div>
-      <div class="field"><label>ФИО наставника</label><input id="mentor" placeholder="___________________________________"></div>
-      <div class="field"><label>Название команды</label><input id="teamName" placeholder="___________________________________"></div>
-      <div class="field"><label>Большая проблема</label><input id="problem" placeholder="___________________________________"></div>
-      <div class="field"><label>Ключевой вопрос</label><input id="keyQuestion" placeholder="___________________________________"></div>
-      <div class="field"><label>Вызов</label><input id="challenge" placeholder="___________________________________"></div>
-    </div>
+  <section class="grid"><article class="card teal-card"><h3>Что делает фасилитатор?</h3><p>Он не делает работу за команду, а помогает группе работать спокойно: задаёт вопросы, держит фокус, фиксирует решения, следит за временем и помогает каждому участнику быть полезным.</p></article><article class="card green-card"><h3>Главный смысл</h3><p>Проект о домовом грибе становится не набором разрозненных действий, а общей командной работой: исследование, карта, фото, эксперимент, презентация и защита соединяются в один маршрут.</p></article><article class="card blue-card"><h3>Когда нужен фасилитатор?</h3><ul><li>участники не понимают свои роли;</li><li>задачи теряются в переписке;</li><li>много идей, но нет выбранного решения;</li><li>сроки приближаются, а план не ясен;</li><li>команда спорит и не фиксирует договорённости.</li></ul></article><article class="card violet-card"><h3>Что получится?</h3><p>Понятный список ролей, доска задач, план встреч, чек-лист готовности, распределение ответственности и спокойная подготовка проекта к защите.</p></article></section>
 
-    <h3>Команда</h3>
-    <table class="team-table" aria-label="Команда">
-      <thead><tr><th style="width:42%">ФИО</th><th style="width:16%">Класс</th><th>Роль в команде</th></tr></thead>
-      <tbody>
-        <tr><td><input id="fio1"></td><td><input id="class1"></td><td><input id="role1"></td></tr>
-        <tr><td><input id="fio2"></td><td><input id="class2"></td><td><input id="role2"></td></tr>
-        <tr><td><input id="fio3"></td><td><input id="class3"></td><td><input id="role3"></td></tr>
-        <tr><td><input id="fio4"></td><td><input id="class4"></td><td><input id="role4"></td></tr>
-        <tr><td><input id="fio5"></td><td><input id="class5"></td><td><input id="role5"></td></tr>
-        <tr><td><input id="fio6"></td><td><input id="class6"></td><td><input id="role6"></td></tr>
-      </tbody>
-    </table>
+  <section><div class="section-title"><span>🎭</span><h2>Роли в команде проекта</h2></div><div class="roles"><article class="role-card"><div class="icon">🔎</div><b>Исследователь</b><small>Собирает факты, опрос, наблюдения, источники и выводы.</small></article><article class="role-card"><div class="icon">🗺️</div><b>Картограф</b><small>Отвечает за карту, точки наблюдений и подписи к данным.</small></article><article class="role-card"><div class="icon">🎨</div><b>Дизайнер</b><small>Оформляет стенд, презентацию, буклет, фото и инфографику.</small></article><article class="role-card"><div class="icon">🎤</div><b>Спикер</b><small>Готовит речь, ответы жюри и уверенную защиту.</small></article><article class="role-card"><div class="icon">🧪</div><b>Экспериментатор</b><small>Следит за образцами, датами, фотофиксацией и описанием опыта.</small></article><article class="role-card"><div class="icon">📁</div><b>Хранитель файлов</b><small>Собирает ссылки, документы, фото, версии и финальные материалы.</small></article><article class="role-card"><div class="icon">✅</div><b>Проверяющий</b><small>Сверяет числа, выводы, подписи, источники и готовность к защите.</small></article><article class="role-card"><div class="icon">👥</div><b>Фасилитатор</b><small>Ведёт встречу, задаёт вопросы, фиксирует решения и сроки.</small></article></div></section>
 
-    <div class="form-grid" style="margin-top:18px">
-      <div class="field full"><label>Список направляющих вопросов</label><textarea id="questions" placeholder="Вопросы, на которые нам нужно ответить, чтобы найти решение"></textarea></div>
-      <div class="field full"><label>Наши ресурсы</label><textarea id="resources" placeholder="Веб-сайты, фильмы, люди, инструменты — источники, к которым мы можем обратиться для поиска информации"></textarea></div>
-      <div class="field full"><label>Наш план действий</label><textarea id="plan" placeholder="Учебные мероприятия, исследования, эксперименты, интервью, изучение, гуглинг — как мы будем получать информацию"></textarea></div>
-      <div class="field full"><label>Обучение</label><textarea id="learning" placeholder="Необходимые навыки и план профессионального развития"></textarea></div>
-      <div class="field full"><label>Ключевые моменты для фото-видеофиксации</label><textarea id="media" placeholder="События, которые мы хотим зафиксировать, формат, необходимые ресурсы и даты"></textarea></div>
-    </div>
-  </section>
+  <section><div class="section-title"><span>📌</span><h2>Доска задач команды</h2></div><div class="kanban"><article class="board-card"><h3>Надо сделать</h3><div class="task">Собрать фото образцов</div><div class="task">Проверить формулировку цели</div><div class="task">Подготовить памятку</div></article><article class="board-card"><h3>В работе</h3><div class="task">Карта распространения</div><div class="task">Диаграмма опроса</div></article><article class="board-card"><h3>Готово</h3><div class="task">Тема проекта</div><div class="task">Командные роли</div></article><article class="board-card"><h3>Проверено</h3><div class="task">Речь на 3 минуты</div><div class="task">Список вопросов жюри</div></article></div></section>
 
-  <section class="section" id="form2">
-    <h2>Форма 2. Выводы исследования</h2>
-    <p class="hint">Не торопитесь. К этому разделу можно вернуться несколько раз и внести коррективы по мере сбора отзывов и информации.</p>
-    <div class="form-grid">
-      <div class="field full"><label>Выводы по результатам исследования</label><textarea id="researchResults" placeholder="Кратко представьте ключевые результаты анализа, выявленные командой. Выводы должны быть подкреплены достоверными источниками и могут сопровождаться графиками, диаграммами и иллюстрациями."></textarea></div>
-      <div class="field full"><label>Как мы поймём, что вызов решён</label><textarea id="solved" placeholder="Как вы узнаете, что проблема решена? Укажите количественные и качественные метрики и значения, на которые хотите повлиять."></textarea></div>
-    </div>
-  </section>
+  <section class="timeline" id="session"><h3>⏱️ План фасилитационной сессии на 45 минут</h3><div class="time-row"><b>0–5 минут</b><p>Разогрев: каждый говорит, что уже сделал и где нужна помощь.</p></div><div class="time-row"><b>5–15 минут</b><p>Уточнение вызова: проблема, цель, главный результат проекта.</p></div><div class="time-row"><b>15–25 минут</b><p>Распределение ролей: кто отвечает за исследование, дизайн, речь, карту, эксперимент и файлы.</p></div><div class="time-row"><b>25–35 минут</b><p>Доска задач: записать задачи, сроки и ответственных.</p></div><div class="time-row"><b>35–45 минут</b><p>Фиксация решений: что делаем сегодня, что проверяем завтра, что будет готово к защите.</p></div></section>
 
-  <section class="section" id="form3">
-    <h2>Форма 3. Решение</h2>
-    <div class="form-grid">
-      <div class="field full"><label>Какие идеи мы придумали для решения вызова?</label><textarea id="ideas" placeholder="Перечислите все идеи, даже если они кажутся нереализуемыми"></textarea></div>
-      <div class="field full"><label>Выбранная идея решения</label><textarea id="selectedIdea" placeholder="Опишите кратко, в чём суть выбранной идеи"></textarea></div>
-      <div class="field full"><label>Цель и задачи проекта</label><textarea id="goal" placeholder="Сформулируйте цель, используя принципы SMART: конкретная, измеримая, достижимая, актуальная, ограниченная во времени"></textarea></div>
-    </div>
+  <section class="form-panel" id="form"><h3>📝 Заполните командный маршрут</h3><div class="form-grid"><div class="field"><label>Название команды</label><input id="teamName" placeholder="Например: Грибы Аман"></div><div class="field"><label>Наставник</label><input id="mentor" placeholder="ФИО наставника"></div><div class="field full"><label>Главный вызов проекта</label><textarea id="challenge" placeholder="Что команда хочет изучить, доказать или изменить?"></textarea></div><div class="field full"><label>Роли участников</label><textarea id="roles" placeholder="ФИО — роль — за что отвечает"></textarea></div><div class="field full"><label>Правила команды</label><textarea id="rules" placeholder="Например: не перебиваем, фиксируем решения, каждый отвечает за свой срок"></textarea></div><div class="field full"><label>План ближайших действий</label><textarea id="plan" placeholder="Задача — ответственный — срок — что считаем готовым"></textarea></div><div class="field full"><label>Как поймём, что команда справилась?</label><textarea id="success" placeholder="Метрики: готова презентация, карта, памятка, речь, ответы жюри, фото"></textarea></div></div><div class="actions"><button class="btn" onclick="downloadFilledWord()">📄 Скачать заполненный Word</button><button class="btn btn--light" onclick="clearForm()">Очистить поля</button></div></section>
 
-    <h3>Как мы поймём, что идея работает или не работает</h3>
-    <p class="hint">Первые метрики успеха прототипа.</p>
-    <table class="metric-table" aria-label="Метрики успеха прототипа">
-      <thead><tr><th>Показатель</th><th>Как измеряем этот показатель</th><th>Целевое значение</th></tr></thead>
-      <tbody>
-        <tr><td><input id="m1"></td><td><input id="measure1"></td><td><input id="target1"></td></tr>
-        <tr><td><input id="m2"></td><td><input id="measure2"></td><td><input id="target2"></td></tr>
-        <tr><td><input id="m3"></td><td><input id="measure3"></td><td><input id="target3"></td></tr>
-        <tr><td><input id="m4"></td><td><input id="measure4"></td><td><input id="target4"></td></tr>
-        <tr><td><input id="m5"></td><td><input id="measure5"></td><td><input id="target5"></td></tr>
-      </tbody>
-    </table>
-  </section>
+  <section class="template"><h3>💬 Фразы фасилитатора</h3><div class="copybox">Давайте сначала зафиксируем проблему одним предложением.
 
-  <section class="section">
-    <h2>Порядок работы команды</h2>
-    <div class="step-list">
-      <article class="step"><b>Шаг 1</b>Заполните форму 1: школа, наставник, команда, проблема, ключевой вопрос, вызов и роли.</article>
-      <article class="step"><b>Шаг 2</b>Соберите информацию, заполните ресурсы, план действий, обучение и фото-видеофиксацию.</article>
-      <article class="step"><b>Шаг 3</b>После исследования заполните выводы, выбранную идею, цель и метрики успеха.</article>
-    </div>
-    <div class="actions"><button class="btn" onclick="copyAll()">Скопировать весь текст</button><a class="btn btn--light" href="../index.html#materials">Вернуться в бесплатную полку</a><a class="btn btn--light" href="project-domovoy-grib.html">Все окошки проекта</a></div>
-    <section class="copybox" id="copyText">Форма 1. На пути к решению вызова
-Название школы: _________________________________
-ФИО наставника: _________________________________
-Название команды: _________________________________
-Большая проблема: _________________________________
-Ключевой вопрос: _________________________________
-Вызов: _________________________________
+Кто за что отвечает? Запишем роли, чтобы не было путаницы.
 
-Команда
-ФИО | Класс | Роль в команде
+Какая задача самая срочная до следующей встречи?
 
-Список направляющих вопросов:
-_________________________________
+Что считаем готовым результатом?
 
-Наши ресурсы:
-_________________________________
+Если есть спор, выбираем решение по критериям: польза, срок, реальность, влияние на защиту.</div></section>
 
-Наш план действий:
-_________________________________
+  <section class="template"><h3>📋 Мини-шаблон командного соглашения</h3><div class="mini" id="copyText">Команда: ________________________________
 
-Обучение:
-_________________________________
+Тема проекта: Заражённость настоящим домовым грибом Serpula lacrymans жилищного фонда села Намцы.
 
-Ключевые моменты для фото-видеофиксации:
-_________________________________
+Главный вызов: ________________________________
 
-Форма 2. Выводы исследования
-Выводы по результатам исследования:
-_________________________________
+Роли:
+1. Исследователь — ________________________________
+2. Дизайнер — ________________________________
+3. Картограф — ________________________________
+4. Экспериментатор — ________________________________
+5. Спикер — ________________________________
+6. Проверяющий — ________________________________
 
-Как мы поймем, что вызов решен:
-_________________________________
+Правила команды:
+— фиксируем решения письменно;
+— у каждой задачи есть ответственный и срок;
+— спорим по идеям, а не по людям;
+— перед защитой проверяем факты, цифры и выводы.
 
-Форма 3. Решение
-Какие идеи мы придумали для решения вызова?
-1. _________________________________
+Итог: команда работает спокойно, роли понятны, задачи не теряются.</div><div class="actions"><button class="btn" onclick="navigator.clipboard.writeText(document.getElementById('copyText').innerText)">📋 Скопировать соглашение</button><button class="btn btn--light" onclick="window.print()">🖨️ Распечатать</button><a class="btn btn--violet" href="project-domovoy-grib.html">🍄 Открыть весь проект</a></div></section>
 
-Выбранная идея решения:
-_________________________________
-
-Цель и задачи проекта:
-_________________________________
-
-Показатель | Как измеряем этот показатель | Целевое значение</section>
-  </section>
+  <div class="actions"><a class="btn" href="../index.html#materials">← Вернуться в бесплатную полку</a><a class="btn btn--light" href="polka-domovoy-grib-prodyuser.html">🎬 Окошко продюсера</a><a class="btn btn--light" href="polka-domovoy-grib-ii.html">💻 Окошко ИИ</a></div>
 </main>
-
 <script>
-const ids = ['school','mentor','teamName','problem','keyQuestion','challenge','questions','resources','plan','learning','media','researchResults','solved','ideas','selectedIdea','goal'];
-for(let i=1;i<=6;i++){ids.push('fio'+i,'class'+i,'role'+i)}
-for(let i=1;i<=5;i++){ids.push('m'+i,'measure'+i,'target'+i)}
-function val(id){const el=document.getElementById(id);return (el&&el.value?el.value:'').replace(/[&<>]/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[s]));}
-function rowsTeam(){let out='';for(let i=1;i<=6;i++){out+=`<tr><td>${val('fio'+i)||' '}</td><td>${val('class'+i)||' '}</td><td>${val('role'+i)||' '}</td></tr>`}return out;}
-function rowsMetrics(){let out='';for(let i=1;i<=5;i++){out+=`<tr><td>${val('m'+i)||' '}</td><td>${val('measure'+i)||' '}</td><td>${val('target'+i)||' '}</td></tr>`}return out;}
-function docHtml(empty=false){
-  const get = id => empty ? '' : val(id);
-  const teamRows = empty ? Array.from({length:6},()=>'<tr><td></td><td></td><td></td></tr>').join('') : rowsTeam();
-  const metricRows = empty ? Array.from({length:5},()=>'<tr><td></td><td></td><td></td></tr>').join('') : rowsMetrics();
-  return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>body{font-family:"Times New Roman",serif;font-size:14pt;color:#000}h1{text-align:center;font-size:18pt}h2{font-size:16pt;margin-top:22px}table{width:100%;border-collapse:collapse;margin:10px 0}td,th{border:1px solid #000;padding:7px;vertical-align:top}.line{border-bottom:1px solid #000;min-height:24px;display:block}.box{border:1px solid #000;min-height:90px;padding:8px;white-space:pre-wrap}.note{font-style:italic}</style></head><body><h1>ДЛЯ ОВСУ Грибы Аман (1)</h1><p class="note">Важное замечание: этот документ динамичный и будет дополняться по мере появления информации.</p><h2>Форма 1. На пути к решению вызова</h2><p><b>Название школы:</b> <span class="line">${get('school')}</span></p><p><b>ФИО наставника:</b> <span class="line">${get('mentor')}</span></p><p><b>Название команды:</b> <span class="line">${get('teamName')}</span></p><p><b>Большая проблема:</b> <span class="line">${get('problem')}</span></p><p><b>Ключевой вопрос:</b> <span class="line">${get('keyQuestion')}</span></p><p><b>Вызов:</b> <span class="line">${get('challenge')}</span></p><h3>Команда</h3><table><tr><th>ФИО</th><th>Класс</th><th>Роль в команде</th></tr>${teamRows}</table><p><b>Список направляющих вопросов</b></p><div class="box">${get('questions')}</div><p><b>Наши ресурсы</b></p><div class="box">${get('resources')}</div><p><b>Наш план действий</b></p><div class="box">${get('plan')}</div><p><b>Обучение</b></p><div class="box">${get('learning')}</div><p><b>Ключевые моменты для фото-видеофиксации</b></p><div class="box">${get('media')}</div><h2>Форма 2. Выводы исследования</h2><p><b>Выводы по результатам исследования</b></p><div class="box">${get('researchResults')}</div><p><b>Как мы поймем, что вызов решен</b></p><div class="box">${get('solved')}</div><h2>Форма 3. Решение</h2><p><b>Какие идеи мы придумали для решения вызова?</b></p><div class="box">${get('ideas')}</div><p><b>Выбранная идея решения</b></p><div class="box">${get('selectedIdea')}</div><p><b>Цель и задачи проекта</b></p><div class="box">${get('goal')}</div><p><b>Как мы поймем, что идея работает или не работает (первые метрики успеха прототипа)</b></p><table><tr><th>Показатель</th><th>Как измеряем этот показатель</th><th>Целевое значение</th></tr>${metricRows}</table></body></html>`;
-}
-function download(content, name){const blob=new Blob(['\ufeff',content],{type:'application/msword'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000)}
-function downloadFilledWord(){download(docHtml(false),'ДЛЯ ОВСУ Грибы Аман (1).doc')}
-function downloadEmptyWord(){download(docHtml(true),'Шаблон ДЛЯ ОВСУ Грибы Аман (1).doc')}
-function copyAll(){navigator.clipboard.writeText(document.getElementById('copyText').innerText)}
-function clearForm(){if(confirm('Очистить все заполненные поля?')){ids.forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});saveForm();}}
-function saveForm(){const data={};ids.forEach(id=>{const el=document.getElementById(id);if(el)data[id]=el.value});localStorage.setItem('ovsu-fasilitator-forms',JSON.stringify(data));}
-function loadForm(){try{const data=JSON.parse(localStorage.getItem('ovsu-fasilitator-forms')||'{}');ids.forEach(id=>{const el=document.getElementById(id);if(el&&data[id])el.value=data[id]});}catch(e){}}
-window.addEventListener('input',saveForm);loadForm();
+function value(id){return document.getElementById(id)?.value?.trim() || '______________________________'}
+function buildDocument(){return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Командный маршрут фасилитатора</title></head><body><h1>Командный маршрут фасилитатора</h1><p><b>Команда:</b> ${value('teamName')}</p><p><b>Наставник:</b> ${value('mentor')}</p><h2>Главный вызов</h2><p>${value('challenge').replace(/\n/g,'<br>')}</p><h2>Роли участников</h2><p>${value('roles').replace(/\n/g,'<br>')}</p><h2>Правила команды</h2><p>${value('rules').replace(/\n/g,'<br>')}</p><h2>План действий</h2><p>${value('plan').replace(/\n/g,'<br>')}</p><h2>Критерии успеха</h2><p>${value('success').replace(/\n/g,'<br>')}</p></body></html>`}
+function downloadFilledWord(){const blob=new Blob(['\ufeff',buildDocument()],{type:'application/msword'});const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='komandnyy-marshrut-fasilitatora.doc';link.click();URL.revokeObjectURL(link.href)}
+function clearForm(){document.querySelectorAll('input,textarea').forEach(el=>el.value='')}
 </script>
 </body>
 </html>
