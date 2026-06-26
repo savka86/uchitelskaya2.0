@@ -40,13 +40,13 @@ const recommendations = {
 };
 
 const diagnosticMentors = {
-  design: { icon: '✏️', title: 'Дизайнер образовательных продуктов', short: 'Ваш наставник по визуальной упаковке материалов.', text: 'Поможет красиво оформить презентацию, стенд, буклет, маршрутный лист, карточки или страницу проекта.', links: [['Оформить проект', 'pages/ne-znayu-kak-oformit-proekt.html'], ['Бесплатная полка', '#materials']] },
+  design: { icon: '✏️', title: 'Дизайнер образовательных продуктов', short: 'Ваш наставник по визуальной упаковке материалов.', text: 'Поможет красиво оформить презентацию, стенд, буклет, маршрутный лист, карточки или страницу проекта.', links: [['Окошко дизайнера', 'pages/polka-domovoy-grib-dizainer.html'], ['Карта суперсил', 'pages/2-naydi-nastavnika.html']] },
   ai: { icon: '💻', title: 'Интегратор ИИ', short: 'Ваш наставник по нейросетям и цифровым помощникам.', text: 'Покажет, как безопасно использовать ИИ, составлять промпты, проверять ответы и создавать цифровые продукты.', links: [['ИИ без страха', 'pages/hochu-ispolzovat-ii-no-boyus.html'], ['ИИ-полка', 'pages/polka-domovoy-grib-ii.html']] },
-  olymp: { icon: '🌟', title: 'Наставник одарённых', short: 'Ваш наставник для сильных учеников, олимпиад и экзаменов.', text: 'Поможет составить план подготовки, подобрать задания, провести диагностику, разобрать ошибки и усилить результат.', links: [['Олимпиада', 'pages/nuzhno-podgotovit-uchenika-k-olimpiade.html'], ['ВПР, ОГЭ и ЕГЭ', 'pages/podgotovka-k-vpr-oge-ege.html']] },
+  olymp: { icon: '🌟', title: 'Наставник одарённых', short: 'Ваш наставник для сильных учеников, олимпиад и экзаменов.', text: 'Поможет составить план подготовки, подобрать задания, провести диагностику, разобрать ошибки и усилить результат.', links: [['Окошко наставника', 'pages/polka-domovoy-grib-nastavnik-odarennyh.html'], ['Олимпиада', 'pages/nuzhno-podgotovit-uchenika-k-olimpiade.html']] },
   research: { icon: '🧩', title: 'Методист проектов', short: 'Ваш наставник по исследовательским и проектным работам.', text: 'Поможет сформулировать тему, цель, задачи, гипотезу, методы, план исследования и подготовить защиту.', links: [['Методист проекта', 'pages/polka-domovoy-grib-metodist.html'], ['Пример проекта', 'pages/project-domovoy-grib.html']] },
-  content: { icon: '🏗️', title: 'Учитель-архитектор содержания', short: 'Ваш наставник по логике урока и учебного материала.', text: 'Поможет собрать понятную структуру урока, модуль, задания, объяснение темы и итоговый образовательный продукт.', links: [['Идеи для урока', 'pages/ne-hvataet-idey-dlya-uroka.html'], ['Выбрать задачу', 'pages/1-vyberi-zadachu.html']] },
-  producer: { icon: '🎬', title: 'Учитель-продюсер', short: 'Ваш наставник по событиям, конкурсам и публичной защите.', text: 'Поможет придумать идею, собрать сценарий, распределить роли, подготовить афишу, медиаплан и яркий финал.', links: [['Школьное событие', 'pages/nuzhno-provesti-yarkoe-shkolnoe-sobytie.html'], ['Получить помощь', 'pages/3-poluchi-pomosch.html']] },
-  team: { icon: '👥', title: 'Фасилитатор', short: 'Ваш наставник по командной работе без хаоса.', text: 'Поможет провести встречу, договориться о правилах, распределить роли, сделать доску задач и довести работу до результата.', links: [['Командная работа', 'pages/hochu-sdelat-komandnuyu-rabotu-bez-haosa.html'], ['Найти наставника', 'pages/2-naydi-nastavnika.html']] }
+  content: { icon: '🏗️', title: 'Учитель-архитектор содержания', short: 'Ваш наставник по логике урока и учебного материала.', text: 'Поможет собрать понятную структуру урока, модуль, задания, объяснение темы и итоговый образовательный продукт.', links: [['Окошко архитектора', 'pages/polka-domovoy-grib-arkhitektor.html'], ['Идеи для урока', 'pages/ne-hvataet-idey-dlya-uroka.html']] },
+  producer: { icon: '🎬', title: 'Учитель-продюсер', short: 'Ваш наставник по событиям, конкурсам и публичной защите.', text: 'Поможет найти ресурсы, партнёров, конкурсы, гранты и вывести проект на внешний уровень.', links: [['Окошко продюсера', 'pages/polka-domovoy-grib-prodyuser.html'], ['Школьное событие', 'pages/nuzhno-provesti-yarkoe-shkolnoe-sobytie.html']] },
+  team: { icon: '👥', title: 'Фасилитатор', short: 'Ваш наставник по командной работе без хаоса.', text: 'Поможет провести встречу, договориться о правилах, распределить роли, сделать доску задач и довести работу до результата.', links: [['Окошко фасилитатора', 'pages/polka-domovoy-grib-fasilitator.html'], ['Командная работа', 'pages/hochu-sdelat-komandnuyu-rabotu-bez-haosa.html']] }
 };
 
 const mentorQuizQuestions = [
@@ -123,13 +123,18 @@ function findBoardCard(column, text) {
   return Array.from(document.querySelectorAll(`[data-column="${column}"] .card`)).find(item => item.innerText.includes(text));
 }
 
-function makeCardActive(card, link, info, title) {
+function makeCardActive(card, link, info, title, subtitle = '') {
   if (!card) return;
   card.dataset.info = info;
   card.dataset.activeLink = link;
   card.classList.add('card--link');
   card.style.cursor = 'pointer';
   card.title = title;
+  if (subtitle && !card.querySelector('small')) {
+    const small = document.createElement('small');
+    small.textContent = subtitle;
+    card.appendChild(small);
+  }
   card.addEventListener('click', event => {
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -137,23 +142,49 @@ function makeCardActive(card, link, info, title) {
   });
 }
 
+function injectSuperpowerStyles() {
+  if (document.querySelector('#superpowerCardStyles')) return;
+  const style = document.createElement('style');
+  style.id = 'superpowerCardStyles';
+  style.textContent = `
+    [data-column="teachers"] .card--link{position:relative;overflow:hidden;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;background:linear-gradient(135deg,#ffffff,#f8fbff)}
+    [data-column="teachers"] .card--link:hover{transform:translateY(-3px);box-shadow:0 18px 36px rgba(39,72,142,.18);border-color:rgba(47,125,245,.45)}
+    [data-column="teachers"] .card small{display:block;margin-top:8px;color:#6d7490;font-size:12.5px;line-height:1.35;font-weight:800}
+    .card--active-superpower{border:2px solid rgba(250,204,21,.82)!important;background:radial-gradient(circle at 8% 0%,rgba(255,237,153,.75),transparent 32%),linear-gradient(135deg,#fffef2 0%,#fff7cd 55%,#fff 100%)!important;box-shadow:0 18px 42px rgba(250,204,21,.28)!important;animation:superPulse 2.6s ease-in-out infinite}
+    .card--active-superpower::before{content:'Рекомендуем';position:absolute;right:10px;top:10px;padding:4px 9px;border-radius:999px;background:#facc15;color:#5b4200;font-size:10.5px;font-weight:1000;letter-spacing:.02em;box-shadow:0 8px 18px rgba(250,204,21,.28)}
+    .card--active-superpower .card__icon{transform:scale(1.12);filter:drop-shadow(0 6px 8px rgba(232,168,31,.26))}
+    @keyframes superPulse{0%,100%{box-shadow:0 18px 42px rgba(250,204,21,.24)}50%{box-shadow:0 22px 52px rgba(250,204,21,.42)}}
+  `;
+  document.head.appendChild(style);
+}
+
 function activateBoardLinks() {
+  injectSuperpowerStyles();
   const links = [
-    ['welcome','Как пользоваться доской','pages/kak-polzovatsya-doskoy.html','Открыть инструкцию по работе с доской'],
-    ['welcome','Выбери задачу','pages/1-vyberi-zadachu.html','Открыть страницу «1. Выбери задачу»'],
-    ['welcome','Найди наставника','pages/2-naydi-nastavnika.html','Открыть страницу «2. Найди наставника»'],
-    ['welcome','Получи помощь','pages/3-poluchi-pomosch.html','Открыть страницу «3. Получи помощь»'],
-    ['welcome','Заполни заявку','pages/4-zapolni-zayavku.html','Открыть страницу «4. Заполни заявку»'],
-    ['welcome','Получи результат','pages/5-poluchi-rezultat.html','Открыть страницу «5. Получи результат»'],
-    ['problems','Не знаю, как оформить проект','pages/ne-znayu-kak-oformit-proekt.html','Открыть страницу «Не знаю, как оформить проект»'],
-    ['problems','Хочу использовать ИИ, но боюсь','pages/hochu-ispolzovat-ii-no-boyus.html','Открыть страницу «Хочу использовать ИИ, но боюсь»'],
-    ['problems','Нужно подготовить ученика к олимпиаде','pages/nuzhno-podgotovit-uchenika-k-olimpiade.html','Открыть страницу «Нужно подготовить ученика к олимпиаде»'],
-    ['problems','Нужно провести яркое школьное событие','pages/nuzhno-provesti-yarkoe-shkolnoe-sobytie.html','Открыть страницу «Нужно провести яркое школьное событие»'],
-    ['problems','Хочу сделать командную работу без хаоса','pages/hochu-sdelat-komandnuyu-rabotu-bez-haosa.html','Открыть страницу «Хочу сделать командную работу без хаоса»'],
-    ['problems','Не хватает идей для урока','pages/ne-hvataet-idey-dlya-uroka.html','Открыть страницу «Не хватает идей для урока»'],
-    ['problems','Подготовка к ВПР, ОГЭ и ЕГЭ','pages/podgotovka-k-vpr-oge-ege.html','Открыть страницу «Подготовка к ВПР, ОГЭ и ЕГЭ»']
+    ['welcome','Как пользоваться доской','pages/kak-polzovatsya-doskoy.html','Открыть инструкцию по работе с доской','Открыть инструкцию по работе с доской'],
+    ['welcome','Выбери задачу','pages/1-vyberi-zadachu.html','Открыть страницу «1. Выбери задачу»','Открыть страницу «1. Выбери задачу»'],
+    ['welcome','Найди наставника','pages/2-naydi-nastavnika.html','Открыть страницу «Карта суперсил учителей»','Открыть страницу «Карта суперсил учителей»'],
+    ['welcome','Получи помощь','pages/3-poluchi-pomosch.html','Открыть страницу «3. Получи помощь»','Открыть страницу «3. Получи помощь»'],
+    ['welcome','Заполни заявку','pages/4-zapolni-zayavku.html','Открыть страницу «4. Заполни заявку»','Открыть страницу «4. Заполни заявку»'],
+    ['welcome','Получи результат','pages/5-poluchi-rezultat.html','Открыть страницу «5. Получи результат»','Открыть страницу «5. Получи результат»'],
+    ['problems','Не знаю, как оформить проект','pages/ne-znayu-kak-oformit-proekt.html','Открыть страницу «Не знаю, как оформить проект»','Открыть страницу «Не знаю, как оформить проект»'],
+    ['problems','Хочу использовать ИИ, но боюсь','pages/hochu-ispolzovat-ii-no-boyus.html','Открыть страницу «Хочу использовать ИИ, но боюсь»','Открыть страницу «Хочу использовать ИИ, но боюсь»'],
+    ['problems','Нужно подготовить ученика к олимпиаде','pages/nuzhno-podgotovit-uchenika-k-olimpiade.html','Открыть страницу «Нужно подготовить ученика к олимпиаде»','Открыть страницу «Нужно подготовить ученика к олимпиаде»'],
+    ['problems','Нужно провести яркое школьное событие','pages/nuzhno-provesti-yarkoe-shkolnoe-sobytie.html','Открыть страницу «Нужно провести яркое школьное событие»','Открыть страницу «Нужно провести яркое школьное событие»'],
+    ['problems','Хочу сделать командную работу без хаоса','pages/hochu-sdelat-komandnuyu-rabotu-bez-haosa.html','Открыть страницу «Хочу сделать командную работу без хаоса»','Открыть страницу «Хочу сделать командную работу без хаоса»'],
+    ['problems','Не хватает идей для урока','pages/ne-hvataet-idey-dlya-uroka.html','Открыть страницу «Не хватает идей для урока»','Открыть страницу «Не хватает идей для урока»'],
+    ['problems','Подготовка к ВПР, ОГЭ и ЕГЭ','pages/podgotovka-k-vpr-oge-ege.html','Открыть страницу «Подготовка к ВПР, ОГЭ и ЕГЭ»','Открыть страницу «Подготовка к ВПР, ОГЭ и ЕГЭ»'],
+    ['teachers','Наставник одарённых','pages/polka-domovoy-grib-nastavnik-odarennyh.html','Наставник одарённых помогает готовить учеников к олимпиадам, НПК, ОВСУ и конкурсам.','Открыть окошко «Наставник одарённых»','Олимпиады, НПК, ОВСУ, конкурсы'],
+    ['teachers','Методист проектов','pages/polka-domovoy-grib-metodist.html','Методист проектов помогает оформить тему, цель, задачи, гипотезу и план исследования.','Открыть окошко «Методист проектов»','Цель, задачи, гипотеза, защита'],
+    ['teachers','Учитель-архитектор содержания','pages/polka-domovoy-grib-arkhitektor.html','Учитель-архитектор содержания помогает выстроить логику урока, модуля или проекта.','Открыть окошко «Архитектор содержания»','Логика, структура, маршрут проекта'],
+    ['teachers','Дизайнер образовательных продуктов','pages/polka-domovoy-grib-dizainer.html','Дизайнер образовательных продуктов помогает создавать стенды, брошюры, дашборды и визуальную упаковку опыта.','Открыть окошко «Дизайнер образовательных продуктов»','Стенды, брошюры, дашборды'],
+    ['teachers','Интегратор ИИ','pages/polka-domovoy-grib-ii.html','Интегратор ИИ помогает применять нейросети, промпты, чат-ботов и цифровых помощников.','Открыть окошко «Интегратор ИИ»','Промпты, ИИ, цифровые помощники'],
+    ['teachers','Учитель-продюсер','pages/polka-domovoy-grib-prodyuser.html','Учитель-продюсер находит ресурсы, партнёров, конкурсы, гранты и выводит проект на внешний уровень.','Открыть окошко «Учитель-продюсер»','Ресурсы, партнёры, гранты'],
+    ['teachers','Фасилитатор','pages/polka-domovoy-grib-fasilitator.html','Фасилитатор помогает команде договориться, распределить роли и довести проект до результата.','Открыть окошко «Фасилитатор»','Роли, правила, доска задач']
   ];
-  links.forEach(([column, text, href, title]) => makeCardActive(findBoardCard(column, text), href, title, title));
+  links.forEach(([column, text, href, info, title, subtitle]) => makeCardActive(findBoardCard(column, text), href, info, title, subtitle));
+  const gifted = findBoardCard('teachers', 'Наставник одарённых');
+  gifted?.classList.add('card--active-superpower');
 }
 
 function loadMushroomProjectShelf() {
@@ -163,11 +194,11 @@ function loadMushroomProjectShelf() {
   const projectCards = [
     { icon: '🌟', title: 'От наставника одарённых', info: 'Проект «Serpula lacrymans»: подготовка к НПК, ОВСУ и защите перед жюри.', href: 'pages/polka-domovoy-grib-nastavnik-odarennyh.html' },
     { icon: '🧩', title: 'От методиста проекта', info: 'Паспорт исследования: тема, цель, задачи, гипотеза, объект, предмет, методы, этапы и выводы.', href: 'pages/polka-domovoy-grib-metodist.html' },
-    { icon: '🏗️', title: 'От архитектора содержания', info: 'Логика работы: проблема → опрос → карта заражённости → эксперимент → рекомендации.', href: 'pages/project-domovoy-grib.html#content' },
-    { icon: '✏️', title: 'От дизайнера продукта', info: 'Визуальная упаковка проекта: палитра, карта, диаграммы, фото и презентация.', href: 'pages/project-domovoy-grib.html#design' },
+    { icon: '🏗️', title: 'От архитектора содержания', info: 'Логика работы: проблема → опрос → карта заражённости → эксперимент → рекомендации.', href: 'pages/polka-domovoy-grib-arkhitektor.html' },
+    { icon: '✏️', title: 'От дизайнера продукта', info: 'Визуальная упаковка проекта: палитра, карта, диаграммы, фото и презентация.', href: 'pages/polka-domovoy-grib-dizainer.html' },
     { icon: '💻', title: 'От интегратора ИИ', info: 'ИИ-поддержка: речь, вопросы жюри, проверка цифр, карточки «вопрос — ответ».', href: 'pages/polka-domovoy-grib-ii.html' },
-    { icon: '🎬', title: 'От учителя-продюсера', info: 'Сценарий защиты: сильное начало, главный аргумент, эксперимент и рекомендации.', href: 'pages/project-domovoy-grib.html#producer' },
-    { icon: '👥', title: 'От фасилитатора', info: 'Роли команды: исследователь, дизайнер, спикер, проверяющий данных и ответственный за материалы.', href: 'pages/project-domovoy-grib.html#team' }
+    { icon: '🎬', title: 'От учителя-продюсера', info: 'Ресурсы, партнёры, конкурсы, гранты и внешний уровень проекта.', href: 'pages/polka-domovoy-grib-prodyuser.html' },
+    { icon: '👥', title: 'От фасилитатора', info: 'Командная работа без хаоса: роли, правила, доска задач и результат.', href: 'pages/polka-domovoy-grib-fasilitator.html' }
   ];
   projectCards.forEach(item => {
     const card = document.createElement('a');
