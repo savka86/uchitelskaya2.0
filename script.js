@@ -151,7 +151,6 @@ function injectSuperpowerStyles() {
     [data-column="teachers"] .card--link:hover{transform:translateY(-3px);box-shadow:0 18px 36px rgba(39,72,142,.18);border-color:rgba(47,125,245,.45)}
     [data-column="teachers"] .card small{display:block;margin-top:8px;color:#6d7490;font-size:12.5px;line-height:1.35;font-weight:800}
     .card--active-superpower{border:2px solid rgba(250,204,21,.82)!important;background:radial-gradient(circle at 8% 0%,rgba(255,237,153,.75),transparent 32%),linear-gradient(135deg,#fffef2 0%,#fff7cd 55%,#fff 100%)!important;box-shadow:0 18px 42px rgba(250,204,21,.28)!important;animation:superPulse 2.6s ease-in-out infinite}
-    .card--active-superpower::before{content:'Рекомендуем';position:absolute;right:10px;top:10px;padding:4px 9px;border-radius:999px;background:#facc15;color:#5b4200;font-size:10.5px;font-weight:1000;letter-spacing:.02em;box-shadow:0 8px 18px rgba(250,204,21,.28)}
     .card--active-superpower .card__icon{transform:scale(1.12);filter:drop-shadow(0 6px 8px rgba(232,168,31,.26))}
     @keyframes superPulse{0%,100%{box-shadow:0 18px 42px rgba(250,204,21,.24)}50%{box-shadow:0 22px 52px rgba(250,204,21,.42)}}
   `;
