@@ -5,10 +5,142 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Наставник одарённых — Учительская 2.0</title>
   <link rel="stylesheet" href="../styles.css" />
+  <meta name="description" content="Окошко цифрового помощника наставника одарённых учащихся." />
   <style>
-    body{margin:0;background:#fff;font-family:Inter,Arial,sans-serif}
+    :root{
+      --bg:#eef4ff;
+      --card:#ffffff;
+      --text:#172033;
+      --muted:#64748b;
+      --primary:#2457ff;
+      --primary-dark:#173ec7;
+      --bot:#f1f5f9;
+      --user:#2457ff;
+      --gold:#facc15;
+      --shadow:0 24px 70px rgba(28,55,110,.18);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
+      min-height:100vh;
+      background:radial-gradient(circle at top left,#dbeafe,transparent 32rem),radial-gradient(circle at 90% 0%,rgba(250,204,21,.28),transparent 26rem),linear-gradient(135deg,#f8fbff 0%,var(--bg) 100%);
+    }
+    .mentor-page{width:min(1040px,calc(100% - 32px));margin:0 auto;padding:28px 0 54px}
+    .topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+    .back-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;padding:12px 16px;border-radius:999px;background:rgba(255,255,255,.86);color:var(--primary-dark);border:1px solid rgba(36,87,255,.16);box-shadow:0 12px 30px rgba(28,55,110,.08)}
+    .hero{text-align:center;margin-bottom:28px;padding:34px 22px;border-radius:34px;background:linear-gradient(135deg,#172554 0%,#2457ff 48%,#7c3aed 100%);color:white;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;right:-90px;bottom:-110px;width:300px;height:300px;border-radius:50%;background:rgba(250,204,21,.18)}
+    .hero>*{position:relative;z-index:1}
+    .badge{display:inline-flex;padding:8px 14px;border-radius:999px;color:#172554;background:#facc15;font-weight:900;margin-bottom:16px}
+    h1{margin:0 0 14px;font-size:clamp(32px,6vw,58px);line-height:1;letter-spacing:-.04em}
+    .hero p{margin:0 auto;max-width:760px;font-size:18px;color:rgba(255,255,255,.92);line-height:1.55}
+    .assistant-window{background:rgba(255,255,255,.9);border:1px solid rgba(148,163,184,.35);box-shadow:var(--shadow);backdrop-filter:blur(18px);border-radius:32px;padding:20px;overflow:hidden}
+    .window-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:4px 4px 16px;border-bottom:1px solid #e2e8f0;margin-bottom:14px;flex-wrap:wrap}
+    .window-title{display:flex;align-items:center;gap:12px;font-weight:1000;color:#172554}.window-title span{width:46px;height:46px;border-radius:18px;display:grid;place-items:center;background:#dbeafe;font-size:25px}.window-status{display:inline-flex;align-items:center;gap:7px;color:#16a34a;font-weight:900;font-size:14px}.window-status:before{content:"";width:10px;height:10px;border-radius:50%;background:#16a34a;box-shadow:0 0 0 5px rgba(22,163,74,.12)}
+    .messages{height:min(62vh,620px);min-height:360px;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}.message{max-width:82%;padding:13px 15px;border-radius:18px;line-height:1.45;white-space:pre-wrap}.message.bot{align-self:flex-start;background:var(--bot)}.message.user{align-self:flex-end;color:white;background:var(--user)}.message.error{align-self:flex-start;background:#fee2e2;color:#991b1b}.chat-form{display:flex;gap:12px;padding-top:14px;border-top:1px solid #e2e8f0}textarea{flex:1;resize:none;border:1px solid #cbd5e1;border-radius:18px;padding:14px 15px;font:inherit;outline:none}textarea:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(36,87,255,.12)}button{border:0;border-radius:18px;padding:0 20px;font:inherit;font-weight:800;color:white;background:var(--primary);cursor:pointer}button:hover{background:var(--primary-dark)}button:disabled{opacity:.6;cursor:wait}.notice{margin:12px 8px 0;color:var(--muted);font-size:13px;line-height:1.45}.quick-actions{display:flex;gap:10px;flex-wrap:wrap;margin:0 8px 14px}.quick-actions button{min-height:38px;padding:8px 12px;border-radius:999px;background:#eff6ff;color:#173ec7;border:1px solid rgba(36,87,255,.16);font-size:13px}.quick-actions button:hover{background:#dbeafe}
+    .fallback{margin-top:16px;padding:16px 18px;border-radius:22px;background:#fff7ed;border:1px solid rgba(245,158,11,.22);color:#92400e;line-height:1.5}.fallback a{color:#173ec7;font-weight:900}
+    @media(max-width:620px){.mentor-page{width:min(100% - 18px,1040px);padding:18px 0}.hero{border-radius:24px;padding:24px 16px}.assistant-window{border-radius:22px;padding:12px}.messages{min-height:420px}.message{max-width:92%}.chat-form{flex-direction:column}button{min-height:48px}.window-top{align-items:flex-start}}
   </style>
 </head>
 <body>
+  <main class="mentor-page">
+    <nav class="topline" aria-label="Навигация">
+      <a class="back-link" href="../index.html#board">← Назад к доске</a>
+      <a class="back-link" href="2-naydi-nastavnika.html">🗺️ Карта суперсил</a>
+    </nav>
+
+    <section class="hero">
+      <div class="badge">Учительская 2.0</div>
+      <h1>ИИ-помощник Матрены Семёновны</h1>
+      <p>Окошко наставника одарённых учащихся. Помогает с подготовкой к олимпиадам, конкурсам, НПК, исследовательским и проектным работам.</p>
+    </section>
+
+    <section class="assistant-window" aria-label="Чат с ИИ-помощником">
+      <div class="window-top">
+        <div class="window-title"><span>🌟</span><div>Наставник одарённых<br><small>цифровой помощник</small></div></div>
+        <div class="window-status">окошко активно</div>
+      </div>
+
+      <div class="quick-actions" aria-label="Быстрые вопросы">
+        <button type="button" data-prompt="Помоги составить план подготовки к олимпиаде">План олимпиады</button>
+        <button type="button" data-prompt="Помоги выбрать тему для НПК">Тема для НПК</button>
+        <button type="button" data-prompt="Помоги подготовить речь для защиты проекта">Речь защиты</button>
+        <button type="button" data-prompt="Какие вопросы может задать жюри?">Вопросы жюри</button>
+      </div>
+
+      <div id="messages" class="messages">
+        <div class="message bot">Здравствуйте! Я цифровой помощник Сидоровой Матрены Семёновны, наставника одарённых учащихся. Помогу разобраться с олимпиадами, конкурсами, НПК, исследовательскими и проектными работами. Напишите, чем я могу помочь: выбрать тему, составить план подготовки, оформить работу или подготовиться к защите?</div>
+      </div>
+
+      <form id="chatForm" class="chat-form">
+        <textarea id="messageInput" rows="2" placeholder="Напишите вопрос..." required></textarea>
+        <button id="sendButton" type="submit">Отправить</button>
+      </form>
+      <p class="notice">Это ИИ-помощник, а не настоящий человек. Ответы нужно проверять у педагога-наставника.</p>
+      <div class="fallback">Источник окошка взят из репозитория <b>savka86/Nastavnikodarennux</b>. Для живых ответов нужен работающий Render-сервер с маршрутом <b>/chat</b>. По умолчанию страница обращается к <a href="https://nastavnikodarennux.onrender.com/health" target="_blank" rel="noopener">nastavnikodarennux.onrender.com</a>.</div>
+    </section>
+  </main>
+
+  <script>
+    const API_BASE_URL = 'https://nastavnikodarennux.onrender.com';
+    const form = document.querySelector('#chatForm');
+    const input = document.querySelector('#messageInput');
+    const button = document.querySelector('#sendButton');
+    const messages = document.querySelector('#messages');
+    const history = [];
+
+    function addMessage(content, role = 'bot') {
+      const item = document.createElement('div');
+      item.className = `message ${role}`;
+      item.textContent = content;
+      messages.appendChild(item);
+      messages.scrollTop = messages.scrollHeight;
+      return item;
+    }
+
+    function setLoading(isLoading) {
+      button.disabled = isLoading;
+      input.disabled = isLoading;
+      button.textContent = isLoading ? 'Думаю...' : 'Отправить';
+    }
+
+    async function sendMessage(text) {
+      if (!text.trim()) return;
+      input.value = '';
+      addMessage(text, 'user');
+      history.push({ role: 'user', content: text });
+      const loading = addMessage('Печатаю ответ...', 'bot');
+      setLoading(true);
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, history: history.slice(-12) })
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || 'Ошибка сервера');
+        loading.textContent = data.reply;
+        history.push({ role: 'assistant', content: data.reply });
+      } catch (error) {
+        loading.remove();
+        addMessage((error && error.message) ? error.message : 'Ошибка соединения с сервером. Проверьте, работает ли Render-сервис Nastavnikodarennux.', 'error');
+      } finally {
+        setLoading(false);
+        input.focus();
+      }
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      sendMessage(input.value.trim());
+    });
+
+    document.querySelectorAll('[data-prompt]').forEach(item => {
+      item.addEventListener('click', () => sendMessage(item.dataset.prompt));
+    });
+  </script>
 </body>
 </html>
