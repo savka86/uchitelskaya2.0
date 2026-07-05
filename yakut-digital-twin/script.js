@@ -1,6 +1,6 @@
 // Cloudflare Worker URL. Worker бэлэм буоллаҕына, бу строканы уларыт.
 // Холобур: const WORKER_URL = "https://yakut-twin.username.workers.dev";
-const WORKER_URL = "";
+const WORKER_URL = "https://040eb949.uchitelskaya2-0.pages.dev";
 
 const form = document.getElementById("chatForm");
 const input = document.getElementById("userInput");
