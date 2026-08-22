@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Радар бензина — Якутск</title>
+<style>
+:root{color-scheme:light dark;--bg:#f4f5f7;--card:#fff;--text:#111827;--muted:#6b7280;--border:#d7dce3}@media(prefers-color-scheme:dark){:root{--bg:#0c1117;--card:#151b24;--text:#f3f4f6;--muted:#9ca3af;--border:#303846}}*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}.wrap{max-width:1100px;margin:auto;padding:14px}.head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:10px}h1{font-size:24px;margin:0 0 3px}.sub{font-size:12px;color:var(--muted)}.badge{font-size:12px;font-weight:800;padding:7px 10px;border:1px solid var(--border);background:var(--card);border-radius:999px}.mapcard{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:10px}.maphead{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}.maphead b{font-size:15px}.mapstatus{font-size:11px;color:var(--muted)}#map{height:620px;border-radius:12px;overflow:hidden;background:#efeaca}.error{display:none;margin-top:9px;padding:10px 12px;border:1px solid #d99;border-radius:10px;background:rgba(220,38,38,.08);font-size:12px}.error.show{display:block}.info{display:none;margin-top:9px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);font-size:12px;line-height:1.45}.info.show{display:block}.info b{display:block;font-size:14px;margin-bottom:3px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}.actions a,.actions button{display:inline-flex;min-height:40px;align-items:center;padding:0 12px;border:1px solid var(--border);border-radius:10px;color:var(--text);text-decoration:none;font-weight:750;background:var(--card)}@media(max-width:700px){#map{height:500px}.wrap{padding:10px}}
+</style>
+<script src="https://mapgl.2gis.com/api/js/v1"></script>
+</head>
+<body>
+<main class="wrap">
+<div class="head"><div><h1>⛽ Радар бензина — Якутск</h1><div class="sub">Живая база Supabase + карта 2ГИС</div></div><div id="count" class="badge">загрузка…</div></div>
+<section class="mapcard"><div class="maphead"><b>🗺️ 2ГИС Якутск</b><span id="status" class="mapstatus">загрузка данных…</span></div><div id="map"></div><div id="err" class="error"></div><div id="info" class="info"></div><div class="actions"><button id="refresh" type="button">Обновить</button><a href="https://2gis.ru/yakutsk/search/%D0%90%D0%97%D0%A1" target="_blank" rel="noopener">Открыть полный 2ГИС ↗</a></div></section>
+</main>
+<script>
+const SUPABASE_URL='https://oetqjkmlzwemreldpbui.supabase.co';
+const ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ldHFqa21sendlbXJlbGRwYnVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczODA0MjcsImV4cCI6MjEwMjk1NjQyN30.OtIQDj7iqoIZxS54yz79-C3_B0nc-jYsKYssnic7Tq4';
+const MAP_KEY='05fe1681-4d67-4732-8e9d-51ac3e2f6ed7';
+const FEED=SUPABASE_URL+'/functions/v1/radar-feed';
+const statusEl=document.getElementById('status'),err=document.getElementById('err'),info=document.getElementById('info'),count=document.getElementById('count');
+let map=null,markers=[];
+function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]||c))}
+function icon(color){const svg='<svg xmlns="http://www.w3.org/2000/svg" width="30" height="38" viewBox="0 0 30 38"><path d="M15 1C7.3 1 1 7.1 1 14.7 1 25.1 15 37 15 37s14-11.9 14-22.3C29 7.1 22.7 1 15 1z" fill="'+color+'" stroke="white" stroke-width="2"/><circle cx="15" cy="14" r="5.5" fill="white"/></svg>';return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)}
+async function load(){
+ statusEl.textContent='загрузка данных…';err.classList.remove('show');info.classList.remove('show');
+ try{
+  const r=await fetch(FEED,{headers:{Authorization:'Bearer '+ANON_KEY,apikey:ANON_KEY}});if(!r.ok)throw new Error('Backend HTTP '+r.status);const j=await r.json();
+  const seen=new Set();const pts=(j.stations||[]).filter(s=>{const lat=Number(s.lat),lon=Number(s.lon);if(!Number.isFinite(lat)||!Number.isFinite(lon))return false;if(lat<61.95||lat>62.20||lon<129.55||lon>129.85)return false;const k=lat.toFixed(6)+':'+lon.toFixed(6);if(seen.has(k))return false;seen.add(k);return true});
+  count.textContent=pts.length+' уникальных точек';
+  if(!window.mapgl)throw new Error('Библиотека 2ГИС не загрузилась');
+  if(!map){map=new mapgl.Map('map',{key:MAP_KEY,center:[129.70,62.04],zoom:11,lang:'ru',enableTrackResize:true});
+    try{map.on('styleload',()=>{statusEl.textContent='карта загружена · '+pts.length+' точек';err.classList.remove('show')})}catch{}
+    try{map.on('styleloaderror',()=>{statusEl.textContent='ошибка подложки';err.textContent='2ГИС не отдаёт карту этому ключу. В Platform Manager нужно включить Map Tiles API для ключа.';err.classList.add('show')})}catch{}
+  }
+  for(const m of markers){try{m.destroy()}catch{}}markers=[];
+  for(const s of pts){const color=s.official_status==='open'?'#22c55e':Number(s.reports_60m||0)>0?'#f59e0b':'#6b7280';const m=new mapgl.Marker(map,{coordinates:[Number(s.lon),Number(s.lat)],icon:icon(color)});m.on('click',()=>{const kind=s.station_type==='lpg'?'Пропан':s.station_type==='cng'?'Метан':s.station_type==='mixed'?'Бензин + газ':'Бензин / ДТ';info.innerHTML='<b>'+esc(s.name)+'</b>'+esc(s.address)+'<br>'+kind+'<br>Отчётов за 60 мин: '+Number(s.reports_60m||0);info.classList.add('show')});markers.push(m)}
+  statusEl.textContent='данные загружены · ждём подложку 2ГИС';
+  setTimeout(()=>{if(statusEl.textContent.includes('ждём')){err.textContent='Метки есть, но 2ГИС не отрисовал улицы. Проверь Map Tiles API у ключа.';err.classList.add('show')}},7000);
+ }catch(e){statusEl.textContent='ошибка';err.textContent=String(e.message||e);err.classList.add('show')}
+}
+document.getElementById('refresh').addEventListener('click',load);load();
+</script>
+</body></html>
