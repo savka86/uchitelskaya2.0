@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-08-22T19:32:00.516621+00:00",
+  "checked_at": "2026-08-22T20:36:16.363949+00:00",
   "source": "Официальные публичные камеры АО «Сахатранснефтегаз»",
   "method": "public camera frame + YOLOv8n",
   "disclaimer": "Экспериментальная оценка количества видимых автомобилей. Это не официальный размер очереди; часть машин может находиться вне кадра.",
@@ -8,9 +8,9 @@
       "id": "mozh31",
       "name": "АГЗС №1 — ул. Можайского, 31",
       "source_url": "https://lk-b2b.camera.rt.ru/sl/POVtkjuH7",
-      "checked_at": "2026-08-22T19:32:00.516621+00:00",
+      "checked_at": "2026-08-22T20:36:16.363949+00:00",
       "online": true,
-      "vehicles_visible": 10,
+      "vehicles_visible": 9,
       "queue_level": "заметная очередь",
       "experimental": true,
       "stream_progressed": true,
@@ -19,43 +19,39 @@
       "detections": [
         {
           "type": "car",
-          "confidence": 0.772
+          "confidence": 0.776
         },
         {
           "type": "car",
-          "confidence": 0.709
+          "confidence": 0.738
         },
         {
           "type": "car",
-          "confidence": 0.702
+          "confidence": 0.695
         },
         {
           "type": "car",
-          "confidence": 0.516
+          "confidence": 0.456
         },
         {
           "type": "car",
-          "confidence": 0.409
+          "confidence": 0.426
         },
         {
           "type": "car",
-          "confidence": 0.391
+          "confidence": 0.385
         },
         {
           "type": "car",
-          "confidence": 0.337
+          "confidence": 0.278
         },
         {
           "type": "car",
-          "confidence": 0.308
+          "confidence": 0.267
         },
         {
           "type": "car",
-          "confidence": 0.218
-        },
-        {
-          "type": "car",
-          "confidence": 0.206
+          "confidence": 0.153
         }
       ]
     },
@@ -63,97 +59,7 @@
       "id": "vil4",
       "name": "АГЗС №3 — Вилюйский тракт, 4 км, 6г",
       "source_url": "https://lk-b2b.camera.rt.ru/sl/H0oMBC_pE",
-      "checked_at": "2026-08-22T19:32:00.516621+00:00",
-      "online": true,
-      "vehicles_visible": 1,
-      "queue_level": "свободно",
-      "experimental": true,
-      "stream_progressed": true,
-      "frame_width": 1280,
-      "frame_height": 720,
-      "detections": [
-        {
-          "type": "car",
-          "confidence": 0.925
-        }
-      ]
-    },
-    {
-      "id": "nik16",
-      "name": "АГЗС №2 — пр. Михаила Николаева, 16а",
-      "source_url": "https://lk-b2b.camera.rt.ru/sl/LL24Sq0y5",
-      "checked_at": "2026-08-22T19:32:00.516621+00:00",
-      "online": true,
-      "vehicles_visible": 14,
-      "queue_level": "заметная очередь",
-      "experimental": true,
-      "stream_progressed": true,
-      "frame_width": 640,
-      "frame_height": 360,
-      "detections": [
-        {
-          "type": "car",
-          "confidence": 0.843
-        },
-        {
-          "type": "car",
-          "confidence": 0.783
-        },
-        {
-          "type": "car",
-          "confidence": 0.757
-        },
-        {
-          "type": "car",
-          "confidence": 0.653
-        },
-        {
-          "type": "truck",
-          "confidence": 0.54
-        },
-        {
-          "type": "car",
-          "confidence": 0.498
-        },
-        {
-          "type": "car",
-          "confidence": 0.314
-        },
-        {
-          "type": "car",
-          "confidence": 0.3
-        },
-        {
-          "type": "car",
-          "confidence": 0.221
-        },
-        {
-          "type": "truck",
-          "confidence": 0.197
-        },
-        {
-          "type": "car",
-          "confidence": 0.166
-        },
-        {
-          "type": "car",
-          "confidence": 0.155
-        },
-        {
-          "type": "car",
-          "confidence": 0.153
-        },
-        {
-          "type": "car",
-          "confidence": 0.151
-        }
-      ]
-    },
-    {
-      "id": "zhatai",
-      "name": "АГЗС — п. Жатай",
-      "source_url": "https://lk-b2b.camera.rt.ru/sl/wtVzcSfmx",
-      "checked_at": "2026-08-22T19:32:00.516621+00:00",
+      "checked_at": "2026-08-22T20:36:16.363949+00:00",
       "online": true,
       "vehicles_visible": 3,
       "queue_level": "есть машины",
@@ -164,15 +70,85 @@
       "detections": [
         {
           "type": "car",
-          "confidence": 0.864
+          "confidence": 0.926
         },
         {
           "type": "car",
-          "confidence": 0.459
+          "confidence": 0.575
         },
         {
           "type": "car",
-          "confidence": 0.21
+          "confidence": 0.504
+        }
+      ]
+    },
+    {
+      "id": "nik16",
+      "name": "АГЗС №2 — пр. Михаила Николаева, 16а",
+      "source_url": "https://lk-b2b.camera.rt.ru/sl/LL24Sq0y5",
+      "checked_at": "2026-08-22T20:36:16.363949+00:00",
+      "online": true,
+      "vehicles_visible": 7,
+      "queue_level": "есть машины",
+      "experimental": true,
+      "stream_progressed": true,
+      "frame_width": 640,
+      "frame_height": 360,
+      "detections": [
+        {
+          "type": "car",
+          "confidence": 0.786
+        },
+        {
+          "type": "car",
+          "confidence": 0.776
+        },
+        {
+          "type": "truck",
+          "confidence": 0.472
+        },
+        {
+          "type": "car",
+          "confidence": 0.445
+        },
+        {
+          "type": "car",
+          "confidence": 0.429
+        },
+        {
+          "type": "truck",
+          "confidence": 0.348
+        },
+        {
+          "type": "car",
+          "confidence": 0.159
+        }
+      ]
+    },
+    {
+      "id": "zhatai",
+      "name": "АГЗС — п. Жатай",
+      "source_url": "https://lk-b2b.camera.rt.ru/sl/wtVzcSfmx",
+      "checked_at": "2026-08-22T20:36:16.363949+00:00",
+      "online": true,
+      "vehicles_visible": 3,
+      "queue_level": "есть машины",
+      "experimental": true,
+      "stream_progressed": true,
+      "frame_width": 1280,
+      "frame_height": 720,
+      "detections": [
+        {
+          "type": "car",
+          "confidence": 0.86
+        },
+        {
+          "type": "car",
+          "confidence": 0.397
+        },
+        {
+          "type": "car",
+          "confidence": 0.202
         }
       ]
     }
