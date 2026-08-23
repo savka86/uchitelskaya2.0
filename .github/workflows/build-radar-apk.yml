@@ -5,12 +5,16 @@ on:
   push:
     paths:
       - "fuel-radar/index.html"
+      - "fuel-radar/privacy.html"
+      - "fuel-radar/rights.html"
       - "fuel-radar/data/**"
       - "android-radar/**"
       - ".github/workflows/build-radar-apk.yml"
   pull_request:
     paths:
       - "fuel-radar/index.html"
+      - "fuel-radar/privacy.html"
+      - "fuel-radar/rights.html"
       - "fuel-radar/data/**"
       - "android-radar/**"
       - ".github/workflows/build-radar-apk.yml"
@@ -63,6 +67,14 @@ jobs:
           openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -nosalt \
             -in fuel-radar/index.html \
             -out "$ASSETS/radar.bin"
+
+          openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -nosalt \
+            -in fuel-radar/privacy.html \
+            -out "$ASSETS/privacy.bin"
+
+          openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -nosalt \
+            -in fuel-radar/rights.html \
+            -out "$ASSETS/rights.bin"
 
           openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -nosalt \
             -in fuel-radar/data/camera-status.json \
