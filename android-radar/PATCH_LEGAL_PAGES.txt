@@ -1,0 +1,1 @@
+Patch encrypted privacy and rights pages into Android WebView
