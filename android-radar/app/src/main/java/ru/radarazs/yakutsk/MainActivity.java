@@ -145,6 +145,32 @@ public class MainActivity extends Activity {
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
             Uri uri = request.getUrl();
+
+            if ("radar.local".equalsIgnoreCase(uri.getHost())
+                    && ("/privacy.html".equals(uri.getPath()) || "/rights.html".equals(uri.getPath()))) {
+                try {
+                    String assetName = "/privacy.html".equals(uri.getPath()) ? "privacy.bin" : "rights.bin";
+                    byte[] html = decryptAsset(assetName);
+                    return new WebResourceResponse(
+                            "text/html",
+                            "UTF-8",
+                            new ByteArrayInputStream(html)
+                    );
+                } catch (Exception ignored) {
+                    return new WebResourceResponse(
+                            "text/html",
+                            "UTF-8",
+                            500,
+                            "Local page error",
+                            null,
+                            new ByteArrayInputStream(
+                                    "<!doctype html><meta charset='utf-8'><p>Не удалось открыть страницу.</p>"
+                                            .getBytes(StandardCharsets.UTF_8)
+                            )
+                    );
+                }
+            }
+
             if ("radar.local".equalsIgnoreCase(uri.getHost())
                     && "/data/camera-status.json".equals(uri.getPath())) {
                 try {
