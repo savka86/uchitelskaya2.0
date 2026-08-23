@@ -1,1 +1,1 @@
-Radar AZS APK validation build — 2026-08-23
+Radar AZS APK validation build — retry with Android SDK setup
