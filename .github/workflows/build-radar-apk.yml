@@ -1,0 +1,76 @@
+name: Build Radar AZS APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "fuel-radar/index.html"
+      - "fuel-radar/data/**"
+      - "android-radar/**"
+      - ".github/workflows/build-radar-apk.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.10.2"
+
+      - name: Install Android SDK components
+        shell: bash
+        run: |
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
+          sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Encrypt embedded Radar files
+        shell: bash
+        run: |
+          set -euo pipefail
+          ASSETS="android-radar/app/src/main/assets"
+          mkdir -p "$ASSETS"
+
+          KEY_HEX="$(openssl rand -hex 32)"
+          IV_HEX="$(openssl rand -hex 16)"
+
+          sed -i "s/__KEY_HEX__/${KEY_HEX}/g; s/__IV_HEX__/${IV_HEX}/g" \
+            android-radar/app/src/main/java/ru/radarazs/yakutsk/MainActivity.java
+
+          openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -nosalt \
+            -in fuel-radar/index.html \
+            -out "$ASSETS/radar.bin"
+
+          openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -nosalt \
+            -in fuel-radar/data/camera-status.json \
+            -out "$ASSETS/camera-status.bin"
+
+      - name: Build installable APK
+        shell: bash
+        run: |
+          gradle -p android-radar :app:assembleDebug --no-daemon
+          cp android-radar/app/build/outputs/apk/debug/app-debug.apk Radar-AZS-1.0.0.apk
+          sha256sum Radar-AZS-1.0.0.apk | tee Radar-AZS-1.0.0.sha256
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Radar-AZS-Android
+          path: |
+            Radar-AZS-1.0.0.apk
+            Radar-AZS-1.0.0.sha256
+          retention-days: 14
