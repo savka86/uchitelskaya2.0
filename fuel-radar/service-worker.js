@@ -1,4 +1,4 @@
-const CACHE='radar-azs-shell-v5';
+const CACHE='radar-azs-shell-v6';
 const SHELL=['./','./pwa.html','./pwa-photo.js','./index.html','./privacy.html','./rights.html','./manifest.webmanifest','./pwa-icon.svg','./data/camera-status.json','./version.json'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
