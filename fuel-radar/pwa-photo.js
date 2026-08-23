@@ -6,86 +6,60 @@ const PRIVACY_METHOD='pwa-canvas-manual-redaction-v1';
 const MAX_SOURCE=25*1024*1024;
 const MAX_LONG_SIDE=1920;
 const MAX_OUTPUT=5*1024*1024;
-let safeFile=null,safePreviewUrl=null,frameWin=null,frameDoc=null;
-let sourceCanvas=null,editorCanvas=null,rects=[],dragStart=null;
-
-function $(id){return frameDoc?.getElementById(id)||null}
-function msg(text){const n=$('mediaMsg');if(n)n.textContent=text}
-function revokeSafe(){if(safePreviewUrl)URL.revokeObjectURL(safePreviewUrl);safePreviewUrl=null;safeFile=null}
-function escapeName(name){return String(name||'photo').replace(/\.[^.]+$/,'').replace(/[^a-zA-Z0-9_-]+/g,'_').slice(0,50)||'photo'}
-
-function ensureEditor(){
- if(document.getElementById('radarPwaPhotoEditor'))return;
- const wrap=document.createElement('div');wrap.id='radarPwaPhotoEditor';wrap.hidden=true;
- wrap.innerHTML=`<div class="rp-card"><div class="rp-head"><div><b>🔒 Проверка фото перед отправкой</b><span id="rpStatus">Подготавливаю безопасную копию…</span></div><button id="rpClose" type="button">✕</button></div><div class="rp-tip">Проверьте лица и госномера. Чтобы скрыть область, <b>проведите по ней пальцем</b>. Можно сделать несколько прямоугольников.</div><div class="rp-stage"><canvas id="rpCanvas"></canvas></div><div class="rp-actions"><button id="rpUndo" type="button">↩ Отменить область</button><button id="rpDone" class="rp-primary" type="button">✓ Готово, использовать фото</button></div></div>`;
- const style=document.createElement('style');
- style.textContent=`#radarPwaPhotoEditor{position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.82);padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));overflow:auto;font:15px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;color:#111827}#radarPwaPhotoEditor[hidden]{display:none}.rp-card{max-width:760px;margin:auto;background:#fff;border-radius:18px;padding:14px;box-shadow:0 24px 80px rgba(0,0,0,.4)}.rp-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.rp-head b{display:block;font-size:18px}.rp-head span{display:block;color:#64748b;font-size:12px;margin-top:3px}.rp-head button,.rp-actions button{border:1px solid #d7dce3;background:#fff;color:#111827;border-radius:12px;min-height:44px;padding:0 13px;font-weight:800}.rp-head button{min-width:44px;padding:0}.rp-tip{margin:12px 0;padding:10px 12px;border-radius:12px;background:#eff6ff;color:#1e3a8a;font-size:13px}.rp-stage{background:#111827;border-radius:14px;overflow:hidden;display:grid;place-items:center;touch-action:none}.rp-stage canvas{display:block;max-width:100%;max-height:70vh;width:auto;height:auto;touch-action:none}.rp-actions{display:grid;grid-template-columns:1fr 1.3fr;gap:9px;margin-top:12px}.rp-actions .rp-primary{background:#111827;color:#fff;border-color:#111827}@media(max-width:560px){.rp-actions{grid-template-columns:1fr}.rp-card{padding:11px}.rp-stage canvas{max-height:62vh}}`;
- document.head.appendChild(style);document.body.appendChild(wrap);
- editorCanvas=document.getElementById('rpCanvas');
- const close=()=>{wrap.hidden=true;sourceCanvas=null;rects=[];dragStart=null;};
- document.getElementById('rpClose').addEventListener('click',close);
- document.getElementById('rpUndo').addEventListener('click',()=>{rects.pop();renderEditor()});
- document.getElementById('rpDone').addEventListener('click',async()=>{
-   if(!sourceCanvas)return;
-   const btn=document.getElementById('rpDone');btn.disabled=true;btn.textContent='Готовлю JPEG…';
-   try{renderEditor();const blob=await exportJpeg(editorCanvas);if(!blob)throw new Error('Не удалось создать JPEG');
-     revokeSafe();safeFile=new File([blob],`SAFE_${Date.now()}.jpg`,{type:'image/jpeg',lastModified:Date.now()});safePreviewUrl=URL.createObjectURL(safeFile);
-     const img=$('mediaImagePreview'),vid=$('mediaVideoPreview'),box=$('filePreview'),meta=$('filePreviewMeta');
-     if(vid){vid.pause?.();vid.classList.remove('show');vid.removeAttribute('src')}
-     if(img){img.src=safePreviewUrl;img.classList.add('show')}
-     box?.classList.add('show');if(meta)meta.textContent=`Защищённая JPEG-копия · ${(safeFile.size/1024/1024).toFixed(2)} МБ · EXIF/GPS удалены · удалится через 1 час`;
-     msg('Фото подготовлено. Проверьте согласие и нажмите «Загрузить».');
-     const send=$('sendMedia');if(send){send.disabled=false;send.textContent='Загрузить фото'}
-     wrap.hidden=true;
-   }catch(e){document.getElementById('rpStatus').textContent='Ошибка: '+String(e?.message||e)}finally{btn.disabled=false;btn.textContent='✓ Готово, использовать фото'}
- });
- const point=e=>{const r=editorCanvas.getBoundingClientRect();return{x:(e.clientX-r.left)*editorCanvas.width/r.width,y:(e.clientY-r.top)*editorCanvas.height/r.height}};
- editorCanvas.addEventListener('pointerdown',e=>{if(!sourceCanvas)return;dragStart=point(e);editorCanvas.setPointerCapture?.(e.pointerId);e.preventDefault()});
- editorCanvas.addEventListener('pointermove',e=>{if(!dragStart)return;renderEditor();const p=point(e),ctx=editorCanvas.getContext('2d');ctx.strokeStyle='#ef4444';ctx.lineWidth=Math.max(3,editorCanvas.width/300);ctx.setLineDash([12,8]);ctx.strokeRect(dragStart.x,dragStart.y,p.x-dragStart.x,p.y-dragStart.y);e.preventDefault()});
- editorCanvas.addEventListener('pointerup',e=>{if(!dragStart)return;const p=point(e);let x=Math.min(dragStart.x,p.x),y=Math.min(dragStart.y,p.y),w=Math.abs(p.x-dragStart.x),h=Math.abs(p.y-dragStart.y);dragStart=null;if(w>12&&h>12)rects.push({x,y,w,h,kind:'manual'});renderEditor();e.preventDefault()});
+let frame=null,w=null,d=null,safeFile=null,safeUrl=null,source=null,canvas=null,rects=[],drag=null;
+const $=id=>d&&d.getElementById(id);
+const say=t=>{const n=$('mediaMsg');if(n)n.textContent=t};
+function clearSafe(){if(safeUrl)URL.revokeObjectURL(safeUrl);safeUrl=null;safeFile=null}
+function showDialog(st){
+  clearSafe();
+  const form=$('mediaForm'), dialog=$('mediaDialog'), input=$('mediaFile'), title=$('mediaDialogTitle'), hidden=$('mediaStationId'), send=$('sendMedia');
+  if(!form||!dialog||!input||!hidden)return;
+  form.reset();
+  hidden.value=String(st&&st.id||'');
+  if(title)title.textContent='Фото: '+String(st&&st.name||'АЗС');
+  input.accept='image/*'; input.removeAttribute('capture');
+  const hint=d.querySelector('#mediaDialog .mediaHint');
+  if(hint)hint.innerHTML='<b>PWA-защита + удаление через 1 час.</b><br>Фото обрабатывается прямо на этом устройстве: создаётся новая JPEG-копия без EXIF/GPS. Проверьте лица и госномера и при необходимости замажьте их пальцем. Видео в PWA не загружается.';
+  const lab=d.querySelector('label[for="mediaFile"]'); if(lab)lab.textContent='Выберите фото или снимите камерой';
+  const vid=$('mediaVideoPreview'); if(vid){vid.pause?.();vid.classList.remove('show');vid.removeAttribute('src')}
+  const img=$('mediaImagePreview'); if(img){img.classList.remove('show');img.removeAttribute('src')}
+  $('filePreview')?.classList.remove('show');
+  if(send){send.disabled=false;send.textContent='Загрузить фото'}
+  say('Выберите фото. Исходный файл на сервер не отправляется.');
+  dialog.showModal();
 }
-
-function expandRect(r,w,h,p=.16){const dx=r.width*p,dy=r.height*p;return{x:Math.max(0,r.x-dx),y:Math.max(0,r.y-dy),w:Math.min(w,r.width+2*dx),h:Math.min(h,r.height+2*dy),kind:'auto'}}
-function pixelate(ctx,base,r){let x=Math.max(0,Math.floor(r.x)),y=Math.max(0,Math.floor(r.y)),w=Math.min(base.width-x,Math.ceil(r.w)),h=Math.min(base.height-y,Math.ceil(r.h));if(w<2||h<2)return;const small=document.createElement('canvas'),sw=Math.max(1,Math.round(w/14)),sh=Math.max(1,Math.round(h/14));small.width=sw;small.height=sh;const s=small.getContext('2d');s.drawImage(base,x,y,w,h,0,0,sw,sh);ctx.save();ctx.imageSmoothingEnabled=false;ctx.drawImage(small,0,0,sw,sh,x,y,w,h);ctx.restore()}
-function renderEditor(){if(!sourceCanvas||!editorCanvas)return;editorCanvas.width=sourceCanvas.width;editorCanvas.height=sourceCanvas.height;const ctx=editorCanvas.getContext('2d');ctx.drawImage(sourceCanvas,0,0);for(const r of rects)pixelate(ctx,sourceCanvas,r)}
-
-async function decodeImage(file){
- if(file.size>MAX_SOURCE)throw new Error('Исходное фото слишком большое (максимум 25 МБ)');
- if('createImageBitmap' in window){try{return await createImageBitmap(file,{imageOrientation:'from-image'})}catch(_e){}}
- return await new Promise((resolve,reject)=>{const u=URL.createObjectURL(file),img=new Image();img.onload=()=>{URL.revokeObjectURL(u);resolve(img)};img.onerror=()=>{URL.revokeObjectURL(u);reject(new Error('Не удалось открыть фото'))};img.src=u});
+function editor(){
+  let x=d.getElementById('radarPwaEditor'); if(x)return x;
+  x=d.createElement('div'); x.id='radarPwaEditor'; x.hidden=true;
+  x.innerHTML='<div class="rp-card"><div class="rp-head"><div><b>🔒 Проверка фото перед отправкой</b><span id="rpStatus">Подготавливаю фото…</span></div><button id="rpClose" type="button">✕</button></div><div class="rp-tip">Проверьте лица и госномера. Чтобы скрыть область, проведите по ней пальцем.</div><div class="rp-stage"><canvas id="rpCanvas"></canvas></div><div class="rp-actions"><button id="rpUndo" type="button">↩ Отменить область</button><button id="rpDone" type="button" class="rp-ok">✓ Готово, использовать фото</button></div></div>';
+  const s=d.createElement('style');
+  s.textContent='#radarPwaEditor{position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.84);padding:12px;overflow:auto;color:#111827;font:15px/1.4 system-ui,-apple-system,Segoe UI,sans-serif}#radarPwaEditor[hidden]{display:none}.rp-card{max-width:760px;margin:auto;background:#fff;border-radius:18px;padding:14px}.rp-head{display:flex;justify-content:space-between;gap:12px}.rp-head b{font-size:18px}.rp-head span{display:block;font-size:12px;color:#64748b;margin-top:3px}.rp-head button,.rp-actions button{min-height:44px;border:1px solid #d7dce3;border-radius:12px;background:#fff;color:#111827;font-weight:800;padding:0 13px}.rp-tip{margin:12px 0;padding:10px 12px;border-radius:12px;background:#eff6ff;color:#1e3a8a;font-size:13px}.rp-stage{background:#111827;border-radius:14px;overflow:hidden;display:grid;place-items:center;touch-action:none}.rp-stage canvas{display:block;max-width:100%;max-height:68vh;touch-action:none}.rp-actions{display:grid;grid-template-columns:1fr 1.4fr;gap:9px;margin-top:12px}.rp-actions .rp-ok{background:#111827;color:white}@media(max-width:560px){.rp-actions{grid-template-columns:1fr}.rp-stage canvas{max-height:60vh}}';
+  d.head.appendChild(s); d.body.appendChild(x); canvas=d.getElementById('rpCanvas');
+  d.getElementById('rpClose').onclick=()=>{x.hidden=true;source=null;rects=[];drag=null};
+  d.getElementById('rpUndo').onclick=()=>{rects.pop();draw()};
+  d.getElementById('rpDone').onclick=finish;
+  const pos=e=>{const r=canvas.getBoundingClientRect();return{x:(e.clientX-r.left)*canvas.width/r.width,y:(e.clientY-r.top)*canvas.height/r.height}};
+  canvas.addEventListener('pointerdown',e=>{if(!source)return;drag=pos(e);canvas.setPointerCapture?.(e.pointerId);e.preventDefault()});
+  canvas.addEventListener('pointermove',e=>{if(!drag)return;draw();const p=pos(e),c=canvas.getContext('2d');c.strokeStyle='#ef4444';c.lineWidth=Math.max(3,canvas.width/300);c.setLineDash([12,8]);c.strokeRect(drag.x,drag.y,p.x-drag.x,p.y-drag.y);e.preventDefault()});
+  canvas.addEventListener('pointerup',e=>{if(!drag)return;const p=pos(e);const r={x:Math.min(drag.x,p.x),y:Math.min(drag.y,p.y),w:Math.abs(p.x-drag.x),h:Math.abs(p.y-drag.y)};drag=null;if(r.w>12&&r.h>12)rects.push(r);draw();e.preventDefault()});
+  return x;
 }
-async function prepareCanvas(file){const image=await decodeImage(file);const iw=image.width||image.naturalWidth,ih=image.height||image.naturalHeight;if(!iw||!ih)throw new Error('Не удалось определить размер фото');const scale=Math.min(1,MAX_LONG_SIDE/Math.max(iw,ih));const w=Math.max(1,Math.round(iw*scale)),h=Math.max(1,Math.round(ih*scale));const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d',{alpha:false});ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.drawImage(image,0,0,w,h);image.close?.();return c}
-function canvasBlob(canvas,q){return new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',q))}
-async function exportJpeg(canvas){for(const q of [.88,.8,.72,.64]){const b=await canvasBlob(canvas,q);if(b&&b.size<=MAX_OUTPUT)return b}throw new Error('После обработки фото всё ещё больше 5 МБ')}
-function normPlate(v){const map={'А':'A','В':'B','Е':'E','К':'K','М':'M','Н':'H','О':'O','Р':'P','С':'C','Т':'T','У':'Y','Х':'X'};return String(v||'').toUpperCase().replace(/[АВЕКМНОРСТУХ]/g,c=>map[c]||c).replace(/[^A-Z0-9]/g,'')}
-function looksLikePlate(v){return /[ABEKMHOPCTYX]\d{3}[ABEKMHOPCTYX]{2}\d{2,3}/.test(normPlate(v))}
-async function autoDetect(){
- const status=document.getElementById('rpStatus');let faces=0,plates=0,supported=false;
- if('FaceDetector' in window){supported=true;try{const det=new FaceDetector({fastMode:false,maxDetectedFaces:20});const found=await det.detect(sourceCanvas);for(const f of found){if(f.boundingBox){rects.push(expandRect(f.boundingBox,sourceCanvas.width,sourceCanvas.height,.2));faces++}}}catch(_e){}}
- if('TextDetector' in window){supported=true;try{const det=new TextDetector();const found=await det.detect(sourceCanvas);for(const t of found){if(t.boundingBox&&looksLikePlate(t.rawValue)){rects.push(expandRect(t.boundingBox,sourceCanvas.width,sourceCanvas.height,.22));plates++}}}catch(_e){}}
- renderEditor();
- if(faces||plates)status.textContent=`Автопроверка: скрыто лиц — ${faces}, номеров — ${plates}. Обязательно проверьте фото сами.`;
- else if(supported)status.textContent='Автопроверка ничего не нашла. Проверьте лица и номера вручную.';
- else status.textContent='На этом браузере автопоиск недоступен. Проверьте лица и номера вручную.';
+function mosaic(ctx,base,r){const x=Math.max(0,Math.floor(r.x)),y=Math.max(0,Math.floor(r.y)),ww=Math.min(base.width-x,Math.ceil(r.w)),hh=Math.min(base.height-y,Math.ceil(r.h));if(ww<2||hh<2)return;const mini=d.createElement('canvas');mini.width=Math.max(1,Math.round(ww/14));mini.height=Math.max(1,Math.round(hh/14));mini.getContext('2d').drawImage(base,x,y,ww,hh,0,0,mini.width,mini.height);ctx.save();ctx.imageSmoothingEnabled=false;ctx.drawImage(mini,0,0,mini.width,mini.height,x,y,ww,hh);ctx.restore()}
+function draw(){if(!source||!canvas)return;canvas.width=source.width;canvas.height=source.height;const c=canvas.getContext('2d');c.drawImage(source,0,0);rects.forEach(r=>mosaic(c,source,r))}
+async function decode(file){if(file.size>MAX_SOURCE)throw new Error('Фото больше 25 МБ');if('createImageBitmap'in w){try{return await w.createImageBitmap(file,{imageOrientation:'from-image'})}catch(_){}}return await new Promise((ok,no)=>{const u=URL.createObjectURL(file),i=new w.Image();i.onload=()=>{URL.revokeObjectURL(u);ok(i)};i.onerror=()=>{URL.revokeObjectURL(u);no(new Error('Не удалось открыть фото'))};i.src=u})}
+async function prepare(file){const im=await decode(file),iw=im.width||im.naturalWidth,ih=im.height||im.naturalHeight;if(!iw||!ih)throw new Error('Не удалось определить размер фото');const k=Math.min(1,MAX_LONG_SIDE/Math.max(iw,ih)),cw=Math.max(1,Math.round(iw*k)),ch=Math.max(1,Math.round(ih*k));const c=d.createElement('canvas');c.width=cw;c.height=ch;const g=c.getContext('2d',{alpha:false});g.fillStyle='#fff';g.fillRect(0,0,cw,ch);g.drawImage(im,0,0,cw,ch);im.close?.();return c}
+function blob(q){return new Promise(ok=>canvas.toBlob(ok,'image/jpeg',q))}
+async function finish(){const b=d.getElementById('rpDone');b.disabled=true;b.textContent='Готовлю JPEG…';try{draw();let out=null;for(const q of [.88,.8,.72,.64]){out=await blob(q);if(out&&out.size<=MAX_OUTPUT)break}if(!out||out.size>MAX_OUTPUT)throw new Error('Фото после обработки больше 5 МБ');clearSafe();safeFile=new w.File([out],`SAFE_${Date.now()}.jpg`,{type:'image/jpeg'});safeUrl=URL.createObjectURL(safeFile);const im=$('mediaImagePreview');if(im){im.src=safeUrl;im.classList.add('show')}$('filePreview')?.classList.add('show');const meta=$('filePreviewMeta');if(meta)meta.textContent='Защищённая JPEG-копия · '+(safeFile.size/1024/1024).toFixed(2)+' МБ · EXIF/GPS удалены · удалится через 1 час';say('Фото подготовлено. Подтвердите согласие и нажмите «Загрузить фото».');d.getElementById('radarPwaEditor').hidden=true;const send=$('sendMedia');if(send){send.disabled=false;send.textContent='Загрузить фото'}}catch(e){d.getElementById('rpStatus').textContent='Ошибка: '+String(e.message||e)}finally{b.disabled=false;b.textContent='✓ Готово, использовать фото'}}
+async function choose(file){clearSafe();rects=[];source=null;const ed=editor();ed.hidden=false;d.getElementById('rpStatus').textContent='Создаю локальную копию без EXIF/GPS…';source=await prepare(file);draw();d.getElementById('rpStatus').textContent='Проверьте фото и замажьте лица/номера при необходимости.'}
+async function upload(e){e.preventDefault();e.stopImmediatePropagation();const consent=$('mediaConsent');if(!consent?.checked){say('Подтвердите согласие на публикацию.');return}if(!safeFile){say('Сначала выберите фото и нажмите «Готово, использовать фото».');return}const station=$('mediaStationId')?.value;if(!station){say('АЗС не выбрана.');return}const send=$('sendMedia');if(send){send.disabled=true;send.textContent='Загрузка…'}say('Отправляю защищённую JPEG-копию…');try{const f=new FormData();f.append('station_id',station);f.append('consent_accepted','yes');f.append('consent_version','media-v1-2026-08-23');f.append('privacy_processed','yes');f.append('privacy_reviewed','yes');f.append('privacy_method',PRIVACY_METHOD);f.append('file',safeFile,safeFile.name);const r=await fetch(SAFE_UPLOAD,{method:'POST',headers:{apikey:PUBLIC_KEY},body:f});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Ошибка загрузки');say('Готово! Фото появилось в карточке и удалится через час.');if(send)send.textContent='Готово';setTimeout(()=>{$('mediaDialog')?.close();clearSafe();frame.src='./index.html?fresh='+Date.now()},900)}catch(err){say('Ошибка: '+String(err.message||err));if(send){send.disabled=false;send.textContent='Загрузить фото'}}}
+function patch(){
+  try{w=frame.contentWindow;d=frame.contentDocument}catch(_){return false} if(!w||!d||typeof w.openMedia!=='function')return false;
+  if(w.__RADAR_PWA_PHOTO_V4)return true; w.__RADAR_PWA_PHOTO_V4=true;
+  w.openMedia=showDialog;
+  const input=$('mediaFile'); if(input){input.accept='image/*';input.addEventListener('change',async e=>{e.stopImmediatePropagation();const f=input.files?.[0];if(!f)return;if(!String(f.type||'').startsWith('image/')){input.value='';say('В PWA можно загрузить только фото.');return}const send=$('sendMedia');if(send)send.disabled=true;try{await choose(f)}catch(err){input.value='';say('Ошибка: '+String(err.message||err));const ed=d.getElementById('radarPwaEditor');if(ed)ed.hidden=true}},true)}
+  const form=$('mediaForm'); if(form)form.addEventListener('submit',upload,true);
+  return true;
 }
-async function openEditor(file){ensureEditor();revokeSafe();rects=[];sourceCanvas=null;document.getElementById('radarPwaPhotoEditor').hidden=false;document.getElementById('rpStatus').textContent='Создаю локальную копию без EXIF/GPS…';sourceCanvas=await prepareCanvas(file);renderEditor();document.getElementById('rpStatus').textContent='Проверяю фото…';await autoDetect()}
-
-function install(frame){
- frameWin=frame.contentWindow;frameDoc=frame.contentDocument;if(!frameWin||!frameDoc)return;
- const original=frameWin.openMedia;
- if(typeof original==='function'&&!frameWin.__radarPwaPhotoOpenPatched){
-   frameWin.__radarPwaPhotoOpenPatched=true;
-   frameWin.openMedia=function(station){const prev=frameWin.RADAR_NATIVE_APP;frameWin.RADAR_NATIVE_APP=true;try{original.call(frameWin,station)}finally{frameWin.RADAR_NATIVE_APP=prev}
-     revokeSafe();const input=$('mediaFile');if(input){input.accept='image/*';input.removeAttribute('capture')}
-     const title=$('mediaDialogTitle');if(title)title.textContent='Фото: '+String(station?.name||'АЗС');
-     const hint=frameDoc.querySelector('#mediaDialog .mediaHint');if(hint)hint.innerHTML='<b>PWA-защита + удаление через 1 час.</b><br>Фото обрабатывается на этом устройстве: создаётся новая JPEG-копия без EXIF/GPS. Проверьте лица и госномера; нужные области можно скрыть пальцем. Видео в PWA не загружается.';
-     const label=frameDoc.querySelector('label[for="mediaFile"]');if(label)label.textContent='Выберите фото или снимите камерой';
-     msg('Выберите фото. Исходный файл на сервер не отправляется.');
-   };
- }
- const input=$('mediaFile');if(input&&!input.__radarPwaPhotoChange){input.__radarPwaPhotoChange=true;input.addEventListener('change',async e=>{e.stopImmediatePropagation();const file=input.files?.[0];revokeSafe();const send=$('sendMedia');if(send)send.disabled=true;if(!file){msg('Выберите фото.');return}if(!String(file.type||'').startsWith('image/')){input.value='';msg('В PWA можно загрузить только фото.');return}try{msg('Фото обрабатывается локально…');await openEditor(file)}catch(err){input.value='';msg('Ошибка: '+String(err?.message||err));document.getElementById('radarPwaPhotoEditor').hidden=true}},true)}
- const form=$('mediaForm');if(form&&!form.__radarPwaPhotoSubmit){form.__radarPwaPhotoSubmit=true;form.addEventListener('submit',async e=>{e.preventDefault();e.stopImmediatePropagation();const consent=$('mediaConsent');if(!consent?.checked){msg('Перед загрузкой подтвердите согласие на публикацию.');consent?.focus();return}if(!safeFile){msg('Сначала выберите фото и нажмите «Готово, использовать фото».');return}const stationId=$('mediaStationId')?.value||'';if(!stationId){msg('АЗС не выбрана.');return}const send=$('sendMedia');if(send){send.disabled=true;send.textContent='Загрузка…'}msg('Отправляю только защищённую JPEG-копию…');try{const body=new FormData();body.append('station_id',stationId);body.append('consent_accepted','yes');body.append('consent_version','media-v1-2026-08-23');body.append('privacy_processed','yes');body.append('privacy_reviewed','yes');body.append('privacy_method',PRIVACY_METHOD);body.append('file',safeFile,safeFile.name);const r=await fetch(SAFE_UPLOAD,{method:'POST',headers:{apikey:PUBLIC_KEY},body});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Ошибка загрузки');msg('Готово! Фото появилось в карточке и удалится через час.');if(send)send.textContent='Готово';setTimeout(()=>{$('mediaDialog')?.close();revokeSafe();if(typeof frameWin.loadMedia==='function')frameWin.loadMedia();else frame.location.reload()},900)}catch(err){msg('Ошибка: '+String(err?.message||err));if(send){send.disabled=false;send.textContent='Загрузить фото'}}},true)}
-}
-
+function install(f){frame=f;let n=0;const go=()=>{n++;if(patch()||n>80)return;setTimeout(go,100)};go();frame.addEventListener('load',()=>{n=0;go()})}
 window.RadarPwaPhoto={install};
 })();
