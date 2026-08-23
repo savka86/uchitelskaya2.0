@@ -14,11 +14,22 @@
 </head>
 <body>
 <iframe id="radarFrame" src="./index.html" title="Радар АЗС" allow="camera; microphone; geolocation; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-<script src="./pwa-photo.js"></script>
+<script src="./pwa-photo.js?v=3"></script>
 <script>
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}))}
 const frame=document.getElementById('radarFrame');
-frame.addEventListener('load',()=>{try{window.RadarPwaPhoto?.install(frame)}catch(e){console.error('PWA photo init failed',e)}});
+function enablePwaPhoto(){
+  try{
+    if(window.RadarPwaPhoto && frame.contentWindow && frame.contentDocument){
+      window.RadarPwaPhoto.install(frame);
+      return typeof frame.contentWindow.openMedia==='function' && !!frame.contentWindow.__radarPwaPhotoOpenPatched;
+    }
+  }catch(e){console.error('PWA photo init failed',e)}
+  return false;
+}
+frame.addEventListener('load',enablePwaPhoto);
+if(frame.contentDocument?.readyState==='complete'||frame.contentDocument?.readyState==='interactive')enablePwaPhoto();
+let tries=0;const initTimer=setInterval(()=>{tries++;if(enablePwaPhoto()||tries>=30)clearInterval(initTimer)},100);
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}))}
 </script>
 </body>
 </html>
