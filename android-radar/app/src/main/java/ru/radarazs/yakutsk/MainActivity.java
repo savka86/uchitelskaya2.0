@@ -74,8 +74,8 @@ public class MainActivity extends Activity {
         settings.setUseWideViewPort(true);
         settings.setTextZoom(100);
         settings.setUserAgentString(
-                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 " +
-                "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+                "Mozilla/5.0 (Linux; Android) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/140.0.0.0 Mobile Safari/537.36 RadarAZS/1.1.4"
         );
 
         webView.setWebViewClient(new RadarWebViewClient());
@@ -94,7 +94,8 @@ public class MainActivity extends Activity {
             );
             html = html.replace(
                     "</head>",
-                    "<style>html,body{min-width:1280px}</style></head>"
+                    "<script>window.RADAR_NATIVE_APP=true;window.RADAR_NATIVE_VERSION=\"1.1.4\";</script>" +
+                            "<style>html,body{min-width:1280px}</style></head>"
             );
             webView.loadDataWithBaseURL(LOCAL_ORIGIN, html, "text/html", "UTF-8", null);
         } catch (Exception e) {
@@ -267,16 +268,12 @@ public class MainActivity extends Activity {
 
             if (acceptsImage) {
                 Intent cameraIntent = createPhotoCaptureIntent();
-                if (cameraIntent != null) {
-                    captureIntents.add(cameraIntent);
-                }
+                if (cameraIntent != null) captureIntents.add(cameraIntent);
             }
 
             if (acceptsVideo) {
                 Intent videoIntent = createVideoCaptureIntent();
-                if (videoIntent != null) {
-                    captureIntents.add(videoIntent);
-                }
+                if (videoIntent != null) captureIntents.add(videoIntent);
             }
 
             Intent chooser = Intent.createChooser(picker, "Выберите фото или видео");
@@ -298,9 +295,7 @@ public class MainActivity extends Activity {
     private Intent createPhotoCaptureIntent() {
         try {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (intent.resolveActivity(getPackageManager()) == null) {
-                return null;
-            }
+            if (intent.resolveActivity(getPackageManager()) == null) return null;
 
             pendingPhotoFile = createCaptureFile("IMG_", ".jpg");
             pendingPhotoUri = FileProvider.getUriForFile(
@@ -320,9 +315,7 @@ public class MainActivity extends Activity {
     private Intent createVideoCaptureIntent() {
         try {
             Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-            if (intent.resolveActivity(getPackageManager()) == null) {
-                return null;
-            }
+            if (intent.resolveActivity(getPackageManager()) == null) return null;
 
             pendingVideoFile = createCaptureFile("VID_", ".mp4");
             pendingVideoUri = FileProvider.getUriForFile(
@@ -342,9 +335,7 @@ public class MainActivity extends Activity {
 
     private File createCaptureFile(String prefix, String suffix) throws Exception {
         File dir = getExternalCacheDir();
-        if (dir == null) {
-            dir = getCacheDir();
-        }
+        if (dir == null) dir = getCacheDir();
         String stamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(new Date());
         return File.createTempFile(prefix + stamp + "_", suffix, dir);
     }
@@ -357,27 +348,105 @@ public class MainActivity extends Activity {
             return;
         }
 
-        if (filePathCallback == null) {
-            return;
-        }
+        if (filePathCallback == null) return;
 
-        Uri[] result = null;
+        Uri sourceUri = null;
+        boolean capturedVideo = false;
         if (resultCode == RESULT_OK) {
             if (data != null && (data.getData() != null || data.getClipData() != null)) {
-                result = WebChromeClient.FileChooserParams.parseResult(resultCode, data);
+                Uri[] picked = WebChromeClient.FileChooserParams.parseResult(resultCode, data);
+                if (picked != null && picked.length > 0) sourceUri = picked[0];
             } else if (pendingPhotoFile != null && pendingPhotoFile.length() > 0 && pendingPhotoUri != null) {
-                result = new Uri[]{pendingPhotoUri};
+                sourceUri = pendingPhotoUri;
             } else if (pendingVideoFile != null && pendingVideoFile.length() > 0 && pendingVideoUri != null) {
-                result = new Uri[]{pendingVideoUri};
+                sourceUri = pendingVideoUri;
+                capturedVideo = true;
             }
         }
 
-        filePathCallback.onReceiveValue(result);
-        filePathCallback = null;
+        if (sourceUri == null) {
+            finishFileChooser(null);
+            return;
+        }
+
+        String mime = null;
+        try {
+            mime = getContentResolver().getType(sourceUri);
+        } catch (Exception ignored) {
+        }
+        boolean isVideo = capturedVideo || (mime != null && mime.toLowerCase(Locale.ROOT).startsWith("video/"));
+        final Uri selectedUri = sourceUri;
+
+        if (isVideo) {
+            setPrivacyStatus("Автозащита видео: проверяю кадры на лица и госномера…");
+            PrivacyVideoProcessor.process(this, selectedUri, new PrivacyVideoProcessor.Callback() {
+                @Override
+                public void onSuccess(Uri safeUri, double durationSeconds, int framesChecked) {
+                    finishFileChooser(new Uri[]{safeUri});
+                    if (webView != null) {
+                        webView.postDelayed(() -> setPrivacyStatus(
+                                "Видео проверено: " + framesChecked +
+                                        " кадров. Лица и номера не обнаружены. Звук и исходные метаданные удалены."
+                        ), 450);
+                    }
+                }
+
+                @Override
+                public void onBlocked(int facesFound, int platesFound) {
+                    finishFileChooser(null);
+                    setPrivacyStatus(
+                            "Видео не принято: обнаружены лица или госномера (лица — " + facesFound +
+                                    ", номера — " + platesFound + "). Снимите ролик без людей и читаемых номеров."
+                    );
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    finishFileChooser(null);
+                    setPrivacyStatus("Видео не выбрано: " + message);
+                }
+            });
+        } else {
+            setPrivacyStatus("Автозащита фото: скрываю найденные лица и госномера…");
+            PrivacyImageProcessor.process(this, selectedUri, new PrivacyImageProcessor.Callback() {
+                @Override
+                public void onSuccess(Uri safeUri, int facesHidden, int platesHidden) {
+                    finishFileChooser(new Uri[]{safeUri});
+                    if (webView != null) {
+                        webView.postDelayed(() -> setPrivacyStatus(
+                                "Фото защищено: скрыто лиц — " + facesHidden +
+                                        ", номеров — " + platesHidden + ". Метаданные удалены."
+                        ), 450);
+                    }
+                }
+
+                @Override
+                public void onFailure() {
+                    finishFileChooser(null);
+                    setPrivacyStatus("Фото не выбрано: не удалось безопасно обработать изображение.");
+                }
+            });
+        }
+    }
+
+    private void finishFileChooser(Uri[] result) {
+        if (filePathCallback != null) {
+            filePathCallback.onReceiveValue(result);
+            filePathCallback = null;
+        }
         pendingPhotoUri = null;
         pendingVideoUri = null;
         pendingPhotoFile = null;
         pendingVideoFile = null;
+    }
+
+    private void setPrivacyStatus(String message) {
+        if (webView == null) return;
+        String safe = message.replace("\\", "\\\\").replace("'", "\\'").replace("\n", " ");
+        webView.evaluateJavascript(
+                "(function(){var n=document.getElementById('mediaMsg');if(n)n.textContent='" + safe + "';})()",
+                null
+        );
     }
 
     @Override
