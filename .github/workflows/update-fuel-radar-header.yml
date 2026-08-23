@@ -1,0 +1,50 @@
+name: Update Fuel Radar Header
+
+on:
+  push:
+    paths:
+      - '.github/workflows/update-fuel-radar-header.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-header:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Update header text
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('fuel-radar/index.html')
+          text = path.read_text(encoding='utf-8')
+
+          old_title = '<title>Радар бензина — Якутск</title>'
+          new_title = '<title>Радар АЗС — Якутск</title>'
+
+          old_header = '<div class="head"><div><h1>⛽ Радар бензина — Якутск</h1><div class="sub">2ГИС + Supabase + сообщения водителей + официальные камеры СТНГ + почасовой бот</div></div><div id="count" class="badge">загрузка…</div></div>'
+          new_header = '<div class="head"><div><h1>⛽ Радар АЗС — помоги другим водителям Якутска узнать реальную обстановку на заправках.</h1><div class="sub">Присоединяйся к водителям Якутска: делись свежей информацией об очередях и наличии топлива — вместе поможем друг другу экономить время.</div></div><div id="count" class="badge">загрузка…</div></div>'
+
+          if old_title not in text:
+              raise SystemExit('Old page title not found')
+          if old_header not in text:
+              raise SystemExit('Old header block not found')
+
+          text = text.replace(old_title, new_title, 1)
+          text = text.replace(old_header, new_header, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fuel-radar/index.html
+          git commit -m "Update Fuel Radar heading and call to action"
+          git push origin main
