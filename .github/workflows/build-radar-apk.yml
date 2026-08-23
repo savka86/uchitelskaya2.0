@@ -25,7 +25,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
 
     steps:
       - name: Checkout
@@ -62,7 +62,8 @@ jobs:
           IV_HEX="$(openssl rand -hex 16)"
 
           sed -i "s/__KEY_HEX__/${KEY_HEX}/g; s/__IV_HEX__/${IV_HEX}/g" \
-            android-radar/app/src/main/java/ru/radarazs/yakutsk/MainActivity.java
+            android-radar/app/src/main/java/ru/radarazs/yakutsk/MainActivity.java \
+            android-radar/app/src/main/java/ru/radarazs/yakutsk/PrivacyMainActivity.java
 
           openssl enc -aes-256-cbc -K "$KEY_HEX" -iv "$IV_HEX" -nosalt \
             -in fuel-radar/index.html \
@@ -84,14 +85,14 @@ jobs:
         shell: bash
         run: |
           gradle -p android-radar :app:assembleDebug --no-daemon
-          cp android-radar/app/build/outputs/apk/debug/app-debug.apk Radar-AZS-PC-1.1.2.apk
-          sha256sum Radar-AZS-PC-1.1.2.apk | tee Radar-AZS-PC-1.1.2.sha256
+          cp android-radar/app/build/outputs/apk/debug/app-debug.apk Radar-AZS-PC-1.1.3-Privacy.apk
+          sha256sum Radar-AZS-PC-1.1.3-Privacy.apk | tee Radar-AZS-PC-1.1.3-Privacy.sha256
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Radar-AZS-Android-PC
+          name: Radar-AZS-Android-PC-Privacy
           path: |
-            Radar-AZS-PC-1.1.2.apk
-            Radar-AZS-PC-1.1.2.sha256
+            Radar-AZS-PC-1.1.3-Privacy.apk
+            Radar-AZS-PC-1.1.3-Privacy.sha256
           retention-days: 14
