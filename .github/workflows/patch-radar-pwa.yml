@@ -38,3 +38,4 @@ if('serviceWorker' in navigator && !window.RADAR_NATIVE_APP){
           git add fuel-radar/index.html
           git commit -m "Enable Radar AZS PWA" || exit 0
           git push
+# trigger 2
