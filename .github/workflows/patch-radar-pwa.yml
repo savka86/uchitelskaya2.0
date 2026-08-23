@@ -1,18 +1,21 @@
 name: Patch Radar PWA
 
 on:
-  push:
-    paths:
-      - '.github/workflows/patch-radar-pwa.yml'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   patch:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref }}
       - name: Add PWA links and service worker registration
         shell: python
         run: |
@@ -37,5 +40,4 @@ if('serviceWorker' in navigator && !window.RADAR_NATIVE_APP){
           git config user.email "64674641+savka86@users.noreply.github.com"
           git add fuel-radar/index.html
           git commit -m "Enable Radar AZS PWA" || exit 0
-          git push
-# trigger 2
+          git push origin HEAD:${{ github.head_ref }}
