@@ -1,0 +1,22 @@
+{
+  "name": "Радар АЗС — Якутск",
+  "short_name": "Радар АЗС",
+  "description": "Реальная обстановка на АЗС Якутска: топливо, очереди, камеры и сообщения водителей.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#0c1117",
+  "theme_color": "#111827",
+  "orientation": "any",
+  "categories": ["navigation", "utilities", "travel"],
+  "icons": [
+    {
+      "src": "./pwa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
