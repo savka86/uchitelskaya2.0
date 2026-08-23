@@ -1,0 +1,67 @@
+name: Fix Radar PWA photo final
+
+on:
+  push:
+    paths:
+      - '.radar-pwa-final-trigger'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Patch Radar for direct PWA photo
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+
+          p = Path('fuel-radar/index.html')
+          s = p.read_text(encoding='utf-8')
+
+          manifest = '<link rel="manifest" href="./manifest.webmanifest">\n<meta name="theme-color" content="#111827">\n<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-title" content="Радар АЗС">'
+          if 'rel="manifest"' not in s:
+              s = s.replace('<title>Радар АЗС — Якутск</title>', '<title>Радар АЗС — Якутск</title>\n' + manifest, 1)
+
+          old = "function openMedia(s){if(!window.RADAR_NATIVE_APP){alert('Загрузка фото и видео доступна в Android-приложении «Радар АЗС», где медиа проходит автоматическую защиту приватности.');return}"
+          new = "function openMedia(s){if(!window.RADAR_NATIVE_APP&&location.hostname!=='radar-azs.vercel.app'){alert('Загрузка фото и видео доступна в Android-приложении «Радар АЗС», где медиа проходит автоматическую защиту приватности.');return}"
+          if old in s:
+              s = s.replace(old, new, 1)
+          elif new not in s:
+              raise SystemExit('openMedia marker not found')
+
+          tag = '<script src="./pwa-photo-final.js?v=1"></script>'
+          if tag not in s:
+              s = s.replace('</body>', tag + '\n</body>', 1)
+
+          p.write_text(s, encoding='utf-8')
+
+          vercel = {
+            '$schema': 'https://openapi.vercel.sh/vercel.json',
+            'cleanUrls': False,
+            'trailingSlash': False,
+            'rewrites': [{'source': '/', 'destination': '/index.html'}],
+            'headers': [
+              {'source':'/index.html','headers':[{'key':'Cache-Control','value':'public, max-age=0, must-revalidate'}]},
+              {'source':'/pwa-photo-final.js','headers':[{'key':'Cache-Control','value':'public, max-age=0, must-revalidate'}]},
+              {'source':'/service-worker.js','headers':[{'key':'Cache-Control','value':'public, max-age=0, must-revalidate'},{'key':'Service-Worker-Allowed','value':'/'}]},
+              {'source':'/version.json','headers':[{'key':'Cache-Control','value':'public, max-age=0, must-revalidate'}]}
+            ]
+          }
+          Path('fuel-radar/vercel.json').write_text(json.dumps(vercel, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Commit final patch
+        shell: bash
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fuel-radar/index.html fuel-radar/vercel.json
+          git commit -m "Fix PWA photo directly in Radar"
+          git push origin main
