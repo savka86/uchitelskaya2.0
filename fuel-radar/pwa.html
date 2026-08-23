@@ -22,10 +22,11 @@ function enablePwaPhoto(){
     if(frame.contentWindow && frame.contentDocument){
       frame.contentWindow.RADAR_NATIVE_APP=true;
       frame.contentWindow.RADAR_PWA_APP=true;
+      frame.contentWindow.RADAR_PWA_MODE=true;
     }
     if(window.RadarPwaPhoto && frame.contentWindow && frame.contentDocument){
       window.RadarPwaPhoto.install(frame);
-      return !!frame.contentWindow.__RADAR_PWA_PHOTO_V4;
+      return !!frame.contentWindow.__RADAR_PWA_PHOTO_V5;
     }
   }catch(e){console.error('PWA photo init failed',e)}
   return false;
