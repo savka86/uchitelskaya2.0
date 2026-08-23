@@ -8,6 +8,12 @@ on:
       - "fuel-radar/data/**"
       - "android-radar/**"
       - ".github/workflows/build-radar-apk.yml"
+  pull_request:
+    paths:
+      - "fuel-radar/index.html"
+      - "fuel-radar/data/**"
+      - "android-radar/**"
+      - ".github/workflows/build-radar-apk.yml"
 
 permissions:
   contents: read
