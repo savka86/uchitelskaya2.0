@@ -25,7 +25,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
 
     steps:
       - name: Checkout
@@ -85,14 +85,14 @@ jobs:
         shell: bash
         run: |
           gradle -p android-radar :app:assembleDebug --no-daemon
-          cp android-radar/app/build/outputs/apk/debug/app-debug.apk Radar-AZS-PC-1.1.3-Privacy.apk
-          sha256sum Radar-AZS-PC-1.1.3-Privacy.apk | tee Radar-AZS-PC-1.1.3-Privacy.sha256
+          cp android-radar/app/build/outputs/apk/debug/app-debug.apk Radar-AZS-PC-1.1.4-Video-Privacy.apk
+          sha256sum Radar-AZS-PC-1.1.4-Video-Privacy.apk | tee Radar-AZS-PC-1.1.4-Video-Privacy.sha256
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Radar-AZS-Android-PC-Privacy
+          name: Radar-AZS-Android-PC-Video-Privacy
           path: |
-            Radar-AZS-PC-1.1.3-Privacy.apk
-            Radar-AZS-PC-1.1.3-Privacy.sha256
+            Radar-AZS-PC-1.1.4-Video-Privacy.apk
+            Radar-AZS-PC-1.1.4-Video-Privacy.sha256
           retention-days: 14
