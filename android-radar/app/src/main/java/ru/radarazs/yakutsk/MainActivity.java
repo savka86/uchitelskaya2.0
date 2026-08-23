@@ -72,6 +72,11 @@ public class MainActivity extends Activity {
         settings.setDisplayZoomControls(false);
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
+        settings.setTextZoom(100);
+        settings.setUserAgentString(
+                "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 " +
+                "(KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+        );
 
         webView.setWebViewClient(new RadarWebViewClient());
         webView.setWebChromeClient(new RadarChromeClient());
@@ -83,6 +88,14 @@ public class MainActivity extends Activity {
         try {
             byte[] htmlBytes = decryptAsset("radar.bin");
             String html = new String(htmlBytes, StandardCharsets.UTF_8);
+            html = html.replace(
+                    "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">",
+                    "<meta name=\"viewport\" content=\"width=1280,user-scalable=yes\">"
+            );
+            html = html.replace(
+                    "</head>",
+                    "<style>html,body{min-width:1280px}</style></head>"
+            );
             webView.loadDataWithBaseURL(LOCAL_ORIGIN, html, "text/html", "UTF-8", null);
         } catch (Exception e) {
             String escaped = String.valueOf(e.getMessage())
