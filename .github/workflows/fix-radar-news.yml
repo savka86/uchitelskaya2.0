@@ -1,0 +1,36 @@
+name: Fix Radar news cards
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/radar-fix-news-trigger.txt'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix news list sizing
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('fuel-radar/index.html')
+          s=p.read_text(encoding='utf-8')
+          old="function limitBotNews(){const items=[...el.botList.querySelectorAll('.botItem')];if(items.length<=3){el.botList.style.maxHeight='none';el.botList.style.overflowY='visible';el.botList.removeAttribute('tabindex');el.botList.removeAttribute('title');return}const listTop=el.botList.getBoundingClientRect().top,thirdBottom=items[2].getBoundingClientRect().bottom;el.botList.style.maxHeight=Math.max(1,Math.ceil(thirdBottom-listTop))+'px';el.botList.style.overflowY='auto';el.botList.tabIndex=0;el.botList.title='Прокрутите, чтобы увидеть остальные новости'}"
+          new="function limitBotNews(){const items=[...el.botList.querySelectorAll('.botItem')];el.botList.style.maxHeight='345px';el.botList.style.overflowY='auto';el.botList.style.minHeight='0';if(items.length>3){el.botList.tabIndex=0;el.botList.title='Прокрутите, чтобы увидеть остальные новости'}else{el.botList.removeAttribute('tabindex');el.botList.removeAttribute('title')}}"
+          if old not in s:
+              raise SystemExit('target limitBotNews not found')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Clean temporary trigger
+        run: |
+          rm -f .github/radar-fix-news-trigger.txt .github/workflows/fix-radar-news.yml
+      - name: Commit fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fuel-radar/index.html .github
+          git commit -m 'Fix collapsed fuel news cards'
+          git push
