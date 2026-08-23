@@ -72,14 +72,14 @@ jobs:
         shell: bash
         run: |
           gradle -p android-radar :app:assembleDebug --no-daemon
-          cp android-radar/app/build/outputs/apk/debug/app-debug.apk Radar-AZS-PC-1.1.1.apk
-          sha256sum Radar-AZS-PC-1.1.1.apk | tee Radar-AZS-PC-1.1.1.sha256
+          cp android-radar/app/build/outputs/apk/debug/app-debug.apk Radar-AZS-PC-1.1.2.apk
+          sha256sum Radar-AZS-PC-1.1.2.apk | tee Radar-AZS-PC-1.1.2.sha256
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Radar-AZS-Android-PC
           path: |
-            Radar-AZS-PC-1.1.1.apk
-            Radar-AZS-PC-1.1.1.sha256
+            Radar-AZS-PC-1.1.2.apk
+            Radar-AZS-PC-1.1.2.sha256
           retention-days: 14
