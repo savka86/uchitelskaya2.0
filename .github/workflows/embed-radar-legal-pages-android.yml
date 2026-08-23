@@ -1,0 +1,60 @@
+name: Embed Radar Legal Pages Android
+
+on:
+  push:
+    paths:
+      - '.github/workflows/embed-radar-legal-pages-android.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Patch Android WebView legal pages
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('android-radar/app/src/main/java/ru/radarazs/yakutsk/MainActivity.java')
+          s=p.read_text(encoding='utf-8')
+          anchor='''            Uri uri = request.getUrl();
+            if ("radar.local".equalsIgnoreCase(uri.getHost())
+                    && "/data/camera-status.json".equals(uri.getPath())) {'''
+          insert='''            Uri uri = request.getUrl();
+            if ("radar.local".equalsIgnoreCase(uri.getHost())
+                    && ("/privacy.html".equals(uri.getPath()) || "/rights.html".equals(uri.getPath()))) {
+                try {
+                    String assetName = "/privacy.html".equals(uri.getPath()) ? "privacy.bin" : "rights.bin";
+                    byte[] html = decryptAsset(assetName);
+                    return new WebResourceResponse(
+                            "text/html",
+                            "UTF-8",
+                            new ByteArrayInputStream(html)
+                    );
+                } catch (Exception ignored) {
+                    return new WebResourceResponse(
+                            "text/html",
+                            "UTF-8",
+                            500,
+                            "Local page error",
+                            null,
+                            new ByteArrayInputStream("<!doctype html><meta charset='utf-8'><p>Не удалось открыть страницу.</p>".getBytes(StandardCharsets.UTF_8))
+                    );
+                }
+            }
+            if ("radar.local".equalsIgnoreCase(uri.getHost())
+                    && "/data/camera-status.json".equals(uri.getPath())) {'''
+          if anchor not in s:
+              raise SystemExit('Android intercept anchor not found')
+          s=s.replace(anchor,insert,1)
+          p.write_text(s,encoding='utf-8')
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name "savka86"
+          git config user.email "64674641+savka86@users.noreply.github.com"
+          git add android-radar/app/src/main/java/ru/radarazs/yakutsk/MainActivity.java
+          git commit -m "Serve encrypted legal pages inside Android app"
+          git push
