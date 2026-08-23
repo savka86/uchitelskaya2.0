@@ -1,9 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
-  "trailingSlash": true,
-  "redirects": [
-    { "source": "/", "destination": "/pwa/", "permanent": false }
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/pwa.html" }
   ],
   "headers": [
     {
@@ -13,7 +13,13 @@
       ]
     },
     {
-      "source": "/pwa-photo.js",
+      "source": "/pwa-bootstrap.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/pwa-photo-direct.js",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
