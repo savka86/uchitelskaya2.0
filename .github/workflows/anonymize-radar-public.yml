@@ -1,0 +1,44 @@
+name: Anonymize Radar public contact
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/anonymize-radar-public.yml
+
+permissions:
+  contents: write
+
+jobs:
+  anonymize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove public personal contact from Radar
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('fuel-radar/index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<a href="mailto:savelii_86@mail.ru">Связаться с владельцем сервиса</a>'
+          new = '<span>Связь с сервисом — через кнопку «Обратная связь»</span>'
+          if old not in s:
+              raise SystemExit('Expected public mail link not found; refusing broad edit')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+      - name: Verify public identity is absent from Radar pages
+        shell: bash
+        run: |
+          if grep -RInE 'savelii_86@mail\.ru|Гуляев Савелий Николаевич' fuel-radar --include='*.html'; then
+            echo 'Personal identity still found in public Radar HTML' >&2
+            exit 1
+          fi
+      - name: Commit exact patch
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add fuel-radar/index.html
+          git commit -m 'Remove personal contact from Radar public footer'
+          git push
