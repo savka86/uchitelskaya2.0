@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-08-24T01:54:54.297341+00:00",
+  "checked_at": "2026-08-24T03:14:25.304632+00:00",
   "source": "Официальные публичные камеры АО «Сахатранснефтегаз»",
   "method": "public camera frame + YOLOv8n",
   "disclaimer": "Экспериментальная оценка количества видимых автомобилей. Это не официальный размер очереди; часть машин может находиться вне кадра.",
@@ -8,61 +8,21 @@
       "id": "mozh31",
       "name": "АГЗС №1 — ул. Можайского, 31",
       "source_url": "https://lk-b2b.camera.rt.ru/sl/POVtkjuH7",
-      "checked_at": "2026-08-24T01:54:54.297341+00:00",
-      "online": true,
-      "vehicles_visible": 9,
-      "queue_level": "заметная очередь",
+      "checked_at": "2026-08-24T03:14:25.304632+00:00",
+      "online": false,
+      "vehicles_visible": null,
+      "queue_level": "камера недоступна",
       "experimental": true,
-      "stream_progressed": true,
-      "frame_width": 1280,
-      "frame_height": 720,
-      "detections": [
-        {
-          "type": "car",
-          "confidence": 0.833
-        },
-        {
-          "type": "car",
-          "confidence": 0.759
-        },
-        {
-          "type": "car",
-          "confidence": 0.487
-        },
-        {
-          "type": "car",
-          "confidence": 0.469
-        },
-        {
-          "type": "car",
-          "confidence": 0.441
-        },
-        {
-          "type": "car",
-          "confidence": 0.35
-        },
-        {
-          "type": "car",
-          "confidence": 0.308
-        },
-        {
-          "type": "car",
-          "confidence": 0.225
-        },
-        {
-          "type": "car",
-          "confidence": 0.192
-        }
-      ]
+      "error": "video element did not become ready"
     },
     {
       "id": "vil4",
       "name": "АГЗС №3 — Вилюйский тракт, 4 км, 6г",
       "source_url": "https://lk-b2b.camera.rt.ru/sl/H0oMBC_pE",
-      "checked_at": "2026-08-24T01:54:54.297341+00:00",
+      "checked_at": "2026-08-24T03:14:25.304632+00:00",
       "online": true,
-      "vehicles_visible": 9,
-      "queue_level": "заметная очередь",
+      "vehicles_visible": 7,
+      "queue_level": "есть машины",
       "experimental": true,
       "stream_progressed": true,
       "frame_width": 1280,
@@ -70,39 +30,31 @@
       "detections": [
         {
           "type": "car",
-          "confidence": 0.816
+          "confidence": 0.745
         },
         {
           "type": "car",
-          "confidence": 0.514
+          "confidence": 0.254
         },
         {
           "type": "car",
-          "confidence": 0.466
+          "confidence": 0.235
         },
         {
           "type": "car",
-          "confidence": 0.311
+          "confidence": 0.231
         },
         {
           "type": "car",
-          "confidence": 0.283
+          "confidence": 0.189
         },
         {
           "type": "car",
-          "confidence": 0.22
+          "confidence": 0.174
         },
         {
           "type": "car",
-          "confidence": 0.206
-        },
-        {
-          "type": "car",
-          "confidence": 0.203
-        },
-        {
-          "type": "car",
-          "confidence": 0.16
+          "confidence": 0.152
         }
       ]
     },
@@ -110,10 +62,10 @@
       "id": "nik16",
       "name": "АГЗС №2 — пр. Михаила Николаева, 16а",
       "source_url": "https://lk-b2b.camera.rt.ru/sl/LL24Sq0y5",
-      "checked_at": "2026-08-24T01:54:54.297341+00:00",
+      "checked_at": "2026-08-24T03:14:25.304632+00:00",
       "online": true,
-      "vehicles_visible": 5,
-      "queue_level": "есть машины",
+      "vehicles_visible": 11,
+      "queue_level": "заметная очередь",
       "experimental": true,
       "stream_progressed": true,
       "frame_width": 640,
@@ -121,23 +73,47 @@
       "detections": [
         {
           "type": "car",
-          "confidence": 0.733
+          "confidence": 0.773
+        },
+        {
+          "type": "car",
+          "confidence": 0.772
+        },
+        {
+          "type": "car",
+          "confidence": 0.731
+        },
+        {
+          "type": "car",
+          "confidence": 0.69
+        },
+        {
+          "type": "car",
+          "confidence": 0.505
         },
         {
           "type": "truck",
-          "confidence": 0.627
+          "confidence": 0.393
         },
         {
           "type": "car",
-          "confidence": 0.416
+          "confidence": 0.367
         },
         {
           "type": "car",
-          "confidence": 0.292
+          "confidence": 0.318
         },
         {
           "type": "car",
-          "confidence": 0.241
+          "confidence": 0.197
+        },
+        {
+          "type": "bus",
+          "confidence": 0.184
+        },
+        {
+          "type": "car",
+          "confidence": 0.152
         }
       ]
     },
@@ -145,10 +121,10 @@
       "id": "zhatai",
       "name": "АГЗС — п. Жатай",
       "source_url": "https://lk-b2b.camera.rt.ru/sl/wtVzcSfmx",
-      "checked_at": "2026-08-24T01:54:54.297341+00:00",
+      "checked_at": "2026-08-24T03:14:25.304632+00:00",
       "online": true,
-      "vehicles_visible": 8,
-      "queue_level": "заметная очередь",
+      "vehicles_visible": 3,
+      "queue_level": "есть машины",
       "experimental": true,
       "stream_progressed": true,
       "frame_width": 1280,
@@ -156,35 +132,15 @@
       "detections": [
         {
           "type": "car",
-          "confidence": 0.873
+          "confidence": 0.886
         },
         {
           "type": "car",
-          "confidence": 0.856
+          "confidence": 0.776
         },
         {
           "type": "car",
-          "confidence": 0.511
-        },
-        {
-          "type": "car",
-          "confidence": 0.329
-        },
-        {
-          "type": "truck",
-          "confidence": 0.201
-        },
-        {
-          "type": "car",
-          "confidence": 0.174
-        },
-        {
-          "type": "truck",
-          "confidence": 0.163
-        },
-        {
-          "type": "car",
-          "confidence": 0.153
+          "confidence": 0.604
         }
       ]
     }
