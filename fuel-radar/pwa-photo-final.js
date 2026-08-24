@@ -3,16 +3,31 @@
 if(location.hostname!=='radar-azs.vercel.app') return;
 
 const SAFE_UPLOAD='https://oetqjkmlzwemreldpbui.supabase.co/functions/v1/station-media-upload-safe';
-const PUBLIC_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ldHFqa21sendlbXJlbGRwYnVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczODA0MjcsImV4cCI6MjEwMjk1NjQyN30.OtIQDj7iqoIZxS54yz79-C3_B0nc-jYsKYssnic7Tq4';
-const MAX_SOURCE=25*1024*1024, MAX_SIDE=1920, MAX_OUT=5*1024*1024;
-let safeFile=null,safeUrl=null,sourceCanvas=null,editorCanvas=null,rects=[],drag=null;
+const PUBLIC_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYXNlIiwicmVmIjoib2V0cWprbWx6d2VtcmVsZHBidWkiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4NzM4MDQyNywiZXhwIjoyMTAyOTU2NDI3fQ.OtIQDj7iqoIZxS54yz79-C3_B0nc-jYsKYssnic7Tq4';
+const MAX_SOURCE=25*1024*1024,MAX_SIDE=1920,MAX_OUT=5*1024*1024;
+const DEVICE_KEY='radarAzsAnonDeviceV1';
+let safeFile=null,safeUrl=null,sourceCanvas=null,editorCanvas=null,rects=[],drag=null,memoryDeviceId='';
 const $=id=>document.getElementById(id);
 const say=t=>{const n=$('mediaMsg');if(n)n.textContent=t};
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
 
 window.RADAR_NATIVE_APP=true;
 window.RADAR_PWA_APP=true;
 window.RADAR_PWA_MODE=true;
 
+function randomUuid(){
+ if(crypto?.randomUUID)return crypto.randomUUID();
+ const b=new Uint8Array(16);crypto.getRandomValues(b);b[6]=(b[6]&15)|64;b[8]=(b[8]&63)|128;
+ const h=[...b].map(x=>x.toString(16).padStart(2,'0')).join('');
+ return `${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`;
+}
+function deviceId(){
+ try{
+   let id=localStorage.getItem(DEVICE_KEY);
+   if(!id||id.length<16){id=randomUuid();localStorage.setItem(DEVICE_KEY,id)}
+   return id;
+ }catch(_){if(!memoryDeviceId)memoryDeviceId=randomUuid();return memoryDeviceId}
+}
 function clearSafe(){if(safeUrl)URL.revokeObjectURL(safeUrl);safeUrl=null;safeFile=null}
 function labels(){
  document.querySelectorAll('.media-btn').forEach(b=>{if(b.textContent!=='📸 Добавить фото')b.textContent='📸 Добавить фото'});
@@ -22,7 +37,6 @@ function labels(){
  const hint=document.querySelector('#mediaDialog .mediaHint');const h='<b>Фото в PWA + удаление через 1 час.</b><br>Перед отправкой создаётся новая JPEG-копия без EXIF/GPS. Проверьте лица и госномера и при необходимости замажьте их пальцем. Видео через PWA не загружается.';if(hint&&hint.innerHTML!==h)hint.innerHTML=h;
  const send=$('sendMedia');if(send&&send.textContent==='Загрузить')send.textContent='Загрузить фото';
 }
-
 function editor(){
  let wrap=$('radarPwaPhotoEditorFinal');if(wrap)return wrap;
  wrap=document.createElement('div');wrap.id='radarPwaPhotoEditorFinal';wrap.hidden=true;
@@ -43,7 +57,65 @@ async function prepare(file){const im=await decode(file),iw=im.width||im.natural
 const toBlob=q=>new Promise(ok=>editorCanvas.toBlob(ok,'image/jpeg',q));
 async function finish(){const b=$('rpfDone');b.disabled=true;b.textContent='Готовлю JPEG…';try{draw();let out=null;for(const q of [.88,.8,.72,.64]){out=await toBlob(q);if(out&&out.size<=MAX_OUT)break}if(!out||out.size>MAX_OUT)throw new Error('Фото после обработки больше 5 МБ');clearSafe();safeFile=new File([out],`SAFE_${Date.now()}.jpg`,{type:'image/jpeg',lastModified:Date.now()});safeUrl=URL.createObjectURL(safeFile);const img=$('mediaImagePreview'),vid=$('mediaVideoPreview');if(vid){vid.pause?.();vid.classList.remove('show');vid.removeAttribute('src')}if(img){img.src=safeUrl;img.classList.add('show')}$('filePreview')?.classList.add('show');const meta=$('filePreviewMeta');if(meta)meta.textContent='Защищённая JPEG-копия · '+(safeFile.size/1024/1024).toFixed(2)+' МБ · EXIF/GPS удалены · удалится через 1 час';say('Фото готово. Подтвердите согласие и нажмите «Загрузить фото».');$('radarPwaPhotoEditorFinal').hidden=true;const send=$('sendMedia');if(send){send.disabled=false;send.textContent='Загрузить фото'}}catch(e){$('rpfStatus').textContent='Ошибка: '+String(e?.message||e)}finally{b.disabled=false;b.textContent='✓ Готово, использовать фото'}}
 async function choose(file){clearSafe();rects=[];sourceCanvas=null;const w=editor();w.hidden=false;$('rpfStatus').textContent='Создаю JPEG-копию без EXIF/GPS…';sourceCanvas=await prepare(file);draw();$('rpfStatus').textContent='Проверьте фото и замажьте лица/номера при необходимости.'}
-async function upload(e){e.preventDefault();e.stopImmediatePropagation();const consent=$('mediaConsent');if(!consent?.checked){say('Подтвердите согласие на публикацию.');consent?.focus();return}if(!safeFile){say('Сначала выберите фото и нажмите «Готово, использовать фото».');return}const station=$('mediaStationId')?.value;if(!station){say('АЗС не выбрана.');return}const send=$('sendMedia');if(send){send.disabled=true;send.textContent='Загрузка…'}say('Отправляю защищённую JPEG-копию…');try{const f=new FormData();f.append('station_id',station);f.append('consent_accepted','yes');f.append('consent_version','media-v1-2026-08-23');f.append('privacy_processed','yes');f.append('privacy_reviewed','yes');f.append('privacy_method','pwa-canvas-manual-redaction-v1');f.append('file',safeFile,safeFile.name);const r=await fetch(SAFE_UPLOAD,{method:'POST',headers:{apikey:PUBLIC_KEY,Authorization:'Bearer '+PUBLIC_KEY},body:f});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Ошибка загрузки');say('Готово! Фото появилось в карточке и удалится через час.');if(send)send.textContent='Готово';setTimeout(()=>{$('mediaDialog')?.close();clearSafe();if(typeof loadMedia==='function')loadMedia()},900)}catch(err){say('Ошибка: '+String(err?.message||err));if(send){send.disabled=false;send.textContent='Загрузить фото'}}}
-function install(){labels();const input=$('mediaFile'),form=$('mediaForm');if(!input||!form){setTimeout(install,100);return}if(window.__RADAR_PWA_PHOTO_FINAL)return;window.__RADAR_PWA_PHOTO_FINAL=true;input.addEventListener('change',async e=>{e.stopImmediatePropagation();const file=input.files?.[0];clearSafe();const send=$('sendMedia');if(send)send.disabled=true;if(!file)return;if(!String(file.type||'').startsWith('image/')){input.value='';say('Через PWA можно загрузить только фото.');return}try{say('Обрабатываю фото на этом устройстве…');await choose(file)}catch(err){input.value='';say('Ошибка: '+String(err?.message||err));const w=$('radarPwaPhotoEditorFinal');if(w)w.hidden=true}},true);form.addEventListener('submit',upload,true);document.addEventListener('click',e=>{if(e.target.closest?.('.media-btn'))setTimeout(labels,0)},true);const grid=$('grid');if(grid)new MutationObserver(labels).observe(grid,{childList:true,subtree:true});if('serviceWorker'in navigator)navigator.serviceWorker.register('/service-worker.js').catch(()=>{})}
+
+async function apiJson(payload,{retry409=false}={}){
+ let lastErr=null;
+ for(let attempt=0;attempt<3;attempt++){
+   try{
+     const r=await fetch(SAFE_UPLOAD,{method:'POST',headers:{apikey:PUBLIC_KEY,Authorization:'Bearer '+PUBLIC_KEY,'Content-Type':'application/json'},body:JSON.stringify(payload)});
+     const j=await r.json().catch(()=>({}));
+     if(r.ok)return j;
+     const retryable=[500,502,503,504].includes(r.status)||(retry409&&r.status===409&&j.retryable);
+     if(!retryable)throw Object.assign(new Error(j.error||'Ошибка загрузки'),{noRetry:true});
+     lastErr=new Error(j.error||'Временная ошибка');
+   }catch(err){
+     if(err?.noRetry)throw err;
+     lastErr=err;
+   }
+   if(attempt<2){say(`Сеть занята, повтор ${attempt+2} из 3…`);await wait([700,1600,3200][attempt])}
+ }
+ throw lastErr||new Error('Не удалось связаться с сервером');
+}
+async function directPut(uploadUrl,file){
+ let lastErr=null;
+ for(let attempt=0;attempt<3;attempt++){
+   try{
+     const body=new FormData();body.append('cacheControl','60');body.append('',file,file.name);
+     const r=await fetch(uploadUrl,{method:'PUT',body});
+     if(r.ok||r.status===409)return;
+     if(![500,502,503,504].includes(r.status))throw Object.assign(new Error('Хранилище отклонило фото'),{noRetry:true});
+     lastErr=new Error('Временная ошибка хранилища');
+   }catch(err){if(err?.noRetry)throw err;lastErr=err}
+   if(attempt<2){say(`Фото загружается, повтор ${attempt+2} из 3…`);await wait([700,1600,3200][attempt])}
+ }
+ throw lastErr||new Error('Не удалось загрузить фото');
+}
+async function upload(e){
+ e.preventDefault();e.stopImmediatePropagation();
+ const consent=$('mediaConsent');if(!consent?.checked){say('Подтвердите согласие на публикацию.');consent?.focus();return}
+ if(!safeFile){say('Сначала выберите фото и нажмите «Готово, использовать фото».');return}
+ const station=$('mediaStationId')?.value;if(!station){say('АЗС не выбрана.');return}
+ const send=$('sendMedia');if(send){send.disabled=true;send.textContent='Загрузка…'}
+ const requestId=randomUuid();
+ try{
+   say('Получаю одноразовое разрешение на загрузку…');
+   const ticket=await apiJson({action:'ticket',request_id:requestId,station_id:station,client_id:deviceId(),size_bytes:safeFile.size,consent_accepted:true,consent_version:'media-v1-2026-08-23',privacy_processed:true,privacy_reviewed:true,privacy_method:'pwa-canvas-manual-redaction-v1'});
+   if(!ticket?.upload_url||!ticket?.ticket_id)throw new Error('Сервер не выдал разрешение на загрузку');
+   say('Отправляю фото напрямую…');
+   await directPut(ticket.upload_url,safeFile);
+   say('Подтверждаю загрузку…');
+   const result=await apiJson({action:'finalize',ticket_id:ticket.ticket_id},{retry409:true});
+   if(!result?.ok)throw new Error('Не удалось подтвердить загрузку');
+   say('Готово! Фото появилось в карточке и удалится через час.');
+   if(send)send.textContent='Готово';
+   setTimeout(()=>{$('mediaDialog')?.close();clearSafe();if(typeof loadMedia==='function')loadMedia()},900);
+ }catch(err){say('Ошибка: '+String(err?.message||err));if(send){send.disabled=false;send.textContent='Загрузить фото'}}
+}
+function install(){
+ labels();const input=$('mediaFile'),form=$('mediaForm');if(!input||!form){setTimeout(install,100);return}
+ if(window.__RADAR_PWA_PHOTO_FINAL)return;window.__RADAR_PWA_PHOTO_FINAL=true;deviceId();
+ input.addEventListener('change',async e=>{e.stopImmediatePropagation();const file=input.files?.[0];clearSafe();const send=$('sendMedia');if(send)send.disabled=true;if(!file)return;if(!String(file.type||'').startsWith('image/')){input.value='';say('Через PWA можно загрузить только фото.');return}try{say('Обрабатываю фото на этом устройстве…');await choose(file)}catch(err){input.value='';say('Ошибка: '+String(err?.message||err));const w=$('radarPwaPhotoEditorFinal');if(w)w.hidden=true}},true);
+ form.addEventListener('submit',upload,true);document.addEventListener('click',e=>{if(e.target.closest?.('.media-btn'))setTimeout(labels,0)},true);const grid=$('grid');if(grid)new MutationObserver(labels).observe(grid,{childList:true,subtree:true});if('serviceWorker'in navigator)navigator.serviceWorker.register('/service-worker.js').catch(()=>{})
+}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install);else install();
 })();
