@@ -19,7 +19,16 @@
       ]
     },
     {
-      "source": "/pwa-photo-final.js",
+      "source": "/pwa-photo-v8.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/pwa-bootstrap.js",
       "headers": [
         {
           "key": "Cache-Control",
