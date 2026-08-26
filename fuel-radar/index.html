@@ -71,8 +71,9 @@ $('feedbackForm').addEventListener('submit',async e=>{e.preventDefault();const c
 $('search').addEventListener('input',render);$('refresh').onclick=load;document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.filter=b.dataset.filter;render()});$('feedbackBtn').onclick=()=>{$('feedbackForm').reset();$('feedbackMsg').textContent='';$('feedbackDialog').showModal()};$('cancelReport').onclick=()=>$('reportDialog').close();$('cancelFeedback').onclick=()=>$('feedbackDialog').close();$('cancelMedia').onclick=()=>$('mediaDialog').close();
 setInterval(()=>{state.media=state.media.filter(m=>new Date(m.expires_at).getTime()>Date.now());renderList(filtered())},60000);
 load();
-if('serviceWorker' in navigator)navigator.serviceWorker.register('/service-worker.js?v=14').catch(()=>{});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('/service-worker.js?v=15').catch(()=>{});
 </script>
 <script src="/pwa-photo-v8.js?v=14"></script>
+<script src="/queue-points.js?v=15"></script>
 </body>
 </html>
