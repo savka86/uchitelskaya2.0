@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Панель владельца — Радар АЗС</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1017;--card:#151b24;--card2:#101620;--text:#f3f4f6;--muted:#9ca7b7;--line:#2b3442;--green:#22c55e;--red:#ef4444;--amber:#f59e0b;--blue:#60a5fa}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:1120px;margin:auto;padding:18px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}.top h1{font-size:25px;margin:0}.muted{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px}.login{max-width:520px;margin:10vh auto}.login h1{margin:0 0 6px}.row{display:grid;gap:6px;margin:12px 0}.row label{font-weight:800}.row input,.row textarea{width:100%;border:1px solid var(--line);border-radius:11px;background:var(--card2);color:var(--text);padding:11px 12px}.row textarea{min-height:84px;resize:vertical}.btn{min-height:42px;border:1px solid var(--line);border-radius:11px;background:var(--card2);color:var(--text);padding:0 13px;font-weight:850;cursor:pointer}.btn.primary{background:#2563eb;border-color:#2563eb;color:#fff}.btn.good{background:#166534;border-color:#15803d;color:#fff}.btn.danger{background:#991b1b;border-color:#dc2626;color:#fff}.btn.warn{background:#78350f;border-color:#d97706;color:#fff}.btn:disabled{opacity:.55;cursor:default}.actions{display:flex;gap:8px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.stat{background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:12px}.stat b{font-size:22px;display:block}.statusline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.status{font-weight:900;font-size:18px}.status.on{color:#4ade80}.status.off{color:#f87171}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:11px;font-weight:800}.msg{margin-top:10px;font-size:12px;min-height:18px}.ok{color:#4ade80}.err{color:#f87171}.warnbox{background:#21190e;border:1px solid #92400e;border-radius:13px;padding:11px 12px;color:#fdba74}.dangerbox{background:#250f12;border:1px solid #7f1d1d;border-radius:13px;padding:11px 12px}.tokenbox{display:none;margin-top:12px;padding:12px;border:1px solid #15803d;background:#092314;border-radius:12px}.tokenbox.show{display:block}.token{font:12px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-all;background:#050b10;border-radius:9px;padding:10px;margin:8px 0}.list{display:grid;gap:8px;max-height:430px;overflow:auto}.item{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px}.itemHead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.item p{margin:7px 0;color:var(--muted);white-space:pre-line}.small{font-size:11px}.audit{display:grid;gap:5px}.audit div{padding:7px 0;border-bottom:1px solid var(--line)}.hidden{display:none!important}a{color:var(--blue)}@media(max-width:760px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.wrap{padding:12px}}
+</style>
+</head>
+<body>
+<div id="login" class="wrap login">
+  <section class="card">
+    <h1>🔐 Панель владельца</h1>
+    <div class="muted">Радар АЗС · отдельная административная часть</div>
+    <div class="row"><label for="ownerKey">Ключ владельца</label><input id="ownerKey" type="password" autocomplete="current-password" placeholder="radar_…"></div>
+    <div class="actions"><button id="loginBtn" class="btn primary">Войти</button><a class="btn" href="../" style="display:inline-grid;place-items:center;text-decoration:none">← Радар</a></div>
+    <div id="loginMsg" class="msg"></div>
+  </section>
+</div>
+
+<main id="app" class="wrap hidden">
+  <header class="top"><div><h1>⚙️ Панель владельца</h1><div class="muted" id="adminLabel"></div></div><div class="actions"><a class="btn" href="../" style="display:inline-grid;place-items:center;text-decoration:none">Открыть Радар ↗</a><button id="logoutBtn" class="btn">Выйти</button></div></header>
+
+  <div class="stats">
+    <div class="stat"><span class="muted">АЗС</span><b id="statStations">—</b></div>
+    <div class="stat"><span class="muted">Новые обращения</span><b id="statFeedback">—</b></div>
+    <div class="stat"><span class="muted">Отчёты водителей</span><b id="statReports">—</b></div>
+    <div class="stat"><span class="muted">Активные фото</span><b id="statMedia">—</b></div>
+  </div>
+
+  <section class="card">
+    <div class="statusline"><div><div class="muted">Состояние сервиса</div><div id="serviceStatus" class="status">—</div></div><div class="actions"><button id="enableBtn" class="btn good">✅ Включить</button><button id="disableBtn" class="btn danger">⛔ Выключить</button></div></div>
+    <div class="row"><label for="shutdownMessage">Сообщение при выключении</label><input id="shutdownMessage" maxlength="200" value="Сервис временно недоступен"></div>
+    <div id="controlMsg" class="msg"></div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2 style="margin-top:0">🏷️ Проект и владелец</h2>
+      <div class="row"><label for="projectName">Название проекта</label><input id="projectName" maxlength="80"></div>
+      <div class="row"><label for="projectSubtitle">Подзаголовок</label><textarea id="projectSubtitle" maxlength="240"></textarea></div>
+      <div class="row"><label for="ownerName">Владелец / организация</label><input id="ownerName" maxlength="160" placeholder="Необязательно"></div>
+      <div class="row"><label for="supportContact">Публичный контакт</label><input id="supportContact" maxlength="200" placeholder="Телефон, email, Telegram — необязательно"></div>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-top:0">✉️ Обратная связь</h2>
+      <div class="row"><label for="feedbackEmail">Email, куда приходят отзывы</label><input id="feedbackEmail" type="email" maxlength="200"></div>
+      <div class="warnbox">После смены адреса первый запрос через почтовый шлюз может потребовать подтверждения нового email. Сами обращения в любом случае сохраняются в базе Радара.</div>
+      <div class="actions" style="margin-top:12px"><button id="saveSettings" class="btn primary">Сохранить настройки</button></div>
+      <div id="settingsMsg" class="msg"></div>
+    </section>
+  </div>
+
+  <div class="grid">
+    <section class="card">
+      <h2 style="margin-top:0">🛡️ Жалобы и модерация</h2>
+      <div class="muted" style="margin-bottom:10px">Новые жалобы пользователей. Можно отметить как решённые.</div>
+      <div id="complaints" class="list"><div class="muted">Загрузка…</div></div>
+      <div id="moderationMsg" class="msg"></div>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-top:0">🧾 Последние действия</h2>
+      <div id="audit" class="audit"><div class="muted">Загрузка…</div></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2 style="margin-top:0">🤝 Передача новому владельцу</h2>
+    <div class="dangerbox"><b>Смена ключа владельца</b><br>Создаёт новый ключ панели и сразу аннулирует текущий. Это удобно делать в момент продажи: новый ключ передаётся покупателю, а старый перестаёт работать.</div>
+    <div class="row"><label for="newOwnerLabel">Имя нового владельца / метка</label><input id="newOwnerLabel" maxlength="80" placeholder="Например: Новый владелец"></div>
+    <button id="rotateKey" class="btn warn">🔑 Создать новый ключ и отключить старый</button>
+    <div id="newTokenBox" class="tokenbox"><b>Новый ключ владельца — сохраните его сейчас</b><div id="newToken" class="token"></div><button id="copyToken" class="btn good">Копировать ключ</button><div class="small muted" style="margin-top:7px">После обновления страницы этот ключ здесь больше не показывается.</div></div>
+    <div id="transferMsg" class="msg"></div>
+  </section>
+
+  <section class="card">
+    <h2 style="margin-top:0">💼 Чек-лист продажи проекта</h2>
+    <div class="list" style="max-height:none">
+      <div class="item"><b>1. Передать ключ владельца</b><p>Через кнопку выше. Старый ключ продавца сразу отзывается.</p></div>
+      <div class="item"><b>2. Поменять email и контакты</b><p>Новый владелец указывает свою почту для отзывов и публичный контакт.</p></div>
+      <div class="item"><b>3. Передать инфраструктуру</b><p>Отдельно передаются репозиторий GitHub, проект Vercel, Supabase и домен, если он появится. Админка не может автоматически переоформить аккаунты сторонних сервисов.</p></div>
+      <div class="item"><b>4. Перевыпустить внешние ключи</b><p>Покупателю лучше создать собственный ключ Яндекс Карт и ограничить его своим доменом.</p></div>
+      <div class="item"><b>5. Проверить юридические страницы</b><p>После смены владельца обновить Политику конфиденциальности, контактные данные и сведения об операторе персональных данных, если они применимы.</p></div>
+    </div>
+  </section>
+</main>
+<script>
+const API='https://oetqjkmlzwemreldpbui.supabase.co/functions/v1/radar-admin';
+const MOD='https://oetqjkmlzwemreldpbui.supabase.co/functions/v1/radar-moderate';
+const $=id=>document.getElementById(id);let key=sessionStorage.getItem('radar-owner-key')||'';
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function setMsg(id,text,ok=false){const n=$(id);n.textContent=text||'';n.className='msg '+(text?(ok?'ok':'err'):'')}
+async function call(method='GET',body=null,endpoint=API){const r=await fetch(endpoint,{method,cache:'no-store',headers:{'x-radar-admin':key,'Content-Type':'application/json'},body:body?JSON.stringify(body):null});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||('HTTP '+r.status));return j}
+function showApp(){ $('login').classList.add('hidden');$('app').classList.remove('hidden') }
+function showLogin(){ $('app').classList.add('hidden');$('login').classList.remove('hidden') }
+function status(control){const on=!!control?.enabled;$('serviceStatus').textContent=on?'✅ Радар включён':'⛔ Радар выключен';$('serviceStatus').className='status '+(on?'on':'off');$('shutdownMessage').value=control?.message||'Сервис временно недоступен';$('enableBtn').disabled=on;$('disableBtn').disabled=!on}
+function fill(j){$('adminLabel').textContent='Доступ: '+(j.admin||'владелец');status(j.control);const s=j.settings||{};$('projectName').value=s.project_name||'Радар АЗС';$('projectSubtitle').value=s.project_subtitle||'';$('feedbackEmail').value=s.feedback_email||'';$('ownerName').value=s.owner_name||'';$('supportContact').value=s.support_contact||'';$('statStations').textContent=j.stats?.stations??0;$('statFeedback').textContent=j.stats?.new_feedback??0;$('statReports').textContent=j.stats?.reports??0;$('statMedia').textContent=j.stats?.active_media??0;const a=j.audit||[];$('audit').innerHTML=a.length?a.map(x=>'<div><b>'+esc(x.action)+'</b><br><span class="small muted">'+esc(x.admin_label)+' · '+new Date(x.created_at).toLocaleString('ru-RU')+'</span></div>').join(''):'<div class="muted">Действий пока нет.</div>'}
+async function load(){const j=await call();fill(j);showApp();loadModeration().catch(()=>{})}
+async function login(){key=$('ownerKey').value.trim();if(!key){setMsg('loginMsg','Введите ключ владельца');return}$('loginBtn').disabled=true;setMsg('loginMsg','');try{const j=await call();sessionStorage.setItem('radar-owner-key',key);fill(j);showApp();loadModeration().catch(()=>{})}catch(e){key='';setMsg('loginMsg',e.message||'Нет доступа')}finally{$('loginBtn').disabled=false}}
+async function setEnabled(enabled){setMsg('controlMsg','');try{const j=await call('POST',{action:'set_enabled',enabled,message:$('shutdownMessage').value.trim()||'Сервис временно недоступен'});status(j.control);setMsg('controlMsg',enabled?'Радар включён.':'Радар выключен.',true);refreshSoon()}catch(e){setMsg('controlMsg',e.message)}}
+async function saveSettings(){const b=$('saveSettings');b.disabled=true;setMsg('settingsMsg','');try{const j=await call('POST',{action:'save_settings',project_name:$('projectName').value,project_subtitle:$('projectSubtitle').value,feedback_email:$('feedbackEmail').value,owner_name:$('ownerName').value,support_contact:$('supportContact').value});fill({...await call(),settings:j.settings});setMsg('settingsMsg','Настройки сохранены.',true)}catch(e){setMsg('settingsMsg',e.message)}finally{b.disabled=false}}
+async function loadModeration(){const j=await call('GET',null,MOD);const rows=(j.complaints||[]).filter(x=>x.status!=='resolved').slice(0,30);$('complaints').innerHTML=rows.length?rows.map(x=>'<div class="item"><div class="itemHead"><div><b>'+esc(x.complaint_kind||'Жалоба')+'</b><div class="small muted">#'+esc(x.id)+' · '+new Date(x.created_at).toLocaleString('ru-RU')+'</div></div><span class="pill">'+esc(x.status||'new')+'</span></div><p>'+esc(x.message)+'</p>'+(x.contact?'<div class="small">Контакт: '+esc(x.contact)+'</div>':'')+'<div class="actions" style="margin-top:8px"><button class="btn good" data-resolve="'+esc(x.id)+'">✓ Решено</button></div></div>').join(''):'<div class="muted">Новых жалоб нет.</div>';document.querySelectorAll('[data-resolve]').forEach(b=>b.onclick=()=>resolveComplaint(b.dataset.resolve))}
+async function resolveComplaint(id){try{await call('POST',{action:'resolve_complaint',id},MOD);setMsg('moderationMsg','Жалоба отмечена как решённая.',true);await loadModeration();refreshSoon()}catch(e){setMsg('moderationMsg',e.message)}}
+async function rotate(){if(!confirm('Текущий ключ сразу перестанет работать. Создать новый ключ владельца?'))return;const b=$('rotateKey');b.disabled=true;setMsg('transferMsg','');try{const j=await call('POST',{action:'rotate_owner_key',label:$('newOwnerLabel').value.trim()||'Новый владелец'});key=j.new_token;sessionStorage.setItem('radar-owner-key',key);$('newToken').textContent=key;$('newTokenBox').classList.add('show');setMsg('transferMsg','Ключ заменён. Старый ключ уже отключён.',true);await load()}catch(e){setMsg('transferMsg',e.message)}finally{b.disabled=false}}
+async function copyToken(){try{await navigator.clipboard.writeText($('newToken').textContent);setMsg('transferMsg','Новый ключ скопирован.',true)}catch{setMsg('transferMsg','Не удалось скопировать автоматически — выделите ключ вручную.')}}
+function refreshSoon(){setTimeout(()=>call().then(fill).catch(()=>{}),500)}
+$('loginBtn').onclick=login;$('ownerKey').addEventListener('keydown',e=>{if(e.key==='Enter')login()});$('logoutBtn').onclick=()=>{sessionStorage.removeItem('radar-owner-key');key='';$('ownerKey').value='';showLogin()};$('enableBtn').onclick=()=>setEnabled(true);$('disableBtn').onclick=()=>setEnabled(false);$('saveSettings').onclick=saveSettings;$('rotateKey').onclick=rotate;$('copyToken').onclick=copyToken;
+if(key)load().catch(()=>{sessionStorage.removeItem('radar-owner-key');key='';showLogin()});
+</script>
+</body>
+</html>
