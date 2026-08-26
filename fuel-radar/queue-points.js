@@ -1,7 +1,7 @@
 (()=>{'use strict';
 if(window.__RADAR_QUEUE_POINTS)return;window.__RADAR_QUEUE_POINTS=true;
 
-let queuePoint=null,pickerMap=null,pickerEntities=[];
+let queuePoint=null,pickerDraft=null,pickerMap=null,pickerStationEntity=null,pickerListener=null,pickerQueueEntities=[];
 const $q=id=>document.getElementById(id);
 
 function injectStyles(){
@@ -18,13 +18,13 @@ function injectFormUi(){
   queueLevel.closest('.row')?.insertAdjacentElement('afterend',row);
 
   const dlg=document.createElement('dialog');dlg.id='queuePointDialog';
-  dlg.innerHTML='<form class="form" method="dialog"><h2>📍 Начало очереди</h2><p>Нажмите на карту там, где сейчас находится последний автомобиль в очереди.</p><div class="queuePickerHint">⛽ — выбранная АЗС &nbsp; · &nbsp; 🚗 — начало очереди. Точку можно переставить повторным нажатием.</div><div id="queuePointMap"></div><div class="buttons"><button id="cancelQueuePoint" type="button">Отмена</button><button id="doneQueuePoint" class="send" type="button">Готово</button></div></form>';
+  dlg.innerHTML='<form class="form" method="dialog"><h2>📍 Начало очереди</h2><p>Нажмите на карту там, где сейчас находится последний автомобиль в очереди.</p><div class="queuePickerHint">⛽ — выбранная АЗС &nbsp; · &nbsp; 🚗 — начало очереди. Точку можно переставлять повторными нажатиями.</div><div id="queuePointMap"></div><div class="buttons"><button id="cancelQueuePoint" type="button">Отмена</button><button id="doneQueuePoint" class="send" type="button">Готово</button></div></form>';
   document.body.appendChild(dlg);
 
   $q('pickQueuePoint').onclick=openPicker;
   $q('clearQueuePoint').onclick=()=>{queuePoint=null;updateState();};
-  $q('cancelQueuePoint').onclick=()=>{dlg.close();destroyPicker();};
-  $q('doneQueuePoint').onclick=()=>{dlg.close();destroyPicker();updateState();};
+  $q('cancelQueuePoint').onclick=()=>{pickerDraft=null;dlg.close();destroyPicker();};
+  $q('doneQueuePoint').onclick=()=>{queuePoint=pickerDraft?{...pickerDraft}:null;dlg.close();destroyPicker();updateState();};
   $q('reportType')?.addEventListener('change',updateVisibility);
   updateVisibility();updateState();
 }
@@ -32,7 +32,7 @@ function injectFormUi(){
 function updateVisibility(){
   const row=$q('queuePointRow');if(!row)return;
   const show=$q('reportType')?.value==='queue';row.classList.toggle('show',show);
-  if(!show){queuePoint=null;updateState();}
+  if(!show){queuePoint=null;pickerDraft=null;updateState();}
 }
 function updateState(){
   const n=$q('queuePointState'),c=$q('clearQueuePoint'),p=$q('pickQueuePoint');if(!n)return;
@@ -50,39 +50,44 @@ async function openPicker(){
   const dlg=$q('queuePointDialog'),msg=$q('reportMsg'),s=currentStation();
   if(!dlg||!s)return;
   const lat=Number(s.lat),lon=Number(s.lon);if(!Number.isFinite(lat)||!Number.isFinite(lon)){if(msg)msg.textContent='Для этой АЗС пока нет координат.';return}
-  try{await ensureMaps();dlg.showModal();requestAnimationFrame(()=>buildPicker(s));}
+  try{await ensureMaps();pickerDraft=queuePoint?{...queuePoint}:null;dlg.showModal();requestAnimationFrame(()=>buildPicker(s));}
   catch(e){if(msg)msg.textContent=String(e.message||e)}
 }
 
+function clearPickerQueueVisuals(){
+  if(!pickerMap)return;
+  for(const e of pickerQueueEntities.splice(0)){try{pickerMap.removeChild(e)}catch{}}
+}
 function destroyPicker(){
-  if(pickerMap){try{pickerMap.destroy?.()}catch{}try{pickerMap.remove?.()}catch{}}pickerMap=null;pickerEntities=[];
+  clearPickerQueueVisuals();
+  if(pickerMap&&pickerStationEntity){try{pickerMap.removeChild(pickerStationEntity)}catch{}}
+  if(pickerMap&&pickerListener){try{pickerMap.removeChild(pickerListener)}catch{}}
+  pickerStationEntity=null;pickerListener=null;
+  if(pickerMap){try{pickerMap.destroy?.()}catch{}try{pickerMap.remove?.()}catch{}}pickerMap=null;
   const el=$q('queuePointMap');if(el)el.innerHTML='';
 }
-function addPickerPoint(s,lon,lat){
-  if(!pickerMap)return;
+function addPickerQueueVisuals(s,lon,lat){
+  if(!pickerMap)return;clearPickerQueueVisuals();
   const {YMapMarker,YMapFeature}=ymaps3;
-  for(const e of pickerEntities.splice(0)){try{pickerMap.removeChild(e)}catch{}}
-  const stationEl=document.createElement('div');stationEl.className='queueStationMarker';stationEl.textContent='⛽';
-  const sm=new YMapMarker({coordinates:[Number(s.lon),Number(s.lat)]},stationEl);pickerMap.addChild(sm);pickerEntities.push(sm);
   const qEl=document.createElement('button');qEl.type='button';qEl.className='queueStartMarker';qEl.textContent='🚗';
-  const qm=new YMapMarker({coordinates:[lon,lat]},qEl);pickerMap.addChild(qm);pickerEntities.push(qm);
-  try{const line=new YMapFeature({geometry:{type:'LineString',coordinates:[[lon,lat],[Number(s.lon),Number(s.lat)]]},style:{stroke:[{width:4,color:'#f59e0b',dash:[8,6]}]}});pickerMap.addChild(line);pickerEntities.push(line)}catch{}
+  const qm=new YMapMarker({coordinates:[lon,lat]},qEl);pickerMap.addChild(qm);pickerQueueEntities.push(qm);
+  try{const line=new YMapFeature({geometry:{type:'LineString',coordinates:[[lon,lat],[Number(s.lon),Number(s.lat)]]},style:{stroke:[{width:4,color:'#f59e0b',dash:[8,6]}]}});pickerMap.addChild(line);pickerQueueEntities.push(line)}catch{}
 }
 async function buildPicker(s){
   destroyPicker();const el=$q('queuePointMap');if(!el)return;
-  const {YMap,YMapDefaultSchemeLayer,YMapDefaultFeaturesLayer,YMapListener}=ymaps3;
+  const {YMap,YMapDefaultSchemeLayer,YMapDefaultFeaturesLayer,YMapMarker,YMapListener}=ymaps3;
   pickerMap=new YMap(el,{location:{center:[Number(s.lon),Number(s.lat)],zoom:15},zoomRange:{min:8,max:18}});
   pickerMap.addChild(new YMapDefaultSchemeLayer());pickerMap.addChild(new YMapDefaultFeaturesLayer({zIndex:1800}));
-  const start=queuePoint?[queuePoint.lon,queuePoint.lat]:[Number(s.lon)+0.001,Number(s.lat)+0.0005];
-  addPickerPoint(s,start[0],start[1]);
-  if(!queuePoint)queuePoint={lon:start[0],lat:start[1]};
-  const listener=new YMapListener({layerId:'any',onClick:(_object,event)=>{const c=event?.coordinates;if(!Array.isArray(c)||c.length<2)return;const lon=Number(c[0]),lat=Number(c[1]);if(!Number.isFinite(lon)||!Number.isFinite(lat))return;queuePoint={lon,lat};addPickerPoint(s,lon,lat);updateState();}});
-  pickerMap.addChild(listener);pickerEntities.push(listener);
+  const stationEl=document.createElement('div');stationEl.className='queueStationMarker';stationEl.textContent='⛽';
+  pickerStationEntity=new YMapMarker({coordinates:[Number(s.lon),Number(s.lat)]},stationEl);pickerMap.addChild(pickerStationEntity);
+  if(pickerDraft)addPickerQueueVisuals(s,pickerDraft.lon,pickerDraft.lat);
+  pickerListener=new YMapListener({layerId:'any',onClick:(_object,event)=>{const c=event?.coordinates;if(!Array.isArray(c)||c.length<2)return;const lon=Number(c[0]),lat=Number(c[1]);if(!Number.isFinite(lon)||!Number.isFinite(lat))return;pickerDraft={lon,lat};addPickerQueueVisuals(s,lon,lat);}});
+  pickerMap.addChild(pickerListener);
 }
 
 function wrapOpenReport(){
   const old=window.openReport;if(typeof old!=='function')return;
-  window.openReport=function(id){queuePoint=null;updateState();const out=old(id);updateVisibility();return out};
+  window.openReport=function(id){queuePoint=null;pickerDraft=null;updateState();const out=old(id);updateVisibility();return out};
 }
 function wrapFetch(){
   const old=window.fetch.bind(window);window.fetch=function(input,init){
@@ -107,8 +112,10 @@ async function renderQueueMarkers(rows){
   for(const e of state.queueEntities||[]){try{state.map.removeChild(e)}catch{}}state.queueEntities=[];
   const {YMapMarker,YMapFeature}=ymaps3;
   for(const s of rows){
-    const r=s?.latest_report,qlat=Number(r?.queue_lat),qlon=Number(r?.queue_lon),slat=Number(s?.lat),slon=Number(s?.lon);
-    if(r?.report_type!=='queue'||!Number.isFinite(qlat)||!Number.isFinite(qlon)||!Number.isFinite(slat)||!Number.isFinite(slon))continue;
+    const r=s?.latest_report;
+    if(r?.report_type!=='queue'||r.queue_lat==null||r.queue_lon==null)continue;
+    const qlat=Number(r.queue_lat),qlon=Number(r.queue_lon),slat=Number(s?.lat),slon=Number(s?.lon);
+    if(!Number.isFinite(qlat)||!Number.isFinite(qlon)||!Number.isFinite(slat)||!Number.isFinite(slon))continue;
     const el=document.createElement('button');el.type='button';el.className='queueStartMarker mainQueue';el.textContent='🚗';el.setAttribute('aria-label','Начало очереди: '+(s.name||'АЗС'));
     const bubble=document.createElement('span');bubble.className='queueStartBubble';bubble.textContent='Начало очереди · '+(typeof rel==='function'?rel(r.created_at):'свежая отметка');el.appendChild(bubble);
     el.onclick=e=>{e.preventDefault();e.stopPropagation();try{focusListStation(s.id)}catch{}};
