@@ -19,6 +19,19 @@
       ]
     },
     {
+      "source": "/admin/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store, max-age=0"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/pwa-photo-v8.js",
       "headers": [
         {
