@@ -46,7 +46,7 @@ const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function rel(v){if(!v)return '';const ms=Date.now()-new Date(v).getTime(),m=Math.max(0,Math.floor(ms/60000));if(m<2)return 'только что';if(m<60)return m+' мин назад';const h=Math.floor(m/60);return h<24?h+' ч назад':Math.floor(h/24)+' дн назад'}
 function fuel(v){return v==='92'?'АИ-92':v==='95'?'АИ-95':v==='98'?'АИ-98':v==='dt'?'ДТ':v==='lpg'?'Пропан':v==='cng'?'Метан':''}
-function isGas(s){return ['lpg','cng','gas'].includes(String(s.station_type||'').toLowerCase())||/газ|агзс|метан|пропан/i.test((s.name||'')+' '+(s.network||''))}
+function isGas(s){const type=String(s.station_type||'').toLowerCase();if(['lpg','cng','gas'].includes(type))return true;const text=(s.name||'')+' '+(s.address||'');return /\bАГЗС\b|метан|пропан|газовая\s+(?:азс|заправка|станция)/i.test(text)}
 function statusOf(s){const r=s?.latest_report;if(r?.created_at&&Date.now()-new Date(r.created_at).getTime()<3600000){if(r.report_type==='available')return 'available';if(r.report_type==='empty')return 'empty';if(r.report_type==='queue')return 'queue'}if(s?.official_status==='open')return 'available';if(s?.official_status==='limited')return 'limited';if(s?.official_status==='closed')return 'empty';return 'unknown'}
 function statusLabel(t){return t==='available'?'✅ Есть':t==='limited'?'🟡 Частично':t==='empty'?'❌ Нет':t==='queue'?'🚗 Очередь':'Нет свежих данных'}
 function markerColor(s){const t=statusOf(s);return t==='available'?'#22c55e':t==='limited'?'#f59e0b':t==='empty'?'#ef4444':t==='queue'?'#f59e0b':'#64748b'}
