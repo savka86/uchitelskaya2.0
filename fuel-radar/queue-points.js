@@ -6,7 +6,7 @@ const $q=id=>document.getElementById(id);
 
 function injectStyles(){
   const st=document.createElement('style');
-  st.textContent='.queuePointRow{display:none;margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}.queuePointRow.show{display:block}.queuePointRow b{display:block;margin-bottom:4px}.queuePointHelp{font-size:12px;color:var(--muted);margin:0 0 8px}.queuePointActions{display:flex;gap:7px;flex-wrap:wrap}.queuePointActions button{min-height:38px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);padding:0 11px;font-weight:800;cursor:pointer}.queuePointActions .pick{border-color:var(--amber);color:var(--amber)}.queuePointState{font-size:12px;color:var(--muted);margin-top:7px}.queuePointState.ready{color:var(--green);font-weight:800}#queuePointMap{height:430px;border-radius:12px;overflow:hidden;background:#e5e7eb;margin-top:10px}.queuePickerHint{padding:9px 10px;border-radius:10px;background:var(--bg);font-size:12px;color:var(--muted)}.queueStartMarker{position:relative;width:34px;height:34px;border:2px solid #fff;border-radius:50%;background:#f59e0b;box-shadow:0 3px 12px #0006;display:grid;place-items:center;font-size:18px;cursor:pointer;transform:translate(-50%,-50%)}.queueStartMarker.mainQueue{width:30px;height:30px;font-size:16px}.queueStartBubble{display:none;position:absolute;left:50%;bottom:38px;transform:translateX(-50%);min-width:180px;max-width:70vw;padding:8px 9px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);box-shadow:0 8px 22px #0004;font:12px/1.35 system-ui;white-space:normal;z-index:20}.queueStartMarker:hover .queueStartBubble,.queueStartMarker:focus .queueStartBubble{display:block}.queueStationMarker{width:34px;height:34px;border:2px solid #fff;border-radius:50%;background:#111827;color:#fff;box-shadow:0 3px 12px #0006;display:grid;place-items:center;font-size:18px;transform:translate(-50%,-50%)}@media(max-width:560px){#queuePointMap{height:360px}}';
+  st.textContent='.queuePointRow{display:none;margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}.queuePointRow.show{display:block}.queuePointRow b{display:block;margin-bottom:4px}.queuePointHelp{font-size:12px;color:var(--muted);margin:0 0 8px}.queuePointActions{display:flex;gap:7px;flex-wrap:wrap}.queuePointActions button{min-height:38px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);padding:0 11px;font-weight:800;cursor:pointer}.queuePointActions .pick{border-color:var(--amber);color:var(--amber)}.queuePointState{font-size:12px;color:var(--muted);margin-top:7px}.queuePointState.ready{color:var(--green);font-weight:800}#queuePointMap{height:430px;border-radius:12px;overflow:hidden;background:#e5e7eb;margin-top:10px}.queuePickerHint{padding:9px 10px;border-radius:10px;background:var(--bg);font-size:12px;color:var(--muted)}.queueStartMarker{position:relative;width:34px;height:34px;border:2px solid #fff;border-radius:50%;background:#f59e0b;box-shadow:0 3px 12px #0006;display:grid;place-items:center;font-size:18px;cursor:pointer;transform:translate(-50%,-50%)}.queueStartMarker.mainQueue{width:30px;height:30px;font-size:16px}.queueStartBubble{display:none;position:absolute;left:50%;bottom:38px;transform:translateX(-50%);min-width:180px;max-width:70vw;padding:8px 9px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);box-shadow:0 8px 22px #0004;font:12px/1.35 system-ui;white-space:normal;z-index:20}.queueStartMarker:hover .queueStartBubble,.queueStartMarker:focus .queueStartBubble{display:block}.queueStationMarker{width:34px;height:34px;border:2px solid #fff;border-radius:50%;background:#111827;color:#fff;box-shadow:0 3px 12px #0006;display:grid;place-items:center;font-size:18px;transform:translate(-50%,-50%)}.fuelAssortment{margin-top:7px}.fuelAssortment .chip{font-weight:900}.fuelSourceHint{margin-top:4px;font-size:10px;color:var(--muted)}@media(max-width:560px){#queuePointMap{height:360px}}';
   document.head.appendChild(st);
 }
 
@@ -124,6 +124,33 @@ async function renderQueueMarkers(rows){
   }
 }
 
-injectStyles();injectFormUi();wrapOpenReport();wrapFetch();wrapMainMap();
+function fuelName(v){return v==='AI_100'?'АИ-100':v==='AI_98'?'АИ-98':v==='AI_95'?'АИ-95':v==='AI_92'?'АИ-92':v==='DT'?'ДТ':v==='LPG'?'Пропан':v==='CNG'?'Метан':String(v||'')}
+function fuelsOf(s){return Array.isArray(s?.fuel_assortment)?s.fuel_assortment.filter(Boolean):[]}
+function hasGasFuel(s){return fuelsOf(s).some(x=>x==='LPG'||x==='CNG')}
+function hasLiquidFuel(s){return fuelsOf(s).some(x=>/^AI_|^DT$/.test(String(x)))}
+function wrapFuelCards(){
+  const old=window.card;if(typeof old!=='function')return;
+  window.isGas=function(s){return hasGasFuel(s)};
+  window.card=function(s){
+    let html=old(s);const fs=fuelsOf(s);const gas=hasGasFuel(s),liquid=hasLiquidFuel(s);
+    const typeLabel=gas&&liquid?'⛽🔥 Бензин + газ':gas?'🔥 Газовая':'⛽ Топливная';
+    html=html.replace(/(🔥 Газовая|⛽ Топливная)/,typeLabel);
+    if(fs.length){const chips='<div class="chips fuelAssortment">'+fs.map(x=>'<span class="chip">'+(typeof esc==='function'?esc(fuelName(x)):fuelName(x))+'</span>').join('')+'</div><div class="fuelSourceHint">Ассортимент: '+(typeof esc==='function'?esc(s.fuel_source_name||'проверенный источник'):(s.fuel_source_name||'проверенный источник'))+'</div>';html=html.replace('<div class="actions">',chips+'<div class="actions">')}
+    return html
+  };
+  try{renderList(filtered())}catch{}
+}
+async function applyPublicSettings(){
+  try{
+    const r=await fetch(FEED+'?settings='+Date.now(),{cache:'no-store'});if(!r.ok)return;const j=await r.json();const s=j.public_settings;if(!s)return;
+    const h=document.querySelector('.head h1'),sub=document.querySelector('.head .sub');
+    if(h&&s.project_name)h.textContent='⛽ '+s.project_name;
+    if(sub&&typeof s.project_subtitle==='string')sub.textContent=s.project_subtitle;
+    if(s.project_name)document.title=s.project_name+' — Якутск';
+    const footer=document.querySelector('.footer');if(footer&&s.support_contact&&!document.getElementById('radarOwnerContact')){const x=document.createElement('div');x.id='radarOwnerContact';x.style.marginTop='7px';x.textContent='Контакт проекта: '+s.support_contact;footer.appendChild(x)}
+  }catch(e){console.warn('public settings',e)}
+}
+
+injectStyles();injectFormUi();wrapOpenReport();wrapFetch();wrapMainMap();wrapFuelCards();applyPublicSettings();
 try{render()}catch{}
 })();
