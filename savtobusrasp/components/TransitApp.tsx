@@ -17,7 +17,37 @@ type LiveTrip = TripRecord & { events: TimedEvent[]; start: number; end: number 
 
 const YANDEX_MAPS_API_KEY = "27132710-296f-4362-b23d-6e2b84d5f48a";
 const NAMTSY_CENTER: Coordinates = [62.7164, 129.6658];
-const NAMTSY_BOUNDS: [Coordinates, Coordinates] = [[62.66, 129.52], [62.79, 129.82]];
+
+const STOP_ADDRESSES: Record<string, string> = {
+  "kyuonda-kiries": "Республика Саха (Якутия), Намский район, село Намцы, улица Куонда-Кириэс",
+  "mira": "Республика Саха (Якутия), Намский район, село Намцы, улица Мира",
+  "manchary": "Республика Саха (Якутия), Намский район, село Намцы, улица Манчаары",
+  "zamyatina-1": "Республика Саха (Якутия), Намский район, село Намцы, улица Т. Замятина, 11",
+  "zamyatina-2": "Республика Саха (Якутия), Намский район, село Намцы, улица Т. Замятина",
+  "zamyatina-3": "Республика Саха (Якутия), Намский район, село Намцы, улица Т. Замятина, 50",
+  "stacionar": "Республика Саха (Якутия), Намский район, село Намцы, Новобольничная улица, 5",
+  "nachalnaya-shkola": "Республика Саха (Якутия), Намский район, село Намцы, улица Степана Платонова, 14/1",
+  "pochta": "Республика Саха (Якутия), Намский район, село Намцы, улица Ленина, 4",
+  "magazin-valeriya": "Республика Саха (Якутия), Намский район, село Намцы, улица Цугель-Аммосовой, 7/1",
+  "tuelbe": "Республика Саха (Якутия), Намский район, село Намцы, улица М. Аммосова, 40",
+  "sportivnaya-ploshchadka": "Республика Саха (Якутия), Намский район, село Намцы, улица Ленина, 16/2",
+  "stroitelnaya": "Республика Саха (Якутия), Намский район, село Намцы, Строительная улица, 47/1",
+  "res": "Республика Саха (Якутия), Намский район, село Намцы, Строительная улица, 59",
+};
+
+// Проверенные адресные точки. Для остальных остановок координаты получает Яндекс
+// непосредственно по полному адресу выше. Никаких нарисованных fallback-точек нет.
+const KNOWN_COORDS: Record<string, Coordinates> = {
+  "kyuonda-kiries": [62.7314284, 129.650093],
+  "mira": [62.7305783, 129.6436157],
+  "stacionar": [62.71602, 129.648278],
+  "nachalnaya-shkola": [62.7206, 129.6582],
+  "pochta": [62.717681, 129.661436],
+  "magazin-valeriya": [62.711857, 129.667855],
+  "tuelbe": [62.711736, 129.67213],
+  "stroitelnaya": [62.707786, 129.683986],
+  "res": [62.704937, 129.686876],
+};
 
 function timeToSeconds(clock: string) {
   const [hours, minutes, seconds = 0] = clock.split(":").map(Number);
@@ -116,30 +146,22 @@ function loadYandexMaps() {
   return globalWindow.__savtobusYandexPromise;
 }
 
-function fallbackCoordinate(index: number, total: number): Coordinates {
-  const t = total <= 1 ? 0 : index / (total - 1);
-  return [62.684 + 0.064 * t, 129.585 + 0.145 * t];
+function isNamtsyCoordinate(coords: unknown): coords is Coordinates {
+  if (!Array.isArray(coords) || coords.length < 2) return false;
+  const lat = Number(coords[0]);
+  const lon = Number(coords[1]);
+  return Number.isFinite(lat) && Number.isFinite(lon) && lat >= 62.65 && lat <= 62.80 && lon >= 129.50 && lon <= 129.85;
 }
 
-async function geocodeStop(ymaps: any, stopName: string, index: number, total: number): Promise<{ coords: Coordinates; exact: boolean }> {
-  const queries = [
-    `${stopName}, село Намцы, Республика Саха (Якутия)`,
-    `село Намцы, ${stopName}`,
-  ];
-
-  for (const query of queries) {
-    try {
-      const result = await ymaps.geocode(query, { boundedBy: NAMTSY_BOUNDS, strictBounds: true, results: 1 });
-      const object = result.geoObjects.get(0);
-      const coords = object?.geometry?.getCoordinates?.();
-      if (Array.isArray(coords) && Number.isFinite(coords[0]) && Number.isFinite(coords[1])) {
-        return { coords: [coords[0], coords[1]], exact: true };
-      }
-    } catch {
-      // Try the next query, then use a safe local fallback.
-    }
+async function geocodeAddress(ymaps: any, address: string): Promise<Coordinates | null> {
+  try {
+    const result = await ymaps.geocode(address, { results: 1 });
+    const object = result.geoObjects.get(0);
+    const coords = object?.geometry?.getCoordinates?.();
+    return isNamtsyCoordinate(coords) ? [Number(coords[0]), Number(coords[1])] : null;
+  } catch {
+    return null;
   }
-  return { coords: fallbackCoordinate(index, total), exact: false };
 }
 
 export function TransitApp({ initialData }: { initialData: ScheduleData }) {
@@ -211,7 +233,7 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
 
         const map = new ymaps.Map(mapContainerRef.current, {
           center: NAMTSY_CENTER,
-          zoom: 13,
+          zoom: 14,
           controls: ["zoomControl", "geolocationControl"],
         }, {
           suppressMapOpenBlock: true,
@@ -220,32 +242,38 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
         yandexMapRef.current = map;
         stopCoordsRef.current = new Map();
 
-        let exactCount = 0;
         const routeCoordinates: Coordinates[] = [];
+        const missingStops: string[] = [];
+
         for (let index = 0; index < forwardStops.length; index += 1) {
           if (cancelled) return;
           const routeStop = forwardStops[index];
           const stop = stopById.get(routeStop.stop_id);
-          setMapMessage(`Определяю остановки: ${index + 1}/${forwardStops.length} · ${stop?.name ?? routeStop.stop_id}`);
+          const stopName = stop?.name ?? routeStop.stop_id;
+          const address = STOP_ADDRESSES[routeStop.stop_id] ?? `Республика Саха (Якутия), село Намцы, ${stopName}`;
+          setMapMessage(`Ищу адрес: ${index + 1}/${forwardStops.length} · ${stopName}`);
 
-          let coords: Coordinates;
-          let exact = false;
+          let coords: Coordinates | null = null;
           if (Number.isFinite(stop?.latitude) && Number.isFinite(stop?.longitude)) {
-            coords = [Number(stop?.latitude), Number(stop?.longitude)];
-            exact = true;
-          } else {
-            const geocoded = await geocodeStop(ymaps, stop?.name ?? routeStop.stop_id, index, forwardStops.length);
-            coords = geocoded.coords;
-            exact = geocoded.exact;
+            const dbCoords: Coordinates = [Number(stop?.latitude), Number(stop?.longitude)];
+            if (isNamtsyCoordinate(dbCoords)) coords = dbCoords;
           }
-          if (exact) exactCount += 1;
+          if (!coords && KNOWN_COORDS[routeStop.stop_id]) coords = KNOWN_COORDS[routeStop.stop_id];
+          if (!coords) coords = await geocodeAddress(ymaps, address);
+
+          if (!coords) {
+            missingStops.push(stopName);
+            continue;
+          }
+
           stopCoordsRef.current.set(routeStop.stop_id, coords);
           routeCoordinates.push(coords);
 
           const placemark = new ymaps.Placemark(coords, {
             iconContent: String(index + 1),
-            balloonContentHeader: `${index + 1}. ${stop?.name ?? routeStop.stop_id}`,
-            balloonContentBody: `Маршрут № ${initialData.route?.route_number ?? "2"}`,
+            balloonContentHeader: `${index + 1}. ${stopName}`,
+            balloonContentBody: `<b>Адрес:</b><br>${address}<br><br>Маршрут № ${initialData.route?.route_number ?? "2"}`,
+            hintContent: `${index + 1}. ${stopName}`,
           }, {
             preset: "islands#blueCircleIcon",
             iconColor: "#2864dc",
@@ -253,56 +281,61 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
           map.geoObjects.add(placemark);
         }
 
-        const fallbackLine = new ymaps.Polyline(routeCoordinates, {}, {
-          strokeColor: "#2864dc",
-          strokeWidth: 5,
-          strokeOpacity: 0.45,
-        });
-        map.geoObjects.add(fallbackLine);
-        routeObjectRef.current = fallbackLine;
-
-        try {
-          const multiRoute = new ymaps.multiRouter.MultiRoute({
-            referencePoints: routeCoordinates,
-            params: { routingMode: "auto", results: 1 },
-          }, {
-            boundsAutoApply: true,
-            routeActiveStrokeColor: "#2864dc",
-            routeActiveStrokeWidth: 7,
-            routeStrokeColor: "#8aaef2",
-            routeStrokeWidth: 4,
-            wayPointVisible: false,
-            viaPointVisible: false,
+        if (routeCoordinates.length >= 2) {
+          const fallbackLine = new ymaps.Polyline(routeCoordinates, {}, {
+            strokeColor: "#2864dc",
+            strokeWidth: 5,
+            strokeOpacity: 0.35,
           });
-          map.geoObjects.add(multiRoute);
-          routeObjectRef.current = multiRoute;
-        } catch {
-          // The fallback polyline remains visible if routing is temporarily unavailable.
+          map.geoObjects.add(fallbackLine);
+          routeObjectRef.current = fallbackLine;
+
+          try {
+            const multiRoute = new ymaps.multiRouter.MultiRoute({
+              referencePoints: routeCoordinates,
+              params: { routingMode: "auto", results: 1 },
+            }, {
+              boundsAutoApply: false,
+              routeActiveStrokeColor: "#2864dc",
+              routeActiveStrokeWidth: 7,
+              routeStrokeColor: "#8aaef2",
+              routeStrokeWidth: 4,
+              wayPointVisible: false,
+              viaPointVisible: false,
+            });
+            map.geoObjects.add(multiRoute);
+            routeObjectRef.current = multiRoute;
+          } catch {
+            // Если маршрутизация дорог временно недоступна, остаётся линия по реальным меткам.
+          }
         }
 
-        const busLayout = ymaps.templateLayoutFactory.createClass(
-          `<div style="display:flex;align-items:center;gap:5px;transform:translate(-24px,-24px);white-space:nowrap;">
-            <div style="display:grid;width:48px;height:48px;place-items:center;border:4px solid white;border-radius:15px;background:#c9f04a;box-shadow:0 8px 22px rgba(26,49,88,.35);font-size:27px;">🚌</div>
-            <b style="padding:6px 8px;border-radius:8px;background:#182132;color:white;font:800 12px Arial,sans-serif;">№ ${initialData.route?.route_number ?? "2"}</b>
-          </div>`,
-        );
-        const firstCoordinate = routeCoordinates[0] ?? NAMTSY_CENTER;
-        const bus = new ymaps.Placemark(firstCoordinate, {
-          hintContent: `Автобус № ${initialData.route?.route_number ?? "2"}`,
-        }, {
-          iconLayout: busLayout,
-          iconShape: { type: "Circle", coordinates: [0, 0], radius: 28 },
-          zIndex: 10000,
-        });
-        busPlacemarkRef.current = bus;
-        map.geoObjects.add(bus);
+        const firstCoordinate = routeCoordinates[0];
+        if (firstCoordinate) {
+          const busLayout = ymaps.templateLayoutFactory.createClass(
+            `<div style="display:flex;align-items:center;gap:5px;transform:translate(-24px,-24px);white-space:nowrap;">
+              <div style="display:grid;width:48px;height:48px;place-items:center;border:4px solid white;border-radius:15px;background:#c9f04a;box-shadow:0 8px 22px rgba(26,49,88,.35);font-size:27px;">🚌</div>
+              <b style="padding:6px 8px;border-radius:8px;background:#182132;color:white;font:800 12px Arial,sans-serif;">№ ${initialData.route?.route_number ?? "2"}</b>
+            </div>`,
+          );
+          const bus = new ymaps.Placemark(firstCoordinate, {
+            hintContent: `Автобус № ${initialData.route?.route_number ?? "2"}`,
+          }, {
+            iconLayout: busLayout,
+            iconShape: { type: "Circle", coordinates: [0, 0], radius: 28 },
+            zIndex: 10000,
+          });
+          busPlacemarkRef.current = bus;
+          map.geoObjects.add(bus);
+        }
 
         const bounds = map.geoObjects.getBounds?.();
-        if (bounds) map.setBounds(bounds, { checkZoomRange: true, zoomMargin: 45 });
-        setMapReady(true);
-        setMapMessage(exactCount === forwardStops.length
-          ? "Яндекс Карта · все 14 остановок определены"
-          : `Яндекс Карта · найдено ${exactCount}/${forwardStops.length}, остальные точки показаны расчётно`);
+        if (bounds) map.setBounds(bounds, { checkZoomRange: true, zoomMargin: 55 });
+
+        setMapReady(routeCoordinates.length > 0);
+        setMapMessage(missingStops.length === 0
+          ? `Яндекс Карта · ${routeCoordinates.length}/${forwardStops.length} остановок по адресам`
+          : `По адресам найдено ${routeCoordinates.length}/${forwardStops.length}. Не найдены: ${missingStops.join(", ")}`);
       } catch (error) {
         const message = error instanceof Error ? error.message : "Не удалось загрузить Яндекс Карту.";
         setMapMessage(message);
@@ -410,7 +443,7 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
               <strong>Маршрут № {initialData.route.route_number} · {initialData.route.locality}</strong>
               <span>{live.activeTrip ? directionLabel : `следующий: ${directionLabel}`}</span>
             </div>
-            <span className="map-mode">ЯНДЕКС КАРТА · РАСЧЁТНО</span>
+            <span className="map-mode">ЯНДЕКС КАРТА · ПО АДРЕСАМ</span>
           </div>
 
           <div className="map-canvas">
@@ -427,7 +460,7 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
             <div style={{ position: "absolute", right: 14, top: 14, zIndex: 20, display: "flex", gap: 8 }}>
               <button type="button" onClick={() => {
                 const bounds = yandexMapRef.current?.geoObjects?.getBounds?.();
-                if (bounds) yandexMapRef.current?.setBounds?.(bounds, { checkZoomRange: true, zoomMargin: 45 });
+                if (bounds) yandexMapRef.current?.setBounds?.(bounds, { checkZoomRange: true, zoomMargin: 55 });
               }} style={{ border: "1px solid #d9e0eb", borderRadius: 10, background: "rgba(255,255,255,.96)", padding: "9px 11px", cursor: "pointer", fontSize: 10, fontWeight: 800 }}>
                 Весь маршрут
               </button>
@@ -467,13 +500,13 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
             })}
           </div>
         </div>
-        <p className="schedule-note">Данные загружаются из Supabase. Положение автобуса на Яндекс Карте рассчитывается между соседними остановками по времени рейса; это не GPS.</p>
+        <p className="schedule-note">Метки остановок берутся по адресам в селе Намцы. Положение автобуса между ними рассчитывается по времени рейса; это не GPS.</p>
       </section>
 
       <footer className="data-footer">
         <span>SUPABASE + ЯНДЕКС КАРТЫ</span>
         <strong>{initialData.route.name}</strong>
-        <p>Маршрут № {initialData.route.route_number} · расчётное движение автобуса по расписанию.</p>
+        <p>Маршрут № {initialData.route.route_number} · остановки привязаны к адресам Намцев.</p>
       </footer>
     </main>
   );
