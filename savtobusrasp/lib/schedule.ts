@@ -51,6 +51,10 @@ export type ScheduleData = {
   error: string | null;
 };
 
+// Publishable keys are safe in public clients when Row Level Security is enabled.
+const defaultSupabaseUrl = "https://clehcdkviariimjwfyun.supabase.co";
+const defaultPublishableKey = "sb_publishable_1PBxH_MMhKheXKkgC5Xfrg_FYQ9SGX7";
+
 const emptySchedule = (error: string): ScheduleData => ({
   route: null,
   stops: [],
@@ -61,8 +65,8 @@ const emptySchedule = (error: string): ScheduleData => ({
 });
 
 export async function loadSchedule(): Promise<ScheduleData> {
-  const url = process.env.SUPABASE_URL;
-  const publishableKey = process.env.SUPABASE_PUBLISHABLE_KEY;
+  const url = process.env.SUPABASE_URL ?? defaultSupabaseUrl;
+  const publishableKey = process.env.SUPABASE_PUBLISHABLE_KEY ?? defaultPublishableKey;
 
   if (!url || !publishableKey) {
     return emptySchedule("Не настроено подключение к базе расписаний.");
