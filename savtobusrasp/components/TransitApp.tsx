@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { RouteStopRecord, ScheduleData, StopTimeRecord, TripRecord } from "@/lib/schedule";
 
 type Direction = "forward" | "return";
-type MapPoint = { x: number; y: number };
+type Coordinates = [number, number];
 type TimedEvent = {
   stopId: string;
   stopName: string;
@@ -12,18 +12,12 @@ type TimedEvent = {
   seconds: number;
   clock: string;
   estimated: boolean;
-  point: MapPoint;
 };
 type LiveTrip = TripRecord & { events: TimedEvent[]; start: number; end: number };
 
-const mapPoints: MapPoint[] = [
-  { x: 8, y: 78 }, { x: 15, y: 70 }, { x: 22, y: 63 }, { x: 30, y: 58 },
-  { x: 38, y: 52 }, { x: 46, y: 47 }, { x: 54, y: 53 }, { x: 61, y: 47 },
-  { x: 67, y: 39 }, { x: 74, y: 33 }, { x: 80, y: 39 }, { x: 86, y: 31 },
-  { x: 91, y: 23 }, { x: 95, y: 16 },
-];
-
-const routePolyline = mapPoints.map((point) => `${point.x * 10},${point.y * 6}`).join(" ");
+const YANDEX_MAPS_API_KEY = "27132710-296f-4362-b23d-6e2b84d5f48a";
+const NAMTSY_CENTER: Coordinates = [62.7164, 129.6658];
+const NAMTSY_BOUNDS: [Coordinates, Coordinates] = [[62.66, 129.52], [62.79, 129.82]];
 
 function timeToSeconds(clock: string) {
   const [hours, minutes, seconds = 0] = clock.split(":").map(Number);
@@ -60,9 +54,8 @@ function sourceDate(date: string | null) {
   return new Intl.DateTimeFormat("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "UTC" }).format(new Date(`${date}T00:00:00Z`));
 }
 
-function createLiveTrips(data: ScheduleData, forwardStops: RouteStopRecord[]): LiveTrip[] {
+function createLiveTrips(data: ScheduleData): LiveTrip[] {
   const stopById = new Map(data.stops.map((stop) => [stop.id, stop]));
-  const forwardPoint = new Map(forwardStops.map((routeStop, index) => [routeStop.stop_id, mapPoints[index] ?? mapPoints[0]]));
 
   return data.trips.map((trip) => {
     const times = data.stopTimes
@@ -86,7 +79,6 @@ function createLiveTrips(data: ScheduleData, forwardStops: RouteStopRecord[]): L
         seconds,
         clock: formatClock(seconds),
         estimated,
-        point: forwardPoint.get(time.stop_id) ?? mapPoints[0],
       };
     });
 
@@ -100,11 +92,70 @@ function displayTime(time: StopTimeRecord | undefined) {
   return time.terminal_status ?? "—";
 }
 
+function loadYandexMaps() {
+  if (typeof window === "undefined") return Promise.reject(new Error("Карта доступна только в браузере."));
+  const globalWindow = window as typeof window & { ymaps?: any; __savtobusYandexPromise?: Promise<void> };
+  if (globalWindow.ymaps) return Promise.resolve();
+  if (globalWindow.__savtobusYandexPromise) return globalWindow.__savtobusYandexPromise;
+
+  globalWindow.__savtobusYandexPromise = new Promise<void>((resolve, reject) => {
+    const existing = document.getElementById("savtobus-yandex-maps") as HTMLScriptElement | null;
+    if (existing) {
+      existing.addEventListener("load", () => resolve(), { once: true });
+      existing.addEventListener("error", () => reject(new Error("Не удалось загрузить Яндекс Карту.")), { once: true });
+      return;
+    }
+    const script = document.createElement("script");
+    script.id = "savtobus-yandex-maps";
+    script.src = `https://api-maps.yandex.ru/2.1/?apikey=${YANDEX_MAPS_API_KEY}&lang=ru_RU`;
+    script.async = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error("Не удалось загрузить Яндекс Карту. Проверьте API-ключ и разрешённый домен."));
+    document.head.appendChild(script);
+  });
+  return globalWindow.__savtobusYandexPromise;
+}
+
+function fallbackCoordinate(index: number, total: number): Coordinates {
+  const t = total <= 1 ? 0 : index / (total - 1);
+  return [62.684 + 0.064 * t, 129.585 + 0.145 * t];
+}
+
+async function geocodeStop(ymaps: any, stopName: string, index: number, total: number): Promise<{ coords: Coordinates; exact: boolean }> {
+  const queries = [
+    `${stopName}, село Намцы, Республика Саха (Якутия)`,
+    `село Намцы, ${stopName}`,
+  ];
+
+  for (const query of queries) {
+    try {
+      const result = await ymaps.geocode(query, { boundedBy: NAMTSY_BOUNDS, strictBounds: true, results: 1 });
+      const object = result.geoObjects.get(0);
+      const coords = object?.geometry?.getCoordinates?.();
+      if (Array.isArray(coords) && Number.isFinite(coords[0]) && Number.isFinite(coords[1])) {
+        return { coords: [coords[0], coords[1]], exact: true };
+      }
+    } catch {
+      // Try the next query, then use a safe local fallback.
+    }
+  }
+  return { coords: fallbackCoordinate(index, total), exact: false };
+}
+
 export function TransitApp({ initialData }: { initialData: ScheduleData }) {
   const [realSeconds, setRealSeconds] = useState(0);
   const [demoSeconds, setDemoSeconds] = useState(timeToSeconds("07:30"));
   const [demoMode, setDemoMode] = useState(false);
   const [scheduleDirection, setScheduleDirection] = useState<Direction>("forward");
+  const [mapMessage, setMapMessage] = useState("Загружаю Яндекс Карту…");
+  const [mapReady, setMapReady] = useState(false);
+  const [followBus, setFollowBus] = useState(true);
+
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const yandexMapRef = useRef<any>(null);
+  const busPlacemarkRef = useRef<any>(null);
+  const routeObjectRef = useRef<any>(null);
+  const stopCoordsRef = useRef<Map<string, Coordinates>>(new Map());
 
   useEffect(() => {
     const tick = () => demoMode
@@ -124,7 +175,7 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
     [initialData.routeStops],
   );
   const stopById = useMemo(() => new Map(initialData.stops.map((stop) => [stop.id, stop])), [initialData.stops]);
-  const liveTrips = useMemo(() => createLiveTrips(initialData, forwardStops), [initialData, forwardStops]);
+  const liveTrips = useMemo(() => createLiveTrips(initialData), [initialData]);
   const currentSeconds = demoMode ? demoSeconds : realSeconds;
 
   const live = useMemo(() => {
@@ -141,12 +192,153 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
     const next = selectedTrip.events[nextIndex];
     const span = Math.max(1, next.seconds - previous.seconds);
     const segment = activeTrip ? Math.min(1, Math.max(0, (positionSeconds - previous.seconds) / span)) : 0;
-    const x = previous.point.x + (next.point.x - previous.point.x) * segment;
-    const y = previous.point.y + (next.point.y - previous.point.y) * segment;
     const progress = activeTrip ? ((positionSeconds - selectedTrip.start) / (selectedTrip.end - selectedTrip.start)) * 100 : 0;
-    const passed = new Set(activeTrip ? selectedTrip.events.filter((event) => event.seconds <= positionSeconds).map((event) => event.stopId) : []);
-    return { activeTrip, selectedTrip, waitSeconds, next, x, y, progress, passed };
+    return { activeTrip, selectedTrip, waitSeconds, previous, next, segment, progress };
   }, [currentSeconds, liveTrips]);
+
+  useEffect(() => {
+    if (!mapContainerRef.current || !forwardStops.length) return;
+    let cancelled = false;
+
+    const initializeMap = async () => {
+      try {
+        await loadYandexMaps();
+        if (cancelled || !mapContainerRef.current) return;
+        const ymaps = (window as typeof window & { ymaps?: any }).ymaps;
+        if (!ymaps) throw new Error("Яндекс Карты не инициализировались.");
+        await new Promise<void>((resolve) => ymaps.ready(resolve));
+        if (cancelled || !mapContainerRef.current) return;
+
+        const map = new ymaps.Map(mapContainerRef.current, {
+          center: NAMTSY_CENTER,
+          zoom: 13,
+          controls: ["zoomControl", "geolocationControl"],
+        }, {
+          suppressMapOpenBlock: true,
+          yandexMapDisablePoiInteractivity: true,
+        });
+        yandexMapRef.current = map;
+        stopCoordsRef.current = new Map();
+
+        let exactCount = 0;
+        const routeCoordinates: Coordinates[] = [];
+        for (let index = 0; index < forwardStops.length; index += 1) {
+          if (cancelled) return;
+          const routeStop = forwardStops[index];
+          const stop = stopById.get(routeStop.stop_id);
+          setMapMessage(`Определяю остановки: ${index + 1}/${forwardStops.length} · ${stop?.name ?? routeStop.stop_id}`);
+
+          let coords: Coordinates;
+          let exact = false;
+          if (Number.isFinite(stop?.latitude) && Number.isFinite(stop?.longitude)) {
+            coords = [Number(stop?.latitude), Number(stop?.longitude)];
+            exact = true;
+          } else {
+            const geocoded = await geocodeStop(ymaps, stop?.name ?? routeStop.stop_id, index, forwardStops.length);
+            coords = geocoded.coords;
+            exact = geocoded.exact;
+          }
+          if (exact) exactCount += 1;
+          stopCoordsRef.current.set(routeStop.stop_id, coords);
+          routeCoordinates.push(coords);
+
+          const placemark = new ymaps.Placemark(coords, {
+            iconContent: String(index + 1),
+            balloonContentHeader: `${index + 1}. ${stop?.name ?? routeStop.stop_id}`,
+            balloonContentBody: `Маршрут № ${initialData.route?.route_number ?? "2"}`,
+          }, {
+            preset: "islands#blueCircleIcon",
+            iconColor: "#2864dc",
+          });
+          map.geoObjects.add(placemark);
+        }
+
+        const fallbackLine = new ymaps.Polyline(routeCoordinates, {}, {
+          strokeColor: "#2864dc",
+          strokeWidth: 5,
+          strokeOpacity: 0.45,
+        });
+        map.geoObjects.add(fallbackLine);
+        routeObjectRef.current = fallbackLine;
+
+        try {
+          const multiRoute = new ymaps.multiRouter.MultiRoute({
+            referencePoints: routeCoordinates,
+            params: { routingMode: "auto", results: 1 },
+          }, {
+            boundsAutoApply: true,
+            routeActiveStrokeColor: "#2864dc",
+            routeActiveStrokeWidth: 7,
+            routeStrokeColor: "#8aaef2",
+            routeStrokeWidth: 4,
+            wayPointVisible: false,
+            viaPointVisible: false,
+          });
+          map.geoObjects.add(multiRoute);
+          routeObjectRef.current = multiRoute;
+        } catch {
+          // The fallback polyline remains visible if routing is temporarily unavailable.
+        }
+
+        const busLayout = ymaps.templateLayoutFactory.createClass(
+          `<div style="display:flex;align-items:center;gap:5px;transform:translate(-24px,-24px);white-space:nowrap;">
+            <div style="display:grid;width:48px;height:48px;place-items:center;border:4px solid white;border-radius:15px;background:#c9f04a;box-shadow:0 8px 22px rgba(26,49,88,.35);font-size:27px;">🚌</div>
+            <b style="padding:6px 8px;border-radius:8px;background:#182132;color:white;font:800 12px Arial,sans-serif;">№ ${initialData.route?.route_number ?? "2"}</b>
+          </div>`,
+        );
+        const firstCoordinate = routeCoordinates[0] ?? NAMTSY_CENTER;
+        const bus = new ymaps.Placemark(firstCoordinate, {
+          hintContent: `Автобус № ${initialData.route?.route_number ?? "2"}`,
+        }, {
+          iconLayout: busLayout,
+          iconShape: { type: "Circle", coordinates: [0, 0], radius: 28 },
+          zIndex: 10000,
+        });
+        busPlacemarkRef.current = bus;
+        map.geoObjects.add(bus);
+
+        const bounds = map.geoObjects.getBounds?.();
+        if (bounds) map.setBounds(bounds, { checkZoomRange: true, zoomMargin: 45 });
+        setMapReady(true);
+        setMapMessage(exactCount === forwardStops.length
+          ? "Яндекс Карта · все 14 остановок определены"
+          : `Яндекс Карта · найдено ${exactCount}/${forwardStops.length}, остальные точки показаны расчётно`);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : "Не удалось загрузить Яндекс Карту.";
+        setMapMessage(message);
+        setMapReady(false);
+      }
+    };
+
+    initializeMap();
+    return () => {
+      cancelled = true;
+      try { yandexMapRef.current?.destroy?.(); } catch { /* noop */ }
+      yandexMapRef.current = null;
+      busPlacemarkRef.current = null;
+      routeObjectRef.current = null;
+      stopCoordsRef.current.clear();
+    };
+  }, [forwardStops, initialData.route?.route_number, stopById]);
+
+  useEffect(() => {
+    if (!mapReady || !live || !busPlacemarkRef.current) return;
+    const previous = stopCoordsRef.current.get(live.previous.stopId);
+    const next = stopCoordsRef.current.get(live.next.stopId);
+    if (!previous || !next) return;
+    const position: Coordinates = [
+      previous[0] + (next[0] - previous[0]) * live.segment,
+      previous[1] + (next[1] - previous[1]) * live.segment,
+    ];
+    busPlacemarkRef.current.geometry?.setCoordinates?.(position);
+    busPlacemarkRef.current.properties?.set?.("hintContent", live.activeTrip
+      ? `Автобус № ${initialData.route?.route_number ?? "2"} · следующая: ${live.next.stopName}`
+      : `Автобус № ${initialData.route?.route_number ?? "2"} · ожидает рейс`);
+
+    if (followBus && live.activeTrip && Math.floor(currentSeconds) % 5 === 0) {
+      yandexMapRef.current?.panTo?.(position, { flying: false, duration: 350 });
+    }
+  }, [currentSeconds, followBus, initialData.route?.route_number, live, mapReady]);
 
   if (initialData.error || !initialData.route || !live) {
     return (
@@ -212,42 +404,37 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
           <p className="speed-note">{demoMode ? "Демонстрация ускорена в 32 раза" : "Часовой пояс: Якутск, UTC+9"}</p>
         </aside>
 
-        <section className="map-panel" aria-label={`Схема движения маршрута № ${initialData.route.route_number}`}>
+        <section className="map-panel" aria-label={`Яндекс Карта маршрута № ${initialData.route.route_number}`}>
           <div className="map-toolbar">
             <div>
               <strong>Маршрут № {initialData.route.route_number} · {initialData.route.locality}</strong>
               <span>{live.activeTrip ? directionLabel : `следующий: ${directionLabel}`}</span>
             </div>
-            <span className="map-mode">РАСЧЁТНОЕ ПОЛОЖЕНИЕ</span>
+            <span className="map-mode">ЯНДЕКС КАРТА · РАСЧЁТНО</span>
           </div>
 
           <div className="map-canvas">
-            <div className="street-grid" aria-hidden="true" />
-            <svg className="route-svg" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-              <polyline className="route-shadow" points={routePolyline} />
-              <polyline className="route-path" points={routePolyline} />
-            </svg>
-            {forwardStops.map((routeStop, index) => {
-              const stop = stopById.get(routeStop.stop_id);
-              const point = mapPoints[index] ?? mapPoints[0];
-              const isNext = live.activeTrip && live.next.stopId === routeStop.stop_id;
-              const showLabel = index === 0 || index === forwardStops.length - 1 || isNext;
-              return (
-                <div className={`map-stop ${live.passed.has(routeStop.stop_id) ? "passed" : ""} ${isNext ? "next" : ""}`} key={routeStop.stop_id} style={{ left: `${point.x}%`, top: `${point.y}%` }}>
-                  <span className="stop-dot" />
-                  <div className={`stop-label ${showLabel ? "visible" : ""}`}>
-                    <strong>{stop?.name ?? routeStop.stop_id}</strong>
-                    {isNext && <span>следующая · {live.next.clock}</span>}
-                  </div>
-                </div>
-              );
-            })}
-            <div className={`bus-marker ${live.activeTrip ? "moving" : "parked"}`} style={{ left: `${live.x}%`, top: `${live.y}%` }}>
-              {live.activeTrip && <span className="bus-pulse" />}
-              <div className="bus-icon" aria-label={`Автобус № ${initialData.route.route_number}`}>🚌</div>
-              <strong>№ {initialData.route.route_number}</strong>
+            <div ref={mapContainerRef} style={{ position: "absolute", inset: 0 }} />
+            <div style={{
+              position: "absolute", left: 14, bottom: 14, zIndex: 20, maxWidth: "calc(100% - 28px)",
+              display: "flex", alignItems: "center", gap: 8, padding: "9px 11px", borderRadius: 12,
+              background: "rgba(255,255,255,.94)", boxShadow: "0 5px 18px rgba(24,33,50,.16)",
+              color: "#526075", fontSize: 10, fontWeight: 800,
+            }}>
+              <span style={{ width: 8, height: 8, flex: "0 0 auto", borderRadius: "50%", background: mapReady ? "#31b26b" : "#f59e0b" }} />
+              <span>{mapMessage}</span>
             </div>
-            <div className="map-legend"><span><i className="legend-bus" /> Автобус</span><span><i className="legend-stop" /> Остановка</span></div>
+            <div style={{ position: "absolute", right: 14, top: 14, zIndex: 20, display: "flex", gap: 8 }}>
+              <button type="button" onClick={() => {
+                const bounds = yandexMapRef.current?.geoObjects?.getBounds?.();
+                if (bounds) yandexMapRef.current?.setBounds?.(bounds, { checkZoomRange: true, zoomMargin: 45 });
+              }} style={{ border: "1px solid #d9e0eb", borderRadius: 10, background: "rgba(255,255,255,.96)", padding: "9px 11px", cursor: "pointer", fontSize: 10, fontWeight: 800 }}>
+                Весь маршрут
+              </button>
+              <button type="button" onClick={() => setFollowBus((value) => !value)} style={{ border: 0, borderRadius: 10, background: followBus ? "#2864dc" : "#182132", color: "white", padding: "9px 11px", cursor: "pointer", fontSize: 10, fontWeight: 800 }}>
+                {followBus ? "Слежу за 🚌" : "Следить за 🚌"}
+              </button>
+            </div>
           </div>
         </section>
       </section>
@@ -280,13 +467,13 @@ export function TransitApp({ initialData }: { initialData: ScheduleData }) {
             })}
           </div>
         </div>
-        <p className="schedule-note">Данные загружаются из Supabase. В исходном расписании минуты на конечных обозначены словами «стоянка» и «конечная», поэтому крайние участки на схеме показаны приблизительно.</p>
+        <p className="schedule-note">Данные загружаются из Supabase. Положение автобуса на Яндекс Карте рассчитывается между соседними остановками по времени рейса; это не GPS.</p>
       </section>
 
       <footer className="data-footer">
-        <span>SUPABASE · ДАННЫЕ ПОДКЛЮЧЕНЫ</span>
+        <span>SUPABASE + ЯНДЕКС КАРТЫ</span>
         <strong>{initialData.route.name}</strong>
-        <p>Координаты остановок можно добавить в базу без изменения сайта.</p>
+        <p>Маршрут № {initialData.route.route_number} · расчётное движение автобуса по расписанию.</p>
       </footer>
     </main>
   );
