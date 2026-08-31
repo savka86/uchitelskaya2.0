@@ -1,0 +1,26 @@
+/* Мобильная раскладка собственных кнопок поверх Яндекс Карты.
+   Верхний правый угол оставляем штатному typeSelector Яндекса
+   (Схема / Спутник / Гибрид). */
+@media (max-width: 900px) {
+  .map-canvas > div[style*="right: 14px"][style*="top: 14px"] {
+    top: auto !important;
+    right: auto !important;
+    left: 50% !important;
+    bottom: 76px !important;
+    transform: translateX(-50%) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: max-content !important;
+    max-width: calc(100% - 32px) !important;
+    z-index: 25 !important;
+  }
+
+  .map-canvas > div[style*="right: 14px"][style*="top: 14px"] > button {
+    white-space: nowrap !important;
+    min-height: 42px !important;
+    box-shadow: 0 5px 16px rgba(24, 33, 50, 0.16) !important;
+  }
+}
