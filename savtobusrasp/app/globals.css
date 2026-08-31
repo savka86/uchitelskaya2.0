@@ -136,6 +136,19 @@ button { font: inherit; }
   .direction-tabs button { flex: 1; padding: 0 10px; }
   .data-footer { min-height: 280px; padding: 60px 18px; }
   .data-footer p { font-size: 15px; }
+
+  /* Third direct child of map-canvas is our custom button group. Move it away
+     from Yandex's upper-right type selector on phones. */
+  .map-canvas > div:last-child {
+    top: auto !important;
+    right: 50% !important;
+    bottom: 74px !important;
+    transform: translateX(50%) !important;
+    width: max-content;
+    max-width: calc(100% - 28px);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
