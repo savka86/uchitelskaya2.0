@@ -1,0 +1,36 @@
+name: Extract Route 1
+on:
+  push:
+    paths:
+      - '.github/workflows/extract-route1.yml'
+  workflow_dispatch:
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Yandex route 1 page
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://yandex.ru/maps/101301/namtsy/routes/bus_1/796d617073626d313a2f2f7472616e7369742f6c696e653f69643d34303432323438353838266c6c3d3132392e36373037303925324336322e373131333930266e616d653d3126723d3630303026747970653d627573/?ll=129.680674%2C62.702761&tab=stops&z=11.34'
+          curl -A 'Mozilla/5.0' -sS -L "$URL" -o /tmp/route.html
+          python - <<'PY'
+          from pathlib import Path
+          import re, html, json
+          s=Path('/tmp/route.html').read_text(errors='ignore')
+          print('SIZE',len(s))
+          for needle in ['4042248588','АЗС','ЖКХ','Сельхозхимия','Пост ГИБДД','coordinates','geometry','polyline','encodedCoordinates','masstransit']:
+              print('\n===',needle,'===')
+              pos=0; n=0
+              while True:
+                  i=s.find(needle,pos)
+                  if i<0 or n>=6: break
+                  print(html.unescape(s[max(0,i-700):min(len(s),i+2200)]).replace('\n',' ')[:3000])
+                  pos=i+len(needle); n+=1
+          pairs=re.findall(r'(62\.\d{4,8})[^0-9]{1,40}(129\.\d{4,8})',s)
+          print('\nCOORD_PAIR_COUNT',len(pairs))
+          seen=[]
+          for p in pairs:
+              if p not in seen: seen.append(p)
+          for p in seen[:500]: print('PAIR',p[0],p[1])
+          PY
