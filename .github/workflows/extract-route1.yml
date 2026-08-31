@@ -16,21 +16,27 @@ jobs:
           curl -A 'Mozilla/5.0' -sS -L "$URL" -o /tmp/route.html
           python - <<'PY'
           from pathlib import Path
-          import re, html, json
+          import json
           s=Path('/tmp/route.html').read_text(errors='ignore')
-          print('SIZE',len(s))
-          for needle in ['4042248588','АЗС','ЖКХ','Сельхозхимия','Пост ГИБДД','coordinates','geometry','polyline','encodedCoordinates','masstransit']:
-              print('\n===',needle,'===')
-              pos=0; n=0
-              while True:
-                  i=s.find(needle,pos)
-                  if i<0 or n>=6: break
-                  print(html.unescape(s[max(0,i-700):min(len(s),i+2200)]).replace('\n',' ')[:3000])
-                  pos=i+len(needle); n+=1
-          pairs=re.findall(r'(62\.\d{4,8})[^0-9]{1,40}(129\.\d{4,8})',s)
-          print('\nCOORD_PAIR_COUNT',len(pairs))
-          seen=[]
-          for p in pairs:
-              if p not in seen: seen.append(p)
-          for p in seen[:500]: print('PAIR',p[0],p[1])
+          marker='"masstransitLine":'
+          i=s.find(marker)
+          if i < 0:
+              raise SystemExit('masstransitLine not found')
+          start=i+len(marker)
+          obj,end=json.JSONDecoder().raw_decode(s[start:])
+          print('KEYS', list(obj.keys()))
+          feats=obj.get('features',[])
+          print('THREADS',len(feats))
+          for ti,thread in enumerate(feats):
+              print(f'=== THREAD {ti} ===')
+              print('PROPS', json.dumps(thread.get('properties',{}), ensure_ascii=False)[:2000])
+              fs=thread.get('features',[])
+              print('ITEMS',len(fs))
+              for item in fs:
+                  if 'name' in item:
+                      c=item.get('coordinates')
+                      print('STOP', item.get('id'), item.get('name'), c[1] if c else None, c[0] if c else None)
+                  elif 'points' in item:
+                      pts=item.get('points',[])
+                      print('SEG', json.dumps([[p[1],p[0]] for p in pts], ensure_ascii=False, separators=(',',':')))
           PY
