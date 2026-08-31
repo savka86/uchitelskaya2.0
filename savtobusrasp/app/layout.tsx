@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./mobile-map-controls.css";
 
 export const metadata: Metadata = {
   title: "Маршрут № 2 Намцы — расписание автобуса",
