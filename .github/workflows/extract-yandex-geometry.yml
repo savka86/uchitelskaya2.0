@@ -1,0 +1,36 @@
+name: Extract Yandex Geometry
+
+on:
+  push:
+    paths:
+      - '.github/workflows/extract-yandex-geometry.yml'
+  workflow_dispatch:
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect Yandex route page
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://yandex.com/maps/?l=sat&ll=129.674236%2C62.717213&mode=routes&routes%5BavoidTypes%5D=tramway%2Ctrolleybus%2Cunderground%2Cminibus%2Crailway&rtext=62.704926%2C129.686543~62.710498%2C129.679535~62.712199%2C129.673802~62.711995%2C129.671272~62.711617%2C129.667940~62.717807%2C129.662336~62.721478%2C129.659938~62.721507%2C129.650053~62.715971%2C129.648910~62.717592%2C129.644203~62.720362%2C129.640748~62.722865%2C129.637832~62.727888%2C129.640963~62.730805%2C129.643531~62.730216%2C129.650616&rtt=mt&ruri=~~~~~~~~~~~~~~&z=14'
+          curl -A 'Mozilla/5.0' -sS -L "$URL" -o /tmp/page.html
+          python - <<'PY'
+          from pathlib import Path
+          import re, html
+          s=Path('/tmp/page.html').read_text(errors='ignore')
+          print('SIZE',len(s))
+          needles=['62.704926','62.730216','encodedCoordinates','geometry','polyline','routeGeometry','routesMasstransit','masstransit']
+          for n in needles:
+              print('\n===',n,'===')
+              pos=0; count=0
+              while True:
+                  i=s.find(n,pos)
+                  if i<0 or count>=8: break
+                  print(html.unescape(s[max(0,i-500):min(len(s),i+1500)]).replace('\n',' ')[:2200])
+                  pos=i+len(n); count+=1
+          pairs=re.findall(r'62\.7\d{4,8}[^0-9]{1,30}129\.6\d{4,8}',s)
+          print('\nPAIR_COUNT',len(pairs))
+          for p in pairs[:200]: print(p)
+          PY
