@@ -1,9 +1,9 @@
-import { TransitAppQR } from "@/components/TransitAppQR";
+import { TransitAppAttached } from "@/components/TransitAppAttached";
 import { loadSchedule } from "@/lib/schedule";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const schedule = await loadSchedule();
-  return <TransitAppQR initialData={schedule} />;
+  return <TransitAppAttached initialData={schedule} />;
 }
