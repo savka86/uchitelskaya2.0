@@ -72,6 +72,17 @@
   letter-spacing: -.055em;
 }
 
+/* Для маршрута №2 уточняем подпись под «Где мой автобус?». */
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-live-panel .intro p {
+  font-size: 0 !important;
+}
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-live-panel .intro p::after {
+  content: "Автобус №2 движется расчётно по расписанию и по официальной линии маршрута Яндекс Карт.";
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 /* Большой блок «Все остановки и рейсы». */
 .schedule-section {
   display: block !important;
