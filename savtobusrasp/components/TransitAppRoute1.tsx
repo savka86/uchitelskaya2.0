@@ -123,6 +123,46 @@ function createLiveTrips(data: ScheduleData): LiveTrip[] {
   }).filter((trip) => trip.events.length > 0).sort((a, b) => a.start - b.start);
 }
 
+function stopArrivalBalloon(stopId: string, liveTrips: LiveTrip[], now: number) {
+  const arrivals = liveTrips
+    .flatMap((trip) => trip.events
+      .filter((event) => event.stopId === stopId)
+      .map((event) => ({
+        seconds: event.seconds,
+        clock: event.clock,
+        estimated: event.estimated,
+        direction: trip.direction as Direction,
+      })))
+    .sort((a, b) => a.seconds - b.seconds);
+
+  const directionName = (direction: Direction) => direction === "forward" ? "к Посту ГИБДД" : "к АЗС";
+  const upcoming = arrivals.filter((arrival) => arrival.seconds >= now).slice(0, 3);
+  const row = (arrival: typeof arrivals[number], wait: number, tomorrow = false) => {
+    const waitText = wait <= 30 ? "сейчас" : formatWait(wait);
+    return `<div style="display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-top:1px solid #edf1f7;">
+      <div><b style="font-size:16px;color:#182132;">${arrival.estimated ? "≈ " : ""}${arrival.clock}</b><div style="margin-top:2px;color:#657289;font-size:12px;">${directionName(arrival.direction)}${tomorrow ? " · завтра" : ""}</div></div>
+      <b style="color:#2864dc;font-size:13px;white-space:nowrap;">${waitText}</b>
+    </div>`;
+  };
+
+  let arrivalsHtml = "";
+  if (upcoming.length) {
+    arrivalsHtml = upcoming.map((arrival) => row(arrival, arrival.seconds - now)).join("");
+  } else if (arrivals.length) {
+    const firstTomorrow = arrivals[0];
+    arrivalsHtml = `<div style="padding:7px 0;color:#657289;font-size:12px;">Сегодня рейсов больше нет</div>${row(firstTomorrow, 86400 - now + firstTomorrow.seconds, true)}`;
+  } else {
+    arrivalsHtml = `<div style="padding:9px 0;color:#657289;font-size:12px;">Для этой остановки время в расписании не указано.</div>`;
+  }
+
+  return `<div style="min-width:230px;font-family:Arial,sans-serif;">
+    <div style="margin-bottom:7px;color:#657289;font-size:12px;">Сейчас в Намцах: <b style="color:#182132;">${formatClock(now, true)}</b></div>
+    <div style="color:#182132;font-size:13px;font-weight:800;">Ближайшее прибытие</div>
+    ${arrivalsHtml}
+    <div style="margin-top:7px;color:#8a95a8;font-size:10px;line-height:1.35;">Время рассчитано по действующему расписанию. Положение автобуса расчётное, не GPS.</div>
+  </div>`;
+}
+
 function loadYandexMaps() {
   if (typeof window === "undefined") return Promise.reject(new Error("Карта доступна только в браузере."));
   const w = window as typeof window & { ymaps?: any; __savtobusYandexPromise?: Promise<void> };
@@ -302,11 +342,18 @@ export function TransitAppRoute1({ initialData }: { initialData: ScheduleData })
           }
           const coords: Coordinates = [Number(stop?.latitude), Number(stop?.longitude)];
           stopDistanceRef.current.set(routeStop.stop_id, distanceAlongPath(coords, ROUTE_PATH, cumulative));
-          map.geoObjects.add(new ymaps.Placemark(coords, {
+          const placemark = new ymaps.Placemark(coords, {
             iconContent: String(index + 1),
             balloonContentHeader: `${index + 1}. ${stop?.name ?? routeStop.stop_id}`,
-            balloonContentBody: "Остановка маршрута № 1 · данные Яндекс Карт",
-          }, { preset: "islands#blueCircleIcon", iconColor: "#2864dc" }));
+            balloonContentBody: "Нажмите на остановку, чтобы увидеть ближайшее прибытие автобуса.",
+          }, { preset: "islands#blueCircleIcon", iconColor: "#2864dc" });
+          const updateArrivalBalloon = () => placemark.properties.set(
+            "balloonContentBody",
+            stopArrivalBalloon(routeStop.stop_id, liveTrips, getYakutskSeconds()),
+          );
+          placemark.events.add("click", updateArrivalBalloon);
+          placemark.events.add("balloonopen", updateArrivalBalloon);
+          map.geoObjects.add(placemark);
         }
 
         const busLayout = ymaps.templateLayoutFactory.createClass(
@@ -326,7 +373,7 @@ export function TransitAppRoute1({ initialData }: { initialData: ScheduleData })
         const bounds = map.geoObjects.getBounds?.();
         if (bounds) map.setBounds(bounds, { checkZoomRange: true, zoomMargin: 45 });
         setMapReady(true);
-        setMapMessage("Маршрут №1 взят из Яндекс Карт · автобус прикреплён к дороге");
+        setMapMessage("Маршрут №1 взят из Яндекс Карт · нажмите остановку — покажу ближайшее прибытие");
       } catch (error) {
         setMapMessage(error instanceof Error ? error.message : "Не удалось показать маршрут №1.");
         setMapReady(false);
@@ -340,7 +387,7 @@ export function TransitAppRoute1({ initialData }: { initialData: ScheduleData })
       busRef.current = null;
       stopDistanceRef.current.clear();
     };
-  }, [forwardStops, stopById]);
+  }, [forwardStops, liveTrips, stopById]);
 
   useEffect(() => {
     if (!mapReady || !live || !busRef.current) return;
@@ -420,7 +467,7 @@ export function TransitAppRoute1({ initialData }: { initialData: ScheduleData })
             ];
           })}
         </div></div>
-        <p className="schedule-note">Маршрут №1 и координаты остановок взяты из переданной страницы Яндекс Карт. Время рейсов загружается из Supabase по расписанию 2024 года; положение автобуса расчётное, не GPS.</p>
+        <p className="schedule-note">Маршрут №1 и координаты остановок взяты из переданной страницы Яндекс Карт. Нажмите на остановку на карте, чтобы увидеть ближайшее время прибытия относительно текущего времени. Положение автобуса расчётное, не GPS.</p>
       </section>
 
       <footer className="data-footer"><span>ЯНДЕКС КАРТА · МАРШРУТ №1 · SUPABASE</span><strong>{initialData.route.name}</strong><p>Маршрут № 1 · расчётное движение по расписанию.</p></footer>
