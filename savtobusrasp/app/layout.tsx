@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./mobile-map-controls.css";
+import { NewsPortal } from "@/components/NewsPortal";
 
 export const metadata: Metadata = {
   title: "Маршрут № 2 Намцы — расписание автобуса",
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
-      <body>{children}</body>
+      <body>
+        {children}
+        <NewsPortal />
+      </body>
     </html>
   );
 }
