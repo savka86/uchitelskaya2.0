@@ -22,6 +22,16 @@
   text-align: center;
 }
 
+/* Для маршрута №2 показываем отдельную точную формулировку. */
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-note {
+  font-size: 0;
+}
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-note::after {
+  content: "Маршрут №2 и координаты остановок взяты из переданной страницы Яндекс Карт. Нажмите на остановку на карте, чтобы увидеть ближайшее время прибытия относительно текущего времени. Положение автобуса расчётное, не GPS.";
+  font-size: 11px;
+  line-height: 1.45;
+}
+
 /* Оставляем место под перенесённую информационную строку. */
 .workspace {
   padding-top: 44px;
@@ -159,6 +169,11 @@
     font-size: 10px;
     line-height: 1.4;
     text-align: left;
+  }
+
+  .app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-note::after {
+    font-size: 10px;
+    line-height: 1.4;
   }
 
   .workspace {
