@@ -423,20 +423,7 @@ export function TransitAppRoute1({ initialData }: { initialData: ScheduleData })
       </header>
 
       <section className="workspace" id="top">
-        <aside className="sidebar">
-          <div className="intro">
-            <span className="source-label">НАМЦЫ · МАРШРУТ № 1</span>
-            <h1>Где мой<br />автобус?</h1>
-            <p>Автобус №1 движется расчётно по расписанию и по официальной линии маршрута Яндекс Карт.</p>
-          </div>
-          <div className="route-card">
-            <div className="route-card-head"><span className="route-badge">1</span><div><strong>{live.activeTrip ? "Автобус следует" : "Следующий рейс"}</strong><span>{directionLabel}</span></div></div>
-            <div className="progress-line"><span style={{ width: `${live.progress}%` }} /></div>
-            <div className="next-stop"><span>{live.activeTrip ? "Следующая остановка" : "До начала рейса"}</span><strong>{live.activeTrip ? live.next.stopName : formatWait(live.waitSeconds)}</strong><small>{live.activeTrip ? `${live.next.estimated ? "расчётно " : "по расписанию "}${live.next.clock}` : directionLabel}</small></div>
-          </div>
-          <div className="clock-card"><div><span>{demoMode ? "Ускоренное время" : "Время в Намцах"}</span><strong>{formatClock(currentSeconds, true)}</strong></div><button type="button" onClick={() => { if (!demoMode) setDemoSeconds(timeToSeconds("07:30")); setDemoMode((m) => !m); }}>{demoMode ? "Онлайн" : "Показать демо"}</button></div>
-          <p className="speed-note">{demoMode ? "Демонстрация ускорена в 32 раза" : "Часовой пояс: Якутск, UTC+9"}</p>
-        </aside>
+        <aside className="sidebar" aria-label="Важные новости" />
 
         <section className="map-panel" aria-label="Яндекс Карта маршрута № 1">
           <div className="map-toolbar"><div><strong>Маршрут № 1 · село Намцы</strong><span>{live.activeTrip ? directionLabel : `следующий: ${directionLabel}`}</span></div><span className="map-mode">ЯНДЕКС · МАРШРУТ №1</span></div>
@@ -452,6 +439,7 @@ export function TransitAppRoute1({ initialData }: { initialData: ScheduleData })
       </section>
 
       <section className="schedule-section">
+        <style>{`.schedule-section::before,.schedule-section::after{display:none!important}`}</style>
         <div className="schedule-heading"><div><span className="source-label">РАСПИСАНИЕ №1 · 2024</span><h2>Все остановки и рейсы</h2></div><div className="direction-tabs"><button className={scheduleDirection === "forward" ? "active" : ""} onClick={() => setScheduleDirection("forward")} type="button">К Посту ГИБДД</button><button className={scheduleDirection === "return" ? "active" : ""} onClick={() => setScheduleDirection("return")} type="button">К АЗС</button></div></div>
         <div className="schedule-table-wrap"><div className="schedule-table" style={{ gridTemplateColumns: `minmax(190px, 1.5fr) repeat(${selectedTrips.length}, minmax(76px, 1fr))` }}>
           <div className="table-head stop-column">Остановка</div>
@@ -467,6 +455,22 @@ export function TransitAppRoute1({ initialData }: { initialData: ScheduleData })
             ];
           })}
         </div></div>
+
+        <aside className="schedule-live-panel" style={{ gridColumn: 2, alignSelf: "start", minWidth: 0 }}>
+          <div className="intro">
+            <span className="source-label">НАМЦЫ · МАРШРУТ № 1</span>
+            <h1 style={{ fontSize: 36, lineHeight: 0.92, margin: "16px 0 12px" }}>Где мой<br />автобус?</h1>
+            <p style={{ marginBottom: 18, fontSize: 13 }}>Автобус №1 движется расчётно по расписанию и по официальной линии маршрута Яндекс Карт.</p>
+          </div>
+          <div className="route-card">
+            <div className="route-card-head"><span className="route-badge">1</span><div><strong>{live.activeTrip ? "Автобус следует" : "Следующий рейс"}</strong><span>{directionLabel}</span></div></div>
+            <div className="progress-line"><span style={{ width: `${live.progress}%` }} /></div>
+            <div className="next-stop"><span>{live.activeTrip ? "Следующая остановка" : "До начала рейса"}</span><strong>{live.activeTrip ? live.next.stopName : formatWait(live.waitSeconds)}</strong><small>{live.activeTrip ? `${live.next.estimated ? "расчётно " : "по расписанию "}${live.next.clock}` : directionLabel}</small></div>
+          </div>
+          <div className="clock-card"><div><span>{demoMode ? "Ускоренное время" : "Время в Намцах"}</span><strong>{formatClock(currentSeconds, true)}</strong></div><button type="button" onClick={() => { if (!demoMode) setDemoSeconds(timeToSeconds("07:30")); setDemoMode((m) => !m); }}>{demoMode ? "Онлайн" : "Показать демо"}</button></div>
+          <p className="speed-note">{demoMode ? "Демонстрация ускорена в 32 раза" : "Часовой пояс: Якутск, UTC+9"}</p>
+        </aside>
+
         <p className="schedule-note">Маршрут №1 и координаты остановок взяты из переданной страницы Яндекс Карт. Нажмите на остановку на карте, чтобы увидеть ближайшее время прибытия относительно текущего времени. Положение автобуса расчётное, не GPS.</p>
       </section>
 
