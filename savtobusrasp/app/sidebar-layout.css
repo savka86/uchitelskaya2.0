@@ -22,6 +22,22 @@
   align-self: auto !important;
 }
 
+/* Заголовок показываем одной строкой, несмотря на старый <br> внутри компонента. */
+.schedule-live-panel .intro h1 {
+  margin: 16px 0 12px !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+}
+.schedule-live-panel .intro h1::after {
+  content: "Где мой автобус?";
+  color: var(--ink);
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -.055em;
+}
+
 /* После возврата live-блока расписание снова занимает всю ширину секции. */
 .schedule-section {
   display: block !important;
@@ -61,6 +77,7 @@
     left: 22px;
     width: 286px;
   }
+  .schedule-live-panel .intro h1::after { font-size: 29px; }
 }
 
 @media (max-width: 760px) {
@@ -75,6 +92,8 @@
     right: 18px;
     width: auto;
   }
+
+  .schedule-live-panel .intro h1::after { font-size: 30px; }
 
   .schedule-section {
     display: block !important;
