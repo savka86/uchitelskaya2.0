@@ -3,6 +3,62 @@
    и визуально идут сразу после часового пояса. */
 .app-shell { position: relative; }
 
+/* Юбилейный баннер в свободной центральной части шапки. */
+.topbar {
+  position: relative;
+  overflow: hidden;
+}
+.topbar > * {
+  position: relative;
+  z-index: 3;
+}
+.topbar::before {
+  content: "К 85-летию Ленского наслега";
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  z-index: 1;
+  width: min(56vw, 760px);
+  height: 58px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px 56px 0;
+  border: 1px solid #cddbf3;
+  border-radius: 13px;
+  background:
+    radial-gradient(circle at 6% 28%, rgba(213,164,65,.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 94% 28%, rgba(213,164,65,.9) 0 2px, transparent 3px),
+    linear-gradient(115deg, rgba(225,241,255,.98), rgba(255,255,255,.99) 30%, rgba(255,255,255,.99) 70%, rgba(225,241,255,.98));
+  box-shadow: 0 5px 18px rgba(33,58,105,.08);
+  color: #1f57a6;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -.02em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.topbar::after {
+  content: "От учеников — Намской средней общеобразовательной школы №2   ·   🚌  НАМ";
+  position: absolute;
+  left: 50%;
+  top: 38px;
+  z-index: 2;
+  width: min(54vw, 720px);
+  transform: translateX(-50%);
+  color: #58739c;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 /* Текст об источнике маршрута переносим из-под расписания наверх,
    сразу под верхней строкой SAVTOBUSRASP. */
 .schedule-note {
@@ -173,6 +229,19 @@
   padding-top: 0;
 }
 
+@media (max-width: 1120px) {
+  .topbar::before {
+    width: 44vw;
+    padding-left: 28px;
+    padding-right: 28px;
+    font-size: 15px;
+  }
+  .topbar::after {
+    width: 42vw;
+    font-size: 8px;
+  }
+}
+
 @media (max-width: 960px) {
   .sidebar { padding-top: 559px !important; }
   .schedule-live-panel {
@@ -188,6 +257,13 @@
 
   .schedule-table-wrap {
     max-height: 620px !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .topbar::before,
+  .topbar::after {
+    display: none;
   }
 }
 
