@@ -3,17 +3,41 @@
    и визуально идут сразу после часового пояса. */
 .app-shell { position: relative; }
 
+/* Текст об источнике маршрута переносим из-под расписания наверх,
+   сразу под верхней строкой SAVTOBUSRASP. */
+.schedule-note {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  z-index: 45;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 10px max(22px, calc((100vw - 1440px) / 2));
+  border-bottom: 1px solid var(--line);
+  background: #f8faff;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* Оставляем место под перенесённую информационную строку. */
+.workspace {
+  padding-top: 44px;
+}
+
 /* В колонке резервируем место под live-панель; новости занимают место сразу после неё. */
 .sidebar {
   position: relative;
-  padding-top: 525px !important;
+  padding-top: 569px !important;
 }
 
 /* Сам live-блок остаётся React-компонентом на своём месте в DOM,
    но визуально возвращается в исходную левую колонку. */
 .schedule-live-panel {
   position: absolute !important;
-  top: 114px;
+  top: 158px;
   left: max(32px, calc((100vw - 1440px) / 2 + 32px));
   z-index: 30;
   width: 326px;
@@ -59,11 +83,6 @@
   max-height: 480px;
 }
 
-.schedule-note {
-  max-width: 850px;
-  margin: 14px 4px 0;
-}
-
 /* Настоящий блок новостей — непосредственно под «Часовой пояс: Якутск, UTC+9». */
 .sidebar > .important-news {
   margin-top: 0;
@@ -71,9 +90,9 @@
 }
 
 @media (max-width: 960px) {
-  .sidebar { padding-top: 515px !important; }
+  .sidebar { padding-top: 559px !important; }
   .schedule-live-panel {
-    top: 104px;
+    top: 148px;
     left: 22px;
     width: 286px;
   }
@@ -81,13 +100,25 @@
 }
 
 @media (max-width: 760px) {
+  .schedule-note {
+    top: 64px;
+    padding: 10px 16px;
+    font-size: 10px;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .workspace {
+    padding-top: 76px;
+  }
+
   .sidebar {
     position: relative;
-    padding-top: 510px !important;
+    padding-top: 586px !important;
   }
 
   .schedule-live-panel {
-    top: 92px;
+    top: 168px;
     left: 18px;
     right: 18px;
     width: auto;
@@ -107,5 +138,4 @@
   }
 
   .schedule-table-wrap { max-height: 420px; }
-  .schedule-note { margin-top: 14px; }
 }
