@@ -83,6 +83,15 @@
   line-height: 1.55;
 }
 
+/* Убираем год из подписи расписания маршрута №1. */
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 1"]) .schedule-heading .source-label {
+  font-size: 0;
+}
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 1"]) .schedule-heading .source-label::after {
+  content: "РАСПИСАНИЕ №1";
+  font-size: 10px;
+}
+
 /* Большой блок «Все остановки и рейсы». */
 .schedule-section {
   display: block !important;
