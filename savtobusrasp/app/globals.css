@@ -28,6 +28,8 @@ button { font: inherit; }
 
 .workspace { display: grid; grid-template-columns: 390px minmax(0, 1fr); min-height: calc(100vh - 72px); max-width: 1440px; margin: 0 auto; }
 .sidebar { padding: 42px 32px; border-right: 1px solid var(--line); background: var(--card); }
+.sidebar::before { content: "ВАЖНЫЕ НОВОСТИ\A\A 🚌 Расписание маршрутов №1 и №2 работает.\A Нажмите на остановку на карте, чтобы увидеть ближайшее время прибытия автобуса."; display: block; margin: 0 0 34px; padding: 18px 18px 20px; white-space: pre-line; border: 1px solid #d9e4f7; border-left: 5px solid var(--blue); border-radius: 16px; background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%); box-shadow: 0 10px 26px rgba(31,51,86,.07); color: #536176; font-size: 12px; line-height: 1.5; }
+.sidebar::after { content: "ВАЖНО"; display: block; position: absolute; width: 0; height: 0; overflow: hidden; }
 .source-label { display: inline-flex; padding: 7px 10px; border-radius: 999px; background: #eaf0fc; color: var(--blue); font-size: 10px; font-weight: 900; letter-spacing: .13em; }
 .intro h1 { margin: 20px 0 16px; font-size: clamp(48px, 5vw, 66px); line-height: .9; letter-spacing: -.065em; }
 .intro p { max-width: 310px; margin: 0 0 30px; color: var(--muted); font-size: 15px; line-height: 1.55; }
@@ -111,6 +113,7 @@ button { font: inherit; }
 @media (max-width: 960px) {
   .workspace { grid-template-columns: 330px minmax(0, 1fr); }
   .sidebar { padding: 32px 22px; }
+  .sidebar::before { margin-bottom: 28px; padding: 16px; font-size: 11px; }
   .map-panel { padding: 18px; }
   .map-canvas { min-height: 560px; }
   .stop-label.visible { display: none; }
@@ -124,6 +127,7 @@ button { font: inherit; }
   .topbar-status { max-width: 140px; font-size: 9px; text-align: right; }
   .workspace { display: flex; min-height: auto; flex-direction: column; }
   .sidebar { padding: 28px 18px 20px; border-right: 0; }
+  .sidebar::before { margin-bottom: 24px; padding: 15px 16px; }
   .intro h1 { font-size: 52px; }
   .intro p { margin-bottom: 22px; }
   .map-panel { padding: 10px 12px 20px; background: white; }
