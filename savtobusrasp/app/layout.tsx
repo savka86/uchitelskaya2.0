@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./mobile-map-controls.css";
+import "./news-admin.css";
 import { NewsPortal } from "@/components/NewsPortal";
 
 export const metadata: Metadata = {
