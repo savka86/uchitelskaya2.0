@@ -92,6 +92,15 @@
   font-size: 10px;
 }
 
+/* Для маршрута №2 показываем подпись без года. */
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-heading .source-label {
+  font-size: 0;
+}
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-heading .source-label::after {
+  content: "РАСПИСАНИЕ №2";
+  font-size: 10px;
+}
+
 /* Большой блок «Все остановки и рейсы». */
 .schedule-section {
   display: block !important;
