@@ -1,0 +1,39 @@
+/* Переставляем блоки в левой колонке:
+   1) Важные новости
+   2) Где мой автобус? */
+
+/* Новости идут первыми в обычном потоке sidebar. */
+.sidebar {
+  padding-top: 28px !important;
+}
+
+.sidebar > .important-news {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  margin-bottom: 24px !important;
+}
+
+/* Live-панель опускаем под новости. */
+.schedule-live-panel {
+  top: calc(var(--jubilee-topbar-h) + 260px) !important;
+}
+
+@media (max-width: 960px) {
+  .sidebar {
+    padding-top: 24px !important;
+  }
+
+  .schedule-live-panel {
+    top: calc(var(--jubilee-topbar-h) + 280px) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    padding-top: 20px !important;
+  }
+
+  .schedule-live-panel {
+    top: calc(var(--jubilee-topbar-h) + 390px) !important;
+  }
+}
