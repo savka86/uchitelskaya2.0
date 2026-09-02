@@ -69,7 +69,7 @@
   pointer-events: none !important;
 }
 
-/* Точный PNG автобуса без фона: между SAVTOBUSRASP и юбилейным текстом. */
+/* PNG автобуса без фона — напрямую из постоянного публичного хранилища. */
 .topbar > .brand::after {
   content: "" !important;
   position: absolute !important;
@@ -80,7 +80,7 @@
   height: 84px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background-image: url("https://clehcdkviariimjwfyun.supabase.co/functions/v1/install-jubilee-bus?v=20260902-2238") !important;
+  background-image: url("https://clehcdkviariimjwfyun.supabase.co/storage/v1/object/public/site-assets/jubilee-bus-transparent.png?v=20260902-2250") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
@@ -89,7 +89,7 @@
   pointer-events: none !important;
 }
 
-/* Точный PNG памятника НАМ без фона. */
+/* PNG памятника НАМ без фона — напрямую из постоянного публичного хранилища. */
 .topbar > .topbar-status::before {
   content: "" !important;
   position: absolute !important;
@@ -100,7 +100,7 @@
   height: 96px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background-image: url("https://clehcdkviariimjwfyun.supabase.co/functions/v1/install-nam-monument?v=20260902-2238") !important;
+  background-image: url("https://clehcdkviariimjwfyun.supabase.co/storage/v1/object/public/site-assets/nam-monument.png?v=20260902-2250") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
