@@ -13,9 +13,18 @@
   margin-bottom: 24px !important;
 }
 
-/* Live-панель опускаем под новости. */
+/* Оставляем место примерно под две полноценные карточки новостей.
+   Если новостей больше — список прокручивается внутри блока. */
+.sidebar > .important-news .important-news-list {
+  max-height: 248px !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+}
+
+/* Live-панель опускаем ниже, чтобы она не перекрывала вторую новость. */
 .schedule-live-panel {
-  top: calc(var(--jubilee-topbar-h) + 260px) !important;
+  top: calc(var(--jubilee-topbar-h) + 430px) !important;
 }
 
 @media (max-width: 960px) {
@@ -23,8 +32,12 @@
     padding-top: 24px !important;
   }
 
+  .sidebar > .important-news .important-news-list {
+    max-height: 248px !important;
+  }
+
   .schedule-live-panel {
-    top: calc(var(--jubilee-topbar-h) + 280px) !important;
+    top: calc(var(--jubilee-topbar-h) + 450px) !important;
   }
 }
 
@@ -33,7 +46,11 @@
     padding-top: 20px !important;
   }
 
+  .sidebar > .important-news .important-news-list {
+    max-height: 230px !important;
+  }
+
   .schedule-live-panel {
-    top: calc(var(--jubilee-topbar-h) + 390px) !important;
+    top: calc(var(--jubilee-topbar-h) + 450px) !important;
   }
 }
