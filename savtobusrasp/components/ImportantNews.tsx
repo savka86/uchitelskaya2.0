@@ -1,35 +1,28 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { ImportantNewsRecord, kindIcon, kindLabel, newsSupabase } from "@/lib/news";
+import { ImportantNewsRecord, kindIcon, kindLabel } from "@/lib/news";
 
 export function ImportantNews({ routeNumber }: { routeNumber?: string }) {
   const [items, setItems] = useState<ImportantNewsRecord[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
-    setLoading(true);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 5000);
+
     try {
-      let query = newsSupabase
-        .from("important_news")
-        .select("id,title,body,kind,route_number,active,starts_at,ends_at,created_at")
-        .order("created_at", { ascending: false })
-        .limit(8);
-
-      if (routeNumber) query = query.or(`route_number.is.null,route_number.eq.${routeNumber}`);
-
-      const result = await Promise.race([
-        query,
-        new Promise<{ data: ImportantNewsRecord[] | null }>((resolve) => {
-          window.setTimeout(() => resolve({ data: [] }), 4000);
-        }),
-      ]);
-
-      setItems((result.data ?? []) as ImportantNewsRecord[]);
+      const suffix = routeNumber ? `?route=${encodeURIComponent(routeNumber)}` : "";
+      const response = await fetch(`/api/important-news${suffix}`, {
+        cache: "no-store",
+        signal: controller.signal,
+      });
+      if (!response.ok) return;
+      const payload = await response.json();
+      setItems(Array.isArray(payload.items) ? payload.items as ImportantNewsRecord[] : []);
     } catch {
-      setItems([]);
+      // Оставляем запасное сообщение вместо бесконечной загрузки.
     } finally {
-      setLoading(false);
+      window.clearTimeout(timeout);
     }
   }, [routeNumber]);
 
@@ -47,8 +40,7 @@ export function ImportantNews({ routeNumber }: { routeNumber?: string }) {
       </div>
 
       <div className="important-news-list">
-        {loading ? <p className="important-news-empty">Загружаю новости…</p> : null}
-        {!loading && !items.length ? (
+        {!items.length ? (
           <article className="news-item info">
             <div className="news-kind">🚌 НОВОСТЬ</div>
             <strong>Маршруты работают по расписанию</strong>
