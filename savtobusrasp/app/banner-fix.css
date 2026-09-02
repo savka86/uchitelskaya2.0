@@ -1,7 +1,46 @@
-/* Принудительно используем именно загруженный пользователем баннер из public. */
+/* Показываем загруженный пользователем баннер целиком, без обрезки нижней подписи. */
+.app-shell {
+  --jubilee-topbar-h: 230px;
+}
+
 .topbar::before {
-  background-image: url("/banner-lensky-85.png?v=20260902-1937") !important;
+  width: 728px !important;
+  height: 153px !important;
+  background-image: url("/banner-lensky-85.png?v=20260902-2003") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
-  background-size: cover !important;
+  background-size: contain !important;
+  background-color: #fff !important;
+}
+
+@media (max-width: 1120px) {
+  .app-shell {
+    --jubilee-topbar-h: 220px;
+  }
+  .topbar::before {
+    width: min(65vw, 728px) !important;
+    height: min(13.65vw, 153px) !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .app-shell {
+    --jubilee-topbar-h: 210px;
+  }
+  .topbar::before {
+    width: min(72vw, 728px) !important;
+    height: min(15.12vw, 153px) !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .app-shell {
+    --jubilee-topbar-h: calc(76px + (100vw - 24px) * 0.21);
+  }
+  .topbar::before {
+    width: calc(100% - 24px) !important;
+    max-width: 728px !important;
+    height: calc((100vw - 24px) * 0.21) !important;
+    max-height: 153px !important;
+  }
 }
