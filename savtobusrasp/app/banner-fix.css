@@ -1,0 +1,7 @@
+/* Баннер грузится через сам SAVTOBUSRASP, чтобы браузер не блокировал внешний файл. */
+.topbar::before {
+  background-image: url("/api/jubilee-banner") !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
