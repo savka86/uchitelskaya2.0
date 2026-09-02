@@ -1,12 +1,13 @@
-/* Показываем загруженный пользователем баннер целиком, без обрезки нижней подписи. */
+/* Юбилейный баннер: на широком экране стоит в верхней строке между логотипом и статусом. */
 .app-shell {
-  --jubilee-topbar-h: 230px;
+  --jubilee-topbar-h: 170px;
 }
 
 .topbar::before {
+  top: 8px !important;
   width: 728px !important;
   height: 153px !important;
-  background-image: url("/banner-lensky-85.png?v=20260902-2003") !important;
+  background-image: url("/banner-lensky-85.png?v=20260902-2015") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
@@ -15,9 +16,10 @@
 
 @media (max-width: 1120px) {
   .app-shell {
-    --jubilee-topbar-h: 220px;
+    --jubilee-topbar-h: 166px;
   }
   .topbar::before {
+    top: 8px !important;
     width: min(65vw, 728px) !important;
     height: min(13.65vw, 153px) !important;
   }
@@ -25,19 +27,22 @@
 
 @media (max-width: 960px) {
   .app-shell {
-    --jubilee-topbar-h: 210px;
+    --jubilee-topbar-h: 164px;
   }
   .topbar::before {
-    width: min(72vw, 728px) !important;
-    height: min(15.12vw, 153px) !important;
+    top: 8px !important;
+    width: min(62vw, 728px) !important;
+    height: min(13.02vw, 153px) !important;
   }
 }
 
+/* На узких экранах баннер переносим ниже первой строки, чтобы логотип и статус не перекрывали его. */
 @media (max-width: 820px) {
   .app-shell {
-    --jubilee-topbar-h: calc(76px + (100vw - 24px) * 0.21);
+    --jubilee-topbar-h: calc(70px + (100vw - 24px) * 0.21);
   }
   .topbar::before {
+    top: 54px !important;
     width: calc(100% - 24px) !important;
     max-width: 728px !important;
     height: calc((100vw - 24px) * 0.21) !important;
