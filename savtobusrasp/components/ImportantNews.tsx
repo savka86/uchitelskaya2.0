@@ -8,17 +8,29 @@ export function ImportantNews({ routeNumber }: { routeNumber?: string }) {
   const [loading, setLoading] = useState(true);
 
   const load = useCallback(async () => {
-    let query = newsSupabase
-      .from("important_news")
-      .select("id,title,body,kind,route_number,active,starts_at,ends_at,created_at")
-      .order("created_at", { ascending: false })
-      .limit(8);
+    setLoading(true);
+    try {
+      let query = newsSupabase
+        .from("important_news")
+        .select("id,title,body,kind,route_number,active,starts_at,ends_at,created_at")
+        .order("created_at", { ascending: false })
+        .limit(8);
 
-    if (routeNumber) query = query.or(`route_number.is.null,route_number.eq.${routeNumber}`);
+      if (routeNumber) query = query.or(`route_number.is.null,route_number.eq.${routeNumber}`);
 
-    const { data } = await query;
-    setItems((data ?? []) as ImportantNewsRecord[]);
-    setLoading(false);
+      const result = await Promise.race([
+        query,
+        new Promise<{ data: ImportantNewsRecord[] | null }>((resolve) => {
+          window.setTimeout(() => resolve({ data: [] }), 4000);
+        }),
+      ]);
+
+      setItems((result.data ?? []) as ImportantNewsRecord[]);
+    } catch {
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
   }, [routeNumber]);
 
   useEffect(() => {
