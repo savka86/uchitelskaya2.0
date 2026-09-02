@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 110" role="img" aria-label="Памятник НАМ">
+  <defs>
+    <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fbff"/>
+      <stop offset="1" stop-color="#cdd7e8"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3c66a"/>
+      <stop offset="1" stop-color="#a86d18"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="62" cy="104" rx="34" ry="5" fill="#243a5c" opacity=".12"/>
+  <rect x="55" y="36" width="14" height="63" rx="2" fill="url(#stone)" stroke="#b9c5d6"/>
+  <rect x="42" y="96" width="40" height="8" rx="2" fill="#d8e0ec" stroke="#bac6d8"/>
+  <circle cx="55" cy="54" r="23" fill="url(#gold)" stroke="#8d5a13" stroke-width="2"/>
+  <circle cx="55" cy="54" r="17" fill="#f7e7bd" stroke="#b57b22" stroke-width="1.5"/>
+  <path d="M40 54h30M55 39v30M45 44l20 20M65 44L45 64" stroke="#c28a2d" stroke-width="1" opacity=".55"/>
+  <rect x="35" y="44" width="78" height="25" rx="3" fill="#f8f6ef" stroke="#a86d18" stroke-width="3"/>
+  <text x="74" y="63" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="900" fill="#9b691f">НАМ</text>
+  <path d="M44 28c8-4 15-4 22 0l7-4 8 5-8 4c-8 5-17 5-28 1z" fill="#184b9e" opacity=".95"/>
+  <circle cx="57" cy="19" r="4" fill="#184b9e"/>
+  <path d="M57 23l5 10M60 27l8-6M52 30l-7 5M71 24l12-7" stroke="#184b9e" stroke-width="3" stroke-linecap="round"/>
+  <path d="M81 17l13 3-12 6z" fill="#2c6bd0"/>
+</svg>
