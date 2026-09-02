@@ -14,9 +14,11 @@
   overflow: visible !important;
 }
 
+/* ВАЖНО: оставляем brand/status flex-элементами, но без собственного positioning,
+   чтобы их псевдоэлементы позиционировались относительно всей .topbar. */
 .topbar > .brand,
 .topbar > .topbar-status {
-  position: relative !important;
+  position: static !important;
   z-index: 8 !important;
 }
 
@@ -64,11 +66,11 @@
   pointer-events: none !important;
 }
 
-/* Автобус: строго между SAVTOBUSRASP и юбилейным текстом. */
+/* Автобус: в промежутке SAVTOBUSRASP → юбилейный текст. */
 .topbar > .brand::after {
   content: "" !important;
   position: absolute !important;
-  left: calc(50% - 337px) !important;
+  left: calc(50% - 380px) !important;
   top: 10px !important;
   z-index: 7 !important;
   width: 110px !important;
@@ -83,11 +85,11 @@
   pointer-events: none !important;
 }
 
-/* Памятник НАМ: строго между юбилейным текстом и статусом рейса. */
+/* Памятник НАМ: в промежутке юбилейный текст → статус рейса. */
 .topbar > .topbar-status::before {
   content: "" !important;
   position: absolute !important;
-  left: calc(50% + 227px) !important;
+  left: calc(50% + 255px) !important;
   top: 10px !important;
   z-index: 7 !important;
   width: 110px !important;
@@ -116,7 +118,7 @@
   }
 
   .topbar > .brand::after {
-    left: calc(50% - 270px) !important;
+    left: calc(50% - 290px) !important;
     width: 78px !important;
     height: 56px !important;
     top: 18px !important;
@@ -124,7 +126,7 @@
   }
 
   .topbar > .topbar-status::before {
-    left: calc(50% + 192px) !important;
+    left: calc(50% + 212px) !important;
     width: 78px !important;
     height: 56px !important;
     top: 18px !important;
