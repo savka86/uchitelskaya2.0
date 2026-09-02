@@ -88,18 +88,18 @@
   pointer-events: none !important;
 }
 
-/* Памятник НАМ без фона: между юбилейным текстом и статусом рейса. */
+/* Точный PNG памятника НАМ без фона. */
 .topbar > .topbar-status::before {
   content: "" !important;
   position: absolute !important;
   left: calc(50% + 255px) !important;
-  top: 3px !important;
+  top: 0 !important;
   z-index: 7 !important;
-  width: 92px !important;
-  height: 86px !important;
+  width: 96px !important;
+  height: 92px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background-image: url("/jubilee-nam.svg?v=20260902-2201") !important;
+  background-image: url("https://clehcdkviariimjwfyun.supabase.co/functions/v1/install-nam-monument?v=20260902-2218") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
@@ -129,9 +129,9 @@
 
   .topbar > .topbar-status::before {
     left: calc(50% + 212px) !important;
-    width: 66px !important;
-    height: 62px !important;
-    top: 14px !important;
+    width: 70px !important;
+    height: 68px !important;
+    top: 12px !important;
   }
 }
 
@@ -173,8 +173,8 @@
   .topbar > .topbar-status::before {
     left: auto !important;
     right: 10px !important;
-    top: 62px !important;
-    width: 54px !important;
-    height: 58px !important;
+    top: 60px !important;
+    width: 58px !important;
+    height: 62px !important;
   }
 }
