@@ -1,4 +1,6 @@
-/* Юбилейная строка в шапке: автобус слева, текст по центру, памятник НАМ справа. */
+/* Юбилейная строка в шапке.
+   Порядок на широком экране:
+   SAVTOBUSRASP → автобус → юбилейный текст → памятник НАМ → статус рейса. */
 .app-shell {
   --jubilee-topbar-h: 92px;
 }
@@ -62,12 +64,12 @@
   pointer-events: none !important;
 }
 
-/* Жёлтый ПАЗ-672 слева от текста. */
+/* Автобус: строго между SAVTOBUSRASP и юбилейным текстом. */
 .topbar > .brand::after {
   content: "" !important;
-  position: fixed !important;
-  left: calc(50% - 380px) !important;
-  top: 92px !important;
+  position: absolute !important;
+  left: calc(50% - 337px) !important;
+  top: 10px !important;
   z-index: 7 !important;
   width: 110px !important;
   height: 72px !important;
@@ -81,12 +83,12 @@
   pointer-events: none !important;
 }
 
-/* Памятник НАМ справа от текста. */
+/* Памятник НАМ: строго между юбилейным текстом и статусом рейса. */
 .topbar > .topbar-status::before {
   content: "" !important;
-  position: fixed !important;
-  left: calc(50% + 270px) !important;
-  top: 92px !important;
+  position: absolute !important;
+  left: calc(50% + 227px) !important;
+  top: 10px !important;
   z-index: 7 !important;
   width: 110px !important;
   height: 72px !important;
@@ -100,40 +102,33 @@
   pointer-events: none !important;
 }
 
-/* Исправляем fixed-позиционирование относительно верхней полосы приложения. */
-@supports (position: absolute) {
-  .topbar > .brand::after,
-  .topbar > .topbar-status::before {
-    position: absolute !important;
-    top: 10px !important;
-  }
-}
-
 @media (max-width: 1180px) {
   .topbar::before {
-    width: 360px !important;
-    max-width: 38vw !important;
-    font-size: 21px !important;
+    width: 340px !important;
+    max-width: 36vw !important;
+    font-size: 20px !important;
   }
 
   .topbar::after {
-    width: 370px !important;
-    max-width: 39vw !important;
+    width: 350px !important;
+    max-width: 37vw !important;
     font-size: 9px !important;
   }
 
   .topbar > .brand::after {
-    left: calc(50% - 320px) !important;
-    width: 84px !important;
-    height: 58px !important;
-    top: 17px !important;
+    left: calc(50% - 270px) !important;
+    width: 78px !important;
+    height: 56px !important;
+    top: 18px !important;
+    border-radius: 11px !important;
   }
 
   .topbar > .topbar-status::before {
-    left: calc(50% + 236px) !important;
-    width: 84px !important;
-    height: 58px !important;
-    top: 17px !important;
+    left: calc(50% + 192px) !important;
+    width: 78px !important;
+    height: 56px !important;
+    top: 18px !important;
+    border-radius: 11px !important;
   }
 }
 
