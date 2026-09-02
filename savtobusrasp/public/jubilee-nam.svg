@@ -1,24 +1,60 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 110" role="img" aria-label="Памятник НАМ">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 155" role="img" aria-label="Памятник НАМ без фона">
   <defs>
     <linearGradient id="stone" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f8fbff"/>
-      <stop offset="1" stop-color="#cdd7e8"/>
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset=".55" stop-color="#eee6d7"/>
+      <stop offset="1" stop-color="#cfc4b0"/>
     </linearGradient>
     <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f3c66a"/>
-      <stop offset="1" stop-color="#a86d18"/>
+      <stop offset="0" stop-color="#ffd463"/>
+      <stop offset=".45" stop-color="#d79a21"/>
+      <stop offset="1" stop-color="#8d5b12"/>
     </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4f6f8"/>
+      <stop offset=".45" stop-color="#aeb7c2"/>
+      <stop offset="1" stop-color="#636d79"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.8" flood-color="#3b2a11" flood-opacity=".2"/>
+    </filter>
   </defs>
-  <ellipse cx="62" cy="104" rx="34" ry="5" fill="#243a5c" opacity=".12"/>
-  <rect x="55" y="36" width="14" height="63" rx="2" fill="url(#stone)" stroke="#b9c5d6"/>
-  <rect x="42" y="96" width="40" height="8" rx="2" fill="#d8e0ec" stroke="#bac6d8"/>
-  <circle cx="55" cy="54" r="23" fill="url(#gold)" stroke="#8d5a13" stroke-width="2"/>
-  <circle cx="55" cy="54" r="17" fill="#f7e7bd" stroke="#b57b22" stroke-width="1.5"/>
-  <path d="M40 54h30M55 39v30M45 44l20 20M65 44L45 64" stroke="#c28a2d" stroke-width="1" opacity=".55"/>
-  <rect x="35" y="44" width="78" height="25" rx="3" fill="#f8f6ef" stroke="#a86d18" stroke-width="3"/>
-  <text x="74" y="63" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="900" fill="#9b691f">НАМ</text>
-  <path d="M44 28c8-4 15-4 22 0l7-4 8 5-8 4c-8 5-17 5-28 1z" fill="#184b9e" opacity=".95"/>
-  <circle cx="57" cy="19" r="4" fill="#184b9e"/>
-  <path d="M57 23l5 10M60 27l8-6M52 30l-7 5M71 24l12-7" stroke="#184b9e" stroke-width="3" stroke-linecap="round"/>
-  <path d="M81 17l13 3-12 6z" fill="#2c6bd0"/>
+
+  <!-- flag -->
+  <path d="M64 8 L65 41" stroke="#59636f" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M65 9 C78 5,90 10,103 8 C113 7,120 5,129 11 L126 26 C114 20,103 23,93 20 C82 17,74 20,65 18 Z" fill="url(#metal)" stroke="#66717d" stroke-width="1.4"/>
+  <path d="M83 12 C89 10,96 11,102 13 C96 15,91 17,86 20 C90 16,88 14,83 12 Z" fill="none" stroke="#707b87" stroke-width="1"/>
+
+  <!-- horse and rider -->
+  <g fill="url(#metal)" stroke="#58616b" stroke-width="1.1" filter="url(#shadow)">
+    <path d="M55 34 C60 28,70 26,80 29 C88 31,92 36,99 38 C95 42,88 43,81 41 C74 39,68 41,62 42 C58 41,56 38,55 34 Z"/>
+    <path d="M60 40 L55 48 L58 49 L64 42 M83 41 L88 49 L91 48 L87 40" fill="none" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="72" cy="24" r="4"/>
+    <path d="M70 28 C67 31,66 34,67 38 L73 39 L76 31 Z"/>
+    <path d="M75 30 L82 25" fill="none" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- pedestal -->
+  <path d="M62 52 H81 V136 H62 Z" fill="url(#stone)" stroke="#c7bca8" stroke-width="1.1"/>
+  <path d="M48 134 H95 L105 142 H38 Z" fill="url(#stone)" stroke="#c7bca8" stroke-width="1.2"/>
+  <path d="M38 142 H105 V151 H38 Z" fill="#ddd2c1" stroke="#bbae98" stroke-width="1.2"/>
+
+  <!-- circular emblem -->
+  <circle cx="61" cy="78" r="30" fill="none" stroke="url(#gold)" stroke-width="9"/>
+  <circle cx="61" cy="78" r="23" fill="none" stroke="#f4e2b4" stroke-width="1.2" opacity=".8"/>
+
+  <!-- NAM board -->
+  <rect x="45" y="65" width="96" height="34" rx="2.5" fill="url(#gold)" stroke="#8b5b16" stroke-width="2" filter="url(#shadow)"/>
+  <text x="93" y="91" text-anchor="middle" font-family="Arial, sans-serif" font-size="31" font-weight="900" fill="#f8f5ec" stroke="#8e641e" stroke-width=".7" paint-order="stroke">НАМ</text>
+
+  <!-- decorative lower arc -->
+  <path d="M39 98 C47 110,73 113,84 100" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M38 62 C44 50,55 46,67 48" fill="none" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- subtle tile lines -->
+  <g stroke="#d6ccbc" stroke-width=".65" opacity=".8">
+    <path d="M62 74H81M62 96H81M62 118H81"/>
+    <path d="M71.5 52V136"/>
+    <path d="M48 138H95M54 134L50 142M88 134L94 142"/>
+  </g>
 </svg>
