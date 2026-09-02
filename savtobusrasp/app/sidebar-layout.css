@@ -26,17 +26,18 @@
   left: 50%;
   top: 58px;
   z-index: 1;
-  width: min(72vw, 1050px);
+  width: min(70vw, 900px);
   aspect-ratio: 3 / 1;
   transform: translateX(-50%);
   border: 1px solid #d6e1f3;
   border-radius: 20px;
-  background-image: url("https://clehcdkviariimjwfyun.supabase.co/storage/v1/object/public/site-assets/jubilee-banner.jpg");
+  background-image: url("https://clehcdkviariimjwfyun.supabase.co/storage/v1/object/public/site-assets/jubilee-banner-hd.png?v=2");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100% auto;
   background-color: #fff;
   box-shadow: 0 12px 32px rgba(33,58,105,.12);
+  filter: contrast(1.035) saturate(1.015);
   pointer-events: none;
 }
 .topbar::after {
@@ -216,7 +217,7 @@
 
 @media (max-width: 1120px) {
   .topbar::before {
-    width: min(76vw, 900px);
+    width: min(72vw, 840px);
   }
 }
 
@@ -227,7 +228,7 @@
 
   .topbar::before {
     top: 58px;
-    width: min(76vw, 820px);
+    width: min(74vw, 774px);
   }
 
   .sidebar { padding-top: 559px !important; }
@@ -260,7 +261,7 @@
     display: block;
     top: 62px;
     width: calc(100% - 24px);
-    max-width: 760px;
+    max-width: 774px;
     border-radius: 14px;
   }
 
