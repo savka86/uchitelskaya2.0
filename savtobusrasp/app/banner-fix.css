@@ -14,6 +14,11 @@
   overflow: visible !important;
 }
 
+/* Убираем стандартную иконку 🚌 перед SAVTOBUSRASP. */
+.brand-bus {
+  display: none !important;
+}
+
 /* ВАЖНО: оставляем brand/status flex-элементами, но без собственного positioning,
    чтобы их псевдоэлементы позиционировались относительно всей .topbar. */
 .topbar > .brand,
