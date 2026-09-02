@@ -1,4 +1,4 @@
-/* Юбилейная строка в шапке: автобус слева, текст по центру, памятник НАМ справа. */
+/* Юбилейная строка в шапке: реальный автобус слева, текст по центру, реальный памятник НАМ справа. */
 .app-shell {
   --jubilee-topbar-h: 82px;
 }
@@ -10,13 +10,11 @@
   padding-top: 0 !important;
 }
 
-/* Делаем topbar общей системой координат для декоративных изображений. */
 .topbar > .brand,
 .topbar > .topbar-status {
   position: static !important;
 }
 
-/* Основной юбилейный текст. */
 .topbar::before {
   content: "К 85-летию Ленского наслега" !important;
   position: absolute !important;
@@ -41,7 +39,6 @@
   pointer-events: none;
 }
 
-/* Подпись под юбилейным текстом. */
 .topbar::after {
   content: "От учеников Намской средней общеобразовательной школы №2" !important;
   display: block !important;
@@ -62,52 +59,64 @@
   pointer-events: none;
 }
 
-/* Автобус слева от юбилейного текста. */
+/* Реальный ПАЗ-672 слева. */
 .topbar > .brand::after {
   content: "";
   position: absolute;
-  left: calc(50% - 360px);
-  top: 12px;
+  left: calc(50% - 372px);
+  top: 10px;
   z-index: 4;
-  width: 82px;
-  height: 58px;
-  background: url("/jubilee-bus.svg") center / contain no-repeat;
+  width: 96px;
+  height: 62px;
+  border: 1px solid #d8e1ef;
+  border-radius: 12px;
+  background-image: url("https://i.obozrevatel.com/news/2024/6/7/zobrazhennya2024-06-07141308376.png?size=1944x924");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 5px 14px rgba(24,49,91,.10);
   pointer-events: none;
 }
 
-/* Памятник НАМ справа от юбилейного текста. */
+/* Реальный памятник НАМ справа. */
 .topbar > .topbar-status::before {
   content: "";
   position: absolute;
-  left: calc(50% + 292px);
-  top: 6px;
+  left: calc(50% + 276px);
+  top: 10px;
   z-index: 4;
-  width: 68px;
-  height: 70px;
-  background: url("/jubilee-nam.svg") center / contain no-repeat;
+  width: 82px;
+  height: 62px;
+  border: 1px solid #d8e1ef;
+  border-radius: 12px;
+  background-image: url("https://gorodarus.ru/images/namci/namci2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 0 5px 14px rgba(24,49,91,.10);
   pointer-events: none;
 }
 
 @media (max-width: 1120px) {
   .topbar::before {
-    max-width: 45vw;
+    max-width: 43vw;
     font-size: 21px;
   }
   .topbar::after {
-    max-width: 45vw;
+    max-width: 43vw;
     font-size: 9px;
   }
   .topbar > .brand::after {
-    left: calc(50% - 310px);
-    width: 72px;
-    height: 52px;
+    left: calc(50% - 320px);
+    width: 78px;
+    height: 54px;
     top: 14px;
   }
   .topbar > .topbar-status::before {
-    left: calc(50% + 250px);
-    width: 60px;
-    height: 62px;
-    top: 9px;
+    left: calc(50% + 244px);
+    width: 68px;
+    height: 54px;
+    top: 14px;
   }
 }
 
@@ -123,7 +132,7 @@
 
   .topbar::before {
     top: 61px !important;
-    width: calc(100% - 116px) !important;
+    width: calc(100% - 132px) !important;
     max-width: none;
     font-size: 17px;
     white-space: normal;
@@ -131,7 +140,7 @@
 
   .topbar::after {
     top: 88px !important;
-    width: calc(100% - 116px) !important;
+    width: calc(100% - 132px) !important;
     max-width: none;
     font-size: 8px;
     white-space: normal;
@@ -140,15 +149,15 @@
   .topbar > .brand::after {
     left: 10px;
     top: 62px;
-    width: 48px;
+    width: 54px;
     height: 42px;
   }
 
   .topbar > .topbar-status::before {
     left: auto;
     right: 10px;
-    top: 57px;
-    width: 48px;
-    height: 50px;
+    top: 62px;
+    width: 54px;
+    height: 42px;
   }
 }
