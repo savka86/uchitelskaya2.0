@@ -1,4 +1,4 @@
-/* Вместо юбилейного баннера — обычный текст в шапке между логотипом и статусом. */
+/* Юбилейная строка в шапке: автобус слева, текст по центру, памятник НАМ справа. */
 .app-shell {
   --jubilee-topbar-h: 82px;
 }
@@ -10,15 +10,22 @@
   padding-top: 0 !important;
 }
 
+/* Делаем topbar общей системой координат для декоративных изображений. */
+.topbar > .brand,
+.topbar > .topbar-status {
+  position: static !important;
+}
+
+/* Основной юбилейный текст. */
 .topbar::before {
   content: "К 85-летию Ленского наслега" !important;
   position: absolute !important;
   left: 50% !important;
   top: 17px !important;
-  z-index: 2 !important;
+  z-index: 4 !important;
   width: auto !important;
   height: auto !important;
-  max-width: 56vw;
+  max-width: 48vw;
   transform: translateX(-50%) !important;
   border: 0 !important;
   border-radius: 0 !important;
@@ -34,15 +41,16 @@
   pointer-events: none;
 }
 
+/* Подпись под юбилейным текстом. */
 .topbar::after {
   content: "От учеников Намской средней общеобразовательной школы №2" !important;
   display: block !important;
   position: absolute !important;
   left: 50% !important;
   top: 48px !important;
-  z-index: 2 !important;
+  z-index: 4 !important;
   width: auto !important;
-  max-width: 56vw;
+  max-width: 48vw;
   transform: translateX(-50%) !important;
   color: #69758a;
   font-size: 10px;
@@ -54,20 +62,58 @@
   pointer-events: none;
 }
 
+/* Автобус слева от юбилейного текста. */
+.topbar > .brand::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 360px);
+  top: 12px;
+  z-index: 4;
+  width: 82px;
+  height: 58px;
+  background: url("/jubilee-bus.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* Памятник НАМ справа от юбилейного текста. */
+.topbar > .topbar-status::before {
+  content: "";
+  position: absolute;
+  left: calc(50% + 292px);
+  top: 6px;
+  z-index: 4;
+  width: 68px;
+  height: 70px;
+  background: url("/jubilee-nam.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+
 @media (max-width: 1120px) {
   .topbar::before {
-    max-width: 52vw;
+    max-width: 45vw;
     font-size: 21px;
   }
   .topbar::after {
-    max-width: 52vw;
+    max-width: 45vw;
     font-size: 9px;
+  }
+  .topbar > .brand::after {
+    left: calc(50% - 310px);
+    width: 72px;
+    height: 52px;
+    top: 14px;
+  }
+  .topbar > .topbar-status::before {
+    left: calc(50% + 250px);
+    width: 60px;
+    height: 62px;
+    top: 9px;
   }
 }
 
 @media (max-width: 820px) {
   .app-shell {
-    --jubilee-topbar-h: 112px;
+    --jubilee-topbar-h: 126px;
   }
 
   .topbar {
@@ -76,18 +122,33 @@
   }
 
   .topbar::before {
-    top: 58px !important;
-    width: calc(100% - 28px) !important;
+    top: 61px !important;
+    width: calc(100% - 116px) !important;
     max-width: none;
-    font-size: 18px;
+    font-size: 17px;
     white-space: normal;
   }
 
   .topbar::after {
-    top: 83px !important;
-    width: calc(100% - 28px) !important;
+    top: 88px !important;
+    width: calc(100% - 116px) !important;
     max-width: none;
     font-size: 8px;
     white-space: normal;
+  }
+
+  .topbar > .brand::after {
+    left: 10px;
+    top: 62px;
+    width: 48px;
+    height: 42px;
+  }
+
+  .topbar > .topbar-status::before {
+    left: auto;
+    right: 10px;
+    top: 57px;
+    width: 48px;
+    height: 50px;
   }
 }
