@@ -3,6 +3,7 @@ import "./globals.css";
 import "./mobile-map-controls.css";
 import "./news-admin.css";
 import "./sidebar-layout.css";
+import "./banner-fix.css";
 import { NewsPortal } from "@/components/NewsPortal";
 
 export const metadata: Metadata = {
