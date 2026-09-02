@@ -14,7 +14,6 @@
   overflow: visible !important;
 }
 
-/* Убираем стандартную иконку 🚌 перед SAVTOBUSRASP. */
 .brand-bus {
   display: none !important;
 }
@@ -25,7 +24,6 @@
   z-index: 8 !important;
 }
 
-/* Центральный юбилейный заголовок. */
 .topbar::before {
   content: "К 85-летию Ленского наслега" !important;
   position: absolute !important;
@@ -69,7 +67,7 @@
   pointer-events: none !important;
 }
 
-/* PNG автобуса без фона — напрямую из постоянного публичного хранилища. */
+/* Браузер получает картинку только с текущего сайта; Supabase с клиента не вызывается. */
 .topbar > .brand::after {
   content: "" !important;
   position: absolute !important;
@@ -80,7 +78,7 @@
   height: 84px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background-image: url("https://clehcdkviariimjwfyun.supabase.co/storage/v1/object/public/site-assets/jubilee-bus-transparent.png?v=20260902-2250") !important;
+  background-image: url("/api/header-bus?v=20260902-2259") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
@@ -89,7 +87,6 @@
   pointer-events: none !important;
 }
 
-/* PNG памятника НАМ без фона — напрямую из постоянного публичного хранилища. */
 .topbar > .topbar-status::before {
   content: "" !important;
   position: absolute !important;
@@ -100,7 +97,7 @@
   height: 96px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background-image: url("https://clehcdkviariimjwfyun.supabase.co/storage/v1/object/public/site-assets/nam-monument.png?v=20260902-2250") !important;
+  background-image: url("/api/header-monument?v=20260902-2259") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: contain !important;
