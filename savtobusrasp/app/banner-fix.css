@@ -1,6 +1,6 @@
-/* Баннер грузится через сам SAVTOBUSRASP, чтобы браузер не блокировал внешний файл. */
+/* Принудительно используем именно загруженный пользователем баннер из public. */
 .topbar::before {
-  background-image: url("/api/jubilee-banner") !important;
+  background-image: url("/banner-lensky-85.png?v=20260902-1937") !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
