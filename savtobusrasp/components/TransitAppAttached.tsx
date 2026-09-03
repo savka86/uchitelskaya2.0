@@ -451,7 +451,7 @@ export function TransitAppAttached({ initialData }: { initialData: ScheduleData 
         <div className="schedule-heading"><div><span className="source-label">РАСПИСАНИЕ · 2024</span><h2>Все остановки и рейсы</h2></div><div className="direction-tabs"><button className={scheduleDirection === "forward" ? "active" : ""} onClick={() => setScheduleDirection("forward")} type="button">К РЭС</button><button className={scheduleDirection === "return" ? "active" : ""} onClick={() => setScheduleDirection("return")} type="button">К Куонда-Кириэс</button></div></div>
         <div className="schedule-table-wrap"><div className="schedule-table" style={{ gridTemplateColumns: `minmax(190px, 1.5fr) repeat(${selectedTrips.length}, minmax(76px, 1fr))` }}>
           <div className="table-head stop-column">Остановка</div>
-          {selectedTrips.map((trip) => <div className="table-head" key={trip.id}>{trip.first_timed_stop.slice(0, 5)}</div>)}
+          {selectedTrips.map((trip) => <div aria-hidden="true" className="table-head" key={trip.id} />)}
           {selectedStops.flatMap((routeStop) => {
             const stop = stopById.get(routeStop.stop_id);
             return [<div className="stop-cell" key={`${routeStop.stop_id}-name`}><span>{routeStop.stop_sequence}</span><strong>{stop?.name ?? routeStop.stop_id}</strong></div>, ...selectedTrips.map((trip) => { const time = initialData.stopTimes.find((item) => item.trip_id === trip.id && item.stop_id === routeStop.stop_id); return <div className="time-cell" key={`${routeStop.stop_id}-${trip.id}`}>{displayTime(time)}</div>; })];
