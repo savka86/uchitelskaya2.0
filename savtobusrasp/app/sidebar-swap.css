@@ -32,12 +32,12 @@
   font-size: 9px;
 }
 
-/* У маршрута №2 показываем только текущее время — кнопку демо скрываем. */
-.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-live-panel .clock-card button {
+/* На обоих маршрутах показываем только текущее время — кнопку демо скрываем. */
+.schedule-live-panel .clock-card button {
   display: none !important;
 }
 
-.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .schedule-live-panel .clock-card {
+.schedule-live-panel .clock-card {
   justify-content: flex-start !important;
 }
 
