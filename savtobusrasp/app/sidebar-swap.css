@@ -22,6 +22,16 @@
   padding-right: 4px;
 }
 
+/* Для маршрута №2 заменяем техническую подпись QR на понятное название. */
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .map-mode {
+  font-size: 0 !important;
+}
+
+.app-shell:has(.map-panel[aria-label="Яндекс Карта маршрута № 2"]) .map-mode::after {
+  content: "ЯНДЕКС · МАРШРУТ №2";
+  font-size: 9px;
+}
+
 /* Live-панель опускаем ниже, чтобы она не перекрывала вторую новость. */
 .schedule-live-panel {
   top: calc(var(--jubilee-topbar-h) + 430px) !important;
