@@ -37,8 +37,16 @@
   display: none !important;
 }
 
+/* Время в Намцах ставим по центру блока. */
 .schedule-live-panel .clock-card {
-  justify-content: flex-start !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+
+.schedule-live-panel .clock-card > div {
+  width: 100%;
+  align-items: center !important;
+  text-align: center !important;
 }
 
 /* Live-панель опускаем ниже, чтобы она не перекрывала вторую новость. */
